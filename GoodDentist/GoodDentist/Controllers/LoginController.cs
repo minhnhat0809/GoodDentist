@@ -5,7 +5,7 @@ namespace GoodDentist.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FirstController : ControllerBase
+    public class LoginController : ControllerBase
     {
         [HttpGet]
         public ActionResult hello()
