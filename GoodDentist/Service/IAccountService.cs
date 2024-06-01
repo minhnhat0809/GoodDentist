@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace Services
 {
     public interface IAccountService
     {
-        string hashPassword(string password);
+        byte[] hashPassword(string password);
 
         bool verifyPassword(string inputPassword, string hashedPassword);
 
-
+        Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO);
     }
 }

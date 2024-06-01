@@ -1,3 +1,8 @@
+
+using BusinessObject;
+using Microsoft.EntityFrameworkCore;
+using Repositories;
+using Repositories.Impl;
 using Services;
 using Services.Impl;
 
@@ -15,8 +20,16 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 
 // repo
+builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 
 
+
+// database
+builder.Services.AddDbContext<GoodDentistDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//mapper
+builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 
 var app = builder.Build();
 

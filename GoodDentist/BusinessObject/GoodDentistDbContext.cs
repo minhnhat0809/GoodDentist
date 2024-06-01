@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace BusinessObject;
 
@@ -55,10 +56,8 @@ public partial class GoodDentistDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(local); Database=Good_Dentist_DB; Uid=sa; Pwd=12345; TrustServerCertificate=True");
-
+   // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       // => optionsBuilder.UseSqlServer("Server=(local);uid=SA;pwd=12345;database=Good_Dentist_DB;TrustServerCertificate=True");
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Clinic>(entity =>
@@ -500,7 +499,7 @@ public partial class GoodDentistDbContext : DbContext
             entity.Property(e => e.Gender)
                 .HasMaxLength(10)
                 .HasColumnName("gender");
-            entity.Property(e => e.Password).HasColumnName("password");
+            entity.Property(e => e.Password).HasColumnName("Password");
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(20)
                 .HasColumnName("phone_number");
@@ -520,4 +519,6 @@ public partial class GoodDentistDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+
 }
