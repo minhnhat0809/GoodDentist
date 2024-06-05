@@ -12,24 +12,20 @@ namespace GoodDentist.Controllers
     {
         private readonly IAccountService _accountService;
 
-        public AccountController(IAccountService accountService, IMapper mapper)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
 
 
-        [HttpGet]
-        public ActionResult hello()
+        [HttpPost("createUser")]
+        public async  Task<ResponseCreateUserDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
-            return Ok("Hello");
+           ResponseCreateUserDTO responseDTO = await _accountService.createUser(createUserDTO); 
+            
+           return responseDTO;                       
         }
 
-        [HttpPost("create user")]
-        public async Task<ResponseCreateUserDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
-        {
-                ResponseCreateUserDTO responseDTO = await _accountService.createUser(createUserDTO);            
-
-                return responseDTO;                       
-        }
+        
     }
 }

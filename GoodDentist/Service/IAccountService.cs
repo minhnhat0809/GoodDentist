@@ -9,7 +9,7 @@ namespace Services
 {
     public interface IAccountService
     {
-        byte[] hashPassword(string password);
+        byte[] hashPassword(string password, byte[] salt);
 
         bool verifyPassword(string inputPassword, string hashedPassword);
 

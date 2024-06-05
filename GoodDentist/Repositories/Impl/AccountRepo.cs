@@ -17,12 +17,14 @@ namespace Repositories.Impl
 
         public bool checkExistUser(string userName)
         {
-            var user = FindByConditionAsync(u => u.UserName.Equals(userName));
-            if (user != null)
+            try
+            {
+                return _repositoryContext.Users.Any(user => user.UserName == userName);
+            }
+            catch (Exception ex)
             {
                 return false;
             }
-            return true;
         }
 
         public void CreateUser(User user)

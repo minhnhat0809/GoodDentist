@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,17 @@ namespace BusinessObject.DTO
 {
     public class ResponseDTO
     {
-        public object? result;
+        public string Message {  get; set; }
+        public int StatusCode { get; set; }
+        public bool IsSuccess { get; set; }
+        public object? Result { get; set; }
+        public ResponseDTO(string message, int statusCode, bool isSucess, object? result)
+        {
+            Message = message;
+            StatusCode = statusCode;
+            IsSuccess = isSucess;
+            Result = result;
+        }
 
-        public bool isSuccess;
-
-        public string? message;
     }
 }

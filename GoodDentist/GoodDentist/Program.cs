@@ -5,6 +5,7 @@ using Repositories;
 using Repositories.Impl;
 using Services;
 using Services.Impl;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,12 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 // repo
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
 
 
 
