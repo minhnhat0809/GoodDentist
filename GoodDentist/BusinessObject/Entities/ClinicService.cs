@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BusinessObject;
 
-public partial class ClinicService
+public partial class ClinicService 
 {
     public int ClinicServiceId { get; set; }
 

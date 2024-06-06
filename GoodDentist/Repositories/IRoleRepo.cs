@@ -7,7 +7,7 @@ using BusinessObject;
 
 namespace Repositories
 {
-    public interface IRoleRepo
+    public interface IRoleRepo : IRepositoryBase<Role>
     {
         List<Role> GetRoles();
     }

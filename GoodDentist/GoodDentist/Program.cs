@@ -5,6 +5,8 @@ using Repositories;
 using Repositories.Impl;
 using Services;
 using Services.Impl;
+using ClinicService = Services.Impl.ClinicService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,12 +22,14 @@ builder.Services.AddSwaggerGen();
 
 //service
 builder.Services.AddScoped<IAccountService, AccountService>();
-
+builder.Services.AddScoped<IClinicService, ClinicService>();
+builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
 
 // repo
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();
-
+builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
+builder.Services.AddScoped<IDentistSlotRepository, DentistSlotRepository>();
 
 
 // database
