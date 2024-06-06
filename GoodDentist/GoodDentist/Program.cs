@@ -21,7 +21,12 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 
 // repo
-builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IRoleRepo, RoleRepo>();
+builder.Services.AddScoped<IClinicUserRepo, ClinicUserRepo>();
+builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
+builder.Services.AddScoped<IClinicRepo, ClinicRepo>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

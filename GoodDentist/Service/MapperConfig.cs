@@ -38,7 +38,9 @@ namespace Services
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            //.ForMember(dest => dest.Clinic, opt => opt.MapFrom(src => src.ClinicUsers.Select(c => c.Clinic).FirstOrDefault()));
+            .ForMember(dest => dest.Clinic, opt => opt.Ignore());
         }
     }
 }

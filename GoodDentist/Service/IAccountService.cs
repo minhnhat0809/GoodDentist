@@ -17,5 +17,7 @@ namespace Services
         Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO);
 
         Task<ResponseDTO> getAllUsers();
+
+        Task<ResponseDTO> deleteUser(string userName);
     }
 }

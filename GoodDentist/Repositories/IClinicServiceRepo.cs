@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public interface IRoleRepo : IRepositoryBase<Role>
+    public interface IClinicServiceRepo : IRepositoryBase<ClinicService>
     {
-        Task<Role?> GetRole(int id);
     }
 }

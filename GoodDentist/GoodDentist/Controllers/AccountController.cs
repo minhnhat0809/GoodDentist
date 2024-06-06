@@ -26,7 +26,7 @@ namespace GoodDentist.Controllers
         }
 
 
-        [HttpPost("createUser")]
+        [HttpPost("new-user")]
         public async  Task<ResponseCreateUserDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
            ResponseCreateUserDTO responseDTO = await accountService.createUser(createUserDTO); 
@@ -34,15 +34,31 @@ namespace GoodDentist.Controllers
            return responseDTO;                       
         }
 
-        [HttpGet("getAllUsers")]
+        [HttpGet("all-users")]
         public async Task<ResponseDTO> GetAllUsers()
         {           
             ResponseDTO responseDTO = await accountService.getAllUsers();
-
             return responseDTO;
         }
 
-        [HttpDelete("deleteRedisCache")]
+        [HttpDelete("user")]
+        public async Task<ResponseDTO> DeleteUser([FromQuery] string userName)
+        {
+            ResponseDTO responseDTO = await accountService.deleteUser(userName);
+            return responseDTO;
+        }
+
+
+
+
+
+
+
+
+
+
+
+        [HttpDelete("key")]
         public async Task<string> deleteRedisCache([FromQuery] string key)
         {
             if (key.IsNullOrEmpty())
@@ -64,7 +80,7 @@ namespace GoodDentist.Controllers
             }           
         }
 
-        [HttpPut("updateRedisCache")]
+        [HttpPut("key")]
         public async Task<string> UpdateRedisCache([FromQuery] string key, [FromQuery] string newValue)
         {
             if (string.IsNullOrEmpty(key))
@@ -89,7 +105,7 @@ namespace GoodDentist.Controllers
             return "Update key successfully!";
         }
 
-        [HttpGet("getMyKey")]
+        [HttpGet("key-information")]
         public async Task<string> GetMyKey([FromQuery] string key)
         {
             if (string.IsNullOrEmpty(key))
@@ -109,7 +125,7 @@ namespace GoodDentist.Controllers
             return existingValue;
         }
 
-        [HttpPost("setString")]
+        [HttpPost("key-value")]
         public async Task<IActionResult> SetString([FromQuery] string key, [FromQuery] string value)
         {
             if (string.IsNullOrEmpty(key))

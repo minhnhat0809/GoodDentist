@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public interface IAccountRepo : IRepositoryBase<User>
+    public interface IUserRepo : IRepositoryBase<User>
     {
-        void CreateUser(User user);
-
-        bool checkExistUser(string userName);
+        User? getUser(string userName);
 
         Task<List<User>> GetAllUsers();
     }

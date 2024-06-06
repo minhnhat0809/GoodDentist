@@ -18,12 +18,12 @@ namespace Services.Impl
         private static readonly HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA256;
 
         private readonly IMapper mapper;
-        private readonly IAccountRepo accountRepo;
+        private readonly IUnitOfWork unitOfWork;
         
-        public AccountService(IMapper mapper, IAccountRepo accountRepo)
+        public AccountService(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            this.mapper = mapper;
-            this.accountRepo = accountRepo;
+            this.mapper = mapper;            
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO)
@@ -31,7 +31,7 @@ namespace Services.Impl
             ResponseCreateUserDTO responseDTO = new ResponseCreateUserDTO();
             try
             {
-               responseDTO = validateUser(createUserDTO);
+               responseDTO = await validateUser(createUserDTO);
 
                 if (responseDTO.IsSuccess == false)
                 {
@@ -42,9 +42,18 @@ namespace Services.Impl
                 user.Salt = salting();
                 user.Password = hashPassword(createUserDTO.Password, user.Salt);
                 user.UserId = Guid.NewGuid();
+                Clinic? clinic = await unitOfWork.clinicRepo.getClinicById(createUserDTO.ClinicId);
 
-                accountRepo.CreateUser(user);
+                ClinicUser clinicUser = new ClinicUser()
+                {
+                    ClinicId = clinic.ClinicId,
+                    UserId = user.UserId,
+                    Status = true
+                };
 
+                await unitOfWork.userRepo.CreateAsync(user);
+                await unitOfWork.clinicUserRepo.CreateAsync(clinicUser);              
+                
                 responseDTO.Message.Add("Create sucessfully");  
                 responseDTO.IsSuccess = true;
                 return responseDTO;
@@ -80,7 +89,7 @@ namespace Services.Impl
             return result;
         }
 
-        private ResponseCreateUserDTO validateUser(CreateUserDTO createUserDTO)
+        private  async Task<ResponseCreateUserDTO> validateUser(CreateUserDTO createUserDTO)
         {
             ResponseCreateUserDTO responseDTO = new ResponseCreateUserDTO();
             responseDTO.IsSuccess = true;
@@ -99,7 +108,8 @@ namespace Services.Impl
                 }
                 else 
                 {
-                    if (accountRepo.checkExistUser(createUserDTO.UserName))
+                    User? user = unitOfWork.userRepo.getUser(createUserDTO.UserName);
+                    if (user != null)
                     {
                         responseDTO.Message.Add("Username is already existed!");
                         responseDTO.IsSuccess = false;
@@ -169,10 +179,34 @@ namespace Services.Impl
                 responseDTO.IsSuccess = false;
             }
 
+            if (createUserDTO.ClinicId.IsNullOrEmpty())
+            {
+                responseDTO.Message.Add("Please choose clinic!");
+                responseDTO.IsSuccess = false;
+            }
+            else
+            {
+                Clinic? clinic = await unitOfWork.clinicRepo.getClinicById(createUserDTO.ClinicId);
+                if (clinic == null)
+                {
+                    responseDTO.Message.Add("Clinic does not exist!");
+                    responseDTO.IsSuccess = false;
+                }
+            }
+
             if (createUserDTO.RoleId == 0)
             {
                 responseDTO.Message.Add("Role is empty!");
                 responseDTO.IsSuccess = false;
+            }
+            else
+            {
+                Role? role = await unitOfWork.roleRepo.GetRole(createUserDTO.RoleId);
+                if (role == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message.Add("This role does not exist!");
+                }
             }
 
             return responseDTO;
@@ -195,9 +229,9 @@ namespace Services.Impl
         {
             try
             {
-                List<User> userList = await accountRepo.GetAllUsers();
+                List<User> userList = await unitOfWork.userRepo.GetAllUsers();
 
-                List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
+                List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);                
                 
                 return new ResponseDTO("Get users successfully!", 200, true, users);
             }
@@ -205,6 +239,40 @@ namespace Services.Impl
             {
                 return new ResponseDTO(ex.Message, 500, false, null);
             }
+        }
+
+        public async Task<ResponseDTO> deleteUser(string userName)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+            try
+            {                
+                if (userName.IsNullOrEmpty())
+                {
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "User name is empty!";
+                    return responseDTO;
+                }
+
+                User? user = unitOfWork.userRepo.getUser(userName);
+                if (user == null)
+                {
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "There are no users with this user name!";
+                    return responseDTO;
+                }
+
+                user.Status = false;
+                await unitOfWork.userRepo.DeleteAsync(user);
+                responseDTO.Message = "Delete successfully!";
+                return responseDTO;
+            }catch (Exception ex)
+            {
+                responseDTO.Message = ex.Message;
+                responseDTO.StatusCode = 500;
+                responseDTO.IsSuccess = false;
+                return responseDTO;
+            }
+            
         }
     }
 }
