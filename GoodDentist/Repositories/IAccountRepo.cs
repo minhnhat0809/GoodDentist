@@ -12,5 +12,7 @@ namespace Repositories
         void CreateUser(User user);
 
         bool checkExistUser(string userName);
+
+        Task<List<User>> GetAllUsers();
     }
 }

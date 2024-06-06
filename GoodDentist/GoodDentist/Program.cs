@@ -35,6 +35,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddStackExchangeRedisCache(redis =>
+{
+    redis.Configuration = "localhost:6379";
+});
+
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 

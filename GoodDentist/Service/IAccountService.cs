@@ -1,4 +1,5 @@
-﻿using BusinessObject.DTO;
+﻿using BusinessObject;
+using BusinessObject.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace Services
         bool verifyPassword(string inputPassword, string hashedPassword);
 
         Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO);
+
+        Task<ResponseDTO> getAllUsers();
     }
 }

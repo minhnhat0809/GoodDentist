@@ -190,5 +190,21 @@ namespace Services.Impl
         {
             return RandomNumberGenerator.GetBytes(saltSize);
         }
+
+        public async Task<ResponseDTO> getAllUsers()
+        {
+            try
+            {
+                List<User> userList = await accountRepo.GetAllUsers();
+
+                List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
+                
+                return new ResponseDTO("Get users successfully!", 200, true, users);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }
     }
 }
