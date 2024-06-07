@@ -12,10 +12,10 @@ namespace GoodDentist.Controllers
         private readonly IClinicService _service;
         private ResponseDTO _response;
 
-        public ClinicController(IClinicService service)
+        public ClinicController(IClinicService service, ResponseDTO response)
         {
             _service = service;
-            _response = new ResponseDTO();
+            _response = response;
         }
 
         [HttpGet]
@@ -25,12 +25,12 @@ namespace GoodDentist.Controllers
             try
             {
                 var clinic = _service.GetClinic(id);
-                _response.result = clinic;
+                _response.Result = clinic;
             }
             catch (Exception e)
             {
-                _response.message = e.Message;
-                _response.isSuccess = false;
+                _response.Message = e.Message;
+                _response.IsSuccess = false;
             }
 
             return Ok(_response);
@@ -42,12 +42,12 @@ namespace GoodDentist.Controllers
             try
             {
                 var clinics = _service.GetClinics();
-                _response.result = clinics;
+                _response.Result = clinics;
             }
             catch (Exception e)
             {
-                _response.message = e.Message;
-                _response.isSuccess = false;
+                _response.Message = e.Message;
+                _response.IsSuccess = false;
             }
 
             return Ok(_response);

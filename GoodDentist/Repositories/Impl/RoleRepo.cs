@@ -21,5 +21,12 @@ namespace Repositories.Impl
         {
             return _context.Roles.ToList();
         }
+
+        public async Task<Role?> GetRole(int id)
+        {
+            List<Role> roleList = await FindAllAsync();
+            Role? role = roleList.FirstOrDefault(r => r.RoleId == id);
+            return role;
+        }
     }
 }

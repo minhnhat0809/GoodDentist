@@ -43,7 +43,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         try
         {
-            _repositoryContext.Set<T>().Remove(entity);
+            _repositoryContext.Set<T>().Update(entity);
             return await SaveChange();
         }
         catch (Exception ex)

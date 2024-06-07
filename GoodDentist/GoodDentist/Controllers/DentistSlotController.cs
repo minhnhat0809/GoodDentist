@@ -11,10 +11,10 @@ namespace GoodDentist.Controllers
         private readonly IDentistSlotService _service;
         private ResponseDTO _response;
 
-        public DentistSlotController(IDentistSlotService service)
+        public DentistSlotController(IDentistSlotService service, ResponseDTO response)
         {
             _service = service;
-            _response = new ResponseDTO();
+            _response = response;
         }
 
         [HttpGet]
@@ -24,12 +24,12 @@ namespace GoodDentist.Controllers
             try
             {
                 var clinic = _service.GetDentistSlot(id);
-                _response.result = clinic;
+                _response.Result = clinic;
             }
             catch (Exception e)
             {
-                _response.message = e.Message;
-                _response.isSuccess = false;
+                _response.Message = e.Message;
+                _response.IsSuccess = false;
             }
 
             return Ok(_response);
@@ -41,12 +41,12 @@ namespace GoodDentist.Controllers
             try
             {
                 var clinics = _service.GetDentistSlots();
-                _response.result = clinics;
+                _response.Result = clinics;
             }
             catch (Exception e)
             {
-                _response.message = e.Message;
-                _response.isSuccess = false;
+                _response.Message = e.Message;
+                _response.IsSuccess = false;
             }
 
             return Ok(_response);

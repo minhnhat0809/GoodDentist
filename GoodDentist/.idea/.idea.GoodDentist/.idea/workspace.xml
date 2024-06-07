@@ -10,7 +10,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="" />
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="mapper dto">
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/UserDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/IClinicServiceRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/IClinicUserRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/IUnitOfWork.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/IUserRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicServiceRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicUserRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/Impl/UnitOfWork.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/BusinessObject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/BusinessObject.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/CreateUserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/CreateUserDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ResponseCreateUserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ResponseCreateUserDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ResponseDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ResponseDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/DataAccess.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/DentistSlotController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/DentistSlotController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IAccountRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IRoleRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IRoleRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/AccountRepo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Repositories.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Repositories.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IAccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Services.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Services.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,45 +51,75 @@
   <component name="DpaMonitoringSettings">
     <option name="autoShow" value="false" />
   </component>
+  <component name="Git.Pull.Settings">
+    <option name="OPTIONS">
+      <set>
+        <option value="NO_COMMIT" />
+      </set>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://D:/backend/Backend/ReservationManagementAPI/Contracts/IRepositoryBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://D:/backend/Backend/ReservationManagementAPI/Repository/RepositoryBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://D:/backend/Backend/SyllabusManagementAPI/Repository/RepositoryBase.cs" root0="SKIP_HIGHLIGHTING" />
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="68bd4e08-e2cc-4eaf-a2ad-cf0e3ba37fd8" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/cc/f365519b/Monitor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/IClinicRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/IDentistSlotRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/ClinicRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/DentistSlotRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IClinicService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IDentistSlotService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/ClinicService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/DentistSlotService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/MapperConfig.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2h3jIRR3IWIvYIWEHozcot41LVH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.GoodDentist: http.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.GoodDentist: http.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging huyntv171283",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propDebugger",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\Admin\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\Admin\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: http">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
@@ -142,6 +204,10 @@
       <workItem from="1716868990516" duration="170000" />
       <workItem from="1716869204215" duration="138000" />
       <workItem from="1716869405878" duration="42000" />
+      <workItem from="1717467850555" duration="142000" />
+      <workItem from="1717596019708" duration="4000" />
+      <workItem from="1717651951005" duration="5858000" />
+      <workItem from="1717727655125" duration="2911000" />
     </task>
     <task id="LOCAL-00001" summary="change file location and create repositoryBase">
       <option name="closed" value="true" />
@@ -159,7 +225,31 @@
       <option name="project" value="LOCAL" />
       <updated>1716869083336</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="role">
+      <option name="closed" value="true" />
+      <created>1717652234129</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717652234129</updated>
+    </task>
+    <task id="LOCAL-00004" summary="unit of work/ clinic / dentist slot - crud/ repository/ controller">
+      <option name="closed" value="true" />
+      <created>1717657850822</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1717657850822</updated>
+    </task>
+    <task id="LOCAL-00005" summary="mapper dto">
+      <option name="closed" value="true" />
+      <created>1717730323014</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1717730323014</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,10 +257,69 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="change file location and create repositoryBase" />
     <MESSAGE value="rename controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="rename controller" />
+    <MESSAGE value="role" />
+    <MESSAGE value="unit of work/ clinic / dentist slot - crud/ repository/ controller" />
+    <MESSAGE value="mapper dto" />
+    <option name="LAST_COMMIT_MESSAGE" value="mapper dto" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs</url>
+          <line>26</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\ClinicController.cs" containingFunctionPresentation="Method 'GetClinic'">
+            <startOffsets>
+              <option value="642" />
+            </startOffsets>
+            <endOffsets>
+              <option value="678" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs</url>
+          <line>16</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\ClinicRepository.cs" containingFunctionPresentation="Method 'GetClinic'">
+            <startOffsets>
+              <option value="401" />
+            </startOffsets>
+            <endOffsets>
+              <option value="451" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs</url>
+          <line>22</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\ClinicRepository.cs" containingFunctionPresentation="Method 'GetClinics'">
+            <startOffsets>
+              <option value="545" />
+            </startOffsets>
+            <endOffsets>
+              <option value="589" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
