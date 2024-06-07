@@ -12,5 +12,12 @@ namespace Repositories.Impl
         public RoleRepo(GoodDentistDbContext repositoryContext) : base(repositoryContext)
         {
         }
+
+        public async Task<Role?> GetRole(int id)
+        {
+            List<Role> roleList = await FindAllAsync();
+            Role? role = roleList.FirstOrDefault(r => r.RoleId == id);
+            return role;
+        }
     }
 }

@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public interface IAccountRepo : IRepositoryBase<User>
+    public interface IClinicServiceRepo : IRepositoryBase<ClinicService>
     {
-        void CreateUser(User user);
-
-        bool checkExistUser(string userName);
     }
 }

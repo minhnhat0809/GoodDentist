@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public interface IRoleRepo : IRepositoryBase<Role>
+    public interface IUserRepo : IRepositoryBase<User>
     {
-        Task<Role?> GetRole(int id);
+        User? getUser(string userName);
+
+        Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage);
     }
 }

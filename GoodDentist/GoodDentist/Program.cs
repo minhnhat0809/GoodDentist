@@ -5,6 +5,7 @@ using Repositories;
 using Repositories.Impl;
 using Services;
 using Services.Impl;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,17 +17,34 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //service
-builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
 
 
 // repo
-builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IRoleRepo, RoleRepo>();
+builder.Services.AddScoped<IClinicUserRepo, ClinicUserRepo>();
+builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
+builder.Services.AddScoped<IClinicRepo, ClinicRepo>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
 
 
 
 // database
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddStackExchangeRedisCache(redis =>
+{
+    redis.Configuration = "localhost:6379";
+});
 
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
