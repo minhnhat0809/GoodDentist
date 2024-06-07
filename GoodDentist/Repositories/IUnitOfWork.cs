@@ -13,9 +13,8 @@ namespace Repositories
         IClinicUserRepo clinicUserRepo { get; }
         IRoleRepo roleRepo { get; }
         IClinicRepo clinicRepo { get; }
-        Task<int> CompleteAsync();
 
-        void attach(ClinicUser clinicUser);
-        void detach(ClinicUser clinicUser);
+        IDentistSlotRepo dentistSlotRepo { get; }
+        Task<int> CompleteAsync();
     }
 }

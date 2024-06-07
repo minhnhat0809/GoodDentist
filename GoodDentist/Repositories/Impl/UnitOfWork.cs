@@ -16,8 +16,10 @@ namespace Repositories.Impl
         public IClinicUserRepo clinicUserRepo { get; private set; }
         public IRoleRepo roleRepo { get; private set; }
         public IClinicRepo clinicRepo { get; private set; }
-
+        public IDentistSlotRepo dentistSlotRepo { get; private set; }
         public IDistributedCache distributedCache { get; private set; }
+
+        
 
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
@@ -27,6 +29,7 @@ namespace Repositories.Impl
             clinicUserRepo = new ClinicUserRepo(_repositoryContext); 
             roleRepo = new RoleRepo(_repositoryContext);
             clinicRepo = new ClinicRepo(_repositoryContext);
+            dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
         }
 
         public async Task<int> CompleteAsync()
@@ -37,16 +40,6 @@ namespace Repositories.Impl
         public void Dispose()
         {
             _repositoryContext.Dispose();
-        }
-
-        public void attach(ClinicUser clincUser)
-        {
-            _repositoryContext.Attach(clincUser);
-        }
-
-        public void detach(ClinicUser clincUser)
-        {
-            _repositoryContext.Entry(clincUser).State = EntityState.Detached;
         }
     }
 }

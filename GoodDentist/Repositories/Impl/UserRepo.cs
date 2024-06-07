@@ -23,8 +23,7 @@ namespace Repositories.Impl
         public async Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage)
         {
             //string key = "userList";
-            List<User>? userList = new List<User>();
-            userList = await FindAllAsync();           
+            List<User>? userList = await Paging(pageNumber, rowsPerPage);
 
 
             /*CancellationToken cancellationToken = default;

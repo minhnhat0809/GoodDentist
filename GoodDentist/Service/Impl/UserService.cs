@@ -26,9 +26,9 @@ namespace Services.Impl
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO)
+        public async Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO)
         {
-            ResponseCreateUserDTO responseDTO = new ResponseCreateUserDTO();
+            ResponseListDTO responseDTO = new ResponseListDTO();
             try
             {
                 responseDTO = await validateUser(createUserDTO);
@@ -97,9 +97,9 @@ namespace Services.Impl
             return result;
         }
 
-        private async Task<ResponseCreateUserDTO> validateUser(CreateUserDTO createUserDTO)
+        private async Task<ResponseListDTO> validateUser(CreateUserDTO createUserDTO)
         {
-            ResponseCreateUserDTO responseDTO = new ResponseCreateUserDTO();
+            ResponseListDTO responseDTO = new ResponseListDTO();
             responseDTO.IsSuccess = true;
 
             if (createUserDTO.UserName.IsNullOrEmpty())
@@ -228,11 +228,7 @@ namespace Services.Impl
         {
             try
             {
-                List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
-                userList = userList
-               .Skip((pageNumber - 1) * rowsPerPage)
-               .Take(rowsPerPage)
-               .ToList();
+                List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);                
 
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
 
@@ -279,9 +275,9 @@ namespace Services.Impl
 
         }
 
-        public async Task<ResponseCreateUserDTO> updateUser(CreateUserDTO createUserDTO)
+        public async Task<ResponseListDTO> updateUser(CreateUserDTO createUserDTO)
         {
-            ResponseCreateUserDTO responseDTO = new ResponseCreateUserDTO();
+            ResponseListDTO responseDTO = new ResponseListDTO();
             try
             {
                 responseDTO = await validateUser(createUserDTO);

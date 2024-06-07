@@ -11,7 +11,7 @@ namespace Services
 {
     public class MapperConfig : Profile
     {
-        public MapperConfig() 
+        public MapperConfig()
         {
             CreateMap<CreateUserDTO, User>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
@@ -39,6 +39,16 @@ namespace Services
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+
+            CreateMap<DentistSlot, DentistSlotDTO>()
+                .ForMember(dest => dest.RoomNumber, otp => otp.Ignore());
+
+            CreateMap<DentistSlotDTO, DentistSlot>()
+                .ForMember(dest => dest.DentistSlotId, otp => otp.Ignore())
+                .ForMember(dest => dest.Dentist, otp => otp.Ignore())
+                .ForMember(dest => dest.Examinations, otp => otp.Ignore())
+                .ForMember(dest => dest.Room, otp => otp.Ignore());
+            
         }
     }
 }

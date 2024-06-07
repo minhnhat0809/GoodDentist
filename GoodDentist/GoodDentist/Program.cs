@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen();
 
 //service
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
 
 
 // repo
