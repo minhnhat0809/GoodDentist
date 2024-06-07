@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public interface IAccountService
+    public interface IUserService
     {
         byte[] hashPassword(string password, byte[] salt);
 

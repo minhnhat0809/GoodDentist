@@ -17,18 +17,14 @@ namespace Repositories.Impl
 
         public User? getUser(string userName)
         {
-                return _repositoryContext.Users.FirstOrDefault(user => user.UserName == userName);           
+                return _repositoryContext.Users.Include(u => u.ClinicUsers).FirstOrDefault(user => user.UserName == userName);           
         }       
 
         public async Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage)
         {
             //string key = "userList";
             List<User>? userList = new List<User>();
-            userList = await FindAllAsync();
-            userList = userList
-               .Skip((pageNumber - 1) * rowsPerPage)
-               .Take(rowsPerPage)
-               .ToList();
+            userList = await FindAllAsync();           
 
 
             /*CancellationToken cancellationToken = default;

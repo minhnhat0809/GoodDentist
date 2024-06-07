@@ -28,7 +28,7 @@ namespace Services
             .ForMember(dest => dest.ClinicUsers, opt => opt.Ignore())
             .ForMember(dest => dest.DentistSlots, opt => opt.Ignore())
             .ForMember(dest => dest.Examinations, opt => opt.Ignore())
-            .ForMember(dest => dest.Role, opt => opt.Ignore()); ;
+            .ForMember(dest => dest.Role, opt => opt.Ignore());
 
             CreateMap<User, UserDTO>()
             .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Dob.HasValue ? new DateTime(src.Dob.Value.Year, src.Dob.Value.Month, src.Dob.Value.Day) : (DateTime?)null))

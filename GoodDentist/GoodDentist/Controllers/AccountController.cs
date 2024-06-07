@@ -16,10 +16,10 @@ namespace GoodDentist.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService accountService;
+        private readonly IUserService accountService;
         private readonly IDistributedCache distributedCache;
 
-        public AccountController(IAccountService accountService, IDistributedCache distributedCache)
+        public AccountController(IUserService accountService, IDistributedCache distributedCache)
         {
             this.accountService = accountService;
             this.distributedCache = distributedCache;
@@ -48,7 +48,7 @@ namespace GoodDentist.Controllers
             return responseDTO;
         }
 
-        [HttpPost("user")]
+        [HttpPut("user")]
         public async Task<ResponseCreateUserDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
         {
             ResponseCreateUserDTO responseDTO = await accountService.updateUser(createUserDTO);

@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Repositories.Impl
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly GoodDentistDbContext _context;
+        private readonly GoodDentistDbContext _repositoryContext;
         public IUserRepo userRepo { get; private set; }
         public IClinicUserRepo clinicUserRepo { get; private set; }
         public IRoleRepo roleRepo { get; private set; }
@@ -20,22 +21,32 @@ namespace Repositories.Impl
 
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
-            _context = context;
+            _repositoryContext = context;
             distributedCache = cache;
-            userRepo = new UserRepo(_context, distributedCache);
-            clinicUserRepo = new ClinicUserRepo(_context); 
-            roleRepo = new RoleRepo(_context);
-            clinicRepo = new ClinicRepo(_context);
+            userRepo = new UserRepo(_repositoryContext, distributedCache);
+            clinicUserRepo = new ClinicUserRepo(_repositoryContext); 
+            roleRepo = new RoleRepo(_repositoryContext);
+            clinicRepo = new ClinicRepo(_repositoryContext);
         }
 
         public async Task<int> CompleteAsync()
         {
-            return await _context.SaveChangesAsync();
+            return await _repositoryContext.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            _context.Dispose();
+            _repositoryContext.Dispose();
+        }
+
+        public void attach(ClinicUser clincUser)
+        {
+            _repositoryContext.Attach(clincUser);
+        }
+
+        public void detach(ClinicUser clincUser)
+        {
+            _repositoryContext.Entry(clincUser).State = EntityState.Detached;
         }
     }
 }

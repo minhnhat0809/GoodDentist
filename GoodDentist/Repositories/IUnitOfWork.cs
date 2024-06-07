@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,8 @@ namespace Repositories
         IRoleRepo roleRepo { get; }
         IClinicRepo clinicRepo { get; }
         Task<int> CompleteAsync();
+
+        void attach(ClinicUser clinicUser);
+        void detach(ClinicUser clinicUser);
     }
 }
