@@ -16,8 +16,10 @@ namespace Services
 
         Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO);
 
-        Task<ResponseDTO> getAllUsers();
+        Task<ResponseDTO> getAllUsers(int pageNumber, int rowsPerPage);
 
         Task<ResponseDTO> deleteUser(string userName);
+
+        Task<ResponseCreateUserDTO> updateUser(CreateUserDTO createUserDTO);
     }
 }

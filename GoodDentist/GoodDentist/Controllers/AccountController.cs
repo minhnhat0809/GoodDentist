@@ -34,11 +34,10 @@ namespace GoodDentist.Controllers
            return responseDTO;                       
         }
 
-
         [HttpGet("all-users")]
-        public async Task<ResponseDTO> GetAllUsers()
+        public async Task<ResponseDTO> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage)
         {           
-            ResponseDTO responseDTO = await accountService.getAllUsers();
+            ResponseDTO responseDTO = await accountService.getAllUsers(pageNumber, rowsPerPage);
             return responseDTO;
         }
 
@@ -49,7 +48,13 @@ namespace GoodDentist.Controllers
             return responseDTO;
         }
 
+        [HttpPost("user")]
+        public async Task<ResponseCreateUserDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
+        {
+            ResponseCreateUserDTO responseDTO = await accountService.updateUser(createUserDTO);
 
+            return responseDTO;
+        }
 
 
 
