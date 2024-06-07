@@ -1,9 +1,10 @@
 ﻿using BusinessObject;
+using BusinessObject.DTO.ViewDTO;
 
 namespace Services;
 
 public interface IDentistSlotService
 {
-    Task<DentistSlot> GetDentistSlot(int id);
-    Task<List<DentistSlot>> GetDentistSlots();
+    Task<DentistSlotDTO> GetDentistSlot(int id);
+    Task<List<DentistSlotDTO>> GetDentistSlots();
 }

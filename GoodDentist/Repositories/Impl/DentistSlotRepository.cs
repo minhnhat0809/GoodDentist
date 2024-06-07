@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using BusinessObject;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Impl;
 
@@ -13,13 +14,13 @@ public class DentistSlotRepository : RepositoryBase<DentistSlot>, IDentistSlotRe
     }
 
 
-    public DentistSlot GetDentistSlot(int id)
+    public async Task<DentistSlot> GetDentistSlot(int id)
     {
-        return _context.DentistSlots.Find(id);
+        return await _context.DentistSlots.FindAsync(id);
     }
 
-    public List<DentistSlot> GetDentistSlots()
+    public async Task<List<DentistSlot>> GetDentistSlots()
     {
-        return _context.DentistSlots.ToList();
+        return await _context.DentistSlots.ToListAsync();
     }
 }

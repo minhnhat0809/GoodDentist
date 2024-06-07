@@ -1,4 +1,6 @@
-﻿using BusinessObject;
+﻿using AutoMapper;
+using BusinessObject;
+using BusinessObject.DTO.ViewDTO;
 using Repositories;
 
 namespace Services.Impl;
@@ -6,19 +8,23 @@ namespace Services.Impl;
 public class ClinicService : IClinicService
 {
     private readonly IClinicRepository _clinicRepository;
+    private readonly IMapper _mapper;
 
-    public ClinicService(IClinicRepository clinicRepository)
+    public ClinicService(IClinicRepository clinicRepository, IMapper mapper)
     {
         _clinicRepository = clinicRepository;
+        _mapper = mapper;
     }
 
-    public async Task<Clinic> GetClinic(Guid id)
+    public async Task<ClinicDTO> GetClinic(Guid id)
     {
-        return _clinicRepository.GetClinic(id);
+        var clinicModel = await _clinicRepository.GetClinic(id);
+        return _mapper.Map<ClinicDTO>(clinicModel);
     }
-
-    public Task<List<Clinic>> GetClinics()
+ 
+    public async Task<List<ClinicDTO>> GetClinics()
     {
-        return _clinicRepository.FindAllAsync();
+        var list = await _clinicRepository.FindAllAsync();
+        return _mapper.Map<List<ClinicDTO>>(list);
     }
 }

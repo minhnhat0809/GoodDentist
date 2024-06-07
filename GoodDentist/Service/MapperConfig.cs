@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.DTO.ViewDTO;
 
 namespace Services
 {
@@ -29,6 +30,9 @@ namespace Services
             .ForMember(dest => dest.DentistSlots, opt => opt.Ignore())
             .ForMember(dest => dest.Examinations, opt => opt.Ignore())
             .ForMember(dest => dest.Role, opt => opt.Ignore()); ;
+
+            CreateMap<ClinicDTO, Clinic>().ReverseMap();
+            CreateMap<DentistSlotDTO, DentistSlot>().ReverseMap();
         }
     }
 }

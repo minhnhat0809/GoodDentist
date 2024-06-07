@@ -1,9 +1,10 @@
 ﻿using BusinessObject;
+using BusinessObject.DTO.ViewDTO;
 
 namespace Services;
 
 public interface IClinicService
 {
-    Task<Clinic> GetClinic(Guid id);
-    Task<List<Clinic>> GetClinics();
+    Task<ClinicDTO>  GetClinic(Guid id);
+    Task<List<ClinicDTO>> GetClinics();
 }

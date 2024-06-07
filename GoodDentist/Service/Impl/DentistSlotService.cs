@@ -1,4 +1,6 @@
-﻿using BusinessObject;
+﻿using AutoMapper;
+using BusinessObject;
+using BusinessObject.DTO.ViewDTO;
 using Repositories;
 
 namespace Services.Impl;
@@ -6,19 +8,23 @@ namespace Services.Impl;
 public class DentistSlotService : IDentistSlotService
 {
     private readonly IDentistSlotRepository _dentistSlotRepository;
+    private readonly IMapper _mapper;
 
-    public DentistSlotService(IDentistSlotRepository dentistSlotRepository)
+    public DentistSlotService(IDentistSlotRepository dentistSlotRepository, IMapper mapper)
     {
         _dentistSlotRepository = dentistSlotRepository;
+        _mapper = mapper;
     }
 
-    public async Task<DentistSlot> GetDentistSlot(int id)
+    public async Task<DentistSlotDTO> GetDentistSlot(int id)
     {
-        return _dentistSlotRepository.GetDentistSlot(id);
+        var model  = await _dentistSlotRepository.GetDentistSlot(id);
+        return _mapper.Map<DentistSlotDTO>(model);
     }
 
-    public async Task<List<DentistSlot>> GetDentistSlots()
+    public async Task<List<DentistSlotDTO>> GetDentistSlots()
     {
-        return _dentistSlotRepository.GetDentistSlots();
+        var list = await _dentistSlotRepository.GetDentistSlots();
+        return _mapper.Map<List<DentistSlotDTO>>(list);
     }
 }

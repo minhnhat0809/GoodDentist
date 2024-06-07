@@ -4,6 +4,6 @@ namespace Repositories;
 
 public interface IClinicRepository : IRepositoryBase<Clinic>
 {
-    Clinic GetClinic(Guid id);
-    List<Clinic> GetClinics();
+    Task<Clinic>  GetClinic(Guid id);
+    Task<List<Clinic>> GetClinics();
 }
