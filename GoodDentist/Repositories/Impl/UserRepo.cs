@@ -20,14 +20,19 @@ namespace Repositories.Impl
                 return _repositoryContext.Users.FirstOrDefault(user => user.UserName == userName);           
         }       
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage)
         {
             //string key = "userList";
             List<User>? userList = new List<User>();
-            userList = _repositoryContext.Users.ToList();
+            userList = await FindAllAsync();
+            userList = userList
+               .Skip((pageNumber - 1) * rowsPerPage)
+               .Take(rowsPerPage)
+               .ToList();
+
+
             /*CancellationToken cancellationToken = default;
             string? cacheMember = await distributedCache.GetStringAsync(key, cancellationToken);*/
-
             /*if (cacheMember.IsNullOrEmpty())
             {
                 userList = await FindAllAsync();
@@ -43,6 +48,7 @@ namespace Repositories.Impl
             }
 
             userList = JsonConvert.DeserializeObject<List<User>>(cacheMember);  */
+
             return userList;
         }
 

@@ -9,6 +9,6 @@ namespace Repositories
 {
     public interface IClinicUserRepo : IRepositoryBase<ClinicUser>
     {
-        
+        Task<ClinicUser?> GetClinicUserByUserAndClinic(string userId, string clinicId);
     }
 }
