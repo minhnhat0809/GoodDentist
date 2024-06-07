@@ -24,9 +24,7 @@ namespace Repositories.Impl
         {
             //string key = "userList";
             List<User>? userList = new List<User>();
-            userList = _repositoryContext.Users
-                //.Include(u => u.ClinicUsers).ThenInclude(c => c.Clinic)
-                .ToList();
+            userList = _repositoryContext.Users.ToList();
             /*CancellationToken cancellationToken = default;
             string? cacheMember = await distributedCache.GetStringAsync(key, cancellationToken);*/
 

@@ -34,6 +34,7 @@ namespace GoodDentist.Controllers
            return responseDTO;                       
         }
 
+
         [HttpGet("all-users")]
         public async Task<ResponseDTO> GetAllUsers()
         {           
