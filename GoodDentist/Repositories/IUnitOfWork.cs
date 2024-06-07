@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace Repositories
         IClinicUserRepo clinicUserRepo { get; }
         IRoleRepo roleRepo { get; }
         IClinicRepo clinicRepo { get; }
+
+        IDentistSlotRepo dentistSlotRepo { get; }
         Task<int> CompleteAsync();
     }
 }

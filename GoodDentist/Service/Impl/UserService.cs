@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace Services.Impl
 {
-    public class AccountService : IAccountService
+    public class UserService : IUserService
     {
         private const int saltSize = 128 / 8;
         private const int keySize = 256 / 8;
@@ -19,28 +19,28 @@ namespace Services.Impl
 
         private readonly IMapper mapper;
         private readonly IUnitOfWork unitOfWork;
-        
-        public AccountService(IMapper mapper, IUnitOfWork unitOfWork)
+
+        public UserService(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            this.mapper = mapper;            
+            this.mapper = mapper;
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO)
+        public async Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO)
         {
-            ResponseCreateUserDTO responseDTO = new ResponseCreateUserDTO();
+            ResponseListDTO responseDTO = new ResponseListDTO();
             try
             {
-               responseDTO = await validateUser(createUserDTO);
+                responseDTO = await validateUser(createUserDTO);
 
-                
-               User? user = unitOfWork.userRepo.getUser(createUserDTO.UserName);
-               if (user != null)
-               {
-                  responseDTO.Message.Add("Username is already existed!");
-                  responseDTO.IsSuccess = false;
+
+                User? user = unitOfWork.userRepo.getUser(createUserDTO.UserName);
+                if (user != null)
+                {
+                    responseDTO.Message.Add("Username is already existed!");
+                    responseDTO.IsSuccess = false;
                     return responseDTO;
-               }                
+                }
 
                 if (responseDTO.IsSuccess == false)
                 {
@@ -60,9 +60,9 @@ namespace Services.Impl
                 };
 
                 await unitOfWork.userRepo.CreateAsync(user);
-                await unitOfWork.clinicUserRepo.CreateAsync(clinicUser);              
-                
-                responseDTO.Message.Add("Create sucessfully");  
+                await unitOfWork.clinicUserRepo.CreateAsync(clinicUser);
+
+                responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
                 return responseDTO;
             }
@@ -72,7 +72,7 @@ namespace Services.Impl
                 responseDTO.Message.Add(ex.Message);
                 responseDTO.IsSuccess = false;
                 return responseDTO;
-            }           
+            }
         }
 
         public bool verifyPassword(string inputPassword, string hashedPassword)
@@ -97,9 +97,9 @@ namespace Services.Impl
             return result;
         }
 
-        private  async Task<ResponseCreateUserDTO> validateUser(CreateUserDTO createUserDTO)
+        private async Task<ResponseListDTO> validateUser(CreateUserDTO createUserDTO)
         {
-            ResponseCreateUserDTO responseDTO = new ResponseCreateUserDTO();
+            ResponseListDTO responseDTO = new ResponseListDTO();
             responseDTO.IsSuccess = true;
 
             if (createUserDTO.UserName.IsNullOrEmpty())
@@ -113,7 +113,7 @@ namespace Services.Impl
                 {
                     responseDTO.Message.Add("Username cannot contain special characters!");
                     responseDTO.IsSuccess = false;
-                }                
+                }
             }
 
             var validatePwd = validatePassword(createUserDTO.Password);
@@ -211,7 +211,7 @@ namespace Services.Impl
             return responseDTO;
         }
 
-        public byte[] hashPassword(string password, byte[] salt)
+        private byte[] hashPassword(string password, byte[] salt)
         {
             var hashedPassword = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
 
@@ -228,10 +228,10 @@ namespace Services.Impl
         {
             try
             {
-                List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
+                List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);                
 
-                List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);                
-                
+                List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
+
                 return new ResponseDTO("Get users successfully!", 200, true, users);
             }
             catch (Exception ex)
@@ -244,7 +244,7 @@ namespace Services.Impl
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
-            {                
+            {
                 if (userName.IsNullOrEmpty())
                 {
                     responseDTO.StatusCode = 400;
@@ -264,19 +264,20 @@ namespace Services.Impl
                 await unitOfWork.userRepo.DeleteAsync(user);
                 responseDTO.Message = "Delete successfully!";
                 return responseDTO;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 responseDTO.Message = ex.Message;
                 responseDTO.StatusCode = 500;
                 responseDTO.IsSuccess = false;
                 return responseDTO;
             }
-            
+
         }
 
-        public async Task<ResponseCreateUserDTO> updateUser(CreateUserDTO createUserDTO)
+        public async Task<ResponseListDTO> updateUser(CreateUserDTO createUserDTO)
         {
-            ResponseCreateUserDTO responseDTO = new ResponseCreateUserDTO();
+            ResponseListDTO responseDTO = new ResponseListDTO();
             try
             {
                 responseDTO = await validateUser(createUserDTO);
@@ -286,29 +287,54 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                var user = unitOfWork.userRepo.getUser(createUserDTO.UserName) ;
+                var user = unitOfWork.userRepo.getUser(createUserDTO.UserName);
                 if (user == null)
                 {
-                    responseDTO.IsSuccess=false;
+                    responseDTO.IsSuccess = false;
                     responseDTO.Message.Add("User is not existed!");
                     return responseDTO;
                 }
 
+                var userId = user.UserId;
+                ClinicUser clinicUserOld = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicNow(userId.ToString());
                 user = mapper.Map<User>(createUserDTO);
-                ClinicUser clinicUser = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinic(user.UserId.ToString(), createUserDTO.ClinicId);
-                if (clinicUser == null)
+                user.UserId = userId;
+
+                if (clinicUserOld == null)
                 {
                     responseDTO.IsSuccess = false;
-                    responseDTO.Message.Add("User is not belong to this clinic!");
+                    responseDTO.Message.Add("User is not belong to any clinics!");
                     return responseDTO;
                 }
-                else
-                {
-                    clinicUser.ClinicId = Guid.Parse(createUserDTO.ClinicId);
-                }
-                await unitOfWork.userRepo.UpdateAsync(user);
-                await unitOfWork.clinicUserRepo.UpdateAsync(clinicUser);
 
+                if (!clinicUserOld.ClinicId.Equals(createUserDTO.ClinicId))
+                {
+                    ClinicUser clinicUserNew = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinic(clinicUserOld.UserId.ToString(), createUserDTO.ClinicId);
+                    if (clinicUserNew == null)
+                    {
+                        clinicUserNew = new ClinicUser()
+                        {
+                            ClinicId = Guid.Parse(createUserDTO.ClinicId),
+                            UserId = user.UserId,
+                            Status = true
+                        };
+                        clinicUserOld.Status = false;
+
+                        unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
+                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);                                            
+                    }
+                    else
+                    {
+                        clinicUserNew.Status = true;
+                        clinicUserOld.Status = false;
+
+                         unitOfWork.clinicUserRepo.UpdateAsync(clinicUserNew);
+                         unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                    }
+                }
+
+
+                unitOfWork.userRepo.UpdateAsync(user);
                 responseDTO.Message.Add("Update sucessfully");
                 responseDTO.IsSuccess = true;
                 return responseDTO;

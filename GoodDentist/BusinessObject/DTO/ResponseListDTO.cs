@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTO
 {
-    public class ResponseCreateUserDTO
+    public class ResponseListDTO
     {
         public object? Result {get; set;}
         public bool IsSuccess { get; set; }
