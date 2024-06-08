@@ -44,6 +44,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // database
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
 builder.Services.AddStackExchangeRedisCache(redis =>
 {

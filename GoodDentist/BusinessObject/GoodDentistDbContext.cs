@@ -15,7 +15,8 @@ public partial class GoodDentistDbContext : DbContext
         : base(options)
     {
     }
-
+    
+    
     public virtual DbSet<Clinic> Clinics { get; set; }
 
     public virtual DbSet<ClinicService> ClinicServices { get; set; }

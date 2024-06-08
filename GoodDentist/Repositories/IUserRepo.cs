@@ -12,5 +12,6 @@ namespace Repositories
         User? getUser(string userName);
 
         Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage);
+        Task<User> LoginAccount(string username, byte[] password);
     }
 }

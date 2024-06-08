@@ -13,11 +13,9 @@ namespace GoodDentist.Controllers
     public class ClinicController : ControllerBase
     {
         private readonly IClinicService _service;
-        public ResponseDTO _response;
-        public ClinicController(IClinicService service, ResponseDTO response)
+        public ClinicController(IClinicService service)
         {
             _service = service;
-            _response = new ResponseDTO(response.Message, response.StatusCode,response.IsSuccess,response.Result);
         }
 
         [HttpGet]

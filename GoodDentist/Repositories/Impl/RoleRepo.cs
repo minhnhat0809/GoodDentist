@@ -24,7 +24,7 @@ namespace Repositories.Impl
 
         public async Task<Role?> GetRole(int id)
         {
-            List<Role> roleList = await FindAllAsync();
+            List<Role> roleList = await _context.Roles.ToListAsync();
             Role? role = roleList.FirstOrDefault(r => r.RoleId == id);
             return role;
         }

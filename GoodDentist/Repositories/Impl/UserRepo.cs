@@ -52,5 +52,10 @@ namespace Repositories.Impl
             return userList;
         }
 
+        public async Task<User> LoginAccount(string username, byte[] password)
+        {
+            return await _repositoryContext.Users
+                .FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
+        }
     }
 }

@@ -14,6 +14,8 @@ namespace Services
 
         bool verifyPassword(string inputPassword, string hashedPassword);
 
+        Task<ResponseDTO> LoginUser(string username, string password);
+
         Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO);
 
         Task<ResponseDTO> getAllUsers(int pageNumber, int rowsPerPage);

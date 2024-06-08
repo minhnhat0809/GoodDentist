@@ -10,15 +10,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="clinic update">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/CreateUserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/CreateUserDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/UserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/UserDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/GoodDentistDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/GoodDentistDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/DentistSlotController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/DentistSlotController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GoodDentist/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IUserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IUserRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IAccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/AccountService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +35,7 @@
   <component name="Git.Pull.Settings">
     <option name="OPTIONS">
       <set>
-        <option value="NO_COMMIT" />
+        <option value="FF_ONLY" />
       </set>
     </option>
   </component>
@@ -42,26 +46,16 @@
     <option name="defaultAccountId" value="68bd4e08-e2cc-4eaf-a2ad-cf0e3ba37fd8" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/8486d31e24f30e3fa1809a95699a0adc16f448d7/src/Mvc/Mvc.Core/src/Infrastructure/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/5535e31a712343a63f5d7d796cd874e563e5ac14/src/libraries/Microsoft.Extensions.DependencyInjection/src/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/bc/0599c07a/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/cc/f365519b/Monitor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/ClinicController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/DentistSlotController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/IClinicRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/IDentistSlotRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/ClinicRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/DentistSlotRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IClinicService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IDentistSlotService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/ClinicService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/DentistSlotService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/MapperConfig.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/MapperConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/MapperConfig.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -69,7 +63,7 @@
 }</component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -80,31 +74,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.GoodDentist: http.executor&quot;: &quot;Debug&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;huyntv171283&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.GoodDentist: http.executor": "Debug",
+    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "huyntv171283",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propDebugger",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\Admin\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\Admin\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: http">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: https">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
@@ -194,6 +189,7 @@
       <workItem from="1717727655125" duration="5615000" />
       <workItem from="1717733449803" duration="1592000" />
       <workItem from="1717776048810" duration="5120000" />
+      <workItem from="1717836675645" duration="5501000" />
     </task>
     <task id="LOCAL-00001" summary="change file location and create repositoryBase">
       <option name="closed" value="true" />
@@ -243,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717730715672</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="clinic update">
+      <option name="closed" value="true" />
+      <created>1717836854260</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1717836854260</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,20 +274,21 @@
     <MESSAGE value="unit of work/ clinic / dentist slot - crud/ repository/ controller" />
     <MESSAGE value="mapper dto" />
     <MESSAGE value="merge master" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge master" />
+    <MESSAGE value="clinic update" />
+    <option name="LAST_COMMIT_MESSAGE" value="clinic update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs</url>
-          <line>28</line>
+          <line>26</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\ClinicController.cs" containingFunctionPresentation="Method 'GetClinic'">
             <startOffsets>
-              <option value="822" />
+              <option value="647" />
             </startOffsets>
             <endOffsets>
-              <option value="864" />
+              <option value="689" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />
@@ -339,6 +344,71 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/AccountService.cs</url>
+          <line>249</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AccountService.cs" containingFunctionPresentation="Method 'validateUser'">
+            <startOffsets>
+              <option value="8692" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8727" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/AccountService.cs</url>
+          <line>241</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AccountService.cs" containingFunctionPresentation="Method 'validateUser'">
+            <startOffsets>
+              <option value="8398" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8467" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs</url>
+          <line>26</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\RoleRepo.cs" containingFunctionPresentation="Method 'GetRole'">
+            <startOffsets>
+              <option value="644" />
+            </startOffsets>
+            <endOffsets>
+              <option value="701" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/AccountService.cs</url>
+          <line>34</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AccountService.cs" containingFunctionPresentation="Method 'LoginUser'">
+            <startOffsets>
+              <option value="1061" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1118" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs</url>
+          <line>40</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\AccountController.cs" containingFunctionPresentation="Method 'LoginUser'">
+            <startOffsets>
+              <option value="1297" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1400" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

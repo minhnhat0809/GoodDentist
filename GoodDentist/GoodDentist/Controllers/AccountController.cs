@@ -34,6 +34,14 @@ namespace GoodDentist.Controllers
            return responseDTO;                       
         }
 
+        [HttpGet]
+        [Route("login")]
+        public async Task<ResponseDTO> LoginUser([FromQuery] UserLoginDTO userLoginDto)
+        {
+            ResponseDTO responseDto = await accountService.LoginUser(userLoginDto.UserName, userLoginDto.Password);
+            return responseDto;
+        }
+
         [HttpGet("all-users")]
         public async Task<ResponseDTO> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage)
         {           
