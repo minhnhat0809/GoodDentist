@@ -41,13 +41,13 @@ namespace Services
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
             CreateMap<DentistSlot, DentistSlotDTO>()
-                .ForMember(dest => dest.RoomNumber, otp => otp.Ignore());
+                .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
             CreateMap<DentistSlotDTO, DentistSlot>()
-                .ForMember(dest => dest.DentistSlotId, otp => otp.Ignore())
-                .ForMember(dest => dest.Dentist, otp => otp.Ignore())
-                .ForMember(dest => dest.Examinations, otp => otp.Ignore())
-                .ForMember(dest => dest.Room, otp => otp.Ignore());
+                .ForMember(dest => dest.DentistSlotId, opt => opt.Ignore())
+                .ForMember(dest => dest.Dentist, opt => opt.Ignore())
+                .ForMember(dest => dest.Examinations, opt => opt.Ignore())
+                .ForMember(dest => dest.Room, opt => opt.Ignore());
             
         }
     }

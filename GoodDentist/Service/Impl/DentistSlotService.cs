@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
+using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace Services.Impl
         public async Task<ResponseListDTO> createDentistSlot(DentistSlotDTO dentistSlotDTO)
         {
             ResponseListDTO responseDTO = new ResponseListDTO();
+            responseDTO.IsSuccess = true;
             try
             {
                 responseDTO = await validateDentistSlot(dentistSlotDTO);
@@ -34,11 +36,12 @@ namespace Services.Impl
 
                 DentistSlot dentistSlot = mapper.Map<DentistSlot>(dentistSlotDTO);
                 await unitOfWork.dentistSlotRepo.CreateAsync(dentistSlot);
-                
+
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
                 return responseDTO;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 responseDTO.Message.Add(ex.Message);
                 responseDTO.IsSuccess = false;
@@ -49,7 +52,7 @@ namespace Services.Impl
 
         public async Task<ResponseDTO> deleteDentistSlot(int slotId)
         {
-            ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
             {
                 if (slotId == 0)
@@ -71,7 +74,8 @@ namespace Services.Impl
 
                 await unitOfWork.dentistSlotRepo.DeleteAsync(dentistSlot);
                 return responseDTO;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 responseDTO.Message = ex.Message;
                 responseDTO.IsSuccess = false;
@@ -166,13 +170,20 @@ namespace Services.Impl
                 DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByID(dentistSlotDTO.DentistSlotId);
                 if (dentistSlot == null)
                 {
-                    responseDTO.Message.Add("There are no dentistSlot slot with this ID");
+                    responseDTO.Message.Add("There are no dentist slots with this ID");
                     responseDTO.IsSuccess = false;
                     return responseDTO;
                 }
+                int dentistSlotId = dentistSlot.DentistSlotId;
 
-                dentistSlot = mapper.Map<DentistSlot>(dentistSlotDTO);
-                await unitOfWork.dentistSlotRepo.UpdateAsync(dentistSlot);
+                unitOfWork.dentistSlotRepo.Detach(dentistSlot);
+                
+
+                DentistSlot updateDentistSlot = mapper.Map<DentistSlot>(dentistSlotDTO);
+                updateDentistSlot.DentistSlotId = dentistSlotId;
+                unitOfWork.dentistSlotRepo.Attach(updateDentistSlot);
+       
+                await unitOfWork.dentistSlotRepo.UpdateAsync(updateDentistSlot);
 
                 responseDTO.Message.Add("Update sucessfully");
                 responseDTO.IsSuccess = true;
@@ -190,9 +201,107 @@ namespace Services.Impl
         private async Task<ResponseListDTO> validateDentistSlot(DentistSlotDTO dentistSlotDTO)
         {
             ResponseListDTO responseDTO = new ResponseListDTO();
+            responseDTO.IsSuccess = true;
+            bool checkTime = true;
+            void AddError(string message)
+            {
+                responseDTO.Message.Add(message);
+                responseDTO.IsSuccess = false;
+            }
 
+            if (!dentistSlotDTO.DentistId.HasValue)
+            {
+                AddError("Please choose a dentist!");
+            }
+            else
+            {
+                User? dentist = await unitOfWork.userRepo.GetByIdAsync(dentistSlotDTO.DentistId);
+                if (dentist == null)
+                {
+                    AddError("This dentist does not exist!");
+                }
+            }
 
+            if (!dentistSlotDTO.TimeStart.HasValue || !dentistSlotDTO.TimeEnd.HasValue)
+            {
+                AddError("Time start or time end is null!");
+                checkTime = false;
+            }
+            else
+            {
+                TimeSpan timeStart = dentistSlotDTO.TimeStart.Value.TimeOfDay;
+                TimeSpan timeEnd = dentistSlotDTO.TimeEnd.Value.TimeOfDay;
+                string error = validateTime(timeStart, timeEnd);
+                if (!error.IsNullOrEmpty())
+                {
+                    AddError(error);
+                }
+            }
+
+            if (!dentistSlotDTO.Status.HasValue)
+            {
+                AddError("Status is null!");
+            }
+
+            if (!dentistSlotDTO.RoomId.HasValue)
+            {
+                AddError("Please choose a room!");
+            }else if (checkTime)
+                {
+                    List<string> errors = await checkRoomAvailable((int)dentistSlotDTO.RoomId, (DateTime)dentistSlotDTO.TimeStart, dentistSlotDTO.DentistId.ToString());
+                    if (!errors.IsNullOrEmpty())
+                    {
+                        responseDTO.Message.AddRange(errors);
+                        responseDTO.IsSuccess = false;
+                    }
+                }                
             return responseDTO;
+        }
+
+        private string validateTime(TimeSpan timeStart, TimeSpan timeEnd)
+        {
+            string errors = "";
+            var validSlots = new List<(TimeSpan start, TimeSpan end)>
+            {
+            (new TimeSpan(8, 0, 0), new TimeSpan(12, 0, 0)),
+            (new TimeSpan(13, 0, 0), new TimeSpan(17, 0, 0)),
+            (new TimeSpan(17, 0, 0), new TimeSpan(19, 30, 0))
+            };
+
+            bool isValid = validSlots.Any(slot => timeStart == slot.start && timeEnd == slot.end);
+
+            if (!isValid)
+            {
+                errors = "Slot must be in range [8:00 - 12:00], [13:00 - 17:00], [17:00 - 19:30]";
+            }
+            return errors;
+        }
+
+        private async Task<List<string>> checkRoomAvailable(int roomId, DateTime timeStart, string dentistId)
+        {
+            List<string> errors = new List<string>();
+            Room? room = await unitOfWork.roomRepo.GetByIdAsync(roomId);
+            if (room == null)
+            {
+                errors.Add("Room is not existed !!!");
+            }
+
+            DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByDentistAndTimeStart(dentistId, timeStart);
+            if (dentistSlot != null)
+            {
+                errors.Add("This dentist already has this slot.");
+            }
+            else
+            {
+                DentistSlot? dentistSlotExisted = await unitOfWork.dentistSlotRepo.GetDentistSlotsByRoomAndTimeStart(roomId, timeStart);
+
+                if (dentistSlotExisted != null)
+                {
+                    string userName = unitOfWork.userRepo.getUserName(dentistSlotExisted.DentistId.ToString());
+                    errors.Add("Dentist " + userName + " uses this room in this range time !!!");
+                }
+            }
+            return errors;
         }
     }
 }
