@@ -19,6 +19,8 @@ namespace Repositories.Impl
         public IDentistSlotRepo dentistSlotRepo { get; private set; }
         public IDistributedCache distributedCache { get; private set; }
 
+        public IMedicineRepository medicineRepo { get; private set; }
+
         
 
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
@@ -30,6 +32,7 @@ namespace Repositories.Impl
             roleRepo = new RoleRepo(_repositoryContext);
             clinicRepo = new ClinicRepo(_repositoryContext);
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
+            medicineRepo = new MedicineRepository(_repositoryContext);
         }
 
         public async Task<int> CompleteAsync()

@@ -48,7 +48,12 @@ namespace Services
                 .ForMember(dest => dest.Dentist, otp => otp.Ignore())
                 .ForMember(dest => dest.Examinations, otp => otp.Ignore())
                 .ForMember(dest => dest.Room, otp => otp.Ignore());
-            
+
+            CreateMap<MedicineDTO, Medicine>()
+                .ReverseMap();
+
+            CreateMap<MedicineUpdateDTO, Medicine>()
+                .ReverseMap();
         }
     }
 }

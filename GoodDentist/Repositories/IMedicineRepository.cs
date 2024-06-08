@@ -7,18 +7,10 @@ using BusinessObject;
 
 namespace Repositories
 {
-    public interface IMedicineRepository
+    public interface IMedicineRepository : IRepositoryBase<Medicine>
     {
-        List<Medicine> GetAllMedicine();
+        Task<List<Medicine>?> GetAllMedicine(int pageNumber, int pageSize);
 
-        List<Medicine> SearchMedicine(string searchValue);
-
-        bool AddMedicine(string medicineName, string type, int quantity,
-            string description, decimal price);
-
-        bool UpdateMedicine(int medicineId, string medicineName, string type, int quantity,
-            string description, decimal price);
-
-        bool DeleteMedicine(int medicintId);
+        Task<Medicine?> GetMedicineByID(int Id);
     }
 }

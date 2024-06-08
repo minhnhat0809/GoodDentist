@@ -10,22 +10,14 @@ namespace Services
 {
     public interface IMedicineService
     {
-        List<Medicine> GetAllMedicine();
+        Task<ResponseDTO> GetAllMedicine(int pageNumber, int pageSize);
 
         List<Medicine> SearchMedicine(string searchValue);
 
-        ValidationResponseDTO CheckValidationAddMedicine(string medicineName, string type, int quantity,
-            string description, decimal price);
+        Task<ResponseDTO> AddMedicine(MedicineDTO medicineDTO);
 
-        bool AddMedicine(string medicineName, string type, int quantity, 
-            string description, decimal price);
+        Task<ResponseDTO> UpdateMedicine(MedicineUpdateDTO medicineDTO);
 
-        ValidationResponseDTO CheckValidationUpdateMedicine(int medicineId, string medicineName, string type, int quantity,
-            string description, decimal price);
-
-        bool UpdateMedicine(int medicineId, string medicineName, string type, int quantity,
-            string description, decimal price);
-
-        bool DeleteMedicine(int medicineId);
+        Task<ResponseDTO> DeleteMedicine(int medicineId);
     }
 }

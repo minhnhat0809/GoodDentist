@@ -4,34 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessObject;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Repositories.Impl
 {
-    public class MedicineRepository : IMedicineRepository
+    public class MedicineRepository : RepositoryBase<Medicine>, IMedicineRepository
     {
-        public List<Medicine> GetAllMedicine()
+        public MedicineRepository(GoodDentistDbContext repositoryContext) : base(repositoryContext)
         {
-            throw new NotImplementedException();
+        }
+        public async Task<List<Medicine>?> GetAllMedicine(int pageNumber, int pageSize)
+        {
+            List<Medicine> medicines = await Paging(pageNumber, pageSize);
+            return medicines;
         }
 
-        public List<Medicine> SearchMedicine(string searchValue)
+        
+
+        public async Task<Medicine?> GetMedicineByID(int Id)
         {
-            throw new NotImplementedException();
+            return await _repositoryContext.Medicines.FirstOrDefaultAsync(c => c.MedicineId == Id);
         }
 
-        public bool DeleteMedicine(int medicintId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AddMedicine(string medicineName, string type, int quantity, string description, decimal price)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateMedicine(int medicineId, string medicineName, string type, int quantity, string description, decimal price)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
