@@ -15,7 +15,7 @@ namespace Repositories.Impl
         public IClinicUserRepo clinicUserRepo { get; private set; }
         public IRoleRepo roleRepo { get; private set; }
         public IClinicRepo clinicRepo { get; private set; }
-
+        public IClinicRepository ClinicRepository { get; private set; }
         public IDistributedCache distributedCache { get; private set; }
 
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
@@ -26,6 +26,7 @@ namespace Repositories.Impl
             clinicUserRepo = new ClinicUserRepo(_context); 
             roleRepo = new RoleRepo(_context);
             clinicRepo = new ClinicRepo(_context);
+            ClinicRepository = new ClinicRepository(_context);
         }
 
         public async Task<int> CompleteAsync()

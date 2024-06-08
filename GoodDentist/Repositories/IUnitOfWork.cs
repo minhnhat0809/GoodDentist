@@ -12,6 +12,7 @@ namespace Repositories
         IClinicUserRepo clinicUserRepo { get; }
         IRoleRepo roleRepo { get; }
         IClinicRepo clinicRepo { get; }
+        IClinicRepository ClinicRepository { get; }
         Task<int> CompleteAsync();
     }
 }
