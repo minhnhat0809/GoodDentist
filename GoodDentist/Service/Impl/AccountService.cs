@@ -26,43 +26,7 @@ namespace Services.Impl
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseDTO> LoginUser(string username, string password)
-        {
-            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
-            try
-            {
-                // check if account exist
-                var existAccount = unitOfWork.userRepo.getUser(username);
-                if (existAccount != null)
-                {
-                    // hash and salt
-                    byte[] inputHashPassword = this.hashPassword(password, existAccount.Salt);
-                    // input password with existAccount password
-                    if (inputHashPassword.SequenceEqual(existAccount.Password))
-                    {
-                        responseDTO.Result = existAccount;
-                    }
-                    else
-                    {
-                        responseDTO.Message = "Password is not correct!";
-                        responseDTO.IsSuccess = false;
-                    }
-                }
-                else
-                {
-                    responseDTO.Message = "Username is not correct!";
-                    responseDTO.IsSuccess = false;
-                }
-            }
-            catch (Exception e)
-            {
-                responseDTO.Message = e.Message;
-                responseDTO.IsSuccess = false;
-                responseDTO.StatusCode = 500;
-            }
-
-            return responseDTO;
-        }
+        
 
         public async Task<ResponseCreateUserDTO> createUser(CreateUserDTO createUserDTO)
         {
