@@ -9,20 +9,25 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Services;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoodDentist.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class AccountController : ControllerBase
     {
         private readonly IAccountService accountService;
         private readonly IDistributedCache distributedCache;
+        private readonly IAuthService _authService;
 
-        public AccountController(IAccountService accountService, IDistributedCache distributedCache)
+        public AccountController(IAccountService accountService, IDistributedCache distributedCache,
+            IAuthService authService)
         {
             this.accountService = accountService;
             this.distributedCache = distributedCache;
+            _authService = authService;
         }
 
 
@@ -34,11 +39,11 @@ namespace GoodDentist.Controllers
            return responseDTO;                       
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("login")]
-        public async Task<ResponseDTO> LoginUser([FromQuery] UserLoginDTO userLoginDto)
+        public async Task<ResponseLoginDTO> LoginUser([FromBody] LoginDTO loginDto)
         {
-            ResponseDTO responseDto = await accountService.LoginUser(userLoginDto.UserName, userLoginDto.Password);
+            ResponseLoginDTO responseDto = await _authService.Authenticate(loginDto);
             return responseDto;
         }
 

@@ -10,5 +10,6 @@ namespace Repositories
     public interface IRoleRepo : IRepositoryBase<Role>
     {
         Task<Role?> GetRole(int id);
+        Role? GetRoleById(int id);
     }
 }

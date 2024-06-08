@@ -1,4 +1,5 @@
 
+using System.Text;
 using BusinessObject;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
@@ -7,6 +8,8 @@ using Services;
 using Services.Impl;
 using System.Text.Json.Serialization;
 using BusinessObject.DTO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using ClinicService = Services.Impl.ClinicService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IClinicService, ClinicService>();
 builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -32,6 +36,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IDentistSlotRepository, DentistSlotRepository>();
 builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
+
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -45,7 +50,22 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
+// jwt
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+        };
+    });
+builder.Services.AddAuthorization();
 builder.Services.AddStackExchangeRedisCache(redis =>
 {
     redis.Configuration = "localhost:6379";
@@ -64,6 +84,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -1,6 +1,7 @@
 ﻿using BusinessObject;
 using BusinessObject.DTO;
 using BusinessObject.DTO.ViewDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -10,6 +11,7 @@ namespace GoodDentist.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClinicController : ControllerBase
     {
         private readonly IClinicService _service;
@@ -38,17 +40,10 @@ namespace GoodDentist.Controllers
         [HttpGet]
         public async Task<IActionResult> GetClinics()
         {
-            try
-            {
+            
                 var clinics = await _service.GetClinics();
                 return Ok(clinics);
-            }
-            catch (Exception e)
-            {
-                
-            }
-
-            return null;
+            
         }
     }
 }

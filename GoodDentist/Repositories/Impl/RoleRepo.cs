@@ -28,5 +28,10 @@ namespace Repositories.Impl
             Role? role = roleList.FirstOrDefault(r => r.RoleId == id);
             return role;
         }
+
+        public Role? GetRoleById(int id)
+        {
+            return _context.Roles.Find(id);
+        }
     }
 }
