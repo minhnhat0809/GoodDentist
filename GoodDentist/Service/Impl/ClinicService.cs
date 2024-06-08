@@ -20,11 +20,13 @@ public class ClinicService : IClinicService
     {
         var clinicModel = await _clinicRepository.GetClinic(id);
         return _mapper.Map<ClinicDTO>(clinicModel);
+        //return clinicModel;
     }
  
     public async Task<List<ClinicDTO>> GetClinics()
     {
-        var list = await _clinicRepository.FindAllAsync();
-        return _mapper.Map<List<ClinicDTO>>(list);
+        var list = await _clinicRepository.GetClinics();
+        var listDto =  _mapper.Map<List<ClinicDTO>>(list);
+        return listDto;
     }
 }

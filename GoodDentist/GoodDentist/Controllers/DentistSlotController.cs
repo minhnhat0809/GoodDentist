@@ -1,4 +1,5 @@
 ﻿using BusinessObject.DTO;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -9,12 +10,11 @@ namespace GoodDentist.Controllers
     public class DentistSlotController : ControllerBase
     {
         private readonly IDentistSlotService _service;
-        private ResponseDTO _response;
 
-        public DentistSlotController(IDentistSlotService service, ResponseDTO response)
+        public DentistSlotController(IDentistSlotService service)
         {
             _service = service;
-            _response = response;
+            
         }
 
         [HttpGet]
@@ -23,16 +23,15 @@ namespace GoodDentist.Controllers
         {
             try
             {
-                var clinic = _service.GetDentistSlot(id);
-                _response.Result = clinic;
+                var dentistSlot = _service.GetDentistSlot(id);
+                return Ok(dentistSlot);
             }
             catch (Exception e)
             {
-                _response.Message = e.Message;
-                _response.IsSuccess = false;
+                
             }
 
-            return Ok(_response);
+            return null;
         }
 
         [HttpGet]
@@ -40,16 +39,15 @@ namespace GoodDentist.Controllers
         {
             try
             {
-                var clinics = _service.GetDentistSlots();
-                _response.Result = clinics;
+                var dentistSlots = _service.GetDentistSlots();
+                return Ok(dentistSlots);
             }
             catch (Exception e)
             {
-                _response.Message = e.Message;
-                _response.IsSuccess = false;
+                
             }
 
-            return Ok(_response);
+            return null;
         }
     }
 }

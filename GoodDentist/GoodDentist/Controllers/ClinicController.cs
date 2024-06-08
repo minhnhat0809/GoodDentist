@@ -1,4 +1,7 @@
-﻿using BusinessObject.DTO;
+﻿using BusinessObject;
+using BusinessObject.DTO;
+using BusinessObject.DTO.ViewDTO;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -10,47 +13,44 @@ namespace GoodDentist.Controllers
     public class ClinicController : ControllerBase
     {
         private readonly IClinicService _service;
-        private ResponseDTO _response;
-
+        public ResponseDTO _response;
         public ClinicController(IClinicService service, ResponseDTO response)
         {
             _service = service;
-            _response = response;
+            _response = new ResponseDTO(response.Message, response.StatusCode,response.IsSuccess,response.Result);
         }
 
         [HttpGet]
         [Route("id/{id:guid}")]
-        public ActionResult<ResponseDTO> GetClinic(Guid id)
+        public async Task<IActionResult> GetClinic(Guid id)
         {
             try
             {
-                var clinic = _service.GetClinic(id);
-                _response.Result = clinic;
+                var clinic = await _service.GetClinic(id);
+                return Ok(clinic);
             }
             catch (Exception e)
             {
-                _response.Message = e.Message;
-                _response.IsSuccess = false;
+                
             }
 
-            return Ok(_response);
+            return null;
         }
 
         [HttpGet]
-        public ActionResult<ResponseDTO> GetClinics()
+        public async Task<IActionResult> GetClinics()
         {
             try
             {
-                var clinics = _service.GetClinics();
-                _response.Result = clinics;
+                var clinics = await _service.GetClinics();
+                return Ok(clinics);
             }
             catch (Exception e)
             {
-                _response.Message = e.Message;
-                _response.IsSuccess = false;
+                
             }
 
-            return Ok(_response);
+            return null;
         }
     }
 }

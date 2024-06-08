@@ -6,11 +6,12 @@ using Repositories.Impl;
 using Services;
 using Services.Impl;
 using System.Text.Json.Serialization;
+using BusinessObject.DTO;
+using ClinicService = Services.Impl.ClinicService;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -18,7 +19,8 @@ builder.Services.AddSwaggerGen();
 
 //service
 builder.Services.AddScoped<IAccountService, AccountService>();
-
+builder.Services.AddScoped<IClinicService, ClinicService>();
+builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
 
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -27,6 +29,9 @@ builder.Services.AddScoped<IClinicUserRepo, ClinicUserRepo>();
 builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
 builder.Services.AddScoped<IClinicRepo, ClinicRepo>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IDentistSlotRepository, DentistSlotRepository>();
+builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
