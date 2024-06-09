@@ -23,6 +23,8 @@ public partial class Customer
 
     public string? Email { get; set; }
 
+    public DateTime? CreatedDate { get; set; }
+
     public string? Address { get; set; }
 
     public string? FrontIdCard { get; set; }

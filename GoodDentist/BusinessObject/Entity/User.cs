@@ -23,6 +23,8 @@ public partial class User
 
     public string? Email { get; set; }
 
+    public DateTime? CreatedDate { get; set; }
+
     public string? Address { get; set; }
 
     public int? RoleId { get; set; }
