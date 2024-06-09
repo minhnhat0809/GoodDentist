@@ -20,9 +20,11 @@ namespace Repositories.Impl
         public IDentistSlotRepo dentistSlotRepo { get; private set; }
         public IClinicRepository ClinicRepository { get; }
         public IDistributedCache distributedCache { get; private set; }
+        public IMedicineRepository medicineRepo { get; private set; }
+        public IRoomRepo roomRepo { get; private set; }
+        public IRecordTypeRepository recordTypeRepo { get; private set; }
         public IServiceRepo serviceRepo { get; private set; }
 
-        public IRoomRepo roomRepo {  get; private set; }
 
         public IExaminationRepo examinationRepo { get; private set; }
 
@@ -35,9 +37,12 @@ namespace Repositories.Impl
             roleRepo = new RoleRepo(_repositoryContext);
             clinicRepo = new ClinicRepo(_repositoryContext);
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
+            medicineRepo = new MedicineRepository(_repositoryContext);
             roomRepo = new RoomRepo(_repositoryContext);
             examinationRepo = new ExaminationRepo(_repositoryContext);
             ClinicRepository = new ClinicRepository(_repositoryContext);
+            recordTypeRepo = new RecordTypeRepository(_repositoryContext);
+            
 			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
         }
 

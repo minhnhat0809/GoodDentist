@@ -19,6 +19,8 @@ builder.Services.AddSwaggerGen();
 //service
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
+builder.Services.AddScoped<IMedicineService, MedicineService>();
+builder.Services.AddScoped<IRecordTypeService, RecordTypeService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 
 // repo
@@ -29,6 +31,9 @@ builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
 builder.Services.AddScoped<IClinicRepo, ClinicRepo>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IServiceRepo, ServiceRepo>();
+builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
+builder.Services.AddScoped<IRecordTypeRepository, RecordTypeRepository>();
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
