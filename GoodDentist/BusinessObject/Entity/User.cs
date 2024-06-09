@@ -9,6 +9,8 @@ public partial class User
 
     public string UserName { get; set; } = null!;
 
+    public string Name { get; set; } = null!;
+
     public byte[]? Salt { get; set; }
 
     public byte[]? Password { get; set; }
