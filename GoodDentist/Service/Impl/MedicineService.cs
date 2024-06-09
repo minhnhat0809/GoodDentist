@@ -109,6 +109,7 @@ namespace Services.Impl
                 {
                     return check;
                 }
+                int medicineId = medicine.MedicineId;
                 medicine = mapper.Map<Medicine>(medicineDTO);
                 await unitOfWork.medicineRepo.UpdateAsync(medicine);
                 return new ResponseDTO("Update Sucessfully!", 201, true, null);

@@ -68,4 +68,15 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
         return await _repositoryContext.Set<T>().FindAsync(id);
     }
 
+    public void Attach(T entity)
+    {
+        _repositoryContext.Set<T>().Attach(entity);
+        _repositoryContext.Entry(entity).State = EntityState.Modified;
+    }
+
+    public void Detach(T entity)
+    {
+        _repositoryContext.Entry(entity).State = EntityState.Detached;
+    }
+
 }
