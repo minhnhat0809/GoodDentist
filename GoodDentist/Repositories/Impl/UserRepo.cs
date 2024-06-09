@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
@@ -47,5 +48,13 @@ namespace Repositories.Impl
             return userList;
         }
 
+        public string getUserName(string Id)
+        {
+            var userId = Guid.Parse(Id);
+            return _repositoryContext.Users
+        .Where(user => user.UserId == userId)
+        .Select(u => u.UserName)
+        .FirstOrDefault();
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using BusinessObject;
+﻿using BusinessObject.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +12,7 @@ namespace Repositories
         User? getUser(string userName);
 
         Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage);
+
+        string getUserName(string Id);
     }
 }

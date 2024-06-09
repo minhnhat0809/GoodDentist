@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject;
+namespace BusinessObject.Entity;
 
 public partial class MedicinePrescription
 {
@@ -14,6 +14,10 @@ public partial class MedicinePrescription
     public int? Quantity { get; set; }
 
     public decimal? Price { get; set; }
+
+    public bool? Status { get; set; }
+
+    public virtual Medicine? Medicine { get; set; }
 
     public virtual Prescription? Prescription { get; set; }
 }

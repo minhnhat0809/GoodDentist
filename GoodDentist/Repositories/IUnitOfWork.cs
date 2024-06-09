@@ -13,7 +13,7 @@ namespace Repositories
         IClinicUserRepo clinicUserRepo { get; }
         IRoleRepo roleRepo { get; }
         IClinicRepo clinicRepo { get; }
-
+        IRoomRepo roomRepo { get; }
         IDentistSlotRepo dentistSlotRepo { get; }
 
         IMedicineRepository medicineRepo { get; }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +41,13 @@ namespace Services
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
             CreateMap<DentistSlot, DentistSlotDTO>()
-                .ForMember(dest => dest.RoomNumber, otp => otp.Ignore());
+                .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
             CreateMap<DentistSlotDTO, DentistSlot>()
                 .ForMember(dest => dest.DentistSlotId, otp => otp.Ignore())
                 .ForMember(dest => dest.Dentist, otp => otp.Ignore())
                 .ForMember(dest => dest.Examinations, otp => otp.Ignore())
                 .ForMember(dest => dest.Room, otp => otp.Ignore());
-
             CreateMap<MedicineDTO, Medicine>()
                 .ReverseMap();
 
