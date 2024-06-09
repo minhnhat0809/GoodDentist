@@ -84,7 +84,8 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> getAllDentistSlots(int pageNumber, int rowsPerPage)
+        public async Task<ResponseDTO> getAllDentistSlots(int pageNumber, int rowsPerPage,
+            string filterField, string filterValue, string sortField, string sortOrder)
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
@@ -106,7 +107,8 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> getAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage)
+        public async Task<ResponseDTO> getAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage,
+            string filterField, string filterValue, string sortField, string sortOrder)
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
@@ -303,5 +305,7 @@ namespace Services.Impl
             }
             return errors;
         }
+
+
     }
 }
