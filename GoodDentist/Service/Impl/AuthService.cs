@@ -5,7 +5,7 @@ using System.Text;
 using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
-using BusinessObject.Entities;
+using BusinessObject.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -105,7 +105,7 @@ public class AuthService : IAuthService
 
     private string GenerateRole(int roleId)
     {
-        var existRole = _unitOfWork.roleRepo.GetRoleById(roleId);
+        var existRole = _unitOfWork.roleRepo.GetRole(roleId).Result;
         if (existRole == null)
         {
             _responseLogin.Message = "Role is not found!";

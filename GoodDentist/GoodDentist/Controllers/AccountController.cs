@@ -9,42 +9,29 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Services;
 using System.Threading;
-using Microsoft.AspNetCore.Authorization;
 
 namespace GoodDentist.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService accountService;
+        private readonly IUserService accountService;
         private readonly IDistributedCache distributedCache;
-        private readonly IAuthService _authService;
 
-        public AccountController(IAccountService accountService, IDistributedCache distributedCache,
-            IAuthService authService)
+        public AccountController(IUserService accountService, IDistributedCache distributedCache)
         {
             this.accountService = accountService;
             this.distributedCache = distributedCache;
-            _authService = authService;
         }
 
 
         [HttpPost("new-user")]
-        public async  Task<ResponseCreateUserDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
+        public async  Task<ResponseListDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
-           ResponseCreateUserDTO responseDTO = await accountService.createUser(createUserDTO); 
+           ResponseListDTO responseDTO = await accountService.createUser(createUserDTO); 
             
            return responseDTO;                       
-        }
-
-        [HttpPost]
-        [Route("login")]
-        public async Task<ResponseLoginDTO> LoginUser([FromBody] LoginDTO loginDto)
-        {
-            ResponseLoginDTO responseDto = await _authService.Authenticate(loginDto);
-            return responseDto;
         }
 
         [HttpGet("all-users")]
@@ -61,10 +48,10 @@ namespace GoodDentist.Controllers
             return responseDTO;
         }
 
-        [HttpPost("user")]
-        public async Task<ResponseCreateUserDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
+        [HttpPut("user")]
+        public async Task<ResponseListDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
         {
-            ResponseCreateUserDTO responseDTO = await accountService.updateUser(createUserDTO);
+            ResponseListDTO responseDTO = await accountService.updateUser(createUserDTO);
 
             return responseDTO;
         }

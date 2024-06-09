@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO.ViewDTO;
-using BusinessObject.Entities;
+using BusinessObject.Entity;
 using Repositories;
 
 namespace Services.Impl;

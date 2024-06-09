@@ -1,5 +1,5 @@
 ﻿using BusinessObject.DTO;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -9,45 +9,56 @@ namespace GoodDentist.Controllers
     [ApiController]
     public class DentistSlotController : ControllerBase
     {
-        private readonly IDentistSlotService _service;
+        private readonly IDentistSlotService dentistSlotService;
 
-        public DentistSlotController(IDentistSlotService service)
+        public DentistSlotController(IDentistSlotService dentistSlotService)
         {
-            _service = service;
-            
+            this.dentistSlotService = dentistSlotService;
         }
 
-        [HttpGet]
-        [Route("id/{id:int}")]
-        public ActionResult<ResponseDTO> GetDentistSlot(int id)
+        [HttpGet("dentist-slot-detail")]
+        public async Task<ResponseDTO> GetDentistSlotDetail([FromQuery] int slotId)
         {
-            try
-            {
-                var dentistSlot = _service.GetDentistSlot(id);
-                return Ok(dentistSlot);
-            }
-            catch (Exception e)
-            {
-                
-            }
-
-            return null;
+            ResponseDTO responseDTO = await dentistSlotService.getDentistSlotDetail(slotId);
+            return responseDTO;
         }
 
-        [HttpGet]
-        public ActionResult<ResponseDTO> GetDentistSlots()
+        [HttpGet("dentist-dentist-slots")]
+        public async Task<ResponseDTO> GetDentistSlots([FromQuery] int pageNumber, int rowsPerPage, [FromQuery] string dentistId)
         {
-            try
-            {
-                var dentistSlots = _service.GetDentistSlots();
-                return Ok(dentistSlots);
-            }
-            catch (Exception e)
-            {
-                
-            }
+            ResponseDTO responseDTO = await dentistSlotService.getAllSlotsOfDentist(dentistId, pageNumber, rowsPerPage);
 
-            return null;
+            return responseDTO;
         }
+
+        [HttpGet("all-dentist-slots")]
+        public async Task<ResponseDTO> GetAllDentistSlots([FromQuery] int pageNumber, int rowsPerPage)
+        {
+            ResponseDTO responseDTO = await dentistSlotService.getAllDentistSlots(pageNumber, rowsPerPage);
+            return responseDTO;
+        }
+
+        [HttpPost("new-dentist-slot")]
+        public async Task<ResponseListDTO> CreateDentistSlot([FromBody] DentistSlotDTO dentistSlotDTO)
+        {
+            ResponseListDTO responseDTO = await dentistSlotService.createDentistSlot(dentistSlotDTO);
+            return responseDTO;
+        }
+
+        [HttpPut("dentist-slot")]
+        public async Task<ResponseListDTO> UpdateDentistSlot([FromBody] DentistSlotDTO dentistSlotDTO)
+        {
+            ResponseListDTO responseDTO = await dentistSlotService.updateDentistSlot(dentistSlotDTO);
+            return responseDTO;
+        }
+
+        [HttpDelete("dentist-slot")]
+        public async Task<ResponseDTO> DeleteDentistSlot([FromQuery] int slotId)
+        {
+            ResponseDTO responseDTO = await dentistSlotService.deleteDentistSlot(slotId);
+            return responseDTO;
+        }
+
+
     }
 }

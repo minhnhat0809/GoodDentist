@@ -1,4 +1,4 @@
-﻿using BusinessObject.Entities;
+﻿using BusinessObject.Entity;
 
 namespace BusinessObject.DTO.ViewDTO;
 

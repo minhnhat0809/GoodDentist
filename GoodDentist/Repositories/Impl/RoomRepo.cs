@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace Repositories.Impl
 {
-    public class ClinicServiceRepo : RepositoryBase<ClinicService>, IClinicServiceRepo
+    public class RoomRepo : RepositoryBase<Room>, IRoomRepo
     {
-        public ClinicServiceRepo(GoodDentistDbContext repositoryContext) : base(repositoryContext)
+        public RoomRepo(GoodDentistDbContext repositoryContext) : base(repositoryContext)
         {
+
         }
     }
 }

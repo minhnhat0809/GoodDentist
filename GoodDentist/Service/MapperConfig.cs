@@ -1,19 +1,17 @@
 ﻿using AutoMapper;
-using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessObject.DTO.ViewDTO;
-using BusinessObject.Entities;
 
 namespace Services
 {
     public class MapperConfig : Profile
     {
-        public MapperConfig() 
+        public MapperConfig()
         {
             CreateMap<CreateUserDTO, User>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
@@ -30,7 +28,7 @@ namespace Services
             .ForMember(dest => dest.ClinicUsers, opt => opt.Ignore())
             .ForMember(dest => dest.DentistSlots, opt => opt.Ignore())
             .ForMember(dest => dest.Examinations, opt => opt.Ignore())
-            .ForMember(dest => dest.Role, opt => opt.Ignore()); ;
+            .ForMember(dest => dest.Role, opt => opt.Ignore());
 
             CreateMap<User, UserDTO>()
             .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Dob.HasValue ? new DateTime(src.Dob.Value.Year, src.Dob.Value.Month, src.Dob.Value.Day) : (DateTime?)null))
@@ -42,8 +40,15 @@ namespace Services
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
-            CreateMap<ClinicDTO, Clinic>().ReverseMap();
-            CreateMap<DentistSlotDTO, DentistSlot>().ReverseMap();
+            CreateMap<DentistSlot, DentistSlotDTO>()
+                .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
+
+            CreateMap<DentistSlotDTO, DentistSlot>()
+                .ForMember(dest => dest.DentistSlotId, opt => opt.Ignore())
+                .ForMember(dest => dest.Dentist, opt => opt.Ignore())
+                .ForMember(dest => dest.Examinations, opt => opt.Ignore())
+                .ForMember(dest => dest.Room, opt => opt.Ignore());
+            
         }
     }
 }

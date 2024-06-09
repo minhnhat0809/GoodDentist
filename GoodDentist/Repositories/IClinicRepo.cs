@@ -1,5 +1,4 @@
-﻿using BusinessObject;
-using BusinessObject.Entities;
+﻿using BusinessObject.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,6 @@ namespace Repositories
 {
     public interface IClinicRepo : IRepositoryBase<Clinic>
     {
-        Task<Clinic?> getClinicById(string id);
+        Task<Clinic?> getClinicById(string id);       
     }
 }

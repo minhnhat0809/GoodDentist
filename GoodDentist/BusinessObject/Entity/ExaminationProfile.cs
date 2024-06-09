@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject.Entities;
+namespace BusinessObject.Entity;
 
 public partial class ExaminationProfile
 {

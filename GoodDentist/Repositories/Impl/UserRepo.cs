@@ -1,5 +1,5 @@
 ﻿using BusinessObject;
-using BusinessObject.Entities;
+using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
@@ -18,18 +18,13 @@ namespace Repositories.Impl
 
         public User? getUser(string userName)
         {
-                return _repositoryContext.Users.FirstOrDefault(user => user.UserName == userName);           
+                return _repositoryContext.Users.Include(u => u.ClinicUsers).FirstOrDefault(user => user.UserName == userName);           
         }       
 
         public async Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage)
         {
             //string key = "userList";
-            List<User>? userList = new List<User>();
-            userList = await FindAllAsync();
-            userList = userList
-               .Skip((pageNumber - 1) * rowsPerPage)
-               .Take(rowsPerPage)
-               .ToList();
+            List<User>? userList = await Paging(pageNumber, rowsPerPage);
 
 
             /*CancellationToken cancellationToken = default;
@@ -53,10 +48,13 @@ namespace Repositories.Impl
             return userList;
         }
 
-        public async Task<User> LoginAccount(string username, byte[] password)
+        public string getUserName(string Id)
         {
-            return await _repositoryContext.Users
-                .FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
+            var userId = Guid.Parse(Id);
+            return _repositoryContext.Users
+        .Where(user => user.UserId == userId)
+        .Select(u => u.UserName)
+        .FirstOrDefault();
         }
     }
 }

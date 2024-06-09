@@ -10,44 +10,63 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="dataSource">
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Clinic.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/ClinicService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/ClinicUser.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Customer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/CustomerClinic.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/DentistSlot.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Examination.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/ExaminationProfile.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/MedicalRecord.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Medicine.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/MedicinePrescription.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Order.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/OrderService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Payment.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Prescription.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/RecordType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Role.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Room.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/Service.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="db set up">
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/DentistSlotDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/IDentistSlotRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/IRoomRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/Impl/DentistSlotRepo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Repositories/Impl/RoomRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ResponseCreateUserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ResponseListDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/DentistSlotDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/DentistSlotDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/ClinicUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/ClinicUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/Customer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/CustomerClinic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/CustomerClinic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Medicine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/Medicine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/MedicinePrescription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/MedicinePrescription.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/Order.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/OrderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/OrderService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Payment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/Payment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Prescription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/Prescription.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/RecordType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/RecordType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/Room.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Service.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entities/Service.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Clinic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Clinic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/ClinicService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/ClinicUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/ClinicUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Customer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/CustomerClinic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/CustomerClinic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/DentistSlot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/DentistSlot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Examination.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Examination.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/ExaminationProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/ExaminationProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/MedicalRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/MedicalRecord.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Medicine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Medicine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/MedicinePrescription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/MedicinePrescription.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Order.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/OrderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/OrderService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Payment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Payment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Prescription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Prescription.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/RecordType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/RecordType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Role.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Service.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Service.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessObject/GoodDentistDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/GoodDentistDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/DentistSlotController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/DentistSlotController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IClinicRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IClinicRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IClinicServiceRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicServiceRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IClinicUserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicUserRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IDentistSlotRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IDentistSlotRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IReposirotyBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IReposirotyBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IRoleRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IRoleRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IUnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IUnitOfWork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IUserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IUserRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicServiceRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicServiceRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicUserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicUserRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/DentistSlotRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/DentistSlotRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/UnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/UnitOfWork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IDentistSlotService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IDentistSlotService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/UserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/AuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/AuthService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/DentistSlotService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/DentistSlotService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +98,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/bc/0599c07a/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/cc/f365519b/Monitor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BusinessObject/Models/Clinic.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/DentistSlotController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/DentistSlotController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/AccountService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -110,7 +131,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "huyntv171283",
+    "git-widget-placeholder": "Merging huyntv171283",
+    "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -222,6 +244,7 @@
       <workItem from="1717914993815" duration="228000" />
       <workItem from="1717919917032" duration="195000" />
       <workItem from="1717940069283" duration="517000" />
+      <workItem from="1717941291820" duration="427000" />
     </task>
     <task id="LOCAL-00001" summary="change file location and create repositoryBase">
       <option name="closed" value="true" />
@@ -311,7 +334,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717874345244</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="db set up">
+      <option name="closed" value="true" />
+      <created>1717941330309</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1717941330309</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,7 +375,8 @@
     <MESSAGE value="Login - Authentication - Authorize - JwtAccessToken" />
     <MESSAGE value="login delete" />
     <MESSAGE value="clinic crud - paging / sorting / filtering" />
-    <option name="LAST_COMMIT_MESSAGE" value="clinic crud - paging / sorting / filtering" />
+    <MESSAGE value="db set up" />
+    <option name="LAST_COMMIT_MESSAGE" value="db set up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -361,32 +393,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/AccountService.cs</url>
-          <line>214</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AccountService.cs" containingFunctionPresentation="Method 'validateUser'">
-            <startOffsets>
-              <option value="7322" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7357" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/AccountService.cs</url>
-          <line>206</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AccountService.cs" containingFunctionPresentation="Method 'validateUser'">
-            <startOffsets>
-              <option value="7028" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7097" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,5 +1,5 @@
 ﻿using BusinessObject;
-using BusinessObject.Entities;
+using BusinessObject.Entity;
 
 namespace Repositories;
 
