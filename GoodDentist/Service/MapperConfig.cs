@@ -44,11 +44,23 @@ namespace Services
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
             CreateMap<DentistSlotDTO, DentistSlot>()
-                .ForMember(dest => dest.DentistSlotId, opt => opt.Ignore())
-                .ForMember(dest => dest.Dentist, opt => opt.Ignore())
-                .ForMember(dest => dest.Examinations, opt => opt.Ignore())
-                .ForMember(dest => dest.Room, opt => opt.Ignore());
-            
-        }
+                .ForMember(dest => dest.DentistSlotId, otp => otp.Ignore())
+                .ForMember(dest => dest.Dentist, otp => otp.Ignore())
+                .ForMember(dest => dest.Examinations, otp => otp.Ignore())
+                .ForMember(dest => dest.Room, otp => otp.Ignore());
+
+            CreateMap<MedicineDTO, Medicine>()
+                .ReverseMap();
+
+            CreateMap<MedicineUpdateDTO, Medicine>()
+                .ReverseMap();
+
+            CreateMap<RecordTypeDTO,  RecordType>()
+                .ReverseMap();
+
+            CreateMap<RecordTypeCreateDTO, RecordType>()
+                .ReverseMap();
+			CreateMap<CreateServiceDTO, Service>().ReverseMap();
+		}
     }
 }

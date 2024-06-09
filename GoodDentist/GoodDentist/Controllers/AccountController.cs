@@ -29,7 +29,7 @@ namespace GoodDentist.Controllers
         [HttpPost("new-user")]
         public async  Task<ResponseListDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
-           ResponseListDTO responseDTO = await accountService.createUser(createUserDTO); 
+			ResponseListDTO responseDTO = await accountService.createUser(createUserDTO); 
             
            return responseDTO;                       
         }
@@ -67,7 +67,7 @@ namespace GoodDentist.Controllers
         [HttpPut("user")]
         public async Task<ResponseListDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
         {
-            ResponseListDTO responseDTO = await accountService.updateUser(createUserDTO);
+			ResponseListDTO responseDTO = await accountService.updateUser(createUserDTO);
 
             return responseDTO;
         }

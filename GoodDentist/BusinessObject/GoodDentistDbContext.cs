@@ -64,7 +64,7 @@ public partial class GoodDentistDbContext : DbContext
     {
         modelBuilder.Entity<Clinic>(entity =>
         {
-            entity.HasKey(e => e.ClinicId).HasName("PK__Clinic__A0C8D19B9957D01B");
+            entity.HasKey(e => e.ClinicId).HasName("PK__Clinic__A0C8D19B82569E1D");
 
             entity.ToTable("Clinic");
 
@@ -88,7 +88,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<ClinicService>(entity =>
         {
-            entity.HasKey(e => e.ClinicServiceId).HasName("PK__Clinic_S__916E631C074E74AA");
+            entity.HasKey(e => e.ClinicServiceId).HasName("PK__Clinic_S__916E631C60773716");
 
             entity.ToTable("Clinic_Service");
 
@@ -111,7 +111,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<ClinicUser>(entity =>
         {
-            entity.HasKey(e => e.ClinicUserId).HasName("PK__Clinic_U__7EF5AC8091134EBF");
+            entity.HasKey(e => e.ClinicUserId).HasName("PK__Clinic_U__7EF5AC801B6EAACB");
 
             entity.ToTable("Clinic_User");
 
@@ -131,7 +131,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB85FAB4CFEA");
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB85D71D0594");
 
             entity.ToTable("Customer");
 
@@ -145,6 +145,9 @@ public partial class GoodDentistDbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("back_id_card");
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("created_date");
             entity.Property(e => e.Dob).HasColumnName("dob");
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
@@ -172,7 +175,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<CustomerClinic>(entity =>
         {
-            entity.HasKey(e => e.CustomerClinicId).HasName("PK__Customer__971AD2859781F82A");
+            entity.HasKey(e => e.CustomerClinicId).HasName("PK__Customer__971AD285443B128A");
 
             entity.ToTable("Customer_Clinic");
 
@@ -192,7 +195,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<DentistSlot>(entity =>
         {
-            entity.HasKey(e => e.DentistSlotId).HasName("PK__Dentist___F7C6C8C37EAAA782");
+            entity.HasKey(e => e.DentistSlotId).HasName("PK__Dentist___F7C6C8C39550A67D");
 
             entity.ToTable("Dentist_Slot");
 
@@ -218,7 +221,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Examination>(entity =>
         {
-            entity.HasKey(e => e.ExaminationId).HasName("PK__Examinat__BCD82530EFD310A4");
+            entity.HasKey(e => e.ExaminationId).HasName("PK__Examinat__BCD825309EF46023");
 
             entity.ToTable("Examination");
 
@@ -253,7 +256,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<ExaminationProfile>(entity =>
         {
-            entity.HasKey(e => e.ExaminationProfileId).HasName("PK__Examinat__2B0A0490C3793508");
+            entity.HasKey(e => e.ExaminationProfileId).HasName("PK__Examinat__2B0A049042B0A298");
 
             entity.ToTable("Examination_Profile");
 
@@ -272,7 +275,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<MedicalRecord>(entity =>
         {
-            entity.HasKey(e => e.MedicalRecordId).HasName("PK__Medical___05C4C30ABB8671AC");
+            entity.HasKey(e => e.MedicalRecordId).HasName("PK__Medical___05C4C30AC9A2E327");
 
             entity.ToTable("Medical_Record");
 
@@ -298,7 +301,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Medicine>(entity =>
         {
-            entity.HasKey(e => e.MedicineId).HasName("PK__Medicine__E7148EBB2064724D");
+            entity.HasKey(e => e.MedicineId).HasName("PK__Medicine__E7148EBB1E204860");
 
             entity.ToTable("Medicine");
 
@@ -321,7 +324,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<MedicinePrescription>(entity =>
         {
-            entity.HasKey(e => e.MedicinePrescriptionId).HasName("PK__Medicine__9354DD60490A6C5F");
+            entity.HasKey(e => e.MedicinePrescriptionId).HasName("PK__Medicine__9354DD60E7FDC7BA");
 
             entity.ToTable("Medicine_Prescription");
 
@@ -345,7 +348,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Order__46596229EFEE4705");
+            entity.HasKey(e => e.OrderId).HasName("PK__Order__465962290A18F92A");
 
             entity.ToTable("Order");
 
@@ -369,7 +372,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<OrderService>(entity =>
         {
-            entity.HasKey(e => e.OrderServiceId).HasName("PK__Order_Se__88196EDD609EDCC6");
+            entity.HasKey(e => e.OrderServiceId).HasName("PK__Order_Se__88196EDD4942B72B");
 
             entity.ToTable("Order_Service");
 
@@ -393,7 +396,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payment__ED1FC9EA83E01FF2");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payment__ED1FC9EA7785F66C");
 
             entity.ToTable("Payment");
 
@@ -414,7 +417,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Prescription>(entity =>
         {
-            entity.HasKey(e => e.PrescriptionId).HasName("PK__Prescrip__3EE444F8E9434702");
+            entity.HasKey(e => e.PrescriptionId).HasName("PK__Prescrip__3EE444F887BD5117");
 
             entity.ToTable("Prescription");
 
@@ -438,7 +441,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<RecordType>(entity =>
         {
-            entity.HasKey(e => e.RecordTypeId).HasName("PK__Record_T__3F68ADEC246F8EF9");
+            entity.HasKey(e => e.RecordTypeId).HasName("PK__Record_T__3F68ADEC3795A240");
 
             entity.ToTable("Record_Type");
 
@@ -451,7 +454,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Role__760965CC89FB42B5");
+            entity.HasKey(e => e.RoleId).HasName("PK__Role__760965CC78BC9B70");
 
             entity.ToTable("Role");
 
@@ -464,7 +467,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Room>(entity =>
         {
-            entity.HasKey(e => e.RoomId).HasName("PK__Room__19675A8A76455AE4");
+            entity.HasKey(e => e.RoomId).HasName("PK__Room__19675A8A4CDF3EA7");
 
             entity.ToTable("Room");
 
@@ -482,7 +485,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AF6CE0F2A7");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AF2384A2FA");
 
             entity.ToTable("Service");
 
@@ -501,7 +504,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User__B9BE370F02BB97B6");
+            entity.HasKey(e => e.UserId).HasName("PK__User__B9BE370F2F4ABE45");
 
             entity.ToTable("User");
 
@@ -511,6 +514,9 @@ public partial class GoodDentistDbContext : DbContext
             entity.Property(e => e.Address)
                 .HasMaxLength(255)
                 .HasColumnName("address");
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("created_date");
             entity.Property(e => e.Dob).HasColumnName("dob");
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
