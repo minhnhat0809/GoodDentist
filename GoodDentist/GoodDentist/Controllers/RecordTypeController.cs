@@ -8,71 +8,64 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Services;
+using Services.Impl;
 using System.Threading;
 
 namespace GoodDentist.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class RecordTypeController : ControllerBase
     {
-        private readonly IUserService accountService;
-        private readonly IDistributedCache distributedCache;
+        private readonly IRecordTypeService _recordTypeService;
+        private readonly IDistributedCache _distributedCache;
 
-        public AccountController(IUserService accountService, IDistributedCache distributedCache)
+        public RecordTypeController(IRecordTypeService recordTypeService, IDistributedCache distributedCache)
         {
-            this.accountService = accountService;
-            this.distributedCache = distributedCache;
+            this._recordTypeService = recordTypeService;
+            this._distributedCache = distributedCache;
         }
 
-
-        [HttpPost("new-user")]
-        public async  Task<ResponseListDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
-        {
-			ResponseListDTO responseDTO = await accountService.createUser(createUserDTO); 
-            
-           return responseDTO;                       
-        }
-
-        [HttpGet("all-users")]
-        public async Task<ResponseDTO> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage,
-            [FromQuery] string? filterField = null,
-            [FromQuery] string? filterValue = null,
-            [FromQuery] string? sortField = null,
-            [FromQuery] string? sortOrder = "asc")
+        [HttpGet("all-recordType")]
+        public async Task<ResponseDTO> GetAllRecordType([FromQuery] int pageNumber, int rowsPerPage)
         {           
-            ResponseDTO responseDTO = await accountService.getAllUsers(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            ResponseDTO responseDTO = await _recordTypeService.GetAllRecordTyoe(pageNumber, rowsPerPage);
             return responseDTO;
         }
 
-        [HttpGet("all-users-by-clinic")]
-        public async Task<ResponseDTO> GetAllUsersByClinic([FromQuery] string clinicId,
-           [FromQuery] int pageNumber, int rowsPerPage,
-           [FromQuery] string? filterField = null,
-           [FromQuery] string? filterValue = null,
-           [FromQuery] string? sortField = null,
-           [FromQuery] string? sortOrder = "asc")
+        [HttpPost("new-recordType")]
+        public async Task<ResponseDTO> AddRecordType([FromBody] RecordTypeCreateDTO recordTypeDTO)
         {
-            ResponseDTO responseDTO = await accountService.getAllUsersByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            ResponseDTO responseDTO = await _recordTypeService.AddRecordType(recordTypeDTO);
+
             return responseDTO;
         }
 
-        [HttpDelete("user")]
-        public async Task<ResponseDTO> DeleteUser([FromQuery] string userName)
+        [HttpDelete("recordType")]
+
+        public async Task<ResponseDTO> DeleteRecordType([FromQuery] int recordTypeId)
         {
-            ResponseDTO responseDTO = await accountService.deleteUser(userName);
+            ResponseDTO responseDTO = await _recordTypeService.DeleteRecordType(recordTypeId);
+
             return responseDTO;
         }
 
-        [HttpPut("user")]
-        public async Task<ResponseListDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
+        [HttpGet("searchRecordType")]
+
+        public async Task<ResponseDTO> SearchRecordType([FromQuery] string searchValue)
         {
-			ResponseListDTO responseDTO = await accountService.updateUser(createUserDTO);
+            ResponseDTO responseDTO = await _recordTypeService.SearchRecordType(searchValue);
 
             return responseDTO;
         }
 
+        [HttpPut("updateRecordType")]
+        public async Task<ResponseDTO> UpdateRecordType([FromBody] RecordTypeDTO recordTypeDTO)
+        {
+            ResponseDTO responseDTO = await _recordTypeService.UpdateRecordType(recordTypeDTO);
 
+            return responseDTO;
+        }
 
 
 
@@ -90,14 +83,14 @@ namespace GoodDentist.Controllers
             else
             {
                 CancellationToken cancellationToken = default;
-                string? checkCache = await distributedCache.GetStringAsync(key, cancellationToken);
+                string? checkCache = await _distributedCache.GetStringAsync(key, cancellationToken);
 
                 if (checkCache.IsNullOrEmpty())
                 {
                     return "No value with this key";
                 }
 
-               await distributedCache.RemoveAsync(key);
+               await _distributedCache.RemoveAsync(key);
                 return "Remove key successfully!";
             }           
         }
@@ -111,7 +104,7 @@ namespace GoodDentist.Controllers
             }
 
            
-            var existingValue = await distributedCache.GetStringAsync(key);
+            var existingValue = await _distributedCache.GetStringAsync(key);
 
             if (existingValue == null)
             {
@@ -122,7 +115,7 @@ namespace GoodDentist.Controllers
             existingValue = newValue;
 
            
-            await distributedCache.SetStringAsync(key, existingValue);
+            await _distributedCache.SetStringAsync(key, existingValue);
 
             return "Update key successfully!";
         }
@@ -137,7 +130,7 @@ namespace GoodDentist.Controllers
 
             CancellationToken cancellationToken = default;
 
-            string? existingValue = await distributedCache.GetStringAsync(key, cancellationToken);
+            string? existingValue = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             if (existingValue == null)
             {
@@ -162,7 +155,7 @@ namespace GoodDentist.Controllers
 
             try
             {
-                await distributedCache.SetStringAsync(key, value);
+                await _distributedCache.SetStringAsync(key, value);
                 return Ok($"Key '{key}' with value '{value}' created successfully.");
             }
             catch (Exception ex)

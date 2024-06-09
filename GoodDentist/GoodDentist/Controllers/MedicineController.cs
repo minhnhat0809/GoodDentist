@@ -14,61 +14,50 @@ namespace GoodDentist.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class MedicineController : ControllerBase
     {
-        private readonly IUserService accountService;
-        private readonly IDistributedCache distributedCache;
+        private readonly IMedicineService _medicineService;
+        private readonly IDistributedCache _distributedCache;
 
-        public AccountController(IUserService accountService, IDistributedCache distributedCache)
+        public MedicineController(IMedicineService medicineService, IDistributedCache distributedCache)
         {
-            this.accountService = accountService;
-            this.distributedCache = distributedCache;
+            this._medicineService = medicineService;
+            this._distributedCache = distributedCache;
         }
 
-
-        [HttpPost("new-user")]
-        public async  Task<ResponseListDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
+        [HttpPost("new-medicine")]
+        public async  Task<ResponseDTO> AddMedicine([FromBody] MedicineDTO medicineDTO)
         {
-			ResponseListDTO responseDTO = await accountService.createUser(createUserDTO); 
+           ResponseDTO responseDTO = await _medicineService.AddMedicine(medicineDTO); 
             
            return responseDTO;                       
         }
 
-        [HttpGet("all-users")]
-        public async Task<ResponseDTO> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage,
-            [FromQuery] string? filterField = null,
-            [FromQuery] string? filterValue = null,
-            [FromQuery] string? sortField = null,
-            [FromQuery] string? sortOrder = "asc")
+        [HttpGet("all-medicine")]
+        public async Task<ResponseDTO> GetAllMedicine([FromQuery] int pageNumber, int rowsPerPage)
         {           
-            ResponseDTO responseDTO = await accountService.getAllUsers(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            ResponseDTO responseDTO = await _medicineService.GetAllMedicine(pageNumber, rowsPerPage);
             return responseDTO;
         }
 
-        [HttpGet("all-users-by-clinic")]
-        public async Task<ResponseDTO> GetAllUsersByClinic([FromQuery] string clinicId,
-           [FromQuery] int pageNumber, int rowsPerPage,
-           [FromQuery] string? filterField = null,
-           [FromQuery] string? filterValue = null,
-           [FromQuery] string? sortField = null,
-           [FromQuery] string? sortOrder = "asc")
+        [HttpDelete("medicine")]
+        public async Task<ResponseDTO> DeleteMedicine([FromQuery] int medicineId)
         {
-            ResponseDTO responseDTO = await accountService.getAllUsersByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            ResponseDTO responseDTO = await _medicineService.DeleteMedicine(medicineId);
             return responseDTO;
         }
 
-        [HttpDelete("user")]
-        public async Task<ResponseDTO> DeleteUser([FromQuery] string userName)
+        [HttpPut("medicine")]
+        public async Task<ResponseDTO> UpdateMedicine([FromBody] MedicineUpdateDTO medicineDTO)
         {
-            ResponseDTO responseDTO = await accountService.deleteUser(userName);
+            ResponseDTO responseDTO = await _medicineService.UpdateMedicine(medicineDTO);
+
             return responseDTO;
         }
-
-        [HttpPut("user")]
-        public async Task<ResponseListDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
+        [HttpGet("medicine")]
+        public async Task<ResponseDTO> SearchMedicine([FromQuery] string searchValue)
         {
-			ResponseListDTO responseDTO = await accountService.updateUser(createUserDTO);
-
+            ResponseDTO responseDTO = await _medicineService.SearchMedicine(searchValue);
             return responseDTO;
         }
 
@@ -90,14 +79,14 @@ namespace GoodDentist.Controllers
             else
             {
                 CancellationToken cancellationToken = default;
-                string? checkCache = await distributedCache.GetStringAsync(key, cancellationToken);
+                string? checkCache = await _distributedCache.GetStringAsync(key, cancellationToken);
 
                 if (checkCache.IsNullOrEmpty())
                 {
                     return "No value with this key";
                 }
 
-               await distributedCache.RemoveAsync(key);
+               await _distributedCache.RemoveAsync(key);
                 return "Remove key successfully!";
             }           
         }
@@ -111,7 +100,7 @@ namespace GoodDentist.Controllers
             }
 
            
-            var existingValue = await distributedCache.GetStringAsync(key);
+            var existingValue = await _distributedCache.GetStringAsync(key);
 
             if (existingValue == null)
             {
@@ -122,7 +111,7 @@ namespace GoodDentist.Controllers
             existingValue = newValue;
 
            
-            await distributedCache.SetStringAsync(key, existingValue);
+            await _distributedCache.SetStringAsync(key, existingValue);
 
             return "Update key successfully!";
         }
@@ -137,7 +126,7 @@ namespace GoodDentist.Controllers
 
             CancellationToken cancellationToken = default;
 
-            string? existingValue = await distributedCache.GetStringAsync(key, cancellationToken);
+            string? existingValue = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             if (existingValue == null)
             {
@@ -162,7 +151,7 @@ namespace GoodDentist.Controllers
 
             try
             {
-                await distributedCache.SetStringAsync(key, value);
+                await _distributedCache.SetStringAsync(key, value);
                 return Ok($"Key '{key}' with value '{value}' created successfully.");
             }
             catch (Exception ex)
