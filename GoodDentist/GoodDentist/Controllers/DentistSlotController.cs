@@ -24,17 +24,28 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("dentist-dentist-slots")]
-        public async Task<ResponseDTO> GetDentistSlots([FromQuery] int pageNumber, int rowsPerPage, [FromQuery] string dentistId)
+        public async Task<ResponseDTO> GetDentistSlots([FromQuery] int pageNumber,
+            [FromQuery] int rowsPerPage,
+            [FromQuery] string dentistId,
+            [FromQuery] string? filterField = null,
+            [FromQuery] string? filterValue = null,
+            [FromQuery] string? sortField = null,
+            [FromQuery] string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = await dentistSlotService.getAllSlotsOfDentist(dentistId, pageNumber, rowsPerPage);
+            ResponseDTO responseDTO = await dentistSlotService.getAllSlotsOfDentist(dentistId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
 
             return responseDTO;
         }
 
         [HttpGet("all-dentist-slots")]
-        public async Task<ResponseDTO> GetAllDentistSlots([FromQuery] int pageNumber, int rowsPerPage)
+        public async Task<ResponseDTO> GetAllDentistSlots([FromQuery] int pageNumber,
+            [FromQuery] int rowsPerPage,
+            [FromQuery] string? filterField = null,
+            [FromQuery] string? filterValue = null,
+            [FromQuery] string? sortField = null,
+            [FromQuery] string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = await dentistSlotService.getAllDentistSlots(pageNumber, rowsPerPage);
+            ResponseDTO responseDTO = await dentistSlotService.getAllDentistSlots(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
             return responseDTO;
         }
 

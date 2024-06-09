@@ -127,7 +127,7 @@ namespace Services.Impl
                     responseDTO.Message.AddRange(validatePwd);
                     responseDTO.IsSuccess = false;
                 }
-            }          
+            }
 
             if (!createUserDTO.Dob.HasValue)
             {
@@ -217,11 +217,14 @@ namespace Services.Impl
             return RandomNumberGenerator.GetBytes(saltSize);
         }
 
-        public async Task<ResponseDTO> getAllUsers(int pageNumber, int rowsPerPage)
+        public async Task<ResponseDTO> getAllUsers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder)
         {
             try
             {
-                List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);                
+                List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
+
+                userList = FilterUsers(userList, filterField, filterValue);
+                userList = SortUsers(userList, sortField, sortOrder);
 
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
 
@@ -315,7 +318,7 @@ namespace Services.Impl
                         clinicUserOld.Status = false;
 
                         unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
-                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);                                            
+                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
                     }
                     else
                     {
@@ -326,7 +329,7 @@ namespace Services.Impl
                         unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
                     }
                 }
-                
+
                 unitOfWork.userRepo.UpdateAsync(user);
                 responseDTO.Message.Add("Update sucessfully");
                 responseDTO.IsSuccess = true;
@@ -340,5 +343,97 @@ namespace Services.Impl
                 return responseDTO;
             }
         }
+
+        private List<User> FilterUsers(List<User> users, string filterField, string filterValue)
+        {
+            if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
+            {
+                return users;
+            }
+
+            switch (filterField.ToLower())
+            {
+                case "username":
+                    return users.Where(u => u.UserName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "dob":
+                    if (DateOnly.TryParse(filterValue, out var dob))
+                    {
+                        return users.Where(u => u.Dob == dob).ToList();
+                    }
+                    break;
+                case "gender":
+                    return users.Where(u => u.Gender != null && u.Gender.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "phonenumber":
+                    return users.Where(u => u.PhoneNumber != null && u.PhoneNumber.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "email":
+                    return users.Where(u => u.Email != null && u.Email.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "address":
+                    return users.Where(u => u.Address != null && u.Address.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "roleid":
+                    if (int.TryParse(filterValue, out var roleId))
+                    {
+                        return users.Where(u => u.RoleId == roleId).ToList();
+                    }
+                    break;
+                case "status":
+                    if (bool.TryParse(filterValue, out var status))
+                    {
+                        return users.Where(u => u.Status == status).ToList();
+                    }
+                    break;
+            }
+            return users;
+        }
+
+        private List<User> SortUsers(List<User> users, string sortField, string sortOrder)
+            {
+            if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
+            {
+                return users;
+            }
+
+            bool isAscending = sortOrder.ToLower() == "asc";
+
+            switch (sortField.ToLower())
+            {
+                case "username":
+                    return isAscending ? users.OrderBy(u => u.UserName).ToList() : users.OrderByDescending(u => u.UserName).ToList();
+                case "dob":
+                    return isAscending ? users.OrderBy(u => u.Dob).ToList() : users.OrderByDescending(u => u.Dob).ToList();
+                case "gender":
+                    return isAscending ? users.OrderBy(u => u.Gender).ToList() : users.OrderByDescending(u => u.Gender).ToList();
+                case "phonenumber":
+                    return isAscending ? users.OrderBy(u => u.PhoneNumber).ToList() : users.OrderByDescending(u => u.PhoneNumber).ToList();
+                case "email":
+                    return isAscending ? users.OrderBy(u => u.Email).ToList() : users.OrderByDescending(u => u.Email).ToList();
+                case "address":
+                    return isAscending ? users.OrderBy(u => u.Address).ToList() : users.OrderByDescending(u => u.Address).ToList();
+                case "roleid":
+                    return isAscending ? users.OrderBy(u => u.RoleId).ToList() : users.OrderByDescending(u => u.RoleId).ToList();
+                case "status":
+                    return isAscending ? users.OrderBy(u => u.Status).ToList() : users.OrderByDescending(u => u.Status).ToList();                    
+            }
+
+            return users;
+        }
+
+        public async Task<ResponseDTO> getAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder)
+        {
+            try
+            {
+                List<User> userList = await unitOfWork.clinicUserRepo.GetAllUsersByClinic(clinicId, pageNumber, rowsPerPage);
+
+                userList = FilterUsers(userList, filterField, filterValue);
+                userList = SortUsers(userList, sortField, sortOrder);
+
+                List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
+
+                return new ResponseDTO("Get users successfully!", 200, true, users);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }
     }
-}
+    }

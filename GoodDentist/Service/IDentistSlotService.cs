@@ -1,4 +1,5 @@
 ﻿using BusinessObject.DTO;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,10 @@ namespace Services
 
         Task<ResponseDTO> getDentistSlotDetail(int slotId);
 
-        Task<ResponseDTO> getAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage);
+        Task<ResponseDTO> getAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage,
+            string filterField, string filterValue, string sortField, string sortOrder);
 
-        Task<ResponseDTO> getAllDentistSlots(int pageNumber, int rowsPerPage);
+        Task<ResponseDTO> getAllDentistSlots(int pageNumber, int rowsPerPage,
+            string filterField, string filterValue, string sortField, string sortOrder);
     }
 }

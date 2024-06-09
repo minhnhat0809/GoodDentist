@@ -35,9 +35,25 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("all-users")]
-        public async Task<ResponseDTO> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage)
+        public async Task<ResponseDTO> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage,
+            [FromQuery] string? filterField = null,
+            [FromQuery] string? filterValue = null,
+            [FromQuery] string? sortField = null,
+            [FromQuery] string? sortOrder = "asc")
         {           
-            ResponseDTO responseDTO = await accountService.getAllUsers(pageNumber, rowsPerPage);
+            ResponseDTO responseDTO = await accountService.getAllUsers(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            return responseDTO;
+        }
+
+        [HttpGet("all-users-by-clinic")]
+        public async Task<ResponseDTO> GetAllUsersByClinic([FromQuery] string clinicId,
+           [FromQuery] int pageNumber, int rowsPerPage,
+           [FromQuery] string? filterField = null,
+           [FromQuery] string? filterValue = null,
+           [FromQuery] string? sortField = null,
+           [FromQuery] string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = await accountService.getAllUsersByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
             return responseDTO;
         }
 
