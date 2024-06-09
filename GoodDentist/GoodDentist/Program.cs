@@ -21,7 +21,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
 builder.Services.AddScoped<IMedicineService, MedicineService>();
 builder.Services.AddScoped<IRecordTypeService, RecordTypeService>();
-
+builder.Services.AddScoped<IServiceService, ServiceService>();
 
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -30,6 +30,7 @@ builder.Services.AddScoped<IClinicUserRepo, ClinicUserRepo>();
 builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
 builder.Services.AddScoped<IClinicRepo, ClinicRepo>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IServiceRepo, ServiceRepo>();
 builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
 builder.Services.AddScoped<IRecordTypeRepository, RecordTypeRepository>();
 

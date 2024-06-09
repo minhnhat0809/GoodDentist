@@ -60,6 +60,7 @@ namespace Services
 
             CreateMap<RecordTypeCreateDTO, RecordType>()
                 .ReverseMap();
-        }
+			CreateMap<CreateServiceDTO, Service>().ReverseMap();
+		}
     }
 }

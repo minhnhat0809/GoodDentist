@@ -1,5 +1,6 @@
 ﻿using BusinessObject;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Update.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Repositories.Impl
         public IMedicineRepository medicineRepo { get; private set; }
         public IRoomRepo roomRepo { get; private set; }
         public IRecordTypeRepository recordTypeRepo { get; private set; }
+        public IServiceRepo serviceRepo { get; private set; }
 
 
         public IExaminationRepo examinationRepo { get; private set; }
@@ -41,6 +43,7 @@ namespace Repositories.Impl
             ClinicRepository = new ClinicRepository(_repositoryContext);
             recordTypeRepo = new RecordTypeRepository(_repositoryContext);
             
+			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
         }
 
         public async Task<int> CompleteAsync()
