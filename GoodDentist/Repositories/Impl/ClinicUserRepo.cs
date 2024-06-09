@@ -28,5 +28,15 @@ namespace Repositories.Impl
 
             return clinicUserList.FirstOrDefault();
         }
+
+        public async Task<List<User?>> GetAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage)
+        {
+            return await _repositoryContext.ClinicUsers
+                    .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId)))
+                    .Select(cu => cu.User)
+                    .Skip((pageNumber - 1) * rowsPerPage)
+                    .Take(rowsPerPage)
+                    .ToListAsync();
+        }
     }
 }
