@@ -35,5 +35,11 @@ namespace GoodDentist.Controllers
 			ResponseDTO responseDTO = await serviceService.updateService(model);
 			return responseDTO;
 		}
+		[HttpDelete("service")]
+		public async Task<ResponseDTO> DeleteService([FromBody] int serviceID)
+		{
+			ResponseDTO responseDTO = await serviceService.deleteService(serviceID);
+			return responseDTO;
+		}
 	}
 }

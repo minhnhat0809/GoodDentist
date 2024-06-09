@@ -12,6 +12,6 @@ namespace Services
 		Task<ResponseDTO> getAllService(int pageNumber, int rowsPerPage);
 		Task<ResponseDTO> createService(CreateServiceDTO serviceDTO);
 		Task<ResponseDTO> updateService(CreateServiceDTO model);
-
+		Task<ResponseDTO> deleteService(int serviceID);
 	}
 }

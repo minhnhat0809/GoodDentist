@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -61,15 +62,16 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> updateService(CreateServiceDTO model)
 		{
-			var ser = unitOfWork.serviceRepo.GetServiceByID(model.ServiceId);
+			Service ser = await unitOfWork.serviceRepo.GetServiceByID(model.ServiceId);
 			if (ser == null)
 			{
 				return new ResponseDTO("", 400, false, null);
 			}
 			try
 			{
+				int serID=model.ServiceId;
+				unitOfWork.serviceRepo.Detach(ser);
 				CreateServiceDTO createServiceDTO = new CreateServiceDTO();
-				createServiceDTO.ServiceId = model.ServiceId;
 				createServiceDTO.ServiceName = model.ServiceName;
 				createServiceDTO.Description = model.Description;
 				createServiceDTO.Price = model.Price;
@@ -79,18 +81,55 @@ namespace Services.Impl
 					return responseDTO;
 				}
 				Service service = mapper.Map<Service>(createServiceDTO);
+				service.ServiceId = serID;
+				unitOfWork.serviceRepo.Attach(service);
 				var update = await unitOfWork.serviceRepo.UpdateAsync(service);
-				if (update)
+				if (!update)
 				{
-					return new ResponseDTO("", 200, true, null);
+					return new ResponseDTO("", 500, false, null);
+					
 				}
-				return new ResponseDTO("", 500, false, null);
+				return new ResponseDTO("", 200, true, null);
 			}
 			catch (Exception ex)
 			{
 				return new ResponseDTO(ex.Message, 500, false, null);
 			}
 		}
+
+
+		public async Task<ResponseDTO> deleteService(int serviceId)
+		{
+			Service ser = await unitOfWork.serviceRepo.GetServiceByID(serviceId);
+			if (ser == null)
+			{
+				return new ResponseDTO("", 400, false, null);
+			}
+			try
+			{
+				unitOfWork.serviceRepo.Detach(ser);
+				CreateServiceDTO createServiceDTO = new CreateServiceDTO();
+				createServiceDTO.ServiceId = ser.ServiceId;
+				createServiceDTO.Price = ser.Price;
+				createServiceDTO.ServiceName = ser.ServiceName;
+				createServiceDTO.Description = ser.Description;	
+				createServiceDTO.Status=false;
+				Service service = mapper.Map<Service>(createServiceDTO);
+				unitOfWork.serviceRepo.Attach(service);
+				var update = await unitOfWork.serviceRepo.UpdateAsync(service);
+				if (!update)
+				{
+					return new ResponseDTO("", 500, false, null);
+
+				}
+				return new ResponseDTO("", 200, true, null);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
+		}
+
 
 		public async Task<ResponseDTO> getAllService(int pageNumber, int rowsPerPage)
 		{
