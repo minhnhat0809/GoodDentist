@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.Entity;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Repositories.Impl

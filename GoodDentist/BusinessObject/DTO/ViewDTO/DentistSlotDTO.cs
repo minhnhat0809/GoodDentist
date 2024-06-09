@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BusinessObject.Entity;
 
-namespace BusinessObject;
+namespace BusinessObject.DTO.ViewDTO;
 
-public partial class DentistSlot
+public class DentistSlotDTO
 {
     public int DentistSlotId { get; set; }
 
@@ -18,8 +17,7 @@ public partial class DentistSlot
     public int? RoomId { get; set; }
 
     public virtual User? Dentist { get; set; }
+    
+    public int RoomNumber { get; set; }
 
-    public virtual ICollection<Examination> Examinations { get; set; } = new List<Examination>();
-
-    public virtual Room? Room { get; set; }
 }

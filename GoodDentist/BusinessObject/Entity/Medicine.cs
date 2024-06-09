@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject;
+namespace BusinessObject.Entity;
 
 public partial class Medicine
 {
@@ -18,4 +18,6 @@ public partial class Medicine
     public decimal? Price { get; set; }
 
     public bool? Status { get; set; }
+
+    public virtual ICollection<MedicinePrescription> MedicinePrescriptions { get; set; } = new List<MedicinePrescription>();
 }

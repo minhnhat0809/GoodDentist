@@ -13,4 +13,7 @@ public interface IRepositoryBase<T>
     Task<List<T>> Paging(int pageNumber, int rowsPerpage);
     Task<T?> GetByIdAsync(object id);
 
+    void Attach(T entity);
+    void Detach(T entity);
+
 }

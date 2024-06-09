@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.Entity;
 
 namespace Repositories
 {

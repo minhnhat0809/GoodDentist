@@ -18,8 +18,12 @@ namespace Repositories.Impl
         public IRoleRepo roleRepo { get; private set; }
         public IClinicRepo clinicRepo { get; private set; }
         public IDentistSlotRepo dentistSlotRepo { get; private set; }
+        public IClinicRepository ClinicRepository { get; }
         public IDistributedCache distributedCache { get; private set; }
         public IServiceRepo serviceRepo { get; private set; }
+
+        public IRoomRepo roomRepo {  get; private set; }
+
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
             _repositoryContext = context;
@@ -29,6 +33,8 @@ namespace Repositories.Impl
             roleRepo = new RoleRepo(_repositoryContext);
             clinicRepo = new ClinicRepo(_repositoryContext);
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
+            roomRepo = new RoomRepo(_repositoryContext);
+            ClinicRepository = new ClinicRepository(_repositoryContext);
 			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
         }
 

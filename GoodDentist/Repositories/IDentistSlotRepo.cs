@@ -1,5 +1,5 @@
-﻿using BusinessObject;
-using BusinessObject.DTO;
+﻿using BusinessObject.DTO;
+using BusinessObject.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +15,9 @@ namespace Repositories
         Task<List<DentistSlot>?> GetAllDentistSlots(int pageNumber, int rowsPerPage);
 
         Task<List<DentistSlot>?> GetAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage);
+
+        Task<DentistSlot?> GetDentistSlotsByRoomAndTimeStart(int roomId, DateTime timeStart);
+
+        Task<DentistSlot?> GetDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart);
     }
 }

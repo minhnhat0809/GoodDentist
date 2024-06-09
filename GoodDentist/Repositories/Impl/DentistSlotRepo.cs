@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,11 @@ namespace Repositories.Impl
 
         public async Task<List<DentistSlot>?> GetAllDentistSlots(int pageNumber, int rowsPerPage)
         {
-            List<DentistSlot> dentistSlots = await Paging(pageNumber, rowsPerPage);
+            List<DentistSlot> dentistSlots = await _repositoryContext.DentistSlots
+                .Include(dl => dl.Room)
+                .Skip((pageNumber - 1) * rowsPerPage)
+                .Take(rowsPerPage)
+                .ToListAsync(); ;
             return dentistSlots;
         }
 
@@ -27,11 +32,23 @@ namespace Repositories.Impl
             return dentistSlots;
         }
 
+        public async Task<DentistSlot?> GetDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart)
+        {
+            List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.DentistId.Equals(Guid.Parse(dentistId)) && dl.TimeStart.Equals(timeStart));
+            return dentistSlots.FirstOrDefault();
+        }
+
         public async Task<DentistSlot?> GetDentistSlotByID(int Id)
         {
             return await _repositoryContext.DentistSlots
                 .Include(dl => dl.Room)
                 .FirstOrDefaultAsync(dl => dl.DentistSlotId == Id);
+        }
+
+        public async Task<DentistSlot?> GetDentistSlotsByRoomAndTimeStart(int roomId, DateTime timeStart)
+        {
+            List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.RoomId == roomId && dl.TimeStart.Equals(timeStart));
+            return dentistSlots.FirstOrDefault();
         }
     }
 }
