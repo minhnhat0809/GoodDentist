@@ -28,7 +28,7 @@ namespace Services.Impl
 
         public async Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO)
         {
-            ResponseListDTO responseDTO = new ResponseListDTO();
+			ResponseListDTO responseDTO = new ResponseListDTO();
             try
             {
                 responseDTO = await validateUser(createUserDTO);
@@ -99,7 +99,7 @@ namespace Services.Impl
 
         private async Task<ResponseListDTO> validateUser(CreateUserDTO createUserDTO)
         {
-            ResponseListDTO responseDTO = new ResponseListDTO();
+			ResponseListDTO responseDTO = new ResponseListDTO();
             responseDTO.IsSuccess = true;
 
             if (createUserDTO.UserName.IsNullOrEmpty())
@@ -277,7 +277,7 @@ namespace Services.Impl
 
         public async Task<ResponseListDTO> updateUser(CreateUserDTO createUserDTO)
         {
-            ResponseListDTO responseDTO = new ResponseListDTO();
+			ResponseListDTO responseDTO = new ResponseListDTO();
             try
             {
                 responseDTO = await validateUser(createUserDTO);

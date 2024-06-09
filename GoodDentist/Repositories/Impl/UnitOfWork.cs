@@ -1,5 +1,6 @@
 ﻿using BusinessObject;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Update.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,7 @@ namespace Repositories.Impl
         public IClinicRepo clinicRepo { get; private set; }
         public IDentistSlotRepo dentistSlotRepo { get; private set; }
         public IDistributedCache distributedCache { get; private set; }
-
-        
-
+        public IServiceRepo serviceRepo { get; private set; }
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
             _repositoryContext = context;
@@ -30,6 +29,7 @@ namespace Repositories.Impl
             roleRepo = new RoleRepo(_repositoryContext);
             clinicRepo = new ClinicRepo(_repositoryContext);
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
+			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
         }
 
         public async Task<int> CompleteAsync()

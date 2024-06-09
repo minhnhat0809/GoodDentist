@@ -23,7 +23,7 @@ namespace Services.Impl
 
         public async Task<ResponseListDTO> createDentistSlot(DentistSlotDTO dentistSlotDTO)
         {
-            ResponseListDTO responseDTO = new ResponseListDTO();
+			ResponseListDTO responseDTO = new ResponseListDTO();
             try
             {
                 responseDTO = await validateDentistSlot(dentistSlotDTO);
@@ -155,7 +155,7 @@ namespace Services.Impl
 
         public async Task<ResponseListDTO> updateDentistSlot(DentistSlotDTO dentistSlotDTO)
         {
-            ResponseListDTO responseDTO = new ResponseListDTO();
+			ResponseListDTO responseDTO = new ResponseListDTO();
             try
             {
                 responseDTO = await validateDentistSlot(dentistSlotDTO);
@@ -189,7 +189,7 @@ namespace Services.Impl
 
         private async Task<ResponseListDTO> validateDentistSlot(DentistSlotDTO dentistSlotDTO)
         {
-            ResponseListDTO responseDTO = new ResponseListDTO();
+			ResponseListDTO responseDTO = new ResponseListDTO();
 
 
             return responseDTO;
