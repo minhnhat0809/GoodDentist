@@ -19,4 +19,5 @@ namespace BusinessObject.DTO
         public required string ClinicId { get; set; }
         public required int RoleId { get; set; }
     }
+    
 }

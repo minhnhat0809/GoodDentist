@@ -7,7 +7,13 @@ public partial class Customer
 {
     public Guid CustomerId { get; set; }
 
-    public string CustomerName { get; set; } = null!;
+    public string UserName { get; set; } = null!;
+
+    public string Name { get; set; } = null!;
+
+    public byte[]? Salt { get; set; }
+
+    public byte[]? Password { get; set; }
 
     public DateOnly? Dob { get; set; }
 
