@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject;
+namespace BusinessObject.Entity;
 
 public partial class DentistSlot
 {
@@ -9,13 +9,15 @@ public partial class DentistSlot
 
     public Guid? DentistId { get; set; }
 
-    public DateTime? TimeStart { get; set; }
+    public TimeOnly? TimeStart { get; set; }
 
-    public DateTime? TimeEnd { get; set; }
+    public TimeOnly? TimeEnd { get; set; }
 
-    public bool? Status { get; set; }
+    public string? Available { get; set; }
 
     public int? RoomId { get; set; }
+
+    public bool? Status { get; set; }
 
     public virtual User? Dentist { get; set; }
 

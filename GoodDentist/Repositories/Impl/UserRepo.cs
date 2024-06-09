@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;

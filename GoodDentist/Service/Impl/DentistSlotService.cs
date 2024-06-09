@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using System;
