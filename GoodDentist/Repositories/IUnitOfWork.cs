@@ -15,6 +15,7 @@ namespace Repositories
         IClinicRepo clinicRepo { get; }
         IRoomRepo roomRepo { get; }
         IDentistSlotRepo dentistSlotRepo { get; }
+        IClinicRepository ClinicRepository { get; }
         Task<int> CompleteAsync();
     }
 }

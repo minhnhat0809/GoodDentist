@@ -17,6 +17,7 @@ namespace Repositories.Impl
         public IRoleRepo roleRepo { get; private set; }
         public IClinicRepo clinicRepo { get; private set; }
         public IDentistSlotRepo dentistSlotRepo { get; private set; }
+        public IClinicRepository ClinicRepository { get; }
         public IDistributedCache distributedCache { get; private set; }
 
         public IRoomRepo roomRepo {  get; private set; }
@@ -31,6 +32,7 @@ namespace Repositories.Impl
             clinicRepo = new ClinicRepo(_repositoryContext);
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
             roomRepo = new RoomRepo(_repositoryContext);
+            ClinicRepository = new ClinicRepository(_repositoryContext);
         }
 
         public async Task<int> CompleteAsync()

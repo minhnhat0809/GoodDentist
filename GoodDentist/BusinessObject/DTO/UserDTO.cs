@@ -17,4 +17,6 @@ namespace BusinessObject.DTO
         public bool? Status { get; set; }
         public required int RoleId { get; set; }
     }
+
+    
 }
