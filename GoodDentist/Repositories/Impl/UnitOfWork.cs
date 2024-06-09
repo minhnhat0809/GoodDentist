@@ -20,6 +20,7 @@ namespace Repositories.Impl
         public IDistributedCache distributedCache { get; private set; }
         public IMedicineRepository medicineRepo { get; private set; }
         public IRoomRepo roomRepo { get; private set; }
+        public IRecordTypeRepository recordTypeRepo { get; private set; }
 
 
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
@@ -33,6 +34,7 @@ namespace Repositories.Impl
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
             medicineRepo = new MedicineRepository(_repositoryContext);
             roomRepo = new RoomRepo(_repositoryContext);
+            recordTypeRepo = new RecordTypeRepository(_repositoryContext);
             
         }
 

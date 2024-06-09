@@ -8,60 +8,64 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Services;
+using Services.Impl;
 using System.Threading;
 
 namespace GoodDentist.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicineController : ControllerBase
+    public class RecordTypeController : ControllerBase
     {
-        private readonly IMedicineService _medicineService;
+        private readonly IRecordTypeService _recordTypeService;
         private readonly IDistributedCache _distributedCache;
 
-        public MedicineController(IMedicineService medicineService, IDistributedCache distributedCache)
+        public RecordTypeController(IRecordTypeService recordTypeService, IDistributedCache distributedCache)
         {
-            this._medicineService = medicineService;
+            this._recordTypeService = recordTypeService;
             this._distributedCache = distributedCache;
         }
 
-        [HttpPost("new-medicine")]
-        public async  Task<ResponseDTO> AddMedicine([FromBody] MedicineDTO medicineDTO)
-        {
-           ResponseDTO responseDTO = await _medicineService.AddMedicine(medicineDTO); 
-            
-           return responseDTO;                       
-        }
-
-        [HttpGet("all-medicine")]
-        public async Task<ResponseDTO> GetAllMedicine([FromQuery] int pageNumber, int rowsPerPage)
+        [HttpGet("all-recordType")]
+        public async Task<ResponseDTO> GetAllRecordType([FromQuery] int pageNumber, int rowsPerPage)
         {           
-            ResponseDTO responseDTO = await _medicineService.GetAllMedicine(pageNumber, rowsPerPage);
+            ResponseDTO responseDTO = await _recordTypeService.GetAllRecordTyoe(pageNumber, rowsPerPage);
             return responseDTO;
         }
 
-        [HttpDelete("medicine")]
-        public async Task<ResponseDTO> DeleteMedicine([FromQuery] int medicineId)
+        [HttpPost("new-recordType")]
+        public async Task<ResponseDTO> AddRecordType([FromBody] RecordTypeCreateDTO recordTypeDTO)
         {
-            ResponseDTO responseDTO = await _medicineService.DeleteMedicine(medicineId);
+            ResponseDTO responseDTO = await _recordTypeService.AddRecordType(recordTypeDTO);
+
             return responseDTO;
         }
 
-        [HttpPut("medicine")]
-        public async Task<ResponseDTO> UpdateMedicine([FromBody] MedicineUpdateDTO medicineDTO)
+        [HttpDelete("recordType")]
+
+        public async Task<ResponseDTO> DeleteRecordType([FromQuery] int recordTypeId)
         {
-            ResponseDTO responseDTO = await _medicineService.UpdateMedicine(medicineDTO);
+            ResponseDTO responseDTO = await _recordTypeService.DeleteRecordType(recordTypeId);
 
             return responseDTO;
         }
-        [HttpGet("medicine")]
-        public async Task<ResponseDTO> SearchMedicine([FromQuery] string searchValue)
+
+        [HttpGet("searchRecordType")]
+
+        public async Task<ResponseDTO> SearchRecordType([FromQuery] string searchValue)
         {
-            ResponseDTO responseDTO = await _medicineService.SearchMedicine(searchValue);
+            ResponseDTO responseDTO = await _recordTypeService.SearchRecordType(searchValue);
+
             return responseDTO;
         }
 
+        [HttpPut("updateRecordType")]
+        public async Task<ResponseDTO> UpdateRecordType([FromBody] RecordTypeDTO recordTypeDTO)
+        {
+            ResponseDTO responseDTO = await _recordTypeService.UpdateRecordType(recordTypeDTO);
 
+            return responseDTO;
+        }
 
 
 

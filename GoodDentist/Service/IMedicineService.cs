@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.Entity;
 
 namespace Services
 {
@@ -12,7 +13,7 @@ namespace Services
     {
         Task<ResponseDTO> GetAllMedicine(int pageNumber, int pageSize);
 
-        List<Medicine> SearchMedicine(string searchValue);
+        Task<ResponseDTO> SearchMedicine(string searchValue);
 
         Task<ResponseDTO> AddMedicine(MedicineDTO medicineDTO);
 

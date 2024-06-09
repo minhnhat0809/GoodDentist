@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using Repositories.Impl;
@@ -14,7 +15,7 @@ namespace Services.Impl
 {
     public class MedicineService : IMedicineService
     {
-        private readonly IMedicineRepository _medicineRepository;
+        
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         public MedicineService(IUnitOfWork unitOfWork, IMapper mapper)
@@ -28,8 +29,9 @@ namespace Services.Impl
             try
             {
                 List<Medicine>? medicineList = await unitOfWork.medicineRepo.GetAllMedicine(pageNumber, pageSize);
+                var all = medicineList.Where(c => c.Status == true);
 
-                List<MedicineDTO> medicineDTOList = mapper.Map<List<MedicineDTO>>(medicineList);
+                List<MedicineUpdateDTO> medicineDTOList = mapper.Map<List<MedicineUpdateDTO>>(all);
 
                 responseDTO.Message = "Get all Medicine successfully!";
                 responseDTO.Result = medicineDTOList;
@@ -44,9 +46,26 @@ namespace Services.Impl
             }
         }
 
-        public List<Medicine> SearchMedicine(string searchValue)
+        public async Task<ResponseDTO> SearchMedicine(string searchValue)
         {
-            return null;
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+            try
+            {
+                List<Medicine>? medicinesList = await unitOfWork.medicineRepo.FindByConditionAsync(c => c.MedicineName == searchValue);
+                var all = medicinesList.Where(c => c.Status == true);
+                List<MedicineDTO> medicineDTOList = mapper.Map<List<MedicineDTO>>(all);
+
+                responseDTO.Message = "Search Medicine successfully!";
+                responseDTO.Result = medicineDTOList;
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.Message = ex.Message;
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 500;
+                return responseDTO;
+            }
         }
 
         public async Task<ResponseDTO> DeleteMedicine(int medicineId)
@@ -110,8 +129,16 @@ namespace Services.Impl
                     return check;
                 }
                 int medicineId = medicine.MedicineId;
-                medicine = mapper.Map<Medicine>(medicineDTO);
-                await unitOfWork.medicineRepo.UpdateAsync(medicine);
+
+                unitOfWork.medicineRepo.Detach(medicine);
+
+                var updateMedicine = mapper.Map<Medicine>(medicineDTO);
+
+                updateMedicine.MedicineId = medicineId;
+
+                unitOfWork.medicineRepo.Attach(updateMedicine);
+
+                await unitOfWork.medicineRepo.UpdateAsync(updateMedicine);
                 return new ResponseDTO("Update Sucessfully!", 201, true, null);
             }
             catch (Exception ex)
