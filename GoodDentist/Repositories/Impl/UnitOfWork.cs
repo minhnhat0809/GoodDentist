@@ -24,6 +24,8 @@ namespace Repositories.Impl
 
         public IRoomRepo roomRepo {  get; private set; }
 
+        public IExaminationRepo examinationRepo { get; private set; }
+
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
             _repositoryContext = context;
@@ -34,6 +36,7 @@ namespace Repositories.Impl
             clinicRepo = new ClinicRepo(_repositoryContext);
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
             roomRepo = new RoomRepo(_repositoryContext);
+            examinationRepo = new ExaminationRepo(_repositoryContext);
             ClinicRepository = new ClinicRepository(_repositoryContext);
 			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
         }
