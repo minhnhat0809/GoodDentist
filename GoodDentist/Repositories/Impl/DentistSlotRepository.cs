@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using BusinessObject;
+using BusinessObject.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Impl;

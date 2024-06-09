@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject;
+namespace BusinessObject.Entities;
 
-public partial class ClinicService 
+public partial class ClinicService
 {
     public int ClinicServiceId { get; set; }
 

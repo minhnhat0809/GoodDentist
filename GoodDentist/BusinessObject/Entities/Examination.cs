@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject;
+namespace BusinessObject.Entities;
 
 public partial class Examination
 {
@@ -15,9 +15,13 @@ public partial class Examination
 
     public string? Diagnosis { get; set; }
 
-    public DateTime? DateTime { get; set; }
+    public DateTime? TimeStart { get; set; }
+
+    public TimeOnly? Duration { get; set; }
 
     public string? Notes { get; set; }
+
+    public bool? Status { get; set; }
 
     public virtual User? Dentist { get; set; }
 

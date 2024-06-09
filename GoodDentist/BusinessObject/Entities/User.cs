@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject;
+namespace BusinessObject.Entities;
 
 public partial class User
 {
@@ -23,9 +23,9 @@ public partial class User
 
     public string? Address { get; set; }
 
-    public bool? Status { get; set; }
-
     public int? RoleId { get; set; }
+
+    public bool? Status { get; set; }
 
     public virtual ICollection<ClinicUser> ClinicUsers { get; set; } = new List<ClinicUser>();
 

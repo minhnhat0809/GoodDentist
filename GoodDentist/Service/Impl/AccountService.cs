@@ -7,6 +7,7 @@ using Repositories;
 using System;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using BusinessObject.Entities;
 
 namespace Services.Impl
 {

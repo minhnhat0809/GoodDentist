@@ -5,6 +5,7 @@ using System.Text;
 using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;

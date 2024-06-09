@@ -1,4 +1,6 @@
-﻿namespace BusinessObject.DTO.ViewDTO;
+﻿using BusinessObject.Entities;
+
+namespace BusinessObject.DTO.ViewDTO;
 
 public class DentistSlotDTO
 {

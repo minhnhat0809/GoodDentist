@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject;
+namespace BusinessObject.Entities;
 
 public partial class Order
 {
@@ -14,6 +14,8 @@ public partial class Order
     public DateTime? DateTime { get; set; }
 
     public decimal? Price { get; set; }
+
+    public bool? Status { get; set; }
 
     public virtual ExaminationProfile? ExaminationProfile { get; set; }
 

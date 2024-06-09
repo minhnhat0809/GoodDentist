@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObject;
+namespace BusinessObject.Entities;
 
 public partial class Clinic
 {
