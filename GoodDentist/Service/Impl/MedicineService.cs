@@ -117,36 +117,7 @@ namespace Services.Impl
             {
                 return new ResponseDTO(ex.Message, 500, false, null);
             }
-            /*ResponseListDTO responseDTO = new ResponseListDTO();
-            try
-            {
-                responseDTO = await validateMedicine(medicineDTO);
-                if (responseDTO.IsSuccess == false)
-                {
-                    return responseDTO;
-                }
-                Medicine? medicine = await unitOfWork.medicineRepo.GetMedicineByID(medicineDTO.MedicineId);
-                if (medicine == null)
-                {
-                    responseDTO.Message.Add("There are no medicin with this ID");
-                    responseDTO.IsSuccess = false;
-                    return responseDTO;
-                }
-
-                medicine = mapper.Map<Medicine>(medicineDTO);
-                await unitOfWork.medicineRepo.UpdateAsync(medicine);
-
-                responseDTO.Message.Add("Update sucessfully");
-                responseDTO.IsSuccess = true;
-                return responseDTO;
-            }
-            catch (Exception ex)
-            {
-                responseDTO.Message.Add(ex.Message);
-                responseDTO.IsSuccess = false;
-                //responseDTO.StatusCode = 500;
-                return responseDTO;
-            }*/
+            
         }
 
         public async Task<ResponseDTO> CheckValidationAddMedicine(MedicineDTO medicineDTO)
