@@ -52,6 +52,7 @@ namespace Services.Impl
                 user.Salt = salting();
                 user.Password = hashPassword(createUserDTO.Password, user.Salt);
                 user.UserId = Guid.NewGuid();
+                user.CreatedDate = DateTime.Now;
 
                 ClinicUser clinicUser = new ClinicUser()
                 {
