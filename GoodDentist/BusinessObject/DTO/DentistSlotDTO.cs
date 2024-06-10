@@ -12,6 +12,8 @@ namespace BusinessObject.DTO
 
         public Guid? DentistId { get; set; }
 
+        public string? DentistName { get; set; }
+
         public DateTime? TimeStart { get; set; }
 
         public DateTime? TimeEnd { get; set; }

@@ -25,6 +25,13 @@ namespace Repositories.Impl
             return dentistSlots;
         }
 
+        public async Task<List<DentistSlot>?> GetAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage)
+        {
+            List<DentistSlot> dentistSlots = await Paging(pageNumber, rowsPerPage);
+            dentistSlots.Where(dl => dl.Room.Clinic.ClinicId.Equals(Guid.Parse(clinicId))).ToList();
+            return dentistSlots;
+        }
+
         public async Task<List<DentistSlot>?> GetAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage)
         {
             List<DentistSlot> dentistSlots = await Paging(pageNumber, rowsPerPage);
