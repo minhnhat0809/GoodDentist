@@ -90,7 +90,7 @@ public class AuthService : IAuthService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-    public byte[] hashPassword(string password, byte[] salt)
+    private byte[] hashPassword(string password, byte[] salt)
     {
         var hashedPassword = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
 
