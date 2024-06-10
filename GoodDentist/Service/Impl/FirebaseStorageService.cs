@@ -1,8 +1,12 @@
 ﻿using System.Data.SqlTypes;
+using Google;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Processing;
 
 namespace Services.Impl;
 
@@ -32,7 +36,7 @@ public class FirebaseStorageService : IFirebaseStorageService
 
         // Upload image to Firebase
         var img = await _storageClient.UploadObjectAsync(
-            _bucketName, $"{imgFolderName}/{fileName}", file.ContentType, stream);
+            _bucketName, $"image/{imgFolderName}/{fileName}", file.ContentType, stream);
 
         // Image URI to get client image
         var photoUri = img.MediaLink;
@@ -53,8 +57,15 @@ public class FirebaseStorageService : IFirebaseStorageService
         var uri = new Uri(fileUrl);
         var filePath = uri.LocalPath.Substring("/download/storage/v1/b/good-dentist-67aba.appspot.com/o/".Length);
         // Delete the file from Firebase Storage
-        await _storageClient.DeleteObjectAsync(_bucketName, filePath);
+        try
+        {
+            await _storageClient.DeleteObjectAsync(_bucketName, filePath);
+        }
+        catch (GoogleApiException ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
-   
 
+    
 }
