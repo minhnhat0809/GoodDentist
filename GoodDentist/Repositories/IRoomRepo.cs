@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public interface IRoomRepo : IRepositoryBase<Room>
-    {
-
-    }
+	public interface IRoomRepo : IRepositoryBase<Room>
+	{
+		Task<List<Room>> GetAllRoom(int pageNumber, int rowsPerPage);
+		Task<Room> GetRoomByID(int roomId);
+	}
 }

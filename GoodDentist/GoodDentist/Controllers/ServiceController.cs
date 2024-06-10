@@ -30,7 +30,7 @@ namespace GoodDentist.Controllers
 			return responseDTO;
 		}
 		[HttpPut("service")]
-		public async Task<ResponseDTO> UpdateService(CreateServiceDTO model)
+		public async Task<ResponseDTO> UpdateService([FromBody] CreateServiceDTO model)
 		{
 			ResponseDTO responseDTO = await serviceService.updateService(model);
 			return responseDTO;

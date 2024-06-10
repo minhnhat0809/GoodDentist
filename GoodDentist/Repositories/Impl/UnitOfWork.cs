@@ -38,7 +38,7 @@ namespace Repositories.Impl
             clinicRepo = new ClinicRepo(_repositoryContext);
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
             medicineRepo = new MedicineRepository(_repositoryContext);
-            roomRepo = new RoomRepo(_repositoryContext);
+            roomRepo = new RoomRepo(_repositoryContext,distributedCache);
             examinationRepo = new ExaminationRepo(_repositoryContext);
             ClinicRepository = new ClinicRepository(_repositoryContext);
             recordTypeRepo = new RecordTypeRepository(_repositoryContext);
