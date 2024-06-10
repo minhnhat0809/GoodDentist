@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.DTO.ViewDTO;
+using DentistSlotDTO = BusinessObject.DTO.DentistSlotDTO;
 
 namespace Services
 {
@@ -22,6 +24,7 @@ namespace Services
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.RoleId))
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
             .ForMember(dest => dest.Salt, opt => opt.Ignore())
             .ForMember(dest => dest.Password, opt => opt.Ignore())
             .ForMember(dest => dest.UserId, opt => opt.Ignore())
@@ -37,6 +40,7 @@ namespace Services
             .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
@@ -44,6 +48,11 @@ namespace Services
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
             CreateMap<DentistSlotDTO, DentistSlot>()
+                .ForMember(dest => dest.TimeStart, opt => opt.MapFrom(src => src.TimeStart))
+                .ForMember(dest => dest.TimeEnd, opt => opt.MapFrom(src => src.TimeEnd))
+                .ForMember(dest => dest.Status, otp => otp.MapFrom(src => src.Status))
+                .ForMember(dest => dest.DentistId, otp => otp.MapFrom(src => src.DentistId))
+                .ForMember(dest => dest.RoomId, otp => otp.MapFrom(src => src.RoomId))
                 .ForMember(dest => dest.DentistSlotId, otp => otp.Ignore())
                 .ForMember(dest => dest.Dentist, otp => otp.Ignore())
                 .ForMember(dest => dest.Examinations, otp => otp.Ignore())
@@ -61,6 +70,9 @@ namespace Services
             CreateMap<RecordTypeCreateDTO, RecordType>()
                 .ReverseMap();
 			CreateMap<CreateServiceDTO, Service>().ReverseMap();
+            CreateMap<MedicalRecordDTO, MedicalRecord>().ReverseMap();
+            CreateMap<MedicalRecordRequestDTO, MedicalRecord>().ReverseMap();
+        }
 			CreateMap<CreateRoomDTO, Room>().ReverseMap();
 		}
     }

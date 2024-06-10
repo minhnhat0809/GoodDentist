@@ -23,13 +23,13 @@ namespace Repositories.Impl
 
         public async Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage)
         {
-            //string key = "userList";
-            List<User>? userList = await Paging(pageNumber, rowsPerPage);
+            string key = "userList";
+            List<User>? userList = new List<User>();
 
 
-            /*CancellationToken cancellationToken = default;
-            string? cacheMember = await distributedCache.GetStringAsync(key, cancellationToken);*/
-            /*if (cacheMember.IsNullOrEmpty())
+            CancellationToken cancellationToken = default;
+            string? cacheMember = await distributedCache.GetStringAsync(key, cancellationToken);
+            if (cacheMember.IsNullOrEmpty())
             {
                 userList = await FindAllAsync();
 
@@ -40,11 +40,22 @@ namespace Repositories.Impl
 
                 await distributedCache.SetStringAsync(key, JsonConvert.SerializeObject(userList), cancellationToken);
 
-                return userList;
+                return userList.Skip((pageNumber - 1) * rowsPerPage)
+                            .Take(rowsPerPage)
+                            .ToList();
             }
 
-            userList = JsonConvert.DeserializeObject<List<User>>(cacheMember);  */
-
+            userList = JsonConvert.DeserializeObject<List<User>>(cacheMember);
+            if (userList.IsNullOrEmpty())
+            {
+                return userList;
+            }
+            else
+            {
+                userList.Skip((pageNumber - 1) * rowsPerPage)
+                            .Take(rowsPerPage)
+                            .ToList();
+            }
             return userList;
         }
 

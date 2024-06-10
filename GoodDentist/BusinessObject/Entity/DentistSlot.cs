@@ -9,11 +9,9 @@ public partial class DentistSlot
 
     public Guid? DentistId { get; set; }
 
-    public TimeOnly? TimeStart { get; set; }
+    public DateTime? TimeStart { get; set; }
 
-    public TimeOnly? TimeEnd { get; set; }
-
-    public string? Available { get; set; }
+    public DateTime? TimeEnd { get; set; }
 
     public int? RoomId { get; set; }
 
