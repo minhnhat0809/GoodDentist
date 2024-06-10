@@ -10,6 +10,7 @@ namespace BusinessObject.DTO
     {
         public required string UserName { get; set;}
         public required string Password { get; set; }
+        public string? Name { get; set; }
         public DateTime? Dob {  get; set; }
         public string? Gender { get; set; }
         public string? PhoneNumber { get; set; }

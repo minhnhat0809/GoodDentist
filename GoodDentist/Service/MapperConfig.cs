@@ -46,6 +46,11 @@ namespace Services
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
             CreateMap<DentistSlotDTO, DentistSlot>()
+                .ForMember(dest => dest.TimeStart, opt => opt.MapFrom(src => src.TimeStart))
+                .ForMember(dest => dest.TimeEnd, opt => opt.MapFrom(src => src.TimeEnd))
+                .ForMember(dest => dest.Status, otp => otp.MapFrom(src => src.Status))
+                .ForMember(dest => dest.DentistId, otp => otp.MapFrom(src => src.DentistId))
+                .ForMember(dest => dest.RoomId, otp => otp.MapFrom(src => src.RoomId))
                 .ForMember(dest => dest.DentistSlotId, otp => otp.Ignore())
                 .ForMember(dest => dest.Dentist, otp => otp.Ignore())
                 .ForMember(dest => dest.Examinations, otp => otp.Ignore())

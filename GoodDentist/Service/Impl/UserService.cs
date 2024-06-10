@@ -130,6 +130,15 @@ namespace Services.Impl
                 }
             }
 
+            if (createUserDTO.Name.IsNullOrEmpty())
+            {
+                AddError("Name cannot be empty!");
+            }
+            else if (Regex.IsMatch(createUserDTO.UserName, @"[^a-zA-Z0-9]"))
+            {
+                AddError("Name cannot contain special characters!");
+            }
+
             if (!createUserDTO.Dob.HasValue)
             {
                 AddError("Date of birth is empty!");
