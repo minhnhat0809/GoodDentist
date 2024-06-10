@@ -15,7 +15,14 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     public Task<List<T>> FindByConditionAsync(Expression<Func<T, bool>> expression) =>
         _repositoryContext.Set<T>().Where(expression).AsNoTracking().ToListAsync();
 
-
+    public async Task<List<T>> Paging(int pageNumber, int pageSize)
+    {
+        return await _repositoryContext.Set<T>()
+            .AsNoTracking()
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
     public async Task<bool> CreateAsync(T entity)
     {
         try
@@ -43,7 +50,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         try
         {
-            _repositoryContext.Set<T>().Remove(entity);
+            _repositoryContext.Set<T>().Update(entity);
             return await SaveChange();
         }
         catch (Exception ex)
@@ -55,6 +62,21 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         var result = await _repositoryContext.SaveChangesAsync();
         return result > 0;
+    }
+    public async Task<T?> GetByIdAsync(object id)
+    {
+        return await _repositoryContext.Set<T>().FindAsync(id);
+    }
+
+    public void Attach(T entity)
+    {
+        _repositoryContext.Set<T>().Attach(entity);
+        _repositoryContext.Entry(entity).State = EntityState.Modified;
+    }
+
+    public void Detach(T entity)
+    {
+        _repositoryContext.Entry(entity).State = EntityState.Detached;
     }
 
 }

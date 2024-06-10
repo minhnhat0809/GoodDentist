@@ -10,5 +10,10 @@ public interface IRepositoryBase<T>
     Task<bool> DeleteAsync(T entity);
     Task<bool> UpdateAsync(T entity);
     Task<bool> SaveChange();
+    Task<List<T>> Paging(int pageNumber, int rowsPerpage);
+    Task<T?> GetByIdAsync(object id);
+
+    void Attach(T entity);
+    void Detach(T entity);
 
 }
