@@ -10,63 +10,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="db set up">
-      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/DentistSlotDTO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Repositories/IDentistSlotRepo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Repositories/IRoomRepo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Repositories/Impl/DentistSlotRepo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Repositories/Impl/RoomRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ResponseCreateUserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ResponseListDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/DentistSlotDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/DentistSlotDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Clinic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Clinic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/ClinicService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/ClinicUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/ClinicUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Customer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/CustomerClinic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/CustomerClinic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/DentistSlot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/DentistSlot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Examination.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Examination.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/ExaminationProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/ExaminationProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/MedicalRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/MedicalRecord.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Medicine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Medicine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/MedicinePrescription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/MedicinePrescription.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Order.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/OrderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/OrderService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Payment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Payment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Prescription.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Prescription.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/RecordType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/RecordType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Role.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Room.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/Service.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Service.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/GoodDentistDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/GoodDentistDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/DentistSlotController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/DentistSlotController.cs" afterDir="false" />
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/GoodDentist/serviceAccountKey.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Service/IFirebaseStorageService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/MedicalRecordsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/MedicalRecordsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GoodDentist/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IClinicRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IClinicRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IClinicServiceRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicServiceRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IClinicUserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicUserRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IDentistSlotRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IDentistSlotRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IReposirotyBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IReposirotyBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IRoleRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IRoleRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IUnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IUnitOfWork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IUserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IUserRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicServiceRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicServiceRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicUserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicUserRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/DentistSlotRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/DentistSlotRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/RoleRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/UnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/UnitOfWork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IUserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IDentistSlotService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IDentistSlotService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/AuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/AuthService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/DentistSlotService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/DentistSlotService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IMedicalRecordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IMedicalRecordService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Services.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Services.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +39,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GithubDefaultAccount">
@@ -98,9 +58,11 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/bc/0599c07a/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/cc/f365519b/Monitor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/DentistSlotController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/DentistSlotController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/AccountService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/IUnitOfWork.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/UnitOfWork.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/MapperConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -125,13 +87,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     ".NET Launch Settings Profile.GoodDentist: http.executor": "Debug",
-    ".NET Launch Settings Profile.GoodDentist: https.executor": "Run",
+    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging huyntv171283",
+    "git-widget-placeholder": "huyntv171283",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -245,6 +207,7 @@
       <workItem from="1717919917032" duration="195000" />
       <workItem from="1717940069283" duration="517000" />
       <workItem from="1717941291820" duration="427000" />
+      <workItem from="1718008629703" duration="9108000" />
     </task>
     <task id="LOCAL-00001" summary="change file location and create repositoryBase">
       <option name="closed" value="true" />
@@ -342,7 +305,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717941330309</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="medical record - crud">
+      <option name="closed" value="true" />
+      <created>1718000296986</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1718000296986</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -376,7 +347,8 @@
     <MESSAGE value="login delete" />
     <MESSAGE value="clinic crud - paging / sorting / filtering" />
     <MESSAGE value="db set up" />
-    <option name="LAST_COMMIT_MESSAGE" value="db set up" />
+    <MESSAGE value="medical record - crud" />
+    <option name="LAST_COMMIT_MESSAGE" value="medical record - crud" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -393,6 +365,110 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/LoginController.cs</url>
+          <line>26</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\LoginController.cs" containingFunctionPresentation="Method 'Login'">
+            <startOffsets>
+              <option value="681" />
+            </startOffsets>
+            <endOffsets>
+              <option value="735" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
+          <line>40</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'Authenticate'">
+            <startOffsets>
+              <option value="1211" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1279" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs</url>
+          <line>72</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\MedicalRecordService.cs" containingFunctionPresentation="Method 'UploadFile'">
+            <startOffsets>
+              <option value="2535" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2609" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs</url>
+          <line>93</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\MedicalRecordService.cs" containingFunctionPresentation="Method 'DeleteFileAndReference'">
+            <startOffsets>
+              <option value="3285" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3359" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/MedicalRecordsController.cs</url>
+          <line>125</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\MedicalRecordsController.cs" containingFunctionPresentation="Method 'DeleteFile'">
+            <startOffsets>
+              <option value="3877" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3942" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/MedicalRecordsController.cs</url>
+          <line>149</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\MedicalRecordsController.cs" containingFunctionPresentation="Method 'UploadFile'">
+            <startOffsets>
+              <option value="4707" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4766" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
+          <line>27</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'UploadFile'">
+            <startOffsets>
+              <option value="923" />
+            </startOffsets>
+            <endOffsets>
+              <option value="970" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
+          <line>52</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'DeleteFileAndReference'">
+            <startOffsets>
+              <option value="1717" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1744" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

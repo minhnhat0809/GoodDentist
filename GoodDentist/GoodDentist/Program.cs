@@ -24,7 +24,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+// singleton
+builder.Services.AddSingleton<IFirebaseStorageService, FirebaseStorageService>();
 //service
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
@@ -33,7 +34,7 @@ builder.Services.AddScoped<IRecordTypeService, RecordTypeService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
-
+builder.Services.AddScoped<IFirebaseStorageService, FirebaseStorageService>();
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();

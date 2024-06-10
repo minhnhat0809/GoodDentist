@@ -116,5 +116,48 @@ namespace GoodDentist.Controllers
             return ResponseDto;
         }
         
+        // POST: api/MedicalRecords/delete
+        [HttpPost("delete-file/{id:int}")]
+        public async Task<ResponseDTO> DeleteFile(int id)
+        {
+            ResponseDto = new ResponseDTO("", 200, true,null);
+            try
+            {
+                var dto = await _medicalRecordService.DeleteFileAndReference(id);
+                ResponseDto.Result = dto;
+            }
+            catch (Exception e)
+            {
+                ResponseDto.Message = e.Message;
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
+            return ResponseDto;
+        }
+        [HttpPost("upload-file/{id:int}")]
+        public async Task<ResponseDTO> UploadFile(IFormFile file, int id)
+        {
+            ResponseDto = new ResponseDTO("", 200, true,null);
+            if (file == null || file.Length == 0)
+            {
+                ResponseDto.Message = "File is empty!";
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
+
+            try
+            {
+                var dto = await _medicalRecordService.UploadFile(file, id);
+                ResponseDto.Result = dto;
+            }
+            catch (Exception e)
+            {
+                ResponseDto.Message = e.Message;
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
+
+            return ResponseDto;
+        }
     }
 }
