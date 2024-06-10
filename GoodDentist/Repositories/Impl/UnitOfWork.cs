@@ -27,6 +27,7 @@ namespace Repositories.Impl
 
 
         public IExaminationRepo examinationRepo { get; private set; }
+        public IMedicalRecordRepository MedicalRecordRepository { get; private set; }
 
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
@@ -42,7 +43,7 @@ namespace Repositories.Impl
             examinationRepo = new ExaminationRepo(_repositoryContext);
             ClinicRepository = new ClinicRepository(_repositoryContext);
             recordTypeRepo = new RecordTypeRepository(_repositoryContext);
-            
+            MedicalRecordRepository = new MedicalRecordRepository(_repositoryContext);
 			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
         }
 

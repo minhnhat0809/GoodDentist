@@ -20,6 +20,7 @@ namespace Repositories
         IRecordTypeRepository recordTypeRepo { get; }
         IClinicRepository ClinicRepository { get; }
         IExaminationRepo examinationRepo { get; }
+        IMedicalRecordRepository MedicalRecordRepository { get; }
         Task<int> CompleteAsync();
     }
 }

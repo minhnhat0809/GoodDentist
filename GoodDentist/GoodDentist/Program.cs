@@ -11,6 +11,7 @@ using Services;
 using Services.Impl;
 using System.Text;
 using System.Text.Json.Serialization;
+using BusinessObject.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -31,6 +32,7 @@ builder.Services.AddScoped<IMedicineService, MedicineService>();
 builder.Services.AddScoped<IRecordTypeService, RecordTypeService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -42,6 +44,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IServiceRepo, ServiceRepo>();
 builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
 builder.Services.AddScoped<IRecordTypeRepository, RecordTypeRepository>();
+builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

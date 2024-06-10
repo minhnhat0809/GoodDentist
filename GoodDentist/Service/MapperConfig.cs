@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.DTO.ViewDTO;
+using DentistSlotDTO = BusinessObject.DTO.DentistSlotDTO;
 
 namespace Services
 {
@@ -68,6 +70,8 @@ namespace Services
             CreateMap<RecordTypeCreateDTO, RecordType>()
                 .ReverseMap();
 			CreateMap<CreateServiceDTO, Service>().ReverseMap();
-		}
+            CreateMap<MedicalRecordDTO, MedicalRecord>().ReverseMap();
+            CreateMap<MedicalRecordRequestDTO, MedicalRecord>().ReverseMap();
+        }
     }
 }
