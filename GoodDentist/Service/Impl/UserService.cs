@@ -52,6 +52,7 @@ namespace Services.Impl
                 user.Salt = salting();
                 user.Password = hashPassword(createUserDTO.Password, user.Salt);
                 user.UserId = Guid.NewGuid();
+                user.CreatedDate = DateTime.Now;
 
                 ClinicUser clinicUser = new ClinicUser()
                 {
@@ -127,6 +128,15 @@ namespace Services.Impl
                     responseDTO.Message.AddRange(validatePwd);
                     responseDTO.IsSuccess = false;
                 }
+            }
+
+            if (createUserDTO.Name.IsNullOrEmpty())
+            {
+                AddError("Name cannot be empty!");
+            }
+            else if (Regex.IsMatch(createUserDTO.UserName, @"[^a-zA-Z0-9]"))
+            {
+                AddError("Name cannot contain special characters!");
             }
 
             if (!createUserDTO.Dob.HasValue)

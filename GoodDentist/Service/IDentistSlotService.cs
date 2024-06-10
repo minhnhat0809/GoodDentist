@@ -23,5 +23,8 @@ namespace Services
 
         Task<ResponseDTO> getAllDentistSlots(int pageNumber, int rowsPerPage,
             string filterField, string filterValue, string sortField, string sortOrder);
+
+        Task<ResponseDTO> getAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage,
+            string filterField, string filterValue, string sortField, string sortOrder);
     }
 }
