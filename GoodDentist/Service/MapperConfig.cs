@@ -64,17 +64,18 @@ namespace Services
             CreateMap<MedicineUpdateDTO, Medicine>()
                 .ReverseMap();
 
-            CreateMap<RecordTypeDTO,  RecordType>()
+            CreateMap<RecordTypeDTO, RecordType>()
                 .ReverseMap();
 
             CreateMap<RecordTypeCreateDTO, RecordType>()
                 .ReverseMap();
-			CreateMap<CreateServiceDTO, Service>().ReverseMap();
+            CreateMap<CreateServiceDTO, Service>().ReverseMap();
             CreateMap<MedicalRecordDTO, MedicalRecord>().ReverseMap();
             CreateMap<MedicalRecordRequestDTO, MedicalRecord>().ReverseMap();
+            CreateMap<CreateRoomDTO, Room>().ReverseMap();
             CreateMap<ExaminationDTO, Examination>().ReverseMap();
             CreateMap<ExaminationRequestDTO, ExaminationDTO>().ReverseMap();
-            /*CreateMap<CreateRoomDTO, Room>().ReverseMap();*/
+            CreateMap<CreateRoomDTO, Room>().ReverseMap();
         }
     }
 }
