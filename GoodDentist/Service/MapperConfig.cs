@@ -73,5 +73,7 @@ namespace Services
             CreateMap<MedicalRecordDTO, MedicalRecord>().ReverseMap();
             CreateMap<MedicalRecordRequestDTO, MedicalRecord>().ReverseMap();
         }
+			CreateMap<CreateRoomDTO, Room>().ReverseMap();
+		}
     }
 }
