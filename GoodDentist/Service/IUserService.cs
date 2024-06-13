@@ -21,5 +21,7 @@ namespace Services
         Task<ResponseDTO> deleteUser(string userName);
 
         Task<ResponseListDTO> updateUser(CreateUserDTO createUserDTO);
+
+        Task<string> deleteCache(string key);
     }
 }

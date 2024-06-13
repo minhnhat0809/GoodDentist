@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 
 
 namespace Repositories.Impl
@@ -29,6 +30,9 @@ namespace Repositories.Impl
 
             CancellationToken cancellationToken = default;
             string? cacheMember = await distributedCache.GetStringAsync(key, cancellationToken);
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+            var db = redis.GetDatabase();
+
             if (cacheMember.IsNullOrEmpty())
             {
                 userList = await FindAllAsync();
@@ -38,7 +42,14 @@ namespace Repositories.Impl
                     return userList;
                 }
 
-                await distributedCache.SetStringAsync(key, JsonConvert.SerializeObject(userList), cancellationToken);
+                foreach (var user in userList)
+                {
+                    var settings = new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    };
+                    await db.ListRightPushAsync(key, JsonConvert.SerializeObject(user, settings));
+                }
 
                 return userList.Skip((pageNumber - 1) * rowsPerPage)
                             .Take(rowsPerPage)
@@ -67,6 +78,26 @@ namespace Repositories.Impl
         .Select(u => u.UserName)
         .FirstOrDefault();
         }
-        
+
+        public async Task<string> DeleteCache(string key)
+        {
+            if (key.IsNullOrEmpty())
+            {
+                return "Empty key";
+            }
+            else
+            {
+                CancellationToken cancellationToken = default;
+                string? checkCache = await distributedCache.GetStringAsync(key, cancellationToken);
+
+                if (checkCache.IsNullOrEmpty())
+                {
+                    return "No value with this key";
+                }
+
+                await distributedCache.RemoveAsync(key);
+                return "Remove key successfully!";
+            }
+        }
     }
 }

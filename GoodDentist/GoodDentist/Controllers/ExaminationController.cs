@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GoodDentist.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/examinations")]
     [ApiController]
     public class ExaminationController : ControllerBase
     {
         [HttpGet("examination-detail")]
-        public async Task<ResponseDTO> GetExaminationDetail()
+        public async Task<ResponseDTO> GetExaminationDetail([FromQuery] int examId)
         {
             ResponseDTO responseDTO = null;
 
