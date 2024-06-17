@@ -19,7 +19,7 @@ namespace GoodDentist.Controllers
 			this.distributedCache = distributedCache;
 		}
 		[HttpGet("all-rooms")]
-		public async Task<ResponseDTO> GetAllService([FromQuery] int pageNumber, int rowsPerPage)
+		public async Task<ResponseDTO> GetAllRoom([FromQuery] int pageNumber, int rowsPerPage)
 		{
 			ResponseDTO responseDTO = await roomService.getAllRoom(pageNumber, rowsPerPage);
 			return responseDTO;
@@ -31,13 +31,13 @@ namespace GoodDentist.Controllers
 			return responseDTO;
 		}
 		[HttpPut("room")]
-		public async Task<ResponseDTO> UpdateService([FromBody] CreateRoomDTO model)
+		public async Task<ResponseDTO> UpdateRoom([FromBody] CreateRoomDTO model)
 		{
 			ResponseDTO responseDTO = await roomService.updateRoom(model);
 			return responseDTO;
 		}
 		[HttpDelete("room")]
-		public async Task<ResponseDTO> DeleteService([FromBody] int roomId)
+		public async Task<ResponseDTO> DeleteRoom([FromBody] int roomId)
 		{
 			ResponseDTO responseDTO = await roomService.deleteRoom(roomId);
 			return responseDTO;

@@ -65,7 +65,7 @@ namespace Services.Impl
 			Service ser = await unitOfWork.serviceRepo.GetServiceByID(model.ServiceId);
 			if (ser == null)
 			{
-				return new ResponseDTO("", 400, false, null);
+				return new ResponseDTO("Cannot find the service", 400, false, null);
 			}
 			try
 			{
@@ -86,10 +86,10 @@ namespace Services.Impl
 				var update = await unitOfWork.serviceRepo.UpdateAsync(service);
 				if (!update)
 				{
-					return new ResponseDTO("", 500, false, null);
+					return new ResponseDTO("Failed to update", 500, false, null);
 					
 				}
-				return new ResponseDTO("", 200, true, null);
+				return new ResponseDTO("Sucessfully", 200, true, null);
 			}
 			catch (Exception ex)
 			{
@@ -103,7 +103,7 @@ namespace Services.Impl
 			Service ser = await unitOfWork.serviceRepo.GetServiceByID(serviceId);
 			if (ser == null)
 			{
-				return new ResponseDTO("", 400, false, null);
+				return new ResponseDTO("Cannot find the service", 400, false, null);
 			}
 			try
 			{
@@ -119,10 +119,10 @@ namespace Services.Impl
 				var update = await unitOfWork.serviceRepo.UpdateAsync(service);
 				if (!update)
 				{
-					return new ResponseDTO("", 500, false, null);
+					return new ResponseDTO("Failed to delete", 500, false, null);
 
 				}
-				return new ResponseDTO("", 200, true, null);
+				return new ResponseDTO("Sucessfully", 200, true, null);
 			}
 			catch (Exception ex)
 			{
