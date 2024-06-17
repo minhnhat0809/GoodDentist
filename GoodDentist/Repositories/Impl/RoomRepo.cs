@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using BusinessObject.DTO;
 using BusinessObject.Entity;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
@@ -14,6 +15,16 @@ namespace Repositories.Impl
 		public RoomRepo(GoodDentistDbContext repositoryContext, IDistributedCache distributedCache) : base(repositoryContext)
         {
 			this.distributedCache = distributedCache;
+		}
+
+		public bool CheckDuplicateRoom(CreateRoomDTO roomDTO)
+		{
+			Room room = _repositoryContext.Rooms.Where(t => t.RoomNumber.Equals(roomDTO.RoomNumber) && t.ClinicId==roomDTO.ClinicId).FirstOrDefault();
+			if (room != null)
+			{
+				return true;
+			}
+			return false;
 		}
 
 		public async Task<List<Room>> GetAllRoom(int pageNumber, int rowsPerPage)
