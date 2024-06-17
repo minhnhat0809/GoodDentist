@@ -63,7 +63,7 @@ public class RoomService : IRoomService
 		Room room = await unitOfWork.roomRepo.GetRoomByID(model.RoomId);
 		if (room == null)
 		{
-			return new ResponseDTO("", 400, false, null);
+			return new ResponseDTO("Cannot find the room", 400, false, null);
 		}
 		try
 		{
@@ -79,10 +79,10 @@ public class RoomService : IRoomService
 			var update = await unitOfWork.roomRepo.UpdateAsync(r);
 			if (!update)
 			{
-				return new ResponseDTO("", 500, false, null);
+				return new ResponseDTO("Failed to update", 500, false, null);
 
 			}
-			return new ResponseDTO("", 200, true, null);
+			return new ResponseDTO("Sucessfully", 200, true, null);
 		}
 		catch (Exception ex)
 		{
@@ -109,10 +109,10 @@ public class RoomService : IRoomService
 			var update = await unitOfWork.roomRepo.UpdateAsync(r);
 			if (!update)
 			{
-				return new ResponseDTO("", 500, false, null);
+				return new ResponseDTO("Failed to update", 500, false, null);
 
 			}
-			return new ResponseDTO("", 200, true, null);
+			return new ResponseDTO("Sucessfully", 200, true, null);
 		}
 		catch (Exception ex)
 		{
