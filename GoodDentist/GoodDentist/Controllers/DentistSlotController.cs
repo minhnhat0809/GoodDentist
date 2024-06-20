@@ -5,7 +5,7 @@ using Services;
 
 namespace GoodDentist.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/dentist-slots")]
     [ApiController]
     public class DentistSlotController : ControllerBase
     {

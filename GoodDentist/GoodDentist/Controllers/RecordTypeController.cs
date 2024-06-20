@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace GoodDentist.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/record-types")]
     [ApiController]
     public class RecordTypeController : ControllerBase
     {
