@@ -24,22 +24,45 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("all-examinations-of-clinic")]
-        public async Task<ResponseDTO> GetAllExaminationsOfClinic([FromQuery] int pageNumber, [FromQuery] int rowsPerPage)
+        public async Task<ResponseDTO> GetAllExaminationsOfClinic([FromQuery] string clinicId, [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
+           [FromQuery] string? filterField = null,
+           [FromQuery] string? filterValue = null,
+           [FromQuery] string? sortField = null,
+           [FromQuery] string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = null;
+            ResponseDTO responseDTO = await examinationService.GetAllExaminationOfClinic(clinicId, pageNumber, 
+                rowsPerPage, filterField, filterValue, sortField, sortOrder);
 
             return responseDTO;
         }
 
-        [HttpGet("all-examinations-of-user")]
-        public async Task<ResponseDTO> GetAllExaminationsOfUser([FromQuery] int pageNumber, [FromQuery] int rowsPerPage)
+        [HttpGet("/clinic/user")]
+        public async Task<ResponseDTO> GetAllExaminationsOfUser([FromQuery] string clinicId, [FromQuery] string userId, [FromQuery] string actor , [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
+           [FromQuery] string? filterField = null,
+           [FromQuery] string? filterValue = null,
+           [FromQuery] string? sortField = null,
+           [FromQuery] string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = null;
+            ResponseDTO responseDTO = await examinationService.GetAllExaminationOfUser(clinicId, userId, actor, pageNumber, 
+                rowsPerPage, filterField, filterValue, sortField, sortOrder);
 
             return responseDTO;
         }
 
-        [HttpPost("new-examination")]
+        [HttpGet("/clinic/user")]
+        public async Task<ResponseDTO> GetAllExaminationsOfExaminationProfile([FromQuery] int profileId, [FromQuery] string userId, [FromQuery] string actor, [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
+           [FromQuery] string? filterField = null,
+           [FromQuery] string? filterValue = null,
+           [FromQuery] string? sortField = null,
+           [FromQuery] string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = await examinationService.GetAllExaminationOfExaminationProfile(profileId, pageNumber,
+                rowsPerPage, filterField, filterValue, sortField, sortOrder);
+
+            return responseDTO;
+        }
+
+        [HttpPost("/new-examination")]
         public async Task<ResponseListDTO> CreateExamination([FromBody] ExaminationDTO examinationDTO)
         {
             ResponseListDTO responseDTO = await examinationService.CreateExamination(examinationDTO);
@@ -51,17 +74,14 @@ namespace GoodDentist.Controllers
         public async Task<ResponseListDTO> UpdateExamination([FromBody] ExaminationRequestDTO requestDto)
         {
             ResponseListDTO responseDTO = null;
-
             return responseDTO;
         }
 
-        [HttpDelete("examination/{id:int}")]
-        public async Task<ResponseDTO> DeleteExamination(int id)
+        [HttpDelete("examination")]
+        public async Task<ResponseDTO> DeleteExamination([FromQuery] int examId)
         {
-            ResponseDTO responseDTO = null;
-
+            ResponseDTO responseDTO = await examinationService.DeleteExamination(examId);
             return responseDTO;
-
         }
     }
 }
