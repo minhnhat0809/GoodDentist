@@ -28,10 +28,14 @@ namespace Repositories.Impl
             List<User>? userList = new List<User>();
 
 
-            CancellationToken cancellationToken = default;
-            string? cacheMember = await distributedCache.GetStringAsync(key, cancellationToken);
+            CancellationToken cancellationToken = default;            
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+            var s = ConvertToRedisKey("user","list");
+
+            var cacheMember = await distributedCache.GetStringAsync(s, cancellationToken);
+            
             var db = redis.GetDatabase();
+
 
             if (cacheMember.IsNullOrEmpty())
             {
@@ -98,6 +102,11 @@ namespace Repositories.Impl
                 await distributedCache.RemoveAsync(key);
                 return "Remove key successfully!";
             }
+        }
+
+        public string ConvertToRedisKey(string prefix, string identifier)
+        {
+            return $"{prefix}:{identifier}"; 
         }
     }
 }

@@ -97,11 +97,6 @@ namespace Services.Impl
             }
         }
 
-        public bool verifyPassword(string inputPassword, string hashedPassword)
-        {
-            throw new NotImplementedException();
-        }
-
         private List<string> validatePassword(string password)
         {
             List<string> result = new List<string>();

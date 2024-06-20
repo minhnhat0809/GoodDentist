@@ -1,6 +1,8 @@
 ﻿using BusinessObject.DTO;
+using BusinessObject.DTO.ViewDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 
 namespace GoodDentist.Controllers
 {
@@ -8,11 +10,16 @@ namespace GoodDentist.Controllers
     [ApiController]
     public class ExaminationController : ControllerBase
     {
+        private readonly IExaminationService examinationService;
+        public ExaminationController(IExaminationService examinationService) 
+        {
+            this.examinationService = examinationService;
+        }
+
         [HttpGet("examination-detail")]
         public async Task<ResponseDTO> GetExaminationDetail([FromQuery] int examId)
         {
-            ResponseDTO responseDTO = null;
-
+            ResponseDTO responseDTO = await examinationService.GetExaminationById(examId);
             return responseDTO;
         }
 
@@ -33,9 +40,9 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPost("new-examination")]
-        public async Task<ResponseListDTO> CreateExamination()
+        public async Task<ResponseListDTO> CreateExamination([FromBody] ExaminationDTO examinationDTO)
         {
-            ResponseListDTO responseDTO = null;
+            ResponseListDTO responseDTO = await examinationService.CreateExamination(examinationDTO);
 
             return responseDTO;
         }

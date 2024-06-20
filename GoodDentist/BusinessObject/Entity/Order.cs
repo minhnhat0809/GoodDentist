@@ -9,7 +9,7 @@ public partial class Order
 
     public string? OrderName { get; set; }
 
-    public int? ExaminationProfileId { get; set; }
+    public int? ExaminationId { get; set; }
 
     public DateTime? DateTime { get; set; }
 
@@ -17,7 +17,7 @@ public partial class Order
 
     public bool? Status { get; set; }
 
-    public virtual ExaminationProfile? ExaminationProfile { get; set; }
+    public virtual Examination? Examination { get; set; }
 
     public virtual ICollection<OrderService> OrderServices { get; set; } = new List<OrderService>();
 

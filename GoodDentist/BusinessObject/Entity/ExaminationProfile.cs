@@ -18,6 +18,4 @@ public partial class ExaminationProfile
     public virtual Customer? Customer { get; set; }
 
     public virtual ICollection<Examination> Examinations { get; set; } = new List<Examination>();
-
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

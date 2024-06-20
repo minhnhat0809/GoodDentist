@@ -10,7 +10,6 @@ namespace Services
 {
     public interface IUserService
     {
-        bool verifyPassword(string inputPassword, string hashedPassword);
 
         Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO);
 
