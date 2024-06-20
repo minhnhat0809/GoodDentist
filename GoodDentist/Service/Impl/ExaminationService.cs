@@ -8,11 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using BusinessObject.DTO;
-using BusinessObject.DTO.ViewDTO;
-using BusinessObject.Entity;
-using Repositories;
 
 namespace Services.Impl
 {
@@ -20,8 +15,8 @@ namespace Services.Impl
     {
         private readonly IExaminationRepo examinationRepo;
         private readonly IMapper mapper;
-        public ExaminationService(IExaminationRepo examinationRepo, IMapper mapper) 
-        { 
+        public ExaminationService(IExaminationRepo examinationRepo, IMapper mapper)
+        {
             this.examinationRepo = examinationRepo;
             this.mapper = mapper;
         }
@@ -54,8 +49,12 @@ namespace Services.Impl
                     responseDTO.StatusCode = 500;
                     return responseDTO;
                 }
-
-
-
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                return responseDTO;
+            }
+        }
     }
 }
