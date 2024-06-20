@@ -50,7 +50,7 @@ namespace GoodDentist.Controllers
         [HttpPut("examination")]
         public async Task<ResponseListDTO> UpdateExamination([FromBody] ExaminationRequestDTO requestDto)
         {
-            ResponseListDTO responseDTO = await _examinationService.UpdateExamination(requestDto);
+            ResponseListDTO responseDTO = null;
 
             return responseDTO;
         }
@@ -58,7 +58,7 @@ namespace GoodDentist.Controllers
         [HttpDelete("examination/{id:int}")]
         public async Task<ResponseDTO> DeleteExamination(int id)
         {
-            ResponseDTO responseDTO = await _examinationService.DeleteExamination(id);
+            ResponseDTO responseDTO = null;
 
             return responseDTO;
 
