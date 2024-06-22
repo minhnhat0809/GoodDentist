@@ -49,7 +49,7 @@ namespace GoodDentist.Controllers
             return responseDTO;
         }
 
-        [HttpGet("/clinic/user")]
+        [HttpGet("/clinic/profile")]
         public async Task<ResponseDTO> GetAllExaminationsOfExaminationProfile([FromQuery] int profileId, [FromQuery] string userId, [FromQuery] string actor, [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
            [FromQuery] string? filterField = null,
            [FromQuery] string? filterValue = null,
