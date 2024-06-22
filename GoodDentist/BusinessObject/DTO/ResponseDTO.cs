@@ -21,5 +21,9 @@ namespace BusinessObject.DTO
             Result = result;
         }
 
-    }
+		public static implicit operator ResponseDTO(bool v)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
