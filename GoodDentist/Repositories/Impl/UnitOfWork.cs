@@ -25,7 +25,7 @@ namespace Repositories.Impl
         public IRecordTypeRepository recordTypeRepo { get; private set; }
         public IServiceRepo serviceRepo { get; private set; }
 
-
+        public IExamProfileRepo examProfileRepo { get; private set; }
         public IExaminationRepo examinationRepo { get; private set; }
         public IMedicalRecordRepository MedicalRecordRepository { get; private set; }
 
@@ -47,6 +47,7 @@ namespace Repositories.Impl
             recordTypeRepo = new RecordTypeRepository(_repositoryContext);
             MedicalRecordRepository = new MedicalRecordRepository(_repositoryContext);
 			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
+            examProfileRepo = new ExamProfileRepo(_repositoryContext);
             clinicServiceRepo = new ClinicServiceRepo(_repositoryContext,distributedCache);
         }
 

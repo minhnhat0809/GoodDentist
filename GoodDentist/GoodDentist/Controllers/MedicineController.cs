@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace GoodDentist.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/medicines")]
     [ApiController]
     public class MedicineController : ControllerBase
     {

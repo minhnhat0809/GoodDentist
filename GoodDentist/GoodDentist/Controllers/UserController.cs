@@ -12,24 +12,22 @@ using System.Threading;
 
 namespace GoodDentist.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IUserService accountService;
-        private readonly IDistributedCache distributedCache;
+        private readonly IUserService userService;
 
-        public AccountController(IUserService accountService, IDistributedCache distributedCache)
+        public UserController(IUserService accountService)
         {
-            this.accountService = accountService;
-            this.distributedCache = distributedCache;
+            this.userService = accountService;
         }
 
 
         [HttpPost("new-user")]
         public async  Task<ResponseListDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
-			ResponseListDTO responseDTO = await accountService.createUser(createUserDTO); 
+			ResponseListDTO responseDTO = await userService.createUser(createUserDTO); 
             
            return responseDTO;                       
         }
@@ -41,7 +39,7 @@ namespace GoodDentist.Controllers
             [FromQuery] string? sortField = null,
             [FromQuery] string? sortOrder = "asc")
         {           
-            ResponseDTO responseDTO = await accountService.getAllUsers(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            ResponseDTO responseDTO = await userService.getAllUsers(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
             return responseDTO;
         }
 
@@ -53,53 +51,23 @@ namespace GoodDentist.Controllers
            [FromQuery] string? sortField = null,
            [FromQuery] string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = await accountService.getAllUsersByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            ResponseDTO responseDTO = await userService.getAllUsersByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
             return responseDTO;
         }
 
         [HttpDelete("user")]
         public async Task<ResponseDTO> DeleteUser([FromQuery] string userName)
         {
-            ResponseDTO responseDTO = await accountService.deleteUser(userName);
+            ResponseDTO responseDTO = await userService.deleteUser(userName);
             return responseDTO;
         }
 
         [HttpPut("user")]
         public async Task<ResponseListDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
         {
-			ResponseListDTO responseDTO = await accountService.updateUser(createUserDTO);
+			ResponseListDTO responseDTO = await userService.updateUser(createUserDTO);
 
             return responseDTO;
-        }
-
-
-
-
-
-
-
-
-
-        [HttpDelete("key")]
-        public async Task<string> deleteRedisCache([FromQuery] string key)
-        {
-            if (key.IsNullOrEmpty())
-            {
-                return "Empty key";
-            }
-            else
-            {
-                CancellationToken cancellationToken = default;
-                string? checkCache = await distributedCache.GetStringAsync(key, cancellationToken);
-
-                if (checkCache.IsNullOrEmpty())
-                {
-                    return "No value with this key";
-                }
-
-               await distributedCache.RemoveAsync(key);
-                return "Remove key successfully!";
-            }           
         }
     }
 }

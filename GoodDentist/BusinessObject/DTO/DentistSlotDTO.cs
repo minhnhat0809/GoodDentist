@@ -23,5 +23,6 @@ namespace BusinessObject.DTO
         public int? RoomId { get; set; }
 
         public string? RoomNumber { get; set; }
+        public required string ClinicId { get; set; }
     }
 }

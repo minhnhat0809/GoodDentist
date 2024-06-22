@@ -1,183 +1,221 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
+using Microsoft.IdentityModel.Tokens;
 using Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Services.Impl
 {
     public class ExaminationService : IExaminationService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        public ResponseDTO _Response;
-        public ResponseListDTO _ResponseList;
-        private List<String> stringList = null;
-        public ExaminationService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IMapper mapper;
+        private readonly IUnitOfWork unitOfWork;
+        public ExaminationService( IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _Response = new ResponseDTO("", 200, true, null);
-            //_ResponseList = new ResponseListDTO( List<String> stringList , 200, true, null);
-
-        }
-        // khong biet xai ResponseList
-
-        public async Task<ResponseDTO> GetExamination(int id)
-        {
-            try
-            {
-                var model = await _unitOfWork.examinationRepo.GetByIdAsync(id);
-                _Response.Result = _mapper.Map<ExaminationDTO>(model);
-            }
-            catch (Exception e)
-            {
-                _Response.IsSuccess = false;
-                _Response.Message = e.Message;
-                _Response.StatusCode = 500;
-            }
-
-            return _Response;
+            this.mapper = mapper;
+            this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseDTO> GetExaminations(
-            )
+        public async Task<ResponseListDTO> CreateExamination(ExaminationDTO examinationDTO)
         {
-            try
-            {
-                var models = await _unitOfWork.examinationRepo.FindAllAsync();
-                _Response.Result = _mapper.Map<List<ExaminationDTO>>(models);
-            }
-            catch (Exception e)
-            {
-                _Response.IsSuccess = false;
-                _Response.Message = e.Message;
-                _Response.StatusCode = 500;
-            }
+            ResponseListDTO responseListDTO = new ResponseListDTO();
 
-            return _Response;
+            responseListDTO = await ValidateExamination(examinationDTO);
+            if (responseListDTO.Message.Count > 0)
+            {
+                return responseListDTO;
+            }
+            
+            throw new NotImplementedException();
         }
 
-        public async Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO requestDto)
+        public async Task<ResponseDTO> DeleteExamination(int examId)
         {
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+            if (examId <= 0)
+            {
+                responseDTO.Message = "Exam ID is null.";
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 500;
+                return responseDTO;
+            }
+
+
+            Examination? examination = await unitOfWork.examinationRepo.GetExaminationById(examId);
+            if (examination == null)
+            {
+                responseDTO.Message = "Examination is not found!";
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 404;
+                return responseDTO;
+            }
+
+            await unitOfWork.examinationRepo.DeleteAsync(examination);
+            responseDTO.Message = "Delete successfully!";
+            return responseDTO;
+
+        }
+
+        public async Task<ResponseDTO> GetAllExaminationOfClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField = null, string? filterValue = null, string? sortField = null, string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);           
             try
             {
-                var model = await _unitOfWork.examinationRepo.GetByIdAsync(requestDto.ExaminationId);
-                if (model == null)
+                List<Examination> examinations = await unitOfWork.examinationRepo.GetAllExaminationOfClinic(clinicId, pageNumber, rowsPerPage);
+
+            }catch (Exception ex)
+            {
+                responseDTO.IsSuccess=false;
+                responseDTO.Message=ex.Message;
+                responseDTO.StatusCode=500;
+                return responseDTO;
+            }
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResponseDTO> GetAllExaminationOfExaminationProfile(int examProfileId, int pageNumber, 
+            int rowsPerPage, string? filterField = null, string? filterValue = null, string? sortField = null, string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+            try
+            {
+                if (examProfileId <= 0)
                 {
-                    model = _mapper.Map<Examination>(requestDto);
-                    _unitOfWork.examinationRepo.CreateAsync(model);
-                    _Response.Result = _mapper.Map<ExaminationDTO>(model);
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message = "Internal error at request data !";
+                    return responseDTO;
+                }
+                
+                ExaminationProfile examinationProfile = await unitOfWork.examProfileRepo.GetExaminationProfileById(examProfileId);
+                if (examinationProfile == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message = "Internal error at request data !";
+                    return responseDTO;
+                }
+
+                List<Examination> examinations = new List<Examination>();
+
+                examinations = await unitOfWork.examinationRepo.GetExaminationByProfileId(examProfileId, pageNumber, rowsPerPage);
+
+                List<ExaminationDTO> examinationDTOs = mapper.Map<List<ExaminationDTO>>(examinations);
+                responseDTO.Result = examinationDTOs;
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.IsSuccess = false;
+                responseDTO.Message = ex.Message;
+                responseDTO.StatusCode = 500;
+                return responseDTO;
+            }
+        }
+
+        public async Task<ResponseDTO> GetAllExaminationOfUser(string clinicId, string userId, string actor, int pageNumber, int rowsPerPage,
+            string? filterField = null,
+            string? filterValue = null,
+            string? sortField = null,
+            string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+            try
+            {
+                List<Examination> examinations = new List<Examination>();
+
+                if (actor.IsNullOrEmpty())
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message = "Empty actor!";
+                    responseDTO.StatusCode = 500;
+                    return responseDTO;
+                }
+                else if (actor.Equals("dentist", StringComparison.OrdinalIgnoreCase))
+                {
+                    examinations = await unitOfWork.examinationRepo.GetAllExaminationOfDentist(clinicId, userId, pageNumber, rowsPerPage);
+                }
+                else if (actor.Equals("customer", StringComparison.OrdinalIgnoreCase))
+                {
+                    examinations = await unitOfWork.examinationRepo.GetAllExaminationOfCustomer(clinicId, userId, pageNumber, rowsPerPage);
                 }
                 else
                 {
-                    _Response.IsSuccess = false;
-                    _Response.Message = "There is existed Examination!";
-                    _Response.StatusCode = 404;
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message = "Error at request data!";
+                    responseDTO.StatusCode = 500;
+                    return responseDTO;
                 }
-            }
-            catch (Exception e)
-            {
-                _Response.IsSuccess = false;
-                _Response.Message = e.Message;
-                _Response.StatusCode = 500;
-            }
 
-            return _ResponseList;
+                List<ExaminationDTO> examinationDTOs = mapper.Map<List<ExaminationDTO>>(examinations);
+                responseDTO.Result = examinationDTOs;
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.IsSuccess = false;
+                responseDTO.Message = ex.Message;
+                responseDTO.StatusCode = 500;
+                return responseDTO;
+            }           
         }
 
-        public async Task<ResponseDTO> DeleteExamination(int id)
+        public async Task<ResponseDTO> GetExaminationById(int examId)
         {
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+
             try
             {
-                var model = await _unitOfWork.examinationRepo.GetByIdAsync(id);
-                if(model != null)
+                if (examId <= 0)
                 {
-                    _unitOfWork.examinationRepo.DeleteAsync(model);
-                    _Response.Result = _mapper.Map<ExaminationDTO>(model);
+                    responseDTO.Message = "Exam ID is null.";
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 500;
+                    return responseDTO;
                 }
-                else
-                {
-                    _Response.IsSuccess = false;
-                    _Response.Message = "Not Found Examination!";
-                    _Response.StatusCode = 500;   
-                }
-            }
-            catch (Exception e)
-            {
-                _Response.IsSuccess = false;
-                _Response.Message = e.Message;
-                _Response.StatusCode = 500;
-            }
 
-            return _Response;
+
+                Examination? examination = await unitOfWork.examinationRepo.GetExaminationById(examId);
+                if (examination == null)
+                {
+                    responseDTO.Message = "Examination is not found!";
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 404;
+                    return responseDTO;
+                }
+
+                ExaminationDTO examinationDTO = mapper.Map<ExaminationDTO>(examination);
+                responseDTO.Result = examinationDTO;
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.Message = ex.Message;
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 500;
+                return responseDTO;
+            }
         }
 
-        public async Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO requestDto)
+        private async Task<ResponseListDTO> ValidateExamination(ExaminationDTO examinationDTO)
         {
-            try
+            ResponseListDTO responseListDTO = new ResponseListDTO();
+            responseListDTO.IsSuccess = true;
+            
+            void Add(string error)
             {
-                var model = await _unitOfWork.examinationRepo.GetByIdAsync(requestDto.ExaminationId);
-                if(model != null)
-                {
-                    model = _mapper.Map<Examination>(requestDto);
-                    _unitOfWork.examinationRepo.UpdateAsync(model);
-                    _Response.Result = _mapper.Map<ExaminationDTO>(model);
-                }
-                else
-                {
-                    _Response.IsSuccess = false;
-                    _Response.Message = "Not Found Examination!";
-                    _Response.StatusCode = 500;   
-                }
-            }
-            catch (Exception e)
-            {
-                _Response.IsSuccess = false;
-                _Response.Message = e.Message;
-                _Response.StatusCode = 500;
+                responseListDTO.IsSuccess = false;
+                responseListDTO.Message.Add(error);
             }
 
-            return _ResponseList;
-        }
-        // khong biet
-        public async Task<ResponseDTO> GetAllExaminationsOfClinic(Guid clinicId)
-        {
-            try
-            {
-                var models = await _unitOfWork.examinationRepo.FindByConditionAsync(x=>x.DentistId==clinicId);
-                _Response.Result = _mapper.Map<List<ExaminationDTO>>(models);
-            }
-            catch (Exception e)
-            {
-                _Response.IsSuccess = false;
-                _Response.Message = e.Message;
-                _Response.StatusCode = 500;
-            }
+            
 
-            return _Response;
-        }
-        // khong biet
-        public async Task<ResponseDTO> GetAllExaminationsOfUser(Guid userId)
-        {
-            try
-            {
-                var models = await _unitOfWork.examinationRepo.FindByConditionAsync(x=>x.DentistId==userId);
-                _Response.Result = _mapper.Map<List<ExaminationDTO>>(models);
-            }
-            catch (Exception e)
-            {
-                _Response.IsSuccess = false;
-                _Response.Message = e.Message;
-                _Response.StatusCode = 500;
-            }
-
-            return _Response;
+            return responseListDTO;
         }
     }
 }

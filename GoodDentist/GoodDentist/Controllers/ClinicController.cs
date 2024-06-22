@@ -9,7 +9,7 @@ using Services;
 namespace GoodDentist.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/clinics")]
     [ApiController]
     [Authorize]
     public class ClinicController : ControllerBase

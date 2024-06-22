@@ -1,34 +1,32 @@
 ﻿using BusinessObject.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BusinessObject.DTO.ViewDTO;
-
-public class ExaminationDTO
+namespace BusinessObject.DTO.ViewDTO
 {
-    public int ExaminationId { get; set; }
+    public class ExaminationDTO
+    {
+        public int ExaminationId { get; set; }
 
-    public int? ExaminationProfileId { get; set; }
+        public int? ExaminationProfileId { get; set; }
 
-    public Guid? DentistId { get; set; }
+        public Guid? DentistId { get; set; }
 
-    public int? DentistSlotId { get; set; }
+        public string? DentistName {  get; set; }
 
-    public string? Diagnosis { get; set; }
+        public int? DentistSlotId { get; set; }
 
-    public DateTime? TimeStart { get; set; }
+        public string? Diagnosis { get; set; }
 
-    public TimeOnly? Duration { get; set; }
+        public DateTime? TimeStart { get; set; }
 
-    public string? Notes { get; set; }
+        public TimeOnly? Duration { get; set; }
 
-    public bool? Status { get; set; }
+        public string? Notes { get; set; }
 
-    public virtual User? Dentist { get; set; }
-
-    public virtual DentistSlot? DentistSlot { get; set; }
-
-    public virtual ExaminationProfile? ExaminationProfile { get; set; }
-
-    public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
-
-    public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+        public bool? Status { get; set; }
+    }
 }
