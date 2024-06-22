@@ -14,15 +14,13 @@ namespace GoodDentist.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserService userService;
-        private readonly IDistributedCache distributedCache;
 
-        public AccountController(IUserService accountService, IDistributedCache distributedCache)
+        public UserController(IUserService accountService)
         {
             this.userService = accountService;
-            this.distributedCache = distributedCache;
         }
 
 
@@ -70,22 +68,6 @@ namespace GoodDentist.Controllers
 			ResponseListDTO responseDTO = await userService.updateUser(createUserDTO);
 
             return responseDTO;
-        }
-
-
-
-
-
-
-
-
-
-        [HttpDelete("key")]
-        public async Task<string> deleteRedisCache([FromQuery] string key)
-        {
-            string result = await userService.deleteCache(key);
-            return result;
-                
         }
     }
 }
