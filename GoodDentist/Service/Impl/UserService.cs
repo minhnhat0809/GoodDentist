@@ -2,8 +2,11 @@
 using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.Entity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Repositories;
+using StackExchange.Redis;
 using System;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -20,16 +23,22 @@ namespace Services.Impl
 
         private readonly IMapper mapper;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IDistributedCache distributedCache;
 
-        public UserService(IMapper mapper, IUnitOfWork unitOfWork)
+        public UserService(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache)
         {
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
+            this.distributedCache = distributedCache;
         }
 
         public async Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO)
         {
 			ResponseListDTO responseDTO = new ResponseListDTO();
+            string key = "userList";
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+            var db = redis.GetDatabase();          
+
             try
             {
                 responseDTO = await validateUser(createUserDTO, mod);
@@ -52,6 +61,7 @@ namespace Services.Impl
                 user.Salt = salting();
                 user.Password = hashPassword(createUserDTO.Password, user.Salt);
                 user.UserId = Guid.NewGuid();
+                user.CreatedDate = DateTime.Now;
 
                 ClinicUser clinicUser = new ClinicUser()
                 {
@@ -62,6 +72,17 @@ namespace Services.Impl
 
                 await unitOfWork.userRepo.CreateAsync(user);
                 await unitOfWork.clinicUserRepo.CreateAsync(clinicUser);
+
+
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+
+                if (db.KeyExists(key))
+                {
+                    await db.ListLeftPushAsync(key, JsonConvert.SerializeObject(user, settings));
+                }
 
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
@@ -74,11 +95,6 @@ namespace Services.Impl
                 responseDTO.IsSuccess = false;
                 return responseDTO;
             }
-        }
-
-        public bool verifyPassword(string inputPassword, string hashedPassword)
-        {
-            throw new NotImplementedException();
         }
 
         private List<string> validatePassword(string password)
@@ -127,6 +143,15 @@ namespace Services.Impl
                     responseDTO.Message.AddRange(validatePwd);
                     responseDTO.IsSuccess = false;
                 }
+            }
+
+            if (createUserDTO.Name.IsNullOrEmpty())
+            {
+                AddError("Name cannot be empty!");
+            }
+            else if (Regex.IsMatch(createUserDTO.UserName, @"[^a-zA-Z0-9]"))
+            {
+                AddError("Name cannot contain special characters!");
             }
 
             if (!createUserDTO.Dob.HasValue)
@@ -194,10 +219,10 @@ namespace Services.Impl
             }
             else
             {
-                Role? role = await unitOfWork.roleRepo.GetRole(createUserDTO.RoleId);
-                if (role == null)
+                BusinessObject.Entity.Role? userRole = await unitOfWork.roleRepo.GetRole(createUserDTO.RoleId);
+                if (userRole == null)
                 {
-                    AddError("This role does not exist!");
+                    AddError("This userRole does not exist!");
                 }
             }
 
@@ -434,6 +459,12 @@ namespace Services.Impl
             {
                 return new ResponseDTO(ex.Message, 500, false, null);
             }
+        }
+
+        public async Task<string> deleteCache(string key)
+        {
+            string result = await unitOfWork.userRepo.DeleteCache(key);
+            return result;
         }
     }
     }

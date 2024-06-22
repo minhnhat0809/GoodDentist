@@ -5,7 +5,7 @@ using Services;
 
 namespace GoodDentist.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/dentist-slots")]
     [ApiController]
     public class DentistSlotController : ControllerBase
     {
@@ -24,7 +24,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("dentist-dentist-slots")]
-        public async Task<ResponseDTO> GetDentistSlots([FromQuery] int pageNumber,
+        public async Task<ResponseDTO> GetAllSlotsOfDentist([FromQuery] int pageNumber,
             [FromQuery] int rowsPerPage,
             [FromQuery] string dentistId,
             [FromQuery] string? filterField = null,
@@ -33,6 +33,20 @@ namespace GoodDentist.Controllers
             [FromQuery] string? sortOrder = "asc")
         {
             ResponseDTO responseDTO = await dentistSlotService.getAllSlotsOfDentist(dentistId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+
+            return responseDTO;
+        }
+
+        [HttpGet("clinic-dentist-slots")]
+        public async Task<ResponseDTO> GetAllSlotsOfClinic([FromQuery] int pageNumber,
+            [FromQuery] int rowsPerPage,
+            [FromQuery] string clinicId,
+            [FromQuery] string? filterField = null,
+            [FromQuery] string? filterValue = null,
+            [FromQuery] string? sortField = null,
+            [FromQuery] string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = await dentistSlotService.getAllSlotsOfClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
 
             return responseDTO;
         }

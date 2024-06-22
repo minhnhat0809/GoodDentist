@@ -9,5 +9,6 @@ namespace Repositories
 {
     public interface IExaminationRepo : IRepositoryBase<Examination>
     {
+        Task<Examination?> GetExaminationById(int examId);
     }
 }

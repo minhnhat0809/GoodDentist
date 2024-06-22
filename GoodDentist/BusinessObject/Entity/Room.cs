@@ -6,7 +6,6 @@ namespace BusinessObject.Entity;
 public partial class Room
 {
     public int RoomId { get; set; }
-
     public string? RoomNumber { get; set; }
 
     public Guid? ClinicId { get; set; }

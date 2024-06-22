@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BusinessObject.Entity;
 
-namespace BusinessObject.Entity;
+namespace BusinessObject.DTO.ViewDTO;
 
-public partial class Examination
+public class ExaminationRequestDTO
 {
     public int ExaminationId { get; set; }
 
@@ -31,7 +30,6 @@ public partial class Examination
 
     public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
     public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+
 }
