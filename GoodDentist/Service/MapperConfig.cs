@@ -76,6 +76,7 @@ namespace Services
             CreateMap<ExaminationDTO, Examination>().ReverseMap();
             CreateMap<ExaminationRequestDTO, ExaminationDTO>().ReverseMap();
             CreateMap<CreateRoomDTO, Room>().ReverseMap();
-        }
+			CreateMap<ClinicServiceDTO, BusinessObject.Entity.ClinicService>().ReverseMap();
+		}
     }
 }
