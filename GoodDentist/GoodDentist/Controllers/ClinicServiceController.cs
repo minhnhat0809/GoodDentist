@@ -26,12 +26,6 @@ namespace GoodDentist.Controllers
 			ResponseDTO responseDTO = await clinicServiceService.getAllClinicService(pageNumber, rowsPerPage);
 			return responseDTO;
 		}
-		[HttpGet]
-		public async Task<ResponseDTO> CreateClinicService([FromQuery] int pageNumber, int rowsPerPage)
-		{
-			ResponseDTO responseDTO = await clinicServiceService.getAllClinicService(pageNumber, rowsPerPage);
-			return responseDTO;
-		}
 		[HttpPost]
 		public async Task<ActionResult<ResponseDTO>> CreateClinicService([FromBody] ClinicServiceDTO clinicServiceDTO)
 		{

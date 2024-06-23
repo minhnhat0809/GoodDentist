@@ -15,7 +15,7 @@ namespace Services.Impl
 	{
 		private readonly IMapper mapper;
 		private readonly IUnitOfWork unitOfWork;
-		private readonly IClinicService clinicService;
+		public ClinicServiceService(IMapper mapper, IUnitOfWork unitOfWork)
 		public ClinicServiceService(IMapper mapper, IUnitOfWork unitOfWork, IClinicService clinicService)
 		{
 			this.mapper = mapper;
