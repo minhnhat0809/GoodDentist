@@ -23,7 +23,6 @@ namespace Services.Impl
 			this.clinicService = clinicService;
 		}
 
-		public IClinicService GetClinicService()
 		{
 			return clinicService;
 		}
