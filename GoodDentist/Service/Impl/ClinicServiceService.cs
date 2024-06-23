@@ -35,7 +35,8 @@ namespace Services.Impl
 					{
 						return new ResponseDTO("Success", 200, true, null);
 					}
-				} else
+				}
+				else
 				{
 					return new ResponseDTO(validate.Message, 400, false, null);
 				}
@@ -50,7 +51,7 @@ namespace Services.Impl
 
 		private async Task<ResponseDTO> CheckValidate(ClinicServiceDTO clinicServiceDTO)
 		{
-			ResponseDTO responseDTO = await unitOfWork.clinicServiceRepo.CheckValidate(clinicServiceDTO);	
+			ResponseDTO responseDTO = await unitOfWork.clinicServiceRepo.CheckValidate(clinicServiceDTO);
 			return responseDTO;
 		}
 
@@ -66,6 +67,40 @@ namespace Services.Impl
 			{
 				return new ResponseDTO(ex.Message, 500, false, null);
 			}
+		}
+
+		public async Task<ResponseDTO> UpdateClinicService(ClinicServiceDTO model)
+		{
+			BusinessObject.Entity.ClinicService clinicService = await unitOfWork.clinicServiceRepo.GetClinicServiceByID(model.ClinicServiceId);
+			if (clinicService == null)
+			{
+				return new ResponseDTO("Cannot find the clinicService", 400, false, null);
+			}
+			try
+			{
+				int clinicServiceId = model.ClinicServiceId;
+				unitOfWork.clinicServiceRepo.Detach(clinicService);
+				ClinicServiceDTO clinicServiceDTO = new ClinicServiceDTO();
+				clinicServiceDTO.ClinicId = model.ClinicId;
+				clinicServiceDTO.ServiceId = model.ServiceId; ;
+				clinicServiceDTO.Price = model.Price;
+				BusinessObject.Entity.ClinicService cs = mapper.Map<BusinessObject.Entity.ClinicService>(clinicServiceDTO);
+				cs.ClinicServiceId = clinicServiceId;
+				cs.Status = true;
+				unitOfWork.clinicServiceRepo.Attach(cs);
+				var update = await unitOfWork.clinicServiceRepo.UpdateAsync(cs);
+				if (!update)
+				{
+					return new ResponseDTO("Failed to update", 500, false, null);
+
+				}
+				return new ResponseDTO("Sucessfully", 200, true, null);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
+
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace Repositories.Impl
 
 		public async Task<ResponseDTO> CheckValidate(ClinicServiceDTO clinicServiceDTO)
 		{
-			ClinicService clinicService= _repositoryContext.ClinicServices.Where(c=>c.ClinicId.Equals(clinicServiceDTO.ClinicId) && c.ServiceId.Equals(clinicServiceDTO.ServiceId)).FirstOrDefault();
+			ClinicService clinicService= _repositoryContext.ClinicServices.Where(c=>c.ClinicId.Equals(clinicServiceDTO.ClinicServiceId) && c.ServiceId.Equals(clinicServiceDTO.ServiceId)).FirstOrDefault();
 			if (clinicService != null)
 				return new ResponseDTO("Duplicated", 400, false, null);
 			return new ResponseDTO("Sucess", 200, true, null);
@@ -34,5 +34,10 @@ namespace Repositories.Impl
 			return clinicServices;
 		}
 
+		public async Task<ClinicService> GetClinicServiceByID(int clinicServiceId)
+		{
+			ClinicService clinicService = _repositoryContext.ClinicServices.Where(c => c.ClinicServiceId.Equals(clinicServiceId)).FirstOrDefault();
+			return clinicService;
+		}
 	}
 }

@@ -12,5 +12,6 @@ namespace Repositories
 	{
 		Task<ResponseDTO> CheckValidate(ClinicServiceDTO clinicServiceDTO);
 		Task<List<ClinicService>> GetAllClinicService(int pageNumber, int rowsPerPage);
+		Task<ClinicService> GetClinicServiceByID(int clinicServiceId);
 	}
 }
