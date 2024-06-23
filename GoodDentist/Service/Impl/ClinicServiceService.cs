@@ -16,15 +16,9 @@ namespace Services.Impl
 		private readonly IMapper mapper;
 		private readonly IUnitOfWork unitOfWork;
 		public ClinicServiceService(IMapper mapper, IUnitOfWork unitOfWork)
-		public ClinicServiceService(IMapper mapper, IUnitOfWork unitOfWork, IClinicService clinicService)
 		{
 			this.mapper = mapper;
 			this.unitOfWork = unitOfWork;
-			this.clinicService = clinicService;
-		}
-
-		{
-			return clinicService;
 		}
 
 
