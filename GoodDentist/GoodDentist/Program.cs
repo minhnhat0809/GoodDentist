@@ -85,6 +85,11 @@ builder.Services.AddSwaggerGen(c =>
     });
     //👆 new code
 });
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("CORSPolicy", builder => builder.AllowAnyHeader().WithOrigins()
+    .AllowAnyMethod().AllowCredentials().SetIsOriginAllowed((host) => true));
+});
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -116,15 +121,14 @@ builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
 
+app.UseCors("CORSPolicy");
 app.UseAuthorization();
 app.UseAuthentication();
 
