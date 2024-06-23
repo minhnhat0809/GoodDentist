@@ -10,6 +10,7 @@ namespace Services
 	public interface IClinicServiceService
 	{
 		Task<ResponseDTO> CreateClinicService(ClinicServiceDTO clinicServiceDTO);
+		Task<ResponseDTO> DeleteClinicService(int clinicServiceID);
 		Task<ResponseDTO> getAllClinicService(int pageNumber, int rowsPerPage);
 		Task<ResponseDTO> UpdateClinicService(ClinicServiceDTO model);
 	}
