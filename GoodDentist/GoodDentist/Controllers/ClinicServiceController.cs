@@ -49,5 +49,11 @@ namespace GoodDentist.Controllers
 			ResponseDTO responseDTO = await clinicServiceService.UpdateClinicService(model);
 			return responseDTO;
 		}
+		[HttpDelete]
+		public async Task<ResponseDTO> DeleteClinicService([FromBody] int clinicServiceID)
+		{
+			ResponseDTO responseDTO = await clinicServiceService.DeleteClinicService(clinicServiceID);
+			return responseDTO;
+		}
 	}
 }

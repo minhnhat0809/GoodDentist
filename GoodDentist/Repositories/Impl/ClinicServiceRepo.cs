@@ -30,7 +30,7 @@ namespace Repositories.Impl
 		public async Task<List<ClinicService>> GetAllClinicService(int pageNumber, int rowsPerPage)
 		{
 			List<ClinicService> clinicServices = await Paging(pageNumber, rowsPerPage);
-			clinicServices.Where(s => true).ToList();
+			clinicServices.Where(s => true && s.Status==true).ToList();
 			return clinicServices;
 		}
 

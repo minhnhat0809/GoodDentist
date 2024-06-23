@@ -102,5 +102,39 @@ namespace Services.Impl
 			}
 
 		}
+
+		public async Task<ResponseDTO> DeleteClinicService(int clinicServiceID)
+		{
+			BusinessObject.Entity.ClinicService clinicService = await unitOfWork.clinicServiceRepo.GetClinicServiceByID(clinicServiceID);
+			if (clinicService == null)
+			{
+				return new ResponseDTO("Cannot find the clinicService", 400, false, null);
+			}
+			try
+			{
+				int clinicServiceId = clinicServiceID;
+				unitOfWork.clinicServiceRepo.Detach(clinicService);
+				ClinicServiceDTO clinicServiceDTO = new ClinicServiceDTO();
+				clinicServiceDTO.ClinicId = clinicService.ClinicId;
+				clinicServiceDTO.ServiceId = clinicService.ServiceId;
+				clinicServiceDTO.Price = clinicService.Price;
+				BusinessObject.Entity.ClinicService cs = mapper.Map<BusinessObject.Entity.ClinicService>(clinicServiceDTO);
+				cs.ClinicServiceId = clinicServiceId;
+				cs.Status = false;
+				unitOfWork.clinicServiceRepo.Attach(cs);
+				var del = await unitOfWork.clinicServiceRepo.DeleteAsync(cs);
+				if (!del)
+				{
+					return new ResponseDTO("Failed to delete", 500, false, null);
+
+				}
+				return new ResponseDTO("Sucessfully", 200, true, null);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
+
+		}
 	}
 }
