@@ -43,5 +43,11 @@ namespace GoodDentist.Controllers
 
 			return responseDTO;
 		}
+		[HttpPut]
+		public async Task<ResponseDTO> UpdateClinicService([FromBody] ClinicServiceDTO model)
+		{
+			ResponseDTO responseDTO = await clinicServiceService.UpdateClinicService(model);
+			return responseDTO;
+		}
 	}
 }

@@ -11,5 +11,6 @@ namespace Services
 	{
 		Task<ResponseDTO> CreateClinicService(ClinicServiceDTO clinicServiceDTO);
 		Task<ResponseDTO> getAllClinicService(int pageNumber, int rowsPerPage);
+		Task<ResponseDTO> UpdateClinicService(ClinicServiceDTO model);
 	}
 }

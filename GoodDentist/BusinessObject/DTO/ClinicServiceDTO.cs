@@ -18,5 +18,6 @@ namespace BusinessObject.DTO
 
 		public bool? Status { get; set; }
 
+
 	}
 }
