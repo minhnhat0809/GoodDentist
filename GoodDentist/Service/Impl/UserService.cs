@@ -34,10 +34,7 @@ namespace Services.Impl
 
         public async Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO)
         {
-			ResponseListDTO responseDTO = new ResponseListDTO();
-            string key = "userList";
-            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
-            var db = redis.GetDatabase();          
+			ResponseListDTO responseDTO = new ResponseListDTO();       
 
             try
             {
@@ -78,11 +75,6 @@ namespace Services.Impl
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 };
-
-                if (db.KeyExists(key))
-                {
-                    await db.ListLeftPushAsync(key, JsonConvert.SerializeObject(user, settings));
-                }
 
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
