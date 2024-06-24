@@ -104,6 +104,21 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
+    public async Task<ResponseDTO> GetUserAsync(Guid userId)
+    {
+        try
+        {
+            _responseDto.Result = await _unitOfWork.userRepo.GetByIdAsync(userId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return _responseDto;
+    }
+
 
     private string GenerateJwtToken(User user)
     {
