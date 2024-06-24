@@ -1,4 +1,6 @@
-﻿using BusinessObject.DTO;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using BusinessObject.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Impl;
 using Services;
@@ -12,11 +14,13 @@ namespace GoodDentist.Controllers
     {
         private readonly IAuthService _authService;
         public ResponseLoginDTO _Response;
+        public ResponseDTO _ResponseDto;
 
         public LoginController(IAuthService authService)
         {
             _authService = authService;
             _Response = new ResponseLoginDTO();
+            _ResponseDto = new ResponseDTO("", 200, true, null);
         }
 
         [HttpPost]
@@ -33,6 +37,28 @@ namespace GoodDentist.Controllers
             }
 
             return _Response;
+        }
+        [HttpGet]
+        public async Task<ResponseDTO> GetUser()
+        {
+            try
+            {
+                // How to take access token and claim the username or user id from it 
+                var accessToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var token = tokenHandler.ReadJwtToken(accessToken);
+                var userIdString = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
+                var userId = Guid.Parse(userIdString);
+                _ResponseDto = await _authService.GetUserAsync(userId);
+                
+            }
+            catch (Exception e)
+            {
+                _ResponseDto.IsSuccess = false;
+                _ResponseDto.Message = e.Message;
+            }
+
+            return _ResponseDto;
         }
     }
 }

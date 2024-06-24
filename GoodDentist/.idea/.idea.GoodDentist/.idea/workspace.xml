@@ -10,15 +10,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="cli">
-      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/ExaminationRequestDTO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/ExaminationDTO.cs" afterDir="false" />
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ExaminationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ExaminationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IExaminationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IExaminationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/LoginController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/LoginController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IAuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IAuthService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/AuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/AuthService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +28,7 @@
   <component name="Git.Pull.Settings">
     <option name="OPTIONS">
       <set>
+        <option value="FF_ONLY" />
         <option value="NO_COMMIT" />
       </set>
     </option>
@@ -38,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="huyntv171283" />
+        <entry key="$PROJECT_DIR$/.." value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -92,14 +90,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Launch Settings Profile.GoodDentist: http.executor": "Debug",
+    ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Run",
+    ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
     ".NET Launch Settings Profile.GoodDentist: https.executor": "Run",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "huyntv171283",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -117,7 +116,7 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: http">
+  <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: IIS Express">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
@@ -360,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718254482546</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="main pulling">
+      <option name="closed" value="true" />
+      <created>1719040162236</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1719040162236</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -399,49 +406,141 @@
     <MESSAGE value="Google Cloud Service Account Credentials" />
     <MESSAGE value="update secret key" />
     <MESSAGE value="cli" />
-    <option name="LAST_COMMIT_MESSAGE" value="cli" />
+    <MESSAGE value="main pulling" />
+    <option name="LAST_COMMIT_MESSAGE" value="main pulling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs</url>
-          <line>30</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\ClinicController.cs" containingFunctionPresentation="Method 'GetClinic'">
-            <startOffsets>
-              <option value="807" />
-            </startOffsets>
-            <endOffsets>
-              <option value="849" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/LoginController.cs</url>
-          <line>26</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\LoginController.cs" containingFunctionPresentation="Method 'Login'">
-            <startOffsets>
-              <option value="681" />
-            </startOffsets>
-            <endOffsets>
-              <option value="735" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
           <line>40</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'Authenticate'">
             <startOffsets>
-              <option value="1211" />
+              <option value="1363" />
             </startOffsets>
             <endOffsets>
-              <option value="1279" />
+              <option value="1431" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/MedicineRepository.cs</url>
+          <line>19</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\MedicineRepository.cs" containingFunctionPresentation="Method 'GetAllMedicine'">
+            <startOffsets>
+              <option value="603" />
+            </startOffsets>
+            <endOffsets>
+              <option value="665" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/MedicineController.cs</url>
+          <line>38</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\MedicineController.cs" containingFunctionPresentation="Method 'GetAllMedicine'">
+            <startOffsets>
+              <option value="1300" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1389" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/MedicalRecordsController.cs</url>
+          <line>27</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\MedicalRecordsController.cs" containingFunctionPresentation="Method 'GetMedicalRecords'">
+            <startOffsets>
+              <option value="763" />
+            </startOffsets>
+            <endOffsets>
+              <option value="818" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs</url>
+          <line>31</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\MedicalRecordService.cs" containingFunctionPresentation="Method 'GetRecords'">
+            <startOffsets>
+              <option value="1004" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1072" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>476</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'GetUserAsync'">
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
+          <line>52</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'Authenticate'">
+            <startOffsets>
+              <option value="1810" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1870" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
+          <line>124</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'GenerateJwtToken'">
+            <startOffsets>
+              <option value="3722" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3822" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
+          <line>110</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'GetUserAsync'">
+            <startOffsets>
+              <option value="3441" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3511" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/LoginController.cs</url>
+          <line>46</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\LoginController.cs" containingFunctionPresentation="Method 'GetUser'">
+            <startOffsets>
+              <option value="1321" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1420" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

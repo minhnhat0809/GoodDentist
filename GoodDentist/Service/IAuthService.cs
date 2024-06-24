@@ -8,4 +8,5 @@ public interface IAuthService
     Task<ResponseDTO> GetAccountByEmailOrPhone(string emailOrPhone);
 
     Task<ResponseLoginDTO> ResetPassword(Guid userId, string password);
+    Task<ResponseDTO> GetUserAsync(Guid userId);
 }
