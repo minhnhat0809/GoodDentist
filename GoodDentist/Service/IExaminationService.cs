@@ -17,6 +17,8 @@ namespace Services
 
         Task<ResponseListDTO> CreateExamination(ExaminationDTO examinationDTO);
 
+        Task<ResponseListDTO> UpdateExamination(ExaminationDTO examinationDTO);
+
         Task<ResponseDTO> DeleteExamination(int examId);
 
         Task<ResponseDTO> GetAllExaminationOfUser(string clinicId, string userId, string actor, int pageNumber, int rowsPerPage,

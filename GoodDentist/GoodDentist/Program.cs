@@ -9,11 +9,7 @@ using Repositories;
 using Repositories.Impl;
 using Services;
 using Services.Impl;
-using System.Text;
 using System.Text.Json.Serialization;
-using BusinessObject.Entity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
