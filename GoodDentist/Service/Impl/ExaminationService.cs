@@ -26,14 +26,22 @@ namespace Services.Impl
         public async Task<ResponseListDTO> CreateExamination(ExaminationDTO examinationDTO)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
-
-            responseListDTO = await ValidateExamination(examinationDTO);
-            if (responseListDTO.Message.Count > 0)
+            try
             {
+                responseListDTO = await ValidateExamination(examinationDTO);
+                if (responseListDTO.Message.Count > 0)
+                {
+                    return responseListDTO;
+                }
+
+
+                return responseListDTO;
+            }catch (Exception ex)
+            {
+                responseListDTO.IsSuccess = false;
+                responseListDTO.Message.Add(ex.Message);
                 return responseListDTO;
             }
-            
-            throw new NotImplementedException();
         }
 
         public async Task<ResponseDTO> DeleteExamination(int examId)
@@ -199,6 +207,28 @@ namespace Services.Impl
                 responseDTO.IsSuccess = false;
                 responseDTO.StatusCode = 500;
                 return responseDTO;
+            }
+        }
+
+        public async Task<ResponseListDTO> UpdateExamination(ExaminationDTO examinationDTO)
+        {
+            ResponseListDTO responseListDTO = new ResponseListDTO();
+            try
+            {
+                responseListDTO = await ValidateExamination(examinationDTO);
+                if (responseListDTO.Message.Count > 0)
+                {
+                    return responseListDTO;
+                }
+
+
+                return responseListDTO;
+            }
+            catch (Exception ex)
+            {
+                responseListDTO.IsSuccess = false;
+                responseListDTO.Message.Add(ex.Message);
+                return responseListDTO;
             }
         }
 

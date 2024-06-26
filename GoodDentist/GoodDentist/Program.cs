@@ -9,11 +9,7 @@ using Repositories;
 using Repositories.Impl;
 using Services;
 using Services.Impl;
-using System.Text;
 using System.Text.Json.Serialization;
-using BusinessObject.Entity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -115,20 +111,24 @@ builder.Services.AddStackExchangeRedisCache(redis =>
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("CORSPolicy", builder => builder.AllowAnyHeader().WithOrigins()
+    .AllowAnyMethod().AllowCredentials().SetIsOriginAllowed((host) => true));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthentication();
+app.UseCors("CORSPolicy");
 
 app.MapControllers();
 
