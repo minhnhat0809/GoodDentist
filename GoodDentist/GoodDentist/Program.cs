@@ -37,6 +37,8 @@ builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 builder.Services.AddScoped<IFirebaseStorageService, FirebaseStorageService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IExaminationService, ExaminationService>();
+builder.Services.AddScoped<IClinicServiceService, ClinicServiceService>();
+builder.Services.AddScoped<IGeneralService, GeneralService>();
 
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -50,6 +52,8 @@ builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
 builder.Services.AddScoped<IRecordTypeRepository, RecordTypeRepository>();
 builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 builder.Services.AddScoped<IExaminationRepo, ExaminationRepo>();
+builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
+builder.Services.AddScoped<IGeneralRepo, GeneralRepo>();
 
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -113,20 +117,24 @@ builder.Services.AddStackExchangeRedisCache(redis =>
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("CORSPolicy", builder => builder.AllowAnyHeader().WithOrigins()
+    .AllowAnyMethod().AllowCredentials().SetIsOriginAllowed((host) => true));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthentication();
+app.UseCors("CORSPolicy");
 
 app.MapControllers();
 

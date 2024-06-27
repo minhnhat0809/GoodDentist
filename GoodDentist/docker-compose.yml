@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  gooddentist:
+    image: gooddentist.azurecr.io/gooddentist
+    build:
+      context: .
+      dockerfile: GoodDentist/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - gooddentist
+  redis:
+    image: redis:6.0.3
+    container_name: redis
+    restart: always
+    volumes:
+      - redis_volume_data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - gooddentist
+volumes:
+  redis_volume_data:
+networks:
+  gooddentist:
+    driver: bridge

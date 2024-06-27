@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Repositories;
 using StackExchange.Redis;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
@@ -34,10 +35,7 @@ namespace Services.Impl
 
         public async Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO)
         {
-			ResponseListDTO responseDTO = new ResponseListDTO();
-            string key = "userList";
-            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
-            var db = redis.GetDatabase();          
+            ResponseListDTO responseDTO = new ResponseListDTO();
 
             try
             {
@@ -79,11 +77,6 @@ namespace Services.Impl
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 };
 
-                if (db.KeyExists(key))
-                {
-                    await db.ListLeftPushAsync(key, JsonConvert.SerializeObject(user, settings));
-                }
-
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
                 return responseDTO;
@@ -116,7 +109,7 @@ namespace Services.Impl
 
         private async Task<ResponseListDTO> validateUser(CreateUserDTO createUserDTO, bool mod)
         {
-			ResponseListDTO responseDTO = new ResponseListDTO();
+            ResponseListDTO responseDTO = new ResponseListDTO();
             responseDTO.IsSuccess = true;
 
             void AddError(string message)
@@ -411,7 +404,7 @@ namespace Services.Impl
         }
 
         private List<User> SortUsers(List<User> users, string sortField, string sortOrder)
-            {
+        {
             if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
             {
                 return users;
@@ -436,7 +429,7 @@ namespace Services.Impl
                 case "roleid":
                     return isAscending ? users.OrderBy(u => u.RoleId).ToList() : users.OrderByDescending(u => u.RoleId).ToList();
                 case "status":
-                    return isAscending ? users.OrderBy(u => u.Status).ToList() : users.OrderByDescending(u => u.Status).ToList();                    
+                    return isAscending ? users.OrderBy(u => u.Status).ToList() : users.OrderByDescending(u => u.Status).ToList();
             }
 
             return users;
@@ -461,10 +454,5 @@ namespace Services.Impl
             }
         }
 
-        public async Task<string> deleteCache(string key)
-        {
-            string result = await unitOfWork.userRepo.DeleteCache(key);
-            return result;
-        }
     }
-    }
+}

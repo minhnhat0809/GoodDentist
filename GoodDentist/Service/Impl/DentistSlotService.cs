@@ -216,6 +216,11 @@ namespace Services.Impl
                 responseDTO.IsSuccess = false;
             }
 
+            if (dentistSlotDTO.ClinicId.IsNullOrEmpty())
+            {
+                AddError("Internal errror at empty clinic data!");
+            }
+
             if (!dentistSlotDTO.DentistId.HasValue)
             {
                 AddError("Please choose a dentist!");
@@ -256,7 +261,7 @@ namespace Services.Impl
             }
             else if (checkTime)
             {
-                List<string> errors = await checkRoomAvailable((int)dentistSlotDTO.RoomId, (DateTime)dentistSlotDTO.TimeStart, dentistSlotDTO.DentistId.ToString());
+                List<string> errors = await checkRoomAvailable((int)dentistSlotDTO.RoomId, dentistSlotDTO.ClinicId, (DateTime)dentistSlotDTO.TimeStart, dentistSlotDTO.DentistId.ToString());
                 if (!errors.IsNullOrEmpty())
                 {
                     responseDTO.Message.AddRange(errors);
@@ -285,13 +290,16 @@ namespace Services.Impl
             return errors;
         }
 
-        private async Task<List<string>> checkRoomAvailable(int roomId, DateTime timeStart, string dentistId)
+        private async Task<List<string>> checkRoomAvailable(int roomId, string clinicId, DateTime timeStart, string dentistId)
         {
             List<string> errors = new List<string>();
             Room? room = await unitOfWork.roomRepo.GetByIdAsync(roomId);
             if (room == null)
             {
                 errors.Add("Room is not existed !!!");
+            }else if (!room.ClinicId.Equals(Guid.Parse(clinicId)))
+            {
+                errors.Add("This clinic does not have this room !!!");
             }
 
             DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByDentistAndTimeStart(dentistId, timeStart);
