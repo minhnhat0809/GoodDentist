@@ -16,6 +16,6 @@ namespace Repositories
 
         string getUserName(string Id);
 
-        Task<string> DeleteCache(string key);
+        Task<int> TotalUser();
     }
 }

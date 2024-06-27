@@ -34,32 +34,12 @@ namespace Repositories.Impl
         .Where(user => user.UserId == userId)
         .Select(u => u.UserName)
         .FirstOrDefault();
-        }
+        }       
 
-        public async Task<string> DeleteCache(string key)
+
+        public async Task<int> TotalUser()
         {
-            if (key.IsNullOrEmpty())
-            {
-                return "Empty key";
-            }
-            else
-            {
-                CancellationToken cancellationToken = default;
-                string? checkCache = await distributedCache.GetStringAsync(key, cancellationToken);
-
-                if (checkCache.IsNullOrEmpty())
-                {
-                    return "No value with this key";
-                }
-
-                await distributedCache.RemoveAsync(key);
-                return "Remove key successfully!";
-            }
-        }
-
-        public string ConvertToRedisKey(string prefix, string identifier)
-        {
-            return $"{prefix}:{identifier}"; 
+            return await _repositoryContext.Users.CountAsync();
         }
     }
 }
