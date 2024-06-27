@@ -48,8 +48,9 @@ builder.Services.AddScoped<IRecordTypeRepository, RecordTypeRepository>();
 builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 builder.Services.AddScoped<IExaminationRepo, ExaminationRepo>();
 builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
-
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
+
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -103,6 +104,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//redis
 builder.Services.AddStackExchangeRedisCache(redis =>
 {
     redis.Configuration = "localhost:6379";
@@ -111,6 +113,7 @@ builder.Services.AddStackExchangeRedisCache(redis =>
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 
+//cors
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy("CORSPolicy", builder => builder.AllowAnyHeader().WithOrigins()

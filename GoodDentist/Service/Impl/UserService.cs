@@ -34,7 +34,8 @@ namespace Services.Impl
 
         public async Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO)
         {
-			ResponseListDTO responseDTO = new ResponseListDTO();       
+			ResponseListDTO responseDTO = new ResponseListDTO();
+            responseDTO.StatusCode = 200;
 
             try
             {
@@ -46,6 +47,7 @@ namespace Services.Impl
                 {
                     responseDTO.Message.Add("Username is already existed!");
                     responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 400;
                     return responseDTO;
                 }
 
@@ -110,11 +112,13 @@ namespace Services.Impl
         {
 			ResponseListDTO responseDTO = new ResponseListDTO();
             responseDTO.IsSuccess = true;
+            responseDTO.StatusCode = 200;
 
             void AddError(string message)
             {
                 responseDTO.Message.Add(message);
                 responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 400;
             }
 
             if (createUserDTO.UserName.IsNullOrEmpty())
@@ -291,6 +295,8 @@ namespace Services.Impl
         public async Task<ResponseListDTO> updateUser(CreateUserDTO createUserDTO)
         {
             ResponseListDTO responseDTO = new ResponseListDTO();
+            responseDTO.StatusCode = 200;
+            responseDTO.IsSuccess = true;
             mod = false;
             try
             {
@@ -306,6 +312,7 @@ namespace Services.Impl
                 {
                     responseDTO.IsSuccess = false;
                     responseDTO.Message.Add("User is not existed!");
+                    responseDTO.StatusCode = 400;
                     return responseDTO;
                 }
 
@@ -318,6 +325,7 @@ namespace Services.Impl
                 {
                     responseDTO.IsSuccess = false;
                     responseDTO.Message.Add("User is not belong to any clinics!");
+                    responseDTO.StatusCode = 400;
                     return responseDTO;
                 }
 

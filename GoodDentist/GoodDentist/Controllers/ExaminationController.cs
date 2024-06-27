@@ -65,7 +65,8 @@ namespace GoodDentist.Controllers
         [HttpPost("/new-examination")]
         public async Task<ResponseListDTO> CreateExamination([FromBody] ExaminationDTO examinationDTO)
         {
-            ResponseListDTO responseDTO = await examinationService.CreateExamination(examinationDTO);
+            string mod = "c";
+            ResponseListDTO responseDTO = await examinationService.CreateExamination(examinationDTO, mod);
 
             return responseDTO;
         }
@@ -73,7 +74,8 @@ namespace GoodDentist.Controllers
         [HttpPut("examination")]
         public async Task<ResponseListDTO> UpdateExamination([FromBody] ExaminationDTO examinationDTO)
         {
-            ResponseListDTO responseDTO = await examinationService.UpdateExamination(examinationDTO);
+            string mod = "c";
+            ResponseListDTO responseDTO = await examinationService.UpdateExamination(examinationDTO, mod);
             return responseDTO;
         }
 

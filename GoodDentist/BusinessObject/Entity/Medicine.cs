@@ -15,6 +15,10 @@ public partial class Medicine
 
     public string? Description { get; set; }
 
+    public string? Effect { get; set; }
+
+    public string? Unit { get; set; }
+
     public decimal? Price { get; set; }
 
     public bool? Status { get; set; }

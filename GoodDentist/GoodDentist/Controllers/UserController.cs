@@ -25,26 +25,25 @@ namespace GoodDentist.Controllers
 
 
         [HttpPost("new-user")]
-        public async  Task<ResponseListDTO> CreateUser([FromBody] CreateUserDTO createUserDTO)
+        public async  Task<ActionResult<ResponseListDTO>> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
-			ResponseListDTO responseDTO = await userService.createUser(createUserDTO); 
-            
-           return responseDTO;                       
+			ResponseListDTO responseDTO = await userService.createUser(createUserDTO);            
+            return StatusCode(responseDTO.StatusCode, responseDTO);                       
         }
 
         [HttpGet("all-users")]
-        public async Task<ResponseDTO> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage,
+        public async Task<ActionResult<ResponseDTO>> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage,
             [FromQuery] string? filterField = null,
             [FromQuery] string? filterValue = null,
             [FromQuery] string? sortField = null,
             [FromQuery] string? sortOrder = "asc")
         {           
             ResponseDTO responseDTO = await userService.getAllUsers(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
-            return responseDTO;
+            return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
         [HttpGet("all-users-by-clinic")]
-        public async Task<ResponseDTO> GetAllUsersByClinic([FromQuery] string clinicId,
+        public async Task<ActionResult<ResponseDTO>> GetAllUsersByClinic([FromQuery] string clinicId,
            [FromQuery] int pageNumber, int rowsPerPage,
            [FromQuery] string? filterField = null,
            [FromQuery] string? filterValue = null,
@@ -52,22 +51,21 @@ namespace GoodDentist.Controllers
            [FromQuery] string? sortOrder = "asc")
         {
             ResponseDTO responseDTO = await userService.getAllUsersByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
-            return responseDTO;
+            return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
         [HttpDelete("user")]
-        public async Task<ResponseDTO> DeleteUser([FromQuery] string userName)
+        public async Task<ActionResult<ResponseDTO>> DeleteUser([FromQuery] string userName)
         {
             ResponseDTO responseDTO = await userService.deleteUser(userName);
-            return responseDTO;
+            return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
         [HttpPut("user")]
-        public async Task<ResponseListDTO> UpdateUser([FromBody] CreateUserDTO createUserDTO)
+        public async Task<ActionResult<ResponseDTO>> UpdateUser([FromBody] CreateUserDTO createUserDTO)
         {
 			ResponseListDTO responseDTO = await userService.updateUser(createUserDTO);
-
-            return responseDTO;
+            return StatusCode(responseDTO.StatusCode, responseDTO);
         }
     }
 }

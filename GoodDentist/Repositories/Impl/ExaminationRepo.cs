@@ -41,6 +41,11 @@ namespace Repositories.Impl
                 .ToListAsync();
         }
 
+        public async Task<List<Examination>> GetAllExaminationOfDentistSlot(int dentistSlotId)
+        {
+            return await _repositoryContext.Examinations.Where(ex => ex.DentistSlotId == dentistSlotId).ToListAsync();
+        }
+
         public async Task<Examination?> GetExaminationById(int examId)
         {
             Examination? examination = await _repositoryContext.Examinations.FirstOrDefaultAsync(ex => ex.ExaminationId == examId);
