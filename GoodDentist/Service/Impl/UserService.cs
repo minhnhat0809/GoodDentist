@@ -246,13 +246,7 @@ namespace Services.Impl
 
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
 
-                var s = new
-                {
-                    UserList = users,
-                    TotalCount = await unitOfWork.userRepo.TotalUser()
-                };
-
-                return new ResponseDTO("Get users successfully!", 200, true, s);
+                return new ResponseDTO("Get users successfully!", 200, true, users);
             }
             catch (Exception ex)
             {

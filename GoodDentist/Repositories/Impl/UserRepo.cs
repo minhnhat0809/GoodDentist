@@ -11,10 +11,10 @@ namespace Repositories.Impl
 {
     public class UserRepo : RepositoryBase<User>, IUserRepo
     {
-        private readonly IDistributedCache distributedCache;
-        public UserRepo(GoodDentistDbContext goodDentistDbContext, IDistributedCache distributedCache) : base(goodDentistDbContext)
+
+        public UserRepo(GoodDentistDbContext goodDentistDbContext) : base(goodDentistDbContext)
         {
-            this.distributedCache = distributedCache;
+            
         }      
 
         public User? getUser(string userName)
@@ -35,11 +35,5 @@ namespace Repositories.Impl
         .Select(u => u.UserName)
         .FirstOrDefault();
         }       
-
-
-        public async Task<int> TotalUser()
-        {
-            return await _repositoryContext.Users.CountAsync();
-        }
     }
 }

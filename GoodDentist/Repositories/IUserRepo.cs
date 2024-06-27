@@ -15,7 +15,5 @@ namespace Repositories
         Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage);        
 
         string getUserName(string Id);
-
-        Task<int> TotalUser();
     }
 }
