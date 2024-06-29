@@ -5,12 +5,24 @@
     <projectFile profileName="IIS Express">GoodDentist/GoodDentist.csproj</projectFile>
     <projectFile profileName="http">GoodDentist/GoodDentist.csproj</projectFile>
     <projectFile profileName="https">GoodDentist/GoodDentist.csproj</projectFile>
+    <projectFile kind="DockerCompose">docker-compose.dcproj</projectFile>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="" />
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="pull rebase from deploy">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/UserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/UserDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entity/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/Entity/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/Entity/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/UserService.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,21 +59,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/bc/0599c07a/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/cc/f365519b/Monitor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/AccountController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/BusinessObject/Entity/Room.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/BusinessObject/Entity/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/serviceAccountKey.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/serviceAccountKey.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/serviceAccountKey.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/serviceAccountKey.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/serviceAccountKey.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/serviceAccountKey.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/serviceAccountKey.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IFirebaseStorageService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/FirebaseStorageService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/MedicalRecordService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -84,9 +89,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Run",
+    ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Debug",
     ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
-    ".NET Launch Settings Profile.GoodDentist: https.executor": "Run",
+    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -109,7 +114,7 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: IIS Express">
+  <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: https">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
@@ -207,6 +212,7 @@
       <workItem from="1717941291820" duration="427000" />
       <workItem from="1718008629703" duration="13812000" />
       <workItem from="1718254448748" duration="3832000" />
+      <workItem from="1719679624320" duration="1255000" />
     </task>
     <task id="LOCAL-00001" summary="change file location and create repositoryBase">
       <option name="closed" value="true" />
@@ -480,19 +486,6 @@
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>476</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'GetUserAsync'">
-            <startOffsets>
-              <option value="-1" />
-            </startOffsets>
-            <endOffsets>
-              <option value="-1" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
           <line>52</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'Authenticate'">
@@ -543,6 +536,110 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>244</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'getAllUsers'">
+            <startOffsets>
+              <option value="8096" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8181" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/UserRepo.cs</url>
+          <line>26</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\UserRepo.cs" containingFunctionPresentation="Method 'GetAllUsers'">
+            <startOffsets>
+              <option value="776" />
+            </startOffsets>
+            <endOffsets>
+              <option value="821" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs</url>
+          <line>19</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\RepositoryBase.cs" containingFunctionPresentation="Method 'Paging'">
+            <startOffsets>
+              <option value="731" />
+            </startOffsets>
+            <endOffsets>
+              <option value="902" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>535</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'DeleteFile'">
+            <startOffsets>
+              <option value="20102" />
+            </startOffsets>
+            <endOffsets>
+              <option value="20161" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>506</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
+            <startOffsets>
+              <option value="19056" />
+            </startOffsets>
+            <endOffsets>
+              <option value="19115" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs</url>
+          <line>74</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\UserController.cs" containingFunctionPresentation="Method 'UploadAvatar'">
+            <startOffsets>
+              <option value="2699" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2761" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
+          <line>26</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'UploadFile'">
+            <startOffsets>
+              <option value="876" />
+            </startOffsets>
+            <endOffsets>
+              <option value="905" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
+          <line>57</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'DeleteFileAndReference'">
+            <startOffsets>
+              <option value="1880" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1986" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
