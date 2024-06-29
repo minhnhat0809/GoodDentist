@@ -11,10 +11,9 @@ namespace Repositories.Impl
 {
     public class RoomRepo : RepositoryBase<Room>, IRoomRepo
     {
-		private readonly IDistributedCache distributedCache;
-		public RoomRepo(GoodDentistDbContext repositoryContext, IDistributedCache distributedCache) : base(repositoryContext)
+		public RoomRepo(GoodDentistDbContext repositoryContext) : base(repositoryContext)
         {
-			this.distributedCache = distributedCache;
+			
 		}
 
 		public bool CheckDuplicateRoom(CreateRoomDTO roomDTO)

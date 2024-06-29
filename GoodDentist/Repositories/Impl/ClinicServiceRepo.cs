@@ -12,10 +12,10 @@ namespace Repositories.Impl
 {
     public class ClinicServiceRepo : RepositoryBase<ClinicService>, IClinicServiceRepo
     {
-		private readonly IDistributedCache distributedCache;
-		public ClinicServiceRepo(GoodDentistDbContext repositoryContext, IDistributedCache distributedCache) : base(repositoryContext)
+		
+		public ClinicServiceRepo(GoodDentistDbContext repositoryContext) : base(repositoryContext)
         {
-			this.distributedCache = distributedCache;
+			
 		}
 
 		public async Task<ResponseDTO> CheckValidate(ClinicServiceDTO clinicServiceDTO)
