@@ -6,6 +6,7 @@ using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
 using BusinessObject.Entity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -23,6 +24,7 @@ public class AuthService : IAuthService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly ResponseLoginDTO _responseLogin;
+    private readonly ResponseDTO _responseDto;
 
     public AuthService(IConfiguration configuration, IUnitOfWork unitOfWork, IMapper mapper)
     {
@@ -30,6 +32,7 @@ public class AuthService : IAuthService
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _responseLogin = new ResponseLoginDTO();
+        _responseDto = new ResponseDTO("",200,true,null);
     }
 
     public async Task<ResponseLoginDTO> Authenticate(LoginDTO loginDto)
@@ -69,6 +72,54 @@ public class AuthService : IAuthService
 
         return _responseLogin;
     }
+
+    public async Task<ResponseDTO> GetAccountByEmailOrPhone(string emailOrPhone)
+    {
+        
+        try
+        {
+            // check if account exist
+            var existAccount = await _unitOfWork.userRepo.FindByConditionAsync(ac => ac.Email == emailOrPhone || ac.PhoneNumber == emailOrPhone);
+            if (existAccount != null)
+            {
+                _responseDto.Result = existAccount;
+            }
+            else
+            {
+                _responseDto.Message = "Account is not found!";
+                _responseDto.IsSuccess = false;
+            }
+        }
+        catch (Exception e)
+        {
+            _responseDto.Message = e.Message;
+            _responseDto.IsSuccess = false;
+        }
+
+        return _responseDto;
+    }
+
+    public Task<ResponseLoginDTO> ResetPassword(Guid userId, string password)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<ResponseDTO> GetUserAsync(Guid userId)
+    {
+        try
+        {
+            _responseDto.Result = await _unitOfWork.userRepo.GetByIdAsync(userId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return _responseDto;
+    }
+
+
     private string GenerateJwtToken(User user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));

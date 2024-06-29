@@ -31,6 +31,8 @@ public partial class User
 
     public bool? Status { get; set; }
 
+    public string? Avatar { get; set; }
+
     public virtual ICollection<ClinicUser> ClinicUsers { get; set; } = new List<ClinicUser>();
 
     public virtual ICollection<DentistSlot> DentistSlots { get; set; } = new List<DentistSlot>();
