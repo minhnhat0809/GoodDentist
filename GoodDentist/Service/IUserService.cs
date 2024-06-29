@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Services
 {
@@ -20,5 +21,8 @@ namespace Services
         Task<ResponseDTO> deleteUser(string userName);
 
         Task<ResponseListDTO> updateUser(CreateUserDTO createUserDTO);
+
+        Task<UserDTO> UploadFile(IFormFile file, Guid userId);
+        Task<UserDTO> DeleteFile(Guid userId);
     }
 }
