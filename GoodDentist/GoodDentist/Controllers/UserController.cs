@@ -67,7 +67,48 @@ namespace GoodDentist.Controllers
 			ResponseListDTO responseDTO = await userService.updateUser(createUserDTO);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
+        [HttpPut("avatar")]
+        public async Task<ResponseDTO> UploadAvatar(IFormFile file, Guid id)
+        {
+            ResponseDTO ResponseDto = new ResponseDTO("", 200, true,null);
+            if (file == null || file.Length == 0)
+            {
+                ResponseDto.Message = "File is empty!";
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
 
+            try
+            {
+                var dto = await userService.UploadFile(file, id);
+                ResponseDto.Result = dto;
+            }
+            catch (Exception e)
+            {
+                ResponseDto.Message = e.Message;
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
+
+            return ResponseDto;
+        }
+        [HttpDelete("avatar")]
+        public async Task<ResponseDTO> DeleteAvatar(Guid userId)
+        {
+            ResponseDTO ResponseDto  = new ResponseDTO("", 200, true,null);
+            try
+            {
+                var dto = await userService.DeleteFile(userId);
+                ResponseDto.Result = dto;
+            }
+            catch (Exception e)
+            {
+                ResponseDto.Message = e.Message;
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
+            return ResponseDto;
+        }
         
     }
 }

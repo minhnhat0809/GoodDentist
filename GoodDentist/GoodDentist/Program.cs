@@ -139,3 +139,4 @@ app.UseCors("CORSPolicy");
 app.MapControllers();
 
 app.Run();
+// dotnet ef dbcontext scaffold "Server=(local);Initial Catalog=Good_Dentist_DB;Persist Security Info=False;User ID=sa;Password=12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Entity" --context-dir ".\"

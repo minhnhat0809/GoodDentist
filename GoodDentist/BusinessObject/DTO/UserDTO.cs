@@ -18,6 +18,7 @@ namespace BusinessObject.DTO
         public string? Address { get; set; }
         public bool? Status { get; set; }
         public required int RoleId { get; set; }
+        public string? Avatar { get; set; }
     }
 
     
