@@ -67,5 +67,7 @@ namespace GoodDentist.Controllers
 			ResponseListDTO responseDTO = await userService.updateUser(createUserDTO);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
+
+        
     }
 }
