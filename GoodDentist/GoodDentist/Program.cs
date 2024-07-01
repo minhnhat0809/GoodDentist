@@ -35,6 +35,7 @@ builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IExaminationService, ExaminationService>();
 builder.Services.AddScoped<IClinicServiceService, ClinicServiceService>();
 builder.Services.AddScoped<IGeneralService, GeneralService>();
+builder.Services.AddScoped<IOrderServices, OrderServices>();
 
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -50,6 +51,7 @@ builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 builder.Services.AddScoped<IExaminationRepo, ExaminationRepo>();
 builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
 builder.Services.AddScoped<IGeneralRepo, GeneralRepo>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 builder.Services.AddControllers().AddJsonOptions(options =>

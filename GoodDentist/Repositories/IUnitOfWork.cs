@@ -24,6 +24,7 @@ namespace Repositories
         IClinicServiceRepo clinicServiceRepo { get; }
         IGeneralRepo generalRepo { get; }
         IExamProfileRepo examProfileRepo { get; }
+        IOrderRepository orderRepo { get; }
         Task<int> CompleteAsync();
     }
 }
