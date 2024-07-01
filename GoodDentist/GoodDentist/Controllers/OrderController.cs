@@ -19,6 +19,14 @@ namespace GoodDentist.Controllers
 			this._distributedCache = distributedCache;
         }
 
+		[HttpPost("new-order")]
+		public async Task<ResponseDTO> AddOrder([FromBody] OrderDTO orderDTO)
+		{
+			ResponseDTO responseDTO = await _orderservice.AddOrder(orderDTO);
+
+			return responseDTO;
+		}
+
 		[HttpGet("all-order")]
 		public async Task<ResponseDTO> GetAllOrder([FromQuery] int pageNumber, int rowsPerPage)
 		{

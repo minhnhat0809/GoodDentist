@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.Entity;
+using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using Repositories.Impl;
 using static StackExchange.Redis.Role;
@@ -44,6 +45,10 @@ namespace Services.Impl
 				List<Order>? orderList = await _unitOfWork.orderRepo.FindByConditionAsync(c => c.OrderName == searchValue);
 				var all = orderList.Where(c => c.Status == true);
 				List<OrderDTO> orderDTOList = _mapper.Map<List<OrderDTO>>(all);
+				if (orderDTOList.IsNullOrEmpty())
+				{
+					return new ResponseDTO("No result found!", 200, true, null);
+				}
 
 				return new ResponseDTO("Search Medicine successfully!", 200, true, orderDTOList);
 			}
@@ -55,17 +60,87 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> DeleteOrder(int orderId)
 		{
+			/*try
+			{
+				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderId);
+				if (order == null)
+				{
+					return new ResponseDTO("This order is not exist!", 400, false, null);
+				}
+				order.Status = false;
+				var result = await _unitOfWork.orderRepo.DeleteAsync(order);
+				if (result)
+				{
+					return new ResponseDTO("Order Delete succesfully!", 201, true, null);
+				}
+				return new ResponseDTO("Order Delete unsucessfully!", 400, false, null);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}*/
 			throw new NotImplementedException();
 		}
 
 		public async Task<ResponseDTO> AddOrder(OrderDTO orderDTO)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var check = await CheckValidationAddOrder(orderDTO);
+				if (check.IsSuccess == false)
+				{
+					return check;
+				}
+
+				Order order = _mapper.Map<Order>(orderDTO);
+				await _unitOfWork.orderRepo.CreateAsync(order);
+				return new ResponseDTO("Creat succesfully", 200, true, null);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
 		}
 
 		public async Task<ResponseDTO> UpdateOrder(OrderDTO orderDTO)
 		{
 			throw new NotImplementedException();
 		}
+
+		public async Task<ResponseDTO> CheckValidationAddOrder(OrderDTO orderDTO)
+		{
+			if (orderDTO.OrderName.IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please input order name", 400, false, null);
+			}
+
+			if(orderDTO.ExaminationId.ToString().IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please input examinationID", 400, false, null);
+			}
+
+			if (orderDTO.DateTime.ToString().IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please choose Date Time!", 400, false, null);
+			}
+
+			if(orderDTO.Price.ToString().IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please input order's price!", 400, false, null);
+			}
+
+			List<Order> order = await _unitOfWork.orderRepo.FindByConditionAsync(c => c.Status == true);
+			if (order.Any(c => c.OrderName == orderDTO.OrderName))
+			{
+				return new ResponseDTO("Order name is already existed!", 400, false, null);
+			}
+
+			if(orderDTO.Price < 0)
+			{
+				return new ResponseDTO("Order's price must be greater than 0!", 400, false, null);
+			}
+			return new ResponseDTO("Check validation successfully", 200, true, null);
+		}
+
 	}
 }
