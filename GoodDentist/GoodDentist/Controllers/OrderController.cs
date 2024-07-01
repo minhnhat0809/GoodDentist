@@ -40,5 +40,12 @@ namespace GoodDentist.Controllers
 			ResponseDTO responseDTO = await _orderservice.SearchOrder(searchValue);
 			return responseDTO;
 		}
+
+		[HttpDelete("order")]
+		public async Task<ResponseDTO> DeleteOrder([FromQuery] int orderId)
+		{
+			ResponseDTO responseDTO = await _orderservice.DeleteOrder(orderId);
+			return responseDTO;
+		}
 	}
 }

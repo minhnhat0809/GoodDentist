@@ -60,7 +60,7 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> DeleteOrder(int orderId)
 		{
-			/*try
+			try
 			{
 				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderId);
 				if (order == null)
@@ -78,8 +78,7 @@ namespace Services.Impl
 			catch (Exception ex)
 			{
 				return new ResponseDTO(ex.Message, 500, false, null);
-			}*/
-			throw new NotImplementedException();
+			}
 		}
 
 		public async Task<ResponseDTO> AddOrder(OrderDTO orderDTO)
