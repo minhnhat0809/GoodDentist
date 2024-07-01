@@ -103,7 +103,35 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> UpdateOrder(OrderDTO orderDTO)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderDTO.OrderId);
+				if (order == null)
+				{
+					return new ResponseDTO("This order is not exist!", 400, false, null);
+				}
+				var check = await CheckValidationUpdateOrder(orderDTO);
+				if (check.IsSuccess == false)
+				{
+					return check;
+				}
+				int orderId = order.OrderId;
+
+				_unitOfWork.orderRepo.Detach(order);
+
+				var updateOrder = _mapper.Map<Order>(orderDTO);
+
+				updateOrder.OrderId = orderId;
+
+				_unitOfWork.orderRepo.Attach(updateOrder);
+
+				await _unitOfWork.orderRepo.UpdateAsync(updateOrder);
+				return new ResponseDTO("Update Sucessfully!", 201, true, null);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
 		}
 
 		public async Task<ResponseDTO> CheckValidationAddOrder(OrderDTO orderDTO)
@@ -135,6 +163,45 @@ namespace Services.Impl
 			}
 
 			if(orderDTO.Price < 0)
+			{
+				return new ResponseDTO("Order's price must be greater than 0!", 400, false, null);
+			}
+			return new ResponseDTO("Check validation successfully", 200, true, null);
+		}
+
+		public async Task<ResponseDTO> CheckValidationUpdateOrder(OrderDTO orderDTO)
+		{
+			if(orderDTO.OrderId.ToString().IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please choose order!", 400, false, null);
+			}
+			if (orderDTO.OrderName.IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please input order name", 400, false, null);
+			}
+
+			if (orderDTO.ExaminationId.ToString().IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please input examinationID", 400, false, null);
+			}
+
+			if (orderDTO.DateTime.ToString().IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please choose Date Time!", 400, false, null);
+			}
+
+			if (orderDTO.Price.ToString().IsNullOrEmpty())
+			{
+				return new ResponseDTO("Please input order's price!", 400, false, null);
+			}
+
+			List<Order> orders = await _unitOfWork.orderRepo.FindByConditionAsync(c => c.Status == true);
+			if (orders.Any(c => c.OrderName == orderDTO.OrderName && c.OrderId != orderDTO.OrderId))
+			{
+				return new ResponseDTO("Order name is already existed!", 400, false, null);
+			}
+
+			if (orderDTO.Price < 0)
 			{
 				return new ResponseDTO("Order's price must be greater than 0!", 400, false, null);
 			}

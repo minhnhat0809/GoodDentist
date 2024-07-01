@@ -34,17 +34,25 @@ namespace GoodDentist.Controllers
 			return responseDTO;
 		}
 
-		[HttpGet("order")]
+		[HttpGet("search-order")]
 		public async Task<ResponseDTO> SearchOrder([FromQuery] string searchValue)
 		{
 			ResponseDTO responseDTO = await _orderservice.SearchOrder(searchValue);
 			return responseDTO;
 		}
 
-		[HttpDelete("order")]
+		[HttpDelete("delete-order")]
 		public async Task<ResponseDTO> DeleteOrder([FromQuery] int orderId)
 		{
 			ResponseDTO responseDTO = await _orderservice.DeleteOrder(orderId);
+			return responseDTO;
+		}
+
+		[HttpPut("update-order")]
+		public async Task<ResponseDTO> UpdateOrder([FromBody] OrderDTO orderDTO)
+		{
+			ResponseDTO responseDTO = await _orderservice.UpdateOrder(orderDTO);
+
 			return responseDTO;
 		}
 	}
