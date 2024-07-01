@@ -7,7 +7,7 @@ using BusinessObject.Entity;
 
 namespace Repositories
 {
-	public interface IOrderRepository
+	public interface IOrderRepository : IRepositoryBase<Order>
 	{
 		Task<List<Order>?> GetAllOrder(int pageNumber, int pageSize);
 	}

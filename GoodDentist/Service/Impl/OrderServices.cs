@@ -23,16 +23,13 @@ namespace Services.Impl
         }
 		public async Task<ResponseDTO> GetAllOrder(int pageNumber, int pageSize)
 		{
-			ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
 			try
 			{
 				List<Order>? orderList = await _unitOfWork.orderRepo.GetAllOrder(pageNumber, pageSize);
 				var all = orderList.Where(c => c.Status == true);
 
 				List<OrderDTO> orderDTOList = _mapper.Map<List<OrderDTO>>(all);
-				responseDTO.Message = "Get all Order successfully!";
-				responseDTO.Result = orderDTOList;
-				return responseDTO;
+				return new ResponseDTO("Get all Order successfully!", 200, true,orderDTOList);
 			}
 			catch (Exception ex)
 			{
@@ -42,7 +39,18 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> SearchOrder(string searchValue)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				List<Order>? orderList = await _unitOfWork.orderRepo.FindByConditionAsync(c => c.OrderName == searchValue);
+				var all = orderList.Where(c => c.Status == true);
+				List<OrderDTO> orderDTOList = _mapper.Map<List<OrderDTO>>(all);
+
+				return new ResponseDTO("Search Medicine successfully!", 200, true, orderDTOList);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
 		}
 
 		public async Task<ResponseDTO> DeleteOrder(int orderId)

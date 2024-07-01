@@ -25,5 +25,12 @@ namespace GoodDentist.Controllers
 			ResponseDTO responseDTO = await _orderservice.GetAllOrder(pageNumber, rowsPerPage);
 			return responseDTO;
 		}
+
+		[HttpGet("order")]
+		public async Task<ResponseDTO> SearchOrder([FromQuery] string searchValue)
+		{
+			ResponseDTO responseDTO = await _orderservice.SearchOrder(searchValue);
+			return responseDTO;
+		}
 	}
 }
