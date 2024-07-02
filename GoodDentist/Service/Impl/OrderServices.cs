@@ -106,7 +106,7 @@ namespace Services.Impl
 			try
 			{
 				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderDTO.OrderId);
-				if (order == null)
+				if (order == null || order.Status == false)
 				{
 					return new ResponseDTO("This order is not exist!", 400, false, null);
 				}
@@ -172,6 +172,11 @@ namespace Services.Impl
 				return new ResponseDTO("Please input order's price", 400, false, null);
 			}
 
+			if(orderDTO.Price > decimal.MaxValue)
+			{
+				return new ResponseDTO("Order's price is out of range!", 400, false, null);
+			}
+
 			return new ResponseDTO("Check validation successfully", 200, true, null);
 		}
 
@@ -210,6 +215,16 @@ namespace Services.Impl
 			if (orderDTO.Price < 0)
 			{
 				return new ResponseDTO("Order's price must be greater than 0!", 400, false, null);
+			}
+
+			if (orderDTO.Price == null)
+			{
+				return new ResponseDTO("Please input order's price", 400, false, null);
+			}
+
+			if (orderDTO.Price > decimal.MaxValue)
+			{
+				return new ResponseDTO("Order's price is out of range!", 400, false, null);
 			}
 			return new ResponseDTO("Check validation successfully", 200, true, null);
 		}
