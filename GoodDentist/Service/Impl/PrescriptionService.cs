@@ -83,7 +83,22 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> AddPrescription(PrescriptionCreateDTO prescriptionDTO)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var check = await CheckValidationAddPrescription(prescriptionDTO);
+				if (check.IsSuccess == false)
+				{
+					return check;
+				}
+
+				Prescription prescription = _mapper.Map<Prescription>(prescriptionDTO);
+				await _unitOfWork.prescriptionRepo.CreateAsync(prescription);
+				return new ResponseDTO("Create succesfully", 200, true, null);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
 		}
 
 		public async Task<ResponseDTO> UpdatePrescription(PrescriptionDTO prescriptionDTO)
@@ -107,7 +122,11 @@ namespace Services.Impl
 			
 			if (prescriptionDTO.Total < 0)
 			{
-				return new ResponseDTO("Order's price must be greater than 0!", 400, false, null);
+				return new ResponseDTO("Prescription's price must be greater than 0", 400, false, null);
+			}
+			if(prescriptionDTO.Total == null)
+			{
+				return new ResponseDTO("Please input presrciption's price", 400, false, null);
 			}
 			return new ResponseDTO("Check validation successfully", 200, true, null);
 		}
