@@ -103,7 +103,36 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> UpdatePrescription(PrescriptionDTO prescriptionDTO)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var prescription = await _unitOfWork.prescriptionRepo.GetByIdAsync(prescriptionDTO.PrescriptionId);
+				if (prescription == null || prescription.Status == false)
+				{
+					return new ResponseDTO("This prescription is not exist!", 400, false, null);
+				}
+				var check = await CheckValidationUpdatePrescription(prescriptionDTO);
+				if (check.IsSuccess == false)
+				{
+					return check;
+				}
+				int prescriptionId = prescription.PrescriptionId;
+
+				_unitOfWork.prescriptionRepo.Detach(prescription);
+
+				var prescriptionUpdate = _mapper.Map<Prescription>(prescriptionDTO);
+
+				prescriptionUpdate.PrescriptionId = prescriptionId;
+
+				_unitOfWork.prescriptionRepo.Attach(prescriptionUpdate);
+
+				await _unitOfWork.prescriptionRepo.UpdateAsync(prescriptionUpdate);
+				return new ResponseDTO("Update Sucessfully!", 201, true, null);
+				
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO (ex.Message, 500, false, null);
+			}
 		}
 
 		public async Task<ResponseDTO> CheckValidationAddPrescription(PrescriptionCreateDTO prescriptionDTO)
@@ -131,7 +160,7 @@ namespace Services.Impl
 			return new ResponseDTO("Check validation successfully", 200, true, null);
 		}
 
-		public async Task<ResponseDTO> CheckValidationUpdateOrder(PrescriptionDTO prescriptionDTO)
+		public async Task<ResponseDTO> CheckValidationUpdatePrescription(PrescriptionDTO prescriptionDTO)
 		{
 			if (prescriptionDTO.PrescriptionId.ToString().IsNullOrEmpty())
 			{
@@ -151,7 +180,17 @@ namespace Services.Impl
 
 			if (prescriptionDTO.Total < 0)
 			{
-				return new ResponseDTO("Order's price must be greater than 0!", 400, false, null);
+				return new ResponseDTO("Prescription's price must be greater than 0!", 400, false, null);
+			}
+
+			if(prescriptionDTO.Total == null)
+			{
+				return new ResponseDTO("Please input presription's price", 400, false, null);
+			}
+
+			if(prescriptionDTO.Total > decimal.MaxValue)
+			{
+				return new ResponseDTO("Prescription value is out of range!", 400, false, null);
 			}
 			return new ResponseDTO("Check validation successfully", 200, true, null);
 		}

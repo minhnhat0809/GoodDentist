@@ -18,5 +18,7 @@ namespace BusinessObject.DTO
 		public decimal? Total { get; set; }
 
 		public int? ExaminationId { get; set; }
-		}
+
+		public bool? Status { get; set; }
+	}
 }

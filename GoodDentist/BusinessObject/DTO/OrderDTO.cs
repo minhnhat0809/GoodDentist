@@ -17,5 +17,7 @@ namespace BusinessObject.DTO
 		public DateTime? DateTime { get; set; }
 
 		public decimal? Price { get; set; }
+
+		public bool? Status { get; set; }
 	}
 }
