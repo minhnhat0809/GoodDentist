@@ -39,7 +39,22 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> SearchPrescription(string searchValue)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				List<Prescription>? prescriptionList = await _unitOfWork.prescriptionRepo.FindByConditionAsync(c => c.PrescriptionId.ToString() == searchValue);
+				var all = prescriptionList.Where(c => c.Status == true);
+				List<PrescriptionDTO> prescriptionDTOList = _mapper.Map<List<PrescriptionDTO>>(all);
+				if (prescriptionDTOList.IsNullOrEmpty())
+				{
+					return new ResponseDTO("No result found!", 200, true, null);
+				}
+
+				return new ResponseDTO("Search Prescription successfully!", 200, true, prescriptionDTOList);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
 		}
 
 		public async Task<ResponseDTO> DeletePrescription(int prescriptionId)

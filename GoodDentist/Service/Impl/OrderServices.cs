@@ -50,7 +50,7 @@ namespace Services.Impl
 					return new ResponseDTO("No result found!", 200, true, null);
 				}
 
-				return new ResponseDTO("Search Medicine successfully!", 200, true, orderDTOList);
+				return new ResponseDTO("Search Order successfully!", 200, true, orderDTOList);
 			}
 			catch (Exception ex)
 			{
