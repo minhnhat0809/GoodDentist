@@ -106,7 +106,7 @@ namespace Services.Impl
 
                 Medicine medicine = mapper.Map<Medicine>(medicineDTO);
                 await unitOfWork.medicineRepo.CreateAsync(medicine);
-                return new ResponseDTO("Creat succesfully", 200, true, null);
+                return new ResponseDTO("Create succesfully", 200, true, null);
             }
             catch (Exception ex)
             {
@@ -187,11 +187,21 @@ namespace Services.Impl
                 return new ResponseDTO("Please input correct medicine quantity (quantity must be greater or equal to 0)", 400, false, null);
             }
 
-            if (medicineDTO.Price < 0)
+            if(medicineDTO.Quantity == null)
+            {
+				return new ResponseDTO("Please input medicine quantity", 400, false, null);
+			}
+
+			if (medicineDTO.Price < 0)
             {
                 return new ResponseDTO("Please input correct medicine price (price must be greater or equal to 0", 400, false, null);
             }
-            return new ResponseDTO("Check validation successfully",200,  true, null);
+
+            if(medicineDTO.Price == null)
+            {
+				return new ResponseDTO("Please input medicine price", 400, false, null);
+			}
+			return new ResponseDTO("Check validation successfully",200,  true, null);
         }
 
         public async Task<ResponseDTO> CheckValidationUpdateMedicine(MedicineUpdateDTO medicineDTO)

@@ -93,7 +93,7 @@ namespace Services.Impl
 
 				Order order = _mapper.Map<Order>(orderDTO);
 				await _unitOfWork.orderRepo.CreateAsync(order);
-				return new ResponseDTO("Creat succesfully", 200, true, null);
+				return new ResponseDTO("Create succesfully", 200, true, null);
 			}
 			catch (Exception ex)
 			{
@@ -166,6 +166,12 @@ namespace Services.Impl
 			{
 				return new ResponseDTO("Order's price must be greater than 0!", 400, false, null);
 			}
+
+			if(orderDTO.Price == null)
+			{
+				return new ResponseDTO("Please input order's price", 400, false, null);
+			}
+
 			return new ResponseDTO("Check validation successfully", 200, true, null);
 		}
 
