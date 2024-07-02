@@ -63,7 +63,7 @@ namespace Services.Impl
 			try
 			{
 				var prescription = await _unitOfWork.prescriptionRepo.GetByIdAsync(prescriptionId);
-				if (prescription == null)
+				if (prescription == null||prescription.Status == false)
 				{
 					return new ResponseDTO("This prescription is not exist!", 400, false, null);
 				}

@@ -63,7 +63,7 @@ namespace Services.Impl
 			try
 			{
 				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderId);
-				if (order == null)
+				if (order == null || order.Status == false)
 				{
 					return new ResponseDTO("This order is not exist!", 400, false, null);
 				}

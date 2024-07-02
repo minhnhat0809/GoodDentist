@@ -73,7 +73,7 @@ namespace Services.Impl
             try
             {
                 var medicine = await unitOfWork.medicineRepo.GetByIdAsync( medicineId);
-                if (medicine == null)
+                if (medicine == null || medicine.Status == false)
                 {
                     return new ResponseDTO("This medicine is not exist!", 400, false, null);
                 }
