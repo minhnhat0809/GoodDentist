@@ -8,6 +8,7 @@ using BusinessObject.DTO;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
+using StackExchange.Redis;
 
 namespace Services.Impl
 {
@@ -59,7 +60,25 @@ namespace Services.Impl
 
 		public async Task<ResponseDTO> DeletePrescription(int prescriptionId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var prescription = await _unitOfWork.prescriptionRepo.GetByIdAsync(prescriptionId);
+				if (prescription == null)
+				{
+					return new ResponseDTO("This prescription is not exist!", 400, false, null);
+				}
+				prescription.Status = false;
+				var result = await _unitOfWork.prescriptionRepo.DeleteAsync(prescription);
+				if (result)
+				{
+					return new ResponseDTO("Prescription Delete succesfully!", 201, true, null);
+				}
+				return new ResponseDTO("Prescription Delete unsucessfully!", 400, false, null);
+			}
+			catch (Exception ex)
+			{
+				return new ResponseDTO(ex.Message, 500, false, null);
+			}
 		}
 
 		public async Task<ResponseDTO> AddPrescription(PrescriptionCreateDTO prescriptionDTO)
