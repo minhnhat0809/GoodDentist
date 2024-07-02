@@ -13,7 +13,7 @@ namespace Services
 
 		Task<ResponseDTO> SearchOrder(string searchValue);
 
-		Task<ResponseDTO> AddOrder(OrderDTO orderDTO);
+		Task<ResponseDTO> AddOrder(OrderCreateDTO orderDTO);
 
 		Task<ResponseDTO> UpdateOrder(OrderDTO orderDTO);
 

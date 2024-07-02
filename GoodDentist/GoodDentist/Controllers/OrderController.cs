@@ -20,7 +20,7 @@ namespace GoodDentist.Controllers
         }
 
 		[HttpPost("new-order")]
-		public async Task<ResponseDTO> AddOrder([FromBody] OrderDTO orderDTO)
+		public async Task<ResponseDTO> AddOrder([FromBody] OrderCreateDTO orderDTO)
 		{
 			ResponseDTO responseDTO = await _orderservice.AddOrder(orderDTO);
 

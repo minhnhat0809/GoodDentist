@@ -81,7 +81,7 @@ namespace Services.Impl
 			}
 		}
 
-		public async Task<ResponseDTO> AddOrder(OrderDTO orderDTO)
+		public async Task<ResponseDTO> AddOrder(OrderCreateDTO orderDTO)
 		{
 			try
 			{
@@ -134,17 +134,17 @@ namespace Services.Impl
 			}
 		}
 
-		public async Task<ResponseDTO> CheckValidationAddOrder(OrderDTO orderDTO)
+		public async Task<ResponseDTO> CheckValidationAddOrder(OrderCreateDTO orderDTO)
 		{
 			if (orderDTO.OrderName.IsNullOrEmpty())
 			{
 				return new ResponseDTO("Please input order name", 400, false, null);
 			}
 
-			if(orderDTO.ExaminationId.ToString().IsNullOrEmpty())
+			/*if(orderDTO.ExaminationId.ToString().IsNullOrEmpty())
 			{
 				return new ResponseDTO("Please input examinationID", 400, false, null);
-			}
+			}*/
 
 			if (orderDTO.DateTime.ToString().IsNullOrEmpty())
 			{
@@ -180,10 +180,10 @@ namespace Services.Impl
 				return new ResponseDTO("Please input order name", 400, false, null);
 			}
 
-			if (orderDTO.ExaminationId.ToString().IsNullOrEmpty())
+			/*if (orderDTO.ExaminationId.ToString().IsNullOrEmpty())
 			{
 				return new ResponseDTO("Please input examinationID", 400, false, null);
-			}
+			}*/
 
 			if (orderDTO.DateTime.ToString().IsNullOrEmpty())
 			{

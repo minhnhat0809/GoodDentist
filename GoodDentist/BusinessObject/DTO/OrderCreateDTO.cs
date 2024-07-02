@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTO
 {
-	public class OrderDTO
+	public class OrderCreateDTO
 	{
-		public int OrderId { get; set; }
-
 		public string? OrderName { get; set; }
 
 		public int? ExaminationId { get; set; }
@@ -17,5 +15,7 @@ namespace BusinessObject.DTO
 		public DateTime? DateTime { get; set; }
 
 		public decimal? Price { get; set; }
+
+		public bool? Status { get; set; }
 	}
 }
