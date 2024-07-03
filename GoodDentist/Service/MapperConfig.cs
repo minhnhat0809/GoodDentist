@@ -82,6 +82,7 @@ namespace Services
             CreateMap<OrderCreateDTO, Order>().ReverseMap();
             CreateMap<PrescriptionDTO, Prescription>().ReverseMap();
             CreateMap<PrescriptionCreateDTO, Prescription>().ReverseMap();
-		}
+            CreateMap<Clinic, ClinicDTO>().ReverseMap();
+        }
     }
 }
