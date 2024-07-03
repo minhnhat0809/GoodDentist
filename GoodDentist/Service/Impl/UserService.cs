@@ -79,7 +79,7 @@ namespace Services.Impl
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 };
-
+                responseDTO.Result = mapper.Map<UserDTO>(user);
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
                 return responseDTO;

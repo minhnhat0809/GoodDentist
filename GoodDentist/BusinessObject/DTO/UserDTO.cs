@@ -8,6 +8,7 @@ namespace BusinessObject.DTO
 {
     public class UserDTO
     {
+        public Guid UserId { get; set; }
         public required string UserName { get; set; }
         public string Name { get; set; }
         public DateTime? Dob { get; set; }
