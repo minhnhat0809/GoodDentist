@@ -11,15 +11,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="User detail">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/UserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/UserDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IClinicRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IClinicRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IUserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,12 +49,15 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/5535e31a712343a63f5d7d796cd874e563e5ac14/src/libraries/Microsoft.Extensions.DependencyInjection/src/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/113641a9e9a8478ab04505b1621f8fb4188b0/a5/037911b8/ClaimTypes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/649f9a5315084d038b64e29ea11b1fb5b8a0/3b/adf13e38/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9a071bbc644f437bba332034f77b433c2c200/9e/68bd6140/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/32/3d5a2fe4/Task`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/8f/29b0a615/AsyncValueTaskMethodBuilder`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/bc/0599c07a/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/cc/f365519b/Monitor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39edc8d6636bf8ac398568727a2cda2ffc90cd6d7bf9a45d9d43252df59484f/StorageClient.UploadObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6293d1755dba2be55da4743189b3329541121b6a8fba6ed5a6c914fbd4515/StorageClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/ClinicRepo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -206,7 +205,7 @@
       <workItem from="1718008629703" duration="13812000" />
       <workItem from="1718254448748" duration="3832000" />
       <workItem from="1719679624320" duration="1255000" />
-      <workItem from="1720018088122" duration="3358000" />
+      <workItem from="1720018088122" duration="6429000" />
     </task>
     <task id="LOCAL-00001" summary="change file location and create repositoryBase">
       <option name="closed" value="true" />
@@ -376,7 +375,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719982262856</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="User detail">
+      <option name="closed" value="true" />
+      <created>1720021733397</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1720021733397</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -418,7 +425,8 @@
     <MESSAGE value="main pulling" />
     <MESSAGE value="get user" />
     <MESSAGE value="userDto: add user id" />
-    <option name="LAST_COMMIT_MESSAGE" value="userDto: add user id" />
+    <MESSAGE value="User detail" />
+    <option name="LAST_COMMIT_MESSAGE" value="User detail" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -490,32 +498,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
-          <line>52</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'Authenticate'">
-            <startOffsets>
-              <option value="1810" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1870" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
-          <line>124</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'GenerateJwtToken'">
-            <startOffsets>
-              <option value="3722" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3822" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
           <line>110</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'GetUserAsync'">
             <startOffsets>
@@ -567,43 +549,69 @@
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
-          <line>26</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'UploadFile'">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>519</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
             <startOffsets>
-              <option value="876" />
+              <option value="19589" />
             </startOffsets>
             <endOffsets>
-              <option value="905" />
+              <option value="19622" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
-          <line>57</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'DeleteFileAndReference'">
-            <startOffsets>
-              <option value="1880" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1986" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="49" />
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>574</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'GetUser'">
+          <line>522</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
             <startOffsets>
-              <option value="21617" />
+              <option value="19692" />
             </startOffsets>
             <endOffsets>
-              <option value="21686" />
+              <option value="19773" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="52" />
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
+          <line>41</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'UploadFile'">
+            <startOffsets>
+              <option value="1431" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1489" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
+          <line>56</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'DeleteFileAndReference'">
+            <startOffsets>
+              <option value="1918" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1945" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
+          <line>76</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\FirebaseStorageService.cs" containingFunctionPresentation="Method 'GetFilePathFromUrl'">
+            <startOffsets>
+              <option value="2605" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2680" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
