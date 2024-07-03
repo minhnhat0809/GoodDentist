@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.DTO.ViewDTO;
+using BusinessObject.Entity;
 
 namespace BusinessObject.DTO
 {
@@ -20,6 +22,7 @@ namespace BusinessObject.DTO
         public bool? Status { get; set; }
         public required int RoleId { get; set; }
         public string? Avatar { get; set; }
+        public ICollection<ClinicDTO>? Clinics { get; set; }
     }
 
     
