@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BusinessObject;
 using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Repositories;

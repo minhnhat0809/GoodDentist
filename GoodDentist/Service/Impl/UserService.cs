@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using BusinessObject.DTO.ViewDTO;
 using Microsoft.AspNetCore.Http;
 
 namespace Services.Impl
@@ -81,7 +82,7 @@ namespace Services.Impl
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 };
-
+                responseDTO.Result = mapper.Map<UserDTO>(user);
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
                 return responseDTO;
@@ -557,6 +558,40 @@ namespace Services.Impl
             }
         
             return mapper.Map<UserDTO>(model);
+        }
+
+        public async Task<ResponseDTO> GetUser(Guid userId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+            try
+            {
+                if (userId == null)
+                {
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "User name is empty!";
+                    return responseDTO;
+                }
+
+                User? user = await unitOfWork.userRepo.GetByIdAsync(userId);
+                if (user == null)
+                {
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "There are no users found !";
+                    return responseDTO;
+                }
+                UserDTO? dto = mapper.Map<UserDTO>(user);
+                List<Clinic> userClinics = await unitOfWork.clinicRepo.GetClinicByUserId(userId);
+                dto.Clinics = mapper.Map<List<ClinicDTO>>(userClinics);
+                responseDTO.Result = dto;
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.Message = ex.Message;
+                responseDTO.StatusCode = 500;
+                responseDTO.IsSuccess = false;
+                return responseDTO;
+            }
         }
     }
 }

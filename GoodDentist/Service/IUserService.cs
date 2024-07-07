@@ -24,5 +24,6 @@ namespace Services
 
         Task<UserDTO> UploadFile(IFormFile file, Guid userId);
         Task<UserDTO> DeleteFile(Guid userId);
+        Task<ResponseDTO> GetUser(Guid userId);
     }
 }
