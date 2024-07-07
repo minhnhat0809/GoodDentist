@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace BusinessObject.DTO
         public bool? Status { get; set; }
         public required string ClinicId { get; set; }
         public required int RoleId { get; set; }
+
+        public IFormFile Image { get; set; }
     }
     
 }

@@ -77,12 +77,13 @@ namespace Services.Impl
                 await unitOfWork.userRepo.CreateAsync(user);
                 await unitOfWork.clinicUserRepo.CreateAsync(clinicUser);
 
+                var userDTO = await UploadFile(createUserDTO.Image, user.UserId);
 
                 var settings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 };
-                responseDTO.Result = mapper.Map<UserDTO>(user);
+                responseDTO.Result = userDTO;
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
                 return responseDTO;
