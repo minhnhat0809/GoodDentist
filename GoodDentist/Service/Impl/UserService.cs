@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using BusinessObject.DTO.ViewDTO;
+using Microsoft.AspNetCore.Http;
 
 namespace Services.Impl
 {
@@ -25,12 +27,14 @@ namespace Services.Impl
         private readonly IMapper mapper;
         private readonly IUnitOfWork unitOfWork;
         private readonly IDistributedCache distributedCache;
+        private readonly IFirebaseStorageService _firebaseStorageService;
 
-        public UserService(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache)
+        public UserService(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache, IFirebaseStorageService firebaseStorageService)
         {
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
             this.distributedCache = distributedCache;
+            _firebaseStorageService = firebaseStorageService;
         }
 
         public async Task<ResponseListDTO> createUser(CreateUserDTO createUserDTO)
@@ -76,7 +80,7 @@ namespace Services.Impl
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 };
-
+                responseDTO.Result = mapper.Map<UserDTO>(user);
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
                 return responseDTO;
@@ -362,6 +366,8 @@ namespace Services.Impl
             }
         }
 
+        
+
         private List<User> FilterUsers(List<User> users, string filterField, string filterValue)
         {
             if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
@@ -454,5 +460,130 @@ namespace Services.Impl
             }
         }
 
+        /*public async Task<MedicalRecordDTO> UploadFile(IFormFile file, int recordId)
+        {
+            var model = await _unitOfWork.MedicalRecordRepository.GetRecord(recordId);
+            if (model == null)
+            {
+                throw new Exception("Medical record not found.");
+            }
+
+            if (model.Url != null)
+            {
+                // Delete the image before add new one
+                await _firebaseStorageService.DeleteFileAndReference(model.Url);
+            }
+
+            // Generate a unique file name
+            var fileName = $"{model.MedicalRecordId}-{Guid.NewGuid()}";
+        
+            // Upload image to Firebase Storage
+            var url = await _firebaseStorageService.UploadFile(fileName, file, "medical-record");
+
+            // Update the URL in the medical record model
+            model.Url = url;
+            model = await _unitOfWork.MedicalRecordRepository.UpdateRecord(model);
+        
+            return _mapper.Map<MedicalRecordDTO>(model);
+        }
+    
+        public async Task<MedicalRecordDTO> DeleteFileAndReference(int recordId)
+        {
+            var model = await _unitOfWork.MedicalRecordRepository.GetRecord(recordId);
+            if (model == null)
+            {
+                throw new Exception("Medical record not found.");
+            }
+            // Delete image to Firebase Storage
+            await _firebaseStorageService.DeleteFileAndReference(model.Url);
+
+            // Update the URL in the medical record model;
+            model.Url = null;
+            model = await _unitOfWork.MedicalRecordRepository.UpdateRecord(model);
+        
+            return _mapper.Map<MedicalRecordDTO>(model);
+        }*/
+        public async Task<UserDTO> UploadFile(IFormFile file, Guid userId)
+        {
+            var model = await unitOfWork.userRepo.GetByIdAsync(userId);
+            if (model == null)
+            {
+                throw new Exception("User not found!");
+            }
+            if (model.Avatar != null)
+            {
+                // Delete the image before add new one
+                await _firebaseStorageService.DeleteFileAndReference(model.Avatar);
+            }
+
+            // Generate a unique file name
+            var fileName = $"{model.UserId}";
+        
+            // Upload image to Firebase Storage
+            var urlAvatar = await _firebaseStorageService.UploadFile(fileName, file, "user");
+
+            // Update the URL in the medical record model
+            model.Avatar = urlAvatar;
+            if (await unitOfWork.userRepo.UpdateAsync(model))
+            {
+                model = await unitOfWork.userRepo.GetByIdAsync(model.UserId);
+            }
+        
+            return mapper.Map<UserDTO>(model);
+        }
+
+        public async Task<UserDTO> DeleteFile(Guid userId)
+        {
+            var model = await unitOfWork.userRepo.GetByIdAsync(userId);
+            if (model == null)
+            {
+                throw new Exception("User not found!");
+            }
+            // Delete image to Firebase Storage
+            await _firebaseStorageService.DeleteFileAndReference(model.Avatar);
+
+            // Update the URL in the medical record model;
+            model.Avatar = null;
+            if (await unitOfWork.userRepo.UpdateAsync(model))
+            {
+                model = await unitOfWork.userRepo.GetByIdAsync(model.UserId);
+            }
+        
+            return mapper.Map<UserDTO>(model);
+        }
+
+        public async Task<ResponseDTO> GetUser(Guid userId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+            try
+            {
+                if (userId == null)
+                {
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "User name is empty!";
+                    return responseDTO;
+                }
+
+                User? user = await unitOfWork.userRepo.GetByIdAsync(userId);
+                if (user == null)
+                {
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "There are no users found !";
+                    return responseDTO;
+                }
+                UserDTO? dto = mapper.Map<UserDTO>(user);
+                List<Clinic> userClinics = await unitOfWork.clinicRepo.GetClinicByUserId(userId);
+                dto.Clinics = mapper.Map<List<ClinicDTO>>(userClinics);
+                responseDTO.Result = dto;
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.Message = ex.Message;
+                responseDTO.StatusCode = 500;
+                responseDTO.IsSuccess = false;
+                return responseDTO;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ using Services;
 using Services.Impl;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
+using ClinicService = BusinessObject.Entity.ClinicService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,10 @@ builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IExaminationService, ExaminationService>();
 builder.Services.AddScoped<IClinicServiceService, ClinicServiceService>();
 builder.Services.AddScoped<IGeneralService, GeneralService>();
+builder.Services.AddScoped<IOrderServices, OrderServices>();
+builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
+builder.Services.AddScoped<IClinicService, Services.Impl.ClinicService>();
+
 
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -50,7 +55,9 @@ builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 builder.Services.AddScoped<IExaminationRepo, ExaminationRepo>();
 builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
 builder.Services.AddScoped<IGeneralRepo, GeneralRepo>();
-
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -135,3 +142,4 @@ app.UseCors("CORSPolicy");
 app.MapControllers();
 
 app.Run();
+// dotnet ef dbcontext scaffold "Server=(local);Initial Catalog=Good_Dentist_DB;Persist Security Info=False;User ID=sa;Password=12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Entity" --context-dir ".\"

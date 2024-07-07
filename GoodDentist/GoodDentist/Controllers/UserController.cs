@@ -42,6 +42,12 @@ namespace GoodDentist.Controllers
             ResponseDTO responseDTO = await userService.getAllUsers(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
             return responseDTO;
         }
+        [HttpGet("user")]
+        public async Task<ResponseDTO> GetUser([FromQuery] Guid userId)
+        {
+            ResponseDTO responseDTO = await userService.GetUser(userId);
+            return responseDTO;
+        }
 
         [HttpGet("all-users-by-clinic")]
         public async Task<ResponseDTO> GetAllUsersByClinic([FromQuery] string clinicId,
@@ -69,7 +75,48 @@ namespace GoodDentist.Controllers
 
             return responseDTO;
         }
+        [HttpPut("avatar")]
+        public async Task<ResponseDTO> UploadAvatar(IFormFile file, Guid id)
+        {
+            ResponseDTO ResponseDto = new ResponseDTO("", 200, true,null);
+            if (file == null || file.Length == 0)
+            {
+                ResponseDto.Message = "File is empty!";
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
 
+            try
+            {
+                var dto = await userService.UploadFile(file, id);
+                ResponseDto.Result = dto;
+            }
+            catch (Exception e)
+            {
+                ResponseDto.Message = e.Message;
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
+
+            return ResponseDto;
+        }
+        [HttpDelete("avatar")]
+        public async Task<ResponseDTO> DeleteAvatar(Guid userId)
+        {
+            ResponseDTO ResponseDto  = new ResponseDTO("", 200, true,null);
+            try
+            {
+                var dto = await userService.DeleteFile(userId);
+                ResponseDto.Result = dto;
+            }
+            catch (Exception e)
+            {
+                ResponseDto.Message = e.Message;
+                ResponseDto.IsSuccess = false;
+                ResponseDto.StatusCode = 500;
+            }
+            return ResponseDto;
+        }
         
     }
 }
