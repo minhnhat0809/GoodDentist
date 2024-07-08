@@ -78,7 +78,7 @@ namespace Services.Impl
                 await unitOfWork.userRepo.CreateAsync(user);
                 await unitOfWork.clinicUserRepo.CreateAsync(clinicUser);
 
-                var userDTO = await UploadFile(createUserDTO.Image, user.UserId);
+                var userDTO = await UploadFile(createUserDTO.Avatar, user.UserId);
 
                 var settings = new JsonSerializerSettings
                 {

@@ -39,6 +39,7 @@ builder.Services.AddScoped<IGeneralService, GeneralService>();
 builder.Services.AddScoped<IOrderServices, OrderServices>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IClinicService, Services.Impl.ClinicService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 
 // repo
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
+builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 
 
 builder.Services.AddControllers().AddJsonOptions(options =>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace BusinessObject.DTO
         public DateTime? Dob {  get; set; }
         public string? Gender { get; set; }
         public string? PhoneNumber { get; set; }
+        [EmailAddress]
         public string? Email { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? Address { get; set; }
@@ -22,7 +24,7 @@ namespace BusinessObject.DTO
         public required string ClinicId { get; set; }
         public required int RoleId { get; set; }
 
-        public IFormFile Image { get; set; }
+        public IFormFile Avatar { get; set; }
     }
     
 }
