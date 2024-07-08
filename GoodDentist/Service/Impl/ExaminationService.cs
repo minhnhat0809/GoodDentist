@@ -23,7 +23,7 @@ namespace Services.Impl
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseListDTO> CreateExamination(ExaminationDTO examinationDTO, string mod)
+        public async Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
@@ -36,7 +36,9 @@ namespace Services.Impl
                     return responseListDTO;
                 }
 
+                Examination examination = mapper.Map<Examination>(examinationDTO);
 
+                await unitOfWork.examinationRepo.CreateAsync(examination);
                 return responseListDTO;
             }catch (Exception ex)
             {
@@ -80,6 +82,8 @@ namespace Services.Impl
             try
             {
                 List<Examination> examinations = await unitOfWork.examinationRepo.GetAllExaminationOfClinic(clinicId, pageNumber, rowsPerPage);
+                responseDTO.Result = examinations;
+                return responseDTO;
 
             }catch (Exception ex)
             {
@@ -88,7 +92,6 @@ namespace Services.Impl
                 responseDTO.StatusCode=500;
                 return responseDTO;
             }
-            throw new NotImplementedException();
         }
 
         public async Task<ResponseDTO> GetAllExaminationOfExaminationProfile(int examProfileId, int pageNumber, 
@@ -147,7 +150,7 @@ namespace Services.Impl
                 {
                     responseDTO.IsSuccess = false;
                     responseDTO.Message = "Empty actor!";
-                    responseDTO.StatusCode = 500;
+                    responseDTO.StatusCode = 400;
                     return responseDTO;
                 }
                 else if (actor.Equals("dentist", StringComparison.OrdinalIgnoreCase))
@@ -217,7 +220,7 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseListDTO> UpdateExamination(ExaminationDTO examinationDTO, string mod)
+        public async Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO examinationDTO, string mod)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
@@ -230,7 +233,15 @@ namespace Services.Impl
                     return responseListDTO;
                 }
 
+                Examination examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId);
+                examination.ExaminationProfileId = examinationDTO.ExaminationProfileId;
+                examination.DentistSlotId = examinationDTO.DentistSlotId;
+                examination.TimeStart = examinationDTO.TimeStart;
+                examination.TimeEnd = examinationDTO.TimeEnd;
+                examination.Status = examinationDTO.Status;
+                examination.Diagnosis = examinationDTO.Diagnosis;
 
+                await unitOfWork.examinationRepo.UpdateAsync(examination);
                 return responseListDTO;
             }
             catch (Exception ex)
@@ -242,7 +253,7 @@ namespace Services.Impl
             }
         }
 
-        private async Task<ResponseListDTO> ValidateExamination(ExaminationDTO examinationDTO, string mod)
+        private async Task<ResponseListDTO> ValidateExamination(ExaminationRequestDTO examinationDTO, string mod)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
@@ -278,29 +289,48 @@ namespace Services.Impl
                 }
             }
 
-            if (examinationDTO.DentistId.IsNullOrEmpty()) Add("Dentist ID is null!");
-            else
-            {
-                User? dentist = await unitOfWork.userRepo.GetByIdAsync(Guid.Parse(examinationDTO.DentistId));
-                if (dentist == null)
-                {
-                    Add("Dentist is not existed!");
-                }
-            }
-
             if (examinationDTO.Diagnosis.IsNullOrEmpty()) Add("Diagnose is empty!");
 
 
             if (!examinationDTO.Status.HasValue) Add("Status is empty!");
 
-            if (examinationDTO.DentistSlotId <= 0) Add("Dentist slot ID is empty!");
-
-            string check = await CheckAvailableSlot((int)examinationDTO.DentistSlotId, examinationDTO.TimeStart, examinationDTO.TimeEnd);
-            if (check.IsNullOrEmpty())
+            if (examinationDTO.DentistSlotId <= 0) 
             {
-                Add(check);
+                Add("Dentist slot ID is empty!");
             }
-
+            else
+            {
+                DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByID(examinationDTO.DentistSlotId.Value);
+                if (dentistSlot == null)
+                {
+                    Add("Dentist slot is not exist!");
+                }
+                else
+                {
+                    string check = await CheckAvailableSlot((int)examinationDTO.DentistSlotId, examinationDTO.TimeStart, examinationDTO.TimeEnd);
+                    if (!check.IsNullOrEmpty())
+                    {
+                        Add(check);
+                    }
+                    else
+                    {
+                        var examinations = dentistSlot.Examinations.ToList();
+                        if (examinations.Count > 0)
+                        {
+                            foreach(var e in examinations)
+                            {
+                                if ((examinationDTO.TimeStart >= e.TimeStart && examinationDTO.TimeStart < e.TimeEnd) || 
+                                    (examinationDTO.TimeEnd > e.TimeStart))
+                                {
+                                    Add("There is an appointment at :" + e.TimeStart + "-" + e.TimeEnd);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
             return responseListDTO;
         }
 
@@ -323,12 +353,6 @@ namespace Services.Impl
             {
                 return "Time must be in range [" + dentistSlot.TimeStart +","+ dentistSlot.TimeEnd +"]";
             }
-            else
-            {
-                List<Examination> examinations = await unitOfWork.examinationRepo.GetAllExaminationOfDentistSlot(dentistSlotId);
-            }
-
-
             return result;
         }
     }
