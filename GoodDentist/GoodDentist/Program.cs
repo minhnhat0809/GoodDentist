@@ -1,7 +1,6 @@
 
 using System.Text;
 using BusinessObject;
-using BusinessObject.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +11,7 @@ using Services.Impl;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using ClinicService = BusinessObject.Entity.ClinicService;
+using BusinessObject.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +40,7 @@ builder.Services.AddScoped<IOrderServices, OrderServices>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IClinicService, Services.Impl.ClinicService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IExaminationProfileService, ExaminationProfileService>();
 
 
 // repo
@@ -61,6 +62,7 @@ builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+builder.Services.AddScoped<IExamProfileRepo, ExamProfileRepo>();
 
 
 builder.Services.AddControllers().AddJsonOptions(options =>

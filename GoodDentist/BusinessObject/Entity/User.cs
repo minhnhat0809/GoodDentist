@@ -37,6 +37,8 @@ public partial class User
 
     public virtual ICollection<DentistSlot> DentistSlots { get; set; } = new List<DentistSlot>();
 
+    public virtual ICollection<ExaminationProfile> ExaminationProfiles { get; set; } = new List<ExaminationProfile>();
+
     public virtual ICollection<Examination> Examinations { get; set; } = new List<Examination>();
 
     public virtual Role? Role { get; set; }

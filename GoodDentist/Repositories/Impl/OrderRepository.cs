@@ -8,7 +8,7 @@ using BusinessObject.Entity;
 
 namespace Repositories.Impl
 {
-	public class OrderRepository : RepositoryBase<Order>, IOrderRepository
+    public class OrderRepository : RepositoryBase<Order>, IOrderRepository
 	{
         public OrderRepository(GoodDentistDbContext goodDentistDbContext) : base(goodDentistDbContext) 
         { 

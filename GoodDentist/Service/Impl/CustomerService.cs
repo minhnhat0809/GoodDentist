@@ -1,4 +1,5 @@
-﻿using BusinessObject.DTO;
+﻿using AutoMapper;
+using BusinessObject.DTO;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -13,10 +14,12 @@ namespace Services.Impl
     public class CustomerService : ICustomerService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public CustomerService(IUnitOfWork unitOfWork)
+        public CustomerService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public async Task<ResponseDTO> GetAllCustomerOfDentist(string dentistId)
@@ -32,7 +35,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                User dentist = await unitOfWork.userRepo.GetByIdAsync(dentistId);
+                User dentist = await unitOfWork.userRepo.GetByIdAsync(Guid.Parse(dentistId));
                 if (dentist == null)
                 {
                     responseDTO.IsSuccess = false;
@@ -41,11 +44,14 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                //List<MedicalRecord> medicalRecords = unitOfWork.examinationRepo.GetAllExaminationOfDentist(dentistId);
+                List<ExaminationProfile> examinationProfiles = await unitOfWork.examProfileRepo.GetProfileByDenitst(dentistId);
+
+                List<Customer> customers = examinationProfiles.Select(e => e.Customer).ToList();
+
+                List<UserDTO> customerDTO = mapper.Map<List<UserDTO>>(customers);
 
 
-
-                responseDTO.Result = null;
+                responseDTO.Result = customerDTO;
                 responseDTO.Message = "Get successfully!";
                 return responseDTO;
             }catch (Exception ex)

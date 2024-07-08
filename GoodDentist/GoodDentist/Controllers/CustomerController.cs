@@ -5,7 +5,7 @@ using Services;
 
 namespace GoodDentist.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace GoodDentist.Controllers
             this.customerService = customerService;
         }
 
-        [HttpGet]
+        [HttpGet("/customers/denitst")]
         public async Task<ActionResult<ResponseDTO>> GetAllCustomerOfDentist([FromQuery] string dentistId)
         {
             ResponseDTO responseDTO = await customerService.GetAllCustomerOfDentist(dentistId);

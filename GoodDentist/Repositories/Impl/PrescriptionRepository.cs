@@ -8,7 +8,7 @@ using BusinessObject.Entity;
 
 namespace Repositories.Impl
 {
-	public class PrescriptionRepository : RepositoryBase<Prescription>, IPrescriptionRepository
+    public class PrescriptionRepository : RepositoryBase<Prescription>, IPrescriptionRepository
 	{
         public PrescriptionRepository(GoodDentistDbContext repositoryContext) : base(repositoryContext)
         { 
