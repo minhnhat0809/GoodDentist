@@ -75,7 +75,7 @@ public class AuthService : IAuthService
 
     public async Task<ResponseDTO> GetAccountByEmailOrPhone(string emailOrPhone)
     {
-        
+        ResponseDTO _responseDto = new ResponseDTO("Get Account Successfully", 200, true, null);
         try
         {
             // check if account exist
@@ -99,9 +99,45 @@ public class AuthService : IAuthService
         return _responseDto;
     }
 
-    public Task<ResponseLoginDTO> ResetPassword(Guid userId, string password)
+    public async Task<ResponseLoginDTO> ResetPassword(LoginDTO loginDto)
     {
-        throw new NotImplementedException();
+        ResponseLoginDTO _responseLogin = new ResponseLoginDTO();
+        try
+        {
+            // check if account exist
+            var existAccount = _unitOfWork.userRepo.getUser(loginDto.UserName);
+            if (existAccount != null)
+            {
+                
+                // hash and salt
+                byte[] inputHashPassword = this.hashPassword(loginDto.Password, existAccount.Salt);
+                // compare password
+                if(inputHashPassword != existAccount.Password)
+                {
+                    // change password
+                    existAccount.Salt = salting();
+                    existAccount.Password = hashPassword(loginDto.Password, existAccount.Salt);
+                    // update password
+                    await _unitOfWork.userRepo.UpdateAsync(existAccount);
+                    // generate token
+                    _responseLogin.AccessToken = GenerateJwtToken(existAccount);
+                    _responseLogin.Message = "Password reset successfully!";
+
+                }
+            }
+            else
+            {
+                _responseLogin.Message = "Username is not correct!";
+                _responseLogin.IsSuccess = false;
+            }
+        }
+        catch (Exception e)
+        {
+            _responseLogin.Message = e.Message;
+            _responseLogin.IsSuccess = false;
+        }
+
+        return _responseLogin;
     }
 
     public async Task<ResponseDTO> GetUserAsync(Guid userId)
@@ -119,6 +155,10 @@ public class AuthService : IAuthService
         return _responseDto;
     }
 
+    private byte[] salting()
+    {
+        return RandomNumberGenerator.GetBytes(saltSize);
+    }
 
     private string GenerateJwtToken(User user)
     {
@@ -141,17 +181,13 @@ public class AuthService : IAuthService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
     private byte[] hashPassword(string password, byte[] salt)
     {
         var hashedPassword = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
 
         var pwdString = string.Join(Convert.ToBase64String(salt), Convert.ToBase64String(hashedPassword));
         return Convert.FromBase64String(pwdString);
-    }
-
-    private byte[] salting()
-    {
-        return RandomNumberGenerator.GetBytes(saltSize);
     }
 
     private string GenerateRole(int roleId)

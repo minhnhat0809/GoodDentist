@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using Repositories.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +28,7 @@ namespace Repositories
         IOrderRepository orderRepo { get; }
         IPrescriptionRepository prescriptionRepo { get; }
         Task<int> CompleteAsync();
+
+        INotificationRepository NotificationRepository { get; }
     }
 }

@@ -42,6 +42,7 @@ namespace GoodDentist.Controllers
             ResponseDTO responseDTO = await userService.getAllUsers(pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
             return responseDTO;
         }
+
         [HttpGet("user")]
         public async Task<ResponseDTO> GetUser([FromQuery] Guid userId)
         {

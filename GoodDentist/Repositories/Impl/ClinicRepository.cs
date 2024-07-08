@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Impl;
 
-public class ClinicRepository: RepositoryBase<Clinic>, IClinicRepository
+public class ClinicRepository : RepositoryBase<Clinic>, IClinicRepository
 {
     
     public ClinicRepository( GoodDentistDbContext context) : base(context)
@@ -70,5 +70,13 @@ public class ClinicRepository: RepositoryBase<Clinic>, IClinicRepository
         _repositoryContext.Clinics.Remove(clinic);
         await _repositoryContext.SaveChangesAsync();
         return clinic;
+    }
+
+    public async Task<Clinic> GetClinicByUserId(Guid id)
+    {
+        var userClinic = await _repositoryContext.Clinics
+            .Include(x=>x.ClinicUsers)
+            .FirstOrDefaultAsync(x=>x.ClinicUsers.Any(x=>x.UserId == id) &&  x.Status == true);
+        return userClinic;
     }
 }

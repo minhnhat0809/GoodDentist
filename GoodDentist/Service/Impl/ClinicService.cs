@@ -53,4 +53,11 @@ public class ClinicService : IClinicService
         var updatedClinic = await _unitOfWork.ClinicRepository.UpdateClinic(clinic);
         return _mapper.Map<ClinicDTO>(updatedClinic);
     }
+
+    public async Task<ClinicDTO> GetClinicByUserId(Guid userId)
+    {
+        Clinic userClinic = await _unitOfWork.ClinicRepository.GetClinicByUserId(userId);
+        var viewModel = _mapper.Map<ClinicDTO>(userClinic);
+        return viewModel;
+    }
 }

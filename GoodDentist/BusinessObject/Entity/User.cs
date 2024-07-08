@@ -40,4 +40,6 @@ public partial class User
     public virtual ICollection<Examination> Examinations { get; set; } = new List<Examination>();
 
     public virtual Role? Role { get; set; }
+
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

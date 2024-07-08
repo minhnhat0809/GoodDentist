@@ -6,7 +6,7 @@ namespace Repositories;
 public interface IClinicRepository : IRepositoryBase<Clinic>
 {
     Task<Clinic>  GetClinic(Guid id);
-
+    Task<Clinic> GetClinicByUserId(Guid id);
     Task<List<Clinic>> GetClinics(
         string? filterOn = null, string? filterQuery = null,
         string? sortBy = null, bool isAscending = true);

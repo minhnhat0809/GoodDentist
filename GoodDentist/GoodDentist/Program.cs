@@ -39,9 +39,10 @@ builder.Services.AddScoped<IGeneralService, GeneralService>();
 builder.Services.AddScoped<IOrderServices, OrderServices>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IClinicService, Services.Impl.ClinicService>();
-
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 // repo
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 builder.Services.AddScoped<IClinicUserRepo, ClinicUserRepo>();
