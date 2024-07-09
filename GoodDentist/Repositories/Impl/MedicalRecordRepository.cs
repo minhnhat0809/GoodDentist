@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Impl;
 
-public class MedicalRecordRepository : RepositoryBase<MedicalRecord>,IMedicalRecordRepository
+public class MedicalRecordRepository : RepositoryBase<MedicalRecord>, IMedicalRecordRepository
 {
     public MedicalRecordRepository(GoodDentistDbContext repositoryContext) : base(repositoryContext)
     {

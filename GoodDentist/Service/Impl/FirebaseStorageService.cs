@@ -38,7 +38,7 @@ public class FirebaseStorageService : IFirebaseStorageService
         var img = await _storageClient.UploadObjectAsync(
             _bucketName, $"image/{imgFolderName}/{fileName}", file.ContentType, stream);
 
-        // Image URI to get client image
+        // Avatar URI to get client image
         var photoUri = ConvertToFirebaseStorageUrl(img.MediaLink);
         return photoUri;
     }

@@ -19,5 +19,21 @@ namespace Repositories.Impl
         {
             return await _repositoryContext.ExaminationProfiles.FirstOrDefaultAsync(ep => ep.ExaminationProfileId == id);
         }
+
+        public async Task<List<ExaminationProfile>> GetProfileByDenitst(string dentistId)
+        {
+            return await _repositoryContext.ExaminationProfiles
+                .Include(ex => ex.Customer)
+                .Where(e => e.DentistId.Equals(Guid.Parse(dentistId))).ToListAsync();
+        }
+
+        public async Task<List<ExaminationProfile>> GetProfilesByCustomerId(string customerId)
+        {
+            return await _repositoryContext.ExaminationProfiles
+                .Include(ex => ex.Examinations).ThenInclude(e => e.MedicalRecords)
+                .Include(ex => ex.Examinations).ThenInclude(e => e.Orders)
+                .Include(ex => ex.Examinations).ThenInclude(e => e.Prescriptions)
+                .Where(ex => ex.CustomerId.Equals(Guid.Parse(customerId))).ToListAsync();
+        }
     }
 }

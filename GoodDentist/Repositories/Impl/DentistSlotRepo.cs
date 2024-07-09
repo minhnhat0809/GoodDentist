@@ -49,6 +49,7 @@ namespace Repositories.Impl
         {
             return await _repositoryContext.DentistSlots
                 .Include(dl => dl.Room)
+                .Include(dl => dl.Examinations)
                 .FirstOrDefaultAsync(dl => dl.DentistSlotId == Id);
         }
 
