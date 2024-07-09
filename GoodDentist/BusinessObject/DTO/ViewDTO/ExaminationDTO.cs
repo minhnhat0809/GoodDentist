@@ -13,7 +13,7 @@ namespace BusinessObject.DTO.ViewDTO
 
         public int? ExaminationProfileId { get; set; }
 
-        public Guid? DentistId { get; set; }
+        public string? DentistId { get; set; }
 
         public string? DentistName {  get; set; }
 
@@ -21,9 +21,9 @@ namespace BusinessObject.DTO.ViewDTO
 
         public string? Diagnosis { get; set; }
 
-        public DateTime? TimeStart { get; set; }
+        public required DateTime TimeStart { get; set; }
 
-        public TimeOnly? Duration { get; set; }
+        public required DateTime TimeEnd { get; set; }
 
         public string? Notes { get; set; }
 

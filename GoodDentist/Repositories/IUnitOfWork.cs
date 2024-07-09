@@ -26,6 +26,8 @@ namespace Repositories
         IExamProfileRepo examProfileRepo { get; }
         IOrderRepository orderRepo { get; }
         IPrescriptionRepository prescriptionRepo { get; }
+
+        ICustomerRepo customerRepo { get; }
         Task<int> CompleteAsync();
     }
 }

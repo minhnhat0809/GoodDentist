@@ -15,7 +15,7 @@ public partial class MedicalRecord
 
     public string? Notes { get; set; }
 
-    public bool? Status { get; set; }
+    public int? Status { get; set; }
 
     public virtual Examination? Examination { get; set; }
 

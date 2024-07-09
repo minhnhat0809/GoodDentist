@@ -1,7 +1,6 @@
 
 using System.Text;
 using BusinessObject;
-using BusinessObject.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +11,7 @@ using Services.Impl;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using ClinicService = BusinessObject.Entity.ClinicService;
+using BusinessObject.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +39,8 @@ builder.Services.AddScoped<IGeneralService, GeneralService>();
 builder.Services.AddScoped<IOrderServices, OrderServices>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IClinicService, Services.Impl.ClinicService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IExaminationProfileService, ExaminationProfileService>();
 
 
 // repo
@@ -59,6 +61,10 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
+builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+builder.Services.AddScoped<IExamProfileRepo, ExamProfileRepo>();
+
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -112,6 +118,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//redis
 builder.Services.AddStackExchangeRedisCache(redis =>
 {
     redis.Configuration = "localhost:6379";
@@ -120,6 +127,7 @@ builder.Services.AddStackExchangeRedisCache(redis =>
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 
+//cors
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy("CORSPolicy", builder => builder.AllowAnyHeader().WithOrigins()
