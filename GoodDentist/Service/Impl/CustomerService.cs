@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessObject.DTO;
+using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -61,6 +62,38 @@ namespace Services.Impl
                 responseDTO.Message = ex.Message;
                 return responseDTO;
             }
+        }
+
+        public async Task<ResponseDTO> GetAllCustomers(string search)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
+            try
+            {
+                List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers();
+                if (!search.IsNullOrEmpty())
+                {
+                    customers = customers.Where(c => c.Name.Contains(search, StringComparison.OrdinalIgnoreCase) || c.PhoneNumber.Contains(search)).ToList();
+                }
+
+                List<UserDTO> userDTOs = new List<UserDTO>();
+                foreach(var u in customers)
+                {
+                    List<Clinic> clinics = u.CustomerClinics.Select(cc => cc.Clinic).ToList();
+                    UserDTO userDTO = mapper.Map<UserDTO>(u);
+                    userDTO.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
+                    userDTOs.Add(userDTO);
+                }
+
+                
+                responseDTO.Result = userDTOs;
+            }catch (Exception e)
+            {
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode =500;
+                responseDTO.Message= e.Message;
+         
+            }
+            return responseDTO;
         }
     }
 }

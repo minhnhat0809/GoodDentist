@@ -76,7 +76,8 @@ namespace Services.Impl
 
         }
 
-        public async Task<ResponseDTO> GetAllExaminationOfClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField = null, string? filterValue = null, string? sortField = null, string? sortOrder = "asc")
+        public async Task<ResponseDTO> GetAllExaminationOfClinic(string clinicId, int pageNumber, int rowsPerPage, 
+            string? sortField = null, string? sortOrder = "asc")
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);           
             try
@@ -95,7 +96,7 @@ namespace Services.Impl
         }
 
         public async Task<ResponseDTO> GetAllExaminationOfExaminationProfile(int examProfileId, int pageNumber, 
-            int rowsPerPage, string? filterField = null, string? filterValue = null, string? sortField = null, string? sortOrder = "asc")
+            int rowsPerPage, string? sortField = null, string? sortOrder = "asc")
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
@@ -135,9 +136,8 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> GetAllExaminationOfUser(string clinicId, string userId, string actor, int pageNumber, int rowsPerPage,
-            string? filterField = null,
-            string? filterValue = null,
+        public async Task<ResponseDTO> GetAllExaminationOfUser(string clinicId, string userId, string actor, DateOnly selectedDate,
+            int pageNumber, int rowsPerPage,
             string? sortField = null,
             string? sortOrder = "asc")
         {
@@ -155,7 +155,7 @@ namespace Services.Impl
                 }
                 else if (actor.Equals("dentist", StringComparison.OrdinalIgnoreCase))
                 {
-                    examinations = await unitOfWork.examinationRepo.GetAllExaminationOfDentist(clinicId, userId, pageNumber, rowsPerPage);
+                    examinations = await unitOfWork.examinationRepo.GetAllExaminationOfDentist(clinicId, userId, selectedDate, pageNumber, rowsPerPage);
                 }
                 else if (actor.Equals("customer", StringComparison.OrdinalIgnoreCase))
                 {
@@ -172,15 +172,15 @@ namespace Services.Impl
                 List<ExaminationDTO> examinationDTOs = mapper.Map<List<ExaminationDTO>>(examinations);
                 responseDTO.Result = examinationDTOs;
                 responseDTO.Message = "Get successfully!";
-                return responseDTO;
             }
             catch (Exception ex)
             {
                 responseDTO.IsSuccess = false;
                 responseDTO.Message = ex.Message;
                 responseDTO.StatusCode = 500;
-                return responseDTO;
-            }           
+                
+            }
+            return responseDTO;           
         }
 
         public async Task<ResponseDTO> GetExaminationById(int examId)

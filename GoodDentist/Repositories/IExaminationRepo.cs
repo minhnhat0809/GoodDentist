@@ -11,7 +11,7 @@ namespace Repositories
     {
         Task<Examination?> GetExaminationById(int examId);
 
-        Task<List<Examination>> GetAllExaminationOfDentist(string clinicId, string userId, int pageNumber, int rowsPerpage);
+        Task<List<Examination>> GetAllExaminationOfDentist(string clinicId, string userId, DateOnly selectedDate, int pageNumber, int rowsPerpage);
 
         Task<List<Examination>> GetAllExaminationOfCustomer(string clinicId, string userId, int pageNumber, int rowsPerpage);
 

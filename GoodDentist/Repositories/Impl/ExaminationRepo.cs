@@ -32,10 +32,11 @@ namespace Repositories.Impl
                 .ToListAsync();
         }
 
-        public async Task<List<Examination>> GetAllExaminationOfDentist(string clinicId, string userId, int pageNumber, int rowsPerpage)
+        public async Task<List<Examination>> GetAllExaminationOfDentist(string clinicId, string userId, DateOnly selectedDate, int pageNumber, int rowsPerpage)
         {
             return await _repositoryContext.Examinations.Where(ex => ex.DentistId.Equals(Guid.Parse(userId)) 
-            && ex.DentistSlot.Room.ClinicId.Equals(Guid.Parse(clinicId)))
+            && ex.DentistSlot.Room.ClinicId.Equals(Guid.Parse(clinicId)) 
+            && ex.TimeStart.Value.Date == selectedDate.ToDateTime(TimeOnly.MinValue).Date)
                 .Skip((pageNumber - 1) * rowsPerpage)
                 .Take(rowsPerpage)
                 .ToListAsync();

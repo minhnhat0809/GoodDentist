@@ -25,39 +25,36 @@ namespace GoodDentist.Controllers
 
         [HttpGet("all-examinations-of-clinic")]
         public async Task<ActionResult<ResponseDTO>> GetAllExaminationsOfClinic([FromQuery] string clinicId, [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
-           [FromQuery] string? filterField = null,
-           [FromQuery] string? filterValue = null,
            [FromQuery] string? sortField = null,
            [FromQuery] string? sortOrder = "asc")
         {
             ResponseDTO responseDTO = await examinationService.GetAllExaminationOfClinic(clinicId, pageNumber, 
-                rowsPerPage, filterField, filterValue, sortField, sortOrder);
+                rowsPerPage,sortField, sortOrder);
 
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
         [HttpGet("/clinic/user")]
-        public async Task<ActionResult<ResponseDTO>> GetAllExaminationsOfUser([FromQuery] string clinicId, [FromQuery] string userId, [FromQuery] string actor , [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
-           [FromQuery] string? filterField = null,
-           [FromQuery] string? filterValue = null,
-           [FromQuery] string? sortField = null,
-           [FromQuery] string? sortOrder = "asc")
+        public async Task<ActionResult<ResponseDTO>> GetAllExaminationsOfUser([FromQuery] string clinicId, string userId,
+            DateOnly selectedDate,
+            string actor , int pageNumber, int rowsPerPage,
+            string? sortField = null,
+            string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = await examinationService.GetAllExaminationOfUser(clinicId, userId, actor, pageNumber, 
-                rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            ResponseDTO responseDTO = await examinationService.GetAllExaminationOfUser(clinicId, userId, actor, selectedDate, pageNumber, 
+                rowsPerPage, sortField, sortOrder);
 
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
         [HttpGet("/clinic/profile")]
-        public async Task<ActionResult<ResponseDTO>> GetAllExaminationsOfExaminationProfile([FromQuery] int profileId, [FromQuery] string userId, [FromQuery] string actor, [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
-           [FromQuery] string? filterField = null,
-           [FromQuery] string? filterValue = null,
+        public async Task<ActionResult<ResponseDTO>> GetAllExaminationsOfExaminationProfile([FromQuery] int profileId, [FromQuery] string userId, [FromQuery] string actor,
+           [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
            [FromQuery] string? sortField = null,
            [FromQuery] string? sortOrder = "asc")
         {
             ResponseDTO responseDTO = await examinationService.GetAllExaminationOfExaminationProfile(profileId, pageNumber,
-                rowsPerPage, filterField, filterValue, sortField, sortOrder);
+                rowsPerPage, sortField, sortOrder);
 
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
