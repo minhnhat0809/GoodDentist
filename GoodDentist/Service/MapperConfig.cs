@@ -96,6 +96,10 @@ namespace Services
             CreateMap<Clinic, ClinicDTO>().ReverseMap();
             CreateMap<ExaminationRequestDTO, Examination>();
             CreateMap<Examination, ExaminationDTO>();
+        
+            CreateMap<OrderDTO, Order>().ReverseMap();
+            CreateMap<NotificationDTO, Notification>().ReverseMap();
+            CreateMap<NotificationRequestDTO, Notification>().ReverseMap();   
         }
     }
 }

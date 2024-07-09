@@ -1,6 +1,7 @@
 
 using System.Text;
 using BusinessObject;
+using BusinessObject.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -39,11 +40,13 @@ builder.Services.AddScoped<IGeneralService, GeneralService>();
 builder.Services.AddScoped<IOrderServices, OrderServices>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IClinicService, Services.Impl.ClinicService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IExaminationProfileService, ExaminationProfileService>();
 
 
 // repo
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 builder.Services.AddScoped<IClinicUserRepo, ClinicUserRepo>();

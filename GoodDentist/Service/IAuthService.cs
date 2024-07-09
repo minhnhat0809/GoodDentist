@@ -6,7 +6,6 @@ public interface IAuthService
 {
     Task<ResponseLoginDTO> Authenticate(LoginDTO loginDto);
     Task<ResponseDTO> GetAccountByEmailOrPhone(string emailOrPhone);
-
-    Task<ResponseLoginDTO> ResetPassword(Guid userId, string password);
+    Task<ResponseLoginDTO> ResetPassword(LoginDTO loginDto);
     Task<ResponseDTO> GetUserAsync(Guid userId);
 }
