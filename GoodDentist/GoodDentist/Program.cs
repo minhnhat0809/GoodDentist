@@ -38,6 +38,7 @@ builder.Services.AddScoped<IFirebaseStorageService, FirebaseStorageService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IExaminationService, ExaminationService>();
 builder.Services.AddScoped<IClinicServiceService, ClinicServiceService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 // repo
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -51,7 +52,7 @@ builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
 builder.Services.AddScoped<IRecordTypeRepository, RecordTypeRepository>();
 builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 builder.Services.AddScoped<IExaminationRepo, ExaminationRepo>();
-builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
+builder.Services.AddScoped<IPaymentRepo, PaymentRepo>();
 
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 builder.Services.AddControllers().AddJsonOptions(options =>

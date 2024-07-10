@@ -31,6 +31,8 @@ namespace Repositories.Impl
 
 		public IClinicServiceRepo clinicServiceRepo { get; private set; }
 
+		public IPaymentRepo paymentRepo { get; private set; }
+
 		public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
             _repositoryContext = context;
@@ -49,6 +51,7 @@ namespace Repositories.Impl
 			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
             examProfileRepo = new ExamProfileRepo(_repositoryContext);
             clinicServiceRepo = new ClinicServiceRepo(_repositoryContext,distributedCache);
+            paymentRepo = new PaymentRepo(_repositoryContext, distributedCache);
         }
 
         public async Task<int> CompleteAsync()
