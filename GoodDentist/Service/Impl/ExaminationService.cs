@@ -320,7 +320,7 @@ namespace Services.Impl
                             foreach(var e in examinations)
                             {
                                 if ((examinationDTO.TimeStart >= e.TimeStart && examinationDTO.TimeStart < e.TimeEnd) || 
-                                    (examinationDTO.TimeEnd > e.TimeStart))
+                                    (examinationDTO.TimeStart < e.TimeStart && examinationDTO.TimeEnd > e.TimeStart))
                                 {
                                     Add("There is an appointment at :" + e.TimeStart + "-" + e.TimeEnd);
                                     break;

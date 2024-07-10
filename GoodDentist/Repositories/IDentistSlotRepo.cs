@@ -21,5 +21,7 @@ namespace Repositories
         Task<DentistSlot?> GetDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart);
 
         Task<List<DentistSlot>?> GetAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage);
+
+        Task<List<DentistSlot>?> GetAllDentistSlotsByDentistAndTimeStart(string clinicId, DateTime timeStart, DateTime timeEnd);
     }
 }

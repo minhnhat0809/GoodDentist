@@ -74,6 +74,7 @@ namespace Services.Impl
                 {
                     customers = customers.Where(c => c.Name.Contains(search, StringComparison.OrdinalIgnoreCase) || c.PhoneNumber.Contains(search)).ToList();
                 }
+                
 
                 List<UserDTO> userDTOs = new List<UserDTO>();
                 foreach(var u in customers)
