@@ -6,8 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Services.Impl
@@ -69,10 +71,13 @@ namespace Services.Impl
             ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
             try
             {
+                string pattern = $@"\b{Regex.Escape(search)}\b";
+                Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
                 List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers();
                 if (!search.IsNullOrEmpty())
                 {
-                    customers = customers.Where(c => c.Name.Contains(search, StringComparison.OrdinalIgnoreCase) || c.PhoneNumber.Contains(search)).ToList();
+                    customers = customers.Where(c => regex.IsMatch(c.Name) || c.PhoneNumber.Contains(search)).ToList();
                 }
                 
 
@@ -96,5 +101,6 @@ namespace Services.Impl
             }
             return responseDTO;
         }
+
     }
 }
