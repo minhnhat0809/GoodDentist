@@ -27,10 +27,10 @@ public class FirebaseStorageService : IFirebaseStorageService
         var newGuid = Guid.NewGuid();
         using var stream = new MemoryStream();
         await file.CopyToAsync(stream);
-        
+
         // Sanitize the file name
         var sanitizedFileName = SanitizeFileName(name);
-        
+
         // Generate a unique file name
         var fileName = $"{sanitizedFileName}-{newGuid}";
 
@@ -38,9 +38,8 @@ public class FirebaseStorageService : IFirebaseStorageService
         var img = await _storageClient.UploadObjectAsync(
             _bucketName, $"image/{imgFolderName}/{fileName}", file.ContentType, stream);
 
-        // Image URI to get client image
-        var photoUri = img.MediaLink;
-
+        // Generate a public download URL
+        var photoUri = GenerateDownloadUrl(_bucketName, $"image/{imgFolderName}/{fileName}");
         return photoUri;
     }
     
@@ -54,8 +53,10 @@ public class FirebaseStorageService : IFirebaseStorageService
     }
     public async Task DeleteFileAndReference(string fileUrl)
     {
+        // Extract the file path from the URL
         var uri = new Uri(fileUrl);
-        var filePath = uri.LocalPath.Substring("/download/storage/v1/b/good-dentist-67aba.appspot.com/o/".Length);
+        var filePath = GetFilePathFromUrl(uri);
+
         // Delete the file from Firebase Storage
         try
         {
@@ -66,6 +67,25 @@ public class FirebaseStorageService : IFirebaseStorageService
             throw new Exception(ex.Message);
         }
     }
+    private string ConvertToFirebaseStorageUrl(string mediaLink)
+    {
+        return mediaLink.Replace("https://storage.googleapis.com/download/storage/v1/b/", "https://firebasestorage.googleapis.com/v0/b/");
+    }
+    private string GetFilePathFromUrl(Uri uri)
+    {
+        // Adjust this method to match the format of your file URLs
+        var bucketSegment = uri.LocalPath.IndexOf("/o/", StringComparison.Ordinal);
+        if (bucketSegment < 0)
+        {
+            throw new ArgumentException("Invalid Firebase Storage URL format.");
+        }
 
+        // Extract the file path from the URL
+        return Uri.UnescapeDataString(uri.LocalPath.Substring(bucketSegment + 3));
+    }
+    private string GenerateDownloadUrl(string bucketName, string fileName)
+    {
+        return $"https://firebasestorage.googleapis.com/v0/b/{bucketName}/o/{Uri.EscapeDataString(fileName)}?alt=media";
+    }
     
 }

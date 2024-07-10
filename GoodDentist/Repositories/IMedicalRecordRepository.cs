@@ -10,4 +10,5 @@ public interface IMedicalRecordRepository : IRepositoryBase<MedicalRecord>
     Task<MedicalRecord> CreateRecord(MedicalRecord record);
     Task<MedicalRecord> DeleteRecord(int id);
     Task<MedicalRecord> UpdateRecord(MedicalRecord record);
+
 }

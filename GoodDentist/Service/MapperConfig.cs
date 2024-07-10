@@ -37,12 +37,26 @@ namespace Services
             .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Dob.HasValue ? new DateTime(src.Dob.Value.Year, src.Dob.Value.Month, src.Dob.Value.Day) : (DateTime?)null))
             .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.RoleId ?? default(int)))
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+
+            CreateMap<Customer, UserDTO>()
+            .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Dob.HasValue ? new DateTime(src.Dob.Value.Year, src.Dob.Value.Month, src.Dob.Value.Day) : (DateTime?)null))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
+            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.Clinics, opt => opt.Ignore());
 
             CreateMap<DentistSlot, DentistSlotDTO>()
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
@@ -77,6 +91,17 @@ namespace Services
             CreateMap<ExaminationRequestDTO, ExaminationDTO>().ReverseMap();
             CreateMap<CreateRoomDTO, Room>().ReverseMap();
 			CreateMap<ClinicServiceDTO, BusinessObject.Entity.ClinicService>().ReverseMap();
-		}
+            CreateMap<OrderDTO, Order>().ReverseMap();
+            CreateMap<OrderCreateDTO, Order>().ReverseMap();
+            CreateMap<PrescriptionDTO, Prescription>().ReverseMap();
+            CreateMap<PrescriptionCreateDTO, Prescription>().ReverseMap();
+            CreateMap<Clinic, ClinicDTO>().ReverseMap();
+            CreateMap<ExaminationRequestDTO, Examination>();
+            CreateMap<Examination, ExaminationDTO>();
+        
+            CreateMap<OrderDTO, Order>().ReverseMap();
+            CreateMap<NotificationDTO, Notification>().ReverseMap();
+            CreateMap<NotificationRequestDTO, Notification>().ReverseMap();   
+        }
     }
 }

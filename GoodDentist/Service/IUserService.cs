@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Services
 {
@@ -21,6 +22,8 @@ namespace Services
 
         Task<ResponseListDTO> updateUser(CreateUserDTO createUserDTO);
 
-        Task<string> deleteCache(string key);
+        Task<UserDTO> UploadFile(IFormFile file, Guid userId);
+        Task<UserDTO> DeleteFile(Guid userId);
+        Task<ResponseDTO> GetUser(Guid userId);
     }
 }

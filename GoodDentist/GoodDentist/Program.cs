@@ -9,12 +9,10 @@ using Repositories;
 using Repositories.Impl;
 using Services;
 using Services.Impl;
-using System.Text;
 using System.Text.Json.Serialization;
-using BusinessObject.Entity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ClinicService = BusinessObject.Entity.ClinicService;
+using BusinessObject.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,9 +36,18 @@ builder.Services.AddScoped<IFirebaseStorageService, FirebaseStorageService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IExaminationService, ExaminationService>();
 builder.Services.AddScoped<IClinicServiceService, ClinicServiceService>();
+builder.Services.AddScoped<IGeneralService, GeneralService>();
+builder.Services.AddScoped<IOrderServices, OrderServices>();
+builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
+builder.Services.AddScoped<IClinicService, Services.Impl.ClinicService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IExaminationProfileService, ExaminationProfileService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
+
 // repo
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 builder.Services.AddScoped<IClinicUserRepo, ClinicUserRepo>();
@@ -52,9 +59,17 @@ builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
 builder.Services.AddScoped<IRecordTypeRepository, RecordTypeRepository>();
 builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 builder.Services.AddScoped<IExaminationRepo, ExaminationRepo>();
+builder.Services.AddScoped<IClinicServiceRepo, ClinicServiceRepo>();
+builder.Services.AddScoped<IGeneralRepo, GeneralRepo>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
+builder.Services.AddScoped<IRoomRepo, RoomRepo>();
+builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+builder.Services.AddScoped<IExamProfileRepo, ExamProfileRepo>();
+
 builder.Services.AddScoped<IPaymentRepo, PaymentRepo>();
 
-builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -108,6 +123,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//redis
 builder.Services.AddStackExchangeRedisCache(redis =>
 {
     redis.Configuration = "localhost:6379";
@@ -116,21 +132,27 @@ builder.Services.AddStackExchangeRedisCache(redis =>
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 
+//cors
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("CORSPolicy", builder => builder.AllowAnyHeader().WithOrigins()
+    .AllowAnyMethod().AllowCredentials().SetIsOriginAllowed((host) => true));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthentication();
+app.UseCors("CORSPolicy");
 
 app.MapControllers();
 
 app.Run();
+// dotnet ef dbcontext scaffold "Server=(local);Initial Catalog=Good_Dentist_DB;Persist Security Info=False;User ID=sa;Password=12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Entity" --context-dir ".\"

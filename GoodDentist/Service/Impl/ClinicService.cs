@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BusinessObject;
 using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Repositories;
@@ -53,5 +52,12 @@ public class ClinicService : IClinicService
         var clinic = _mapper.Map<Clinic>(requestDto);
         var updatedClinic = await _unitOfWork.ClinicRepository.UpdateClinic(clinic);
         return _mapper.Map<ClinicDTO>(updatedClinic);
+    }
+
+    public async Task<ClinicDTO> GetClinicByUserId(Guid userId)
+    {
+        Clinic userClinic = await _unitOfWork.ClinicRepository.GetClinicByUserId(userId);
+        var viewModel = _mapper.Map<ClinicDTO>(userClinic);
+        return viewModel;
     }
 }

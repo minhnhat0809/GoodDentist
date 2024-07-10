@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using Repositories.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,16 @@ namespace Repositories
         IExaminationRepo examinationRepo { get; }
         IMedicalRecordRepository MedicalRecordRepository { get; }
         IClinicServiceRepo clinicServiceRepo { get; }
+        IGeneralRepo generalRepo { get; }
+        IExamProfileRepo examProfileRepo { get; }
+        IOrderRepository orderRepo { get; }
+        IPrescriptionRepository prescriptionRepo { get; }
 
+        ICustomerRepo customerRepo { get; }
         IExamProfileRepo examProfileRepo { get; }
         IPaymentRepo paymentRepo { get; }
         Task<int> CompleteAsync();
+
+        INotificationRepository NotificationRepository { get; }
     }
 }

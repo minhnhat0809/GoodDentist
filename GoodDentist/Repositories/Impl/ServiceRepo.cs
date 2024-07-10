@@ -10,12 +10,10 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Repositories.Impl
 {
-	public class ServiceRepo : RepositoryBase<Service>, IServiceRepo
+    public class ServiceRepo : RepositoryBase<Service>, IServiceRepo
 	{
-		private readonly IDistributedCache distributedCache;
-		public ServiceRepo(GoodDentistDbContext repositoryContext, IDistributedCache distributedCache) : base(repositoryContext)
+		public ServiceRepo(GoodDentistDbContext repositoryContext) : base(repositoryContext)
 		{
-			this.distributedCache = distributedCache;
 		}
 
 

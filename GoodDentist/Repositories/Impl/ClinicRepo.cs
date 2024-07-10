@@ -19,5 +19,13 @@ namespace Repositories.Impl
         {
            return await _repositoryContext.Clinics.FirstOrDefaultAsync(c => c.ClinicId.ToString().Equals(id));
         }
+
+        public async Task<List<Clinic>> GetClinicByUserId(Guid userId)
+        {
+            return await _repositoryContext.Clinics
+                .Include(c => c.ClinicUsers)
+                .Where(c => c.ClinicUsers.Any(x => x.UserId == userId))
+                .ToListAsync();
+        }
     }
 }

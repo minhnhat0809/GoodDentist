@@ -31,11 +31,17 @@ public partial class User
 
     public bool? Status { get; set; }
 
+    public string? Avatar { get; set; }
+
     public virtual ICollection<ClinicUser> ClinicUsers { get; set; } = new List<ClinicUser>();
 
     public virtual ICollection<DentistSlot> DentistSlots { get; set; } = new List<DentistSlot>();
 
+    public virtual ICollection<ExaminationProfile> ExaminationProfiles { get; set; } = new List<ExaminationProfile>();
+
     public virtual ICollection<Examination> Examinations { get; set; } = new List<Examination>();
 
     public virtual Role? Role { get; set; }
+
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

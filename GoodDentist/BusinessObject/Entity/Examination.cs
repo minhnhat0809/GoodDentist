@@ -17,11 +17,11 @@ public partial class Examination
 
     public DateTime? TimeStart { get; set; }
 
-    public TimeOnly? Duration { get; set; }
+    public DateTime? TimeEnd { get; set; }
 
     public string? Notes { get; set; }
 
-    public bool? Status { get; set; }
+    public int? Status { get; set; }
 
     public virtual User? Dentist { get; set; }
 

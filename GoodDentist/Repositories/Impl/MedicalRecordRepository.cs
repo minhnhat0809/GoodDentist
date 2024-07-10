@@ -1,9 +1,10 @@
 ﻿using BusinessObject;
 using BusinessObject.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Impl;
 
-public class MedicalRecordRepository : RepositoryBase<MedicalRecord>,IMedicalRecordRepository
+public class MedicalRecordRepository : RepositoryBase<MedicalRecord>, IMedicalRecordRepository
 {
     public MedicalRecordRepository(GoodDentistDbContext repositoryContext) : base(repositoryContext)
     {
@@ -15,9 +16,9 @@ public class MedicalRecordRepository : RepositoryBase<MedicalRecord>,IMedicalRec
         return exist;
     }
 
-    public Task<List<MedicalRecord>> GetRecords()
+    public async Task<List<MedicalRecord>> GetRecords()
     {
-        var exist =  FindAllAsync();
+        var exist = await _repositoryContext.MedicalRecords.ToListAsync();
         return exist;
     }
 

@@ -19,7 +19,6 @@ namespace Repositories.Impl
         public IClinicRepo clinicRepo { get; private set; }
         public IDentistSlotRepo dentistSlotRepo { get; private set; }
         public IClinicRepository ClinicRepository { get; }
-        public IDistributedCache distributedCache { get; private set; }
         public IMedicineRepository medicineRepo { get; private set; }
         public IRoomRepo roomRepo { get; private set; }
         public IRecordTypeRepository recordTypeRepo { get; private set; }
@@ -31,27 +30,43 @@ namespace Repositories.Impl
 
 		public IClinicServiceRepo clinicServiceRepo { get; private set; }
 
+        public IGeneralRepo generalRepo { get; private set; }
+
+        public IOrderRepository orderRepo { get; private set; }
+
+        public IPrescriptionRepository prescriptionRepo { get; private set; }
+
+        public INotificationRepository NotificationRepository { get; private set; }
+
+        public ICustomerRepo customerRepo { get; private set; }
+
+        
+        public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
 		public IPaymentRepo paymentRepo { get; private set; }
 
 		public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
             _repositoryContext = context;
-            distributedCache = cache;
-            userRepo = new UserRepo(_repositoryContext, distributedCache);
+            userRepo = new UserRepo(_repositoryContext);
             clinicUserRepo = new ClinicUserRepo(_repositoryContext); 
             roleRepo = new RoleRepo(_repositoryContext);
             clinicRepo = new ClinicRepo(_repositoryContext);
             dentistSlotRepo = new DentistSlotRepo(_repositoryContext);
             medicineRepo = new MedicineRepository(_repositoryContext);
-            roomRepo = new RoomRepo(_repositoryContext,distributedCache);
+            roomRepo = new RoomRepo(_repositoryContext);
             examinationRepo = new ExaminationRepo(_repositoryContext);
             ClinicRepository = new ClinicRepository(_repositoryContext);
             recordTypeRepo = new RecordTypeRepository(_repositoryContext);
             MedicalRecordRepository = new MedicalRecordRepository(_repositoryContext);
-			serviceRepo = new ServiceRepo(_repositoryContext,distributedCache);
+			serviceRepo = new ServiceRepo(_repositoryContext);
             examProfileRepo = new ExamProfileRepo(_repositoryContext);
-            clinicServiceRepo = new ClinicServiceRepo(_repositoryContext,distributedCache);
-            paymentRepo = new PaymentRepo(_repositoryContext, distributedCache);
+            clinicServiceRepo = new ClinicServiceRepo(_repositoryContext);
+            generalRepo = new GeneralRepo(_repositoryContext);
+            orderRepo = new OrderRepository(_repositoryContext);
+            prescriptionRepo = new PrescriptionRepository(_repositoryContext);
+            NotificationRepository = new NotificationRepository(_repositoryContext);
+            customerRepo = new CustomerRepo(_repositoryContext);
+
         }
 
         public async Task<int> CompleteAsync()
