@@ -11,7 +11,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Get User include Clinic" />
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="commit">
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/CustomerRequestDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/CustomerDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/ExaminationProfileDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ExaminationProfileController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ExaminationProfileController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/ICustomerRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/ICustomerRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IExamProfileRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IExamProfileRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ExamProfileRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ExamProfileRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/ICustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/ICustomerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IExaminationProfileService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IExaminationProfileService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/CustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/CustomerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/ExaminationProfileService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ExaminationProfileService.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,12 +93,12 @@
   "keyToString": {
     ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Debug",
     ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
-    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
+    ".NET Launch Settings Profile.GoodDentist: https.executor": "Run",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "huyntv171283",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -386,7 +401,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720679079575</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="commit">
+      <option name="closed" value="true" />
+      <created>1720679375866</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1720679375866</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -430,7 +453,8 @@
     <MESSAGE value="userDto: add user id" />
     <MESSAGE value="User detail" />
     <MESSAGE value="Get User include Clinic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Get User include Clinic" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -668,6 +692,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
+          <line>175</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'CreateCustomer'">
+            <startOffsets>
+              <option value="6668" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6722" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="69" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

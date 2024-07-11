@@ -27,7 +27,7 @@ namespace Services.Impl
 
         public async Task<ResponseDTO> GetAllCustomerOfDentist(string dentistId)
         {
-            ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
+            ResponseDTO responseDTO = new ResponseDTO(" Get All Customer By Dentist Successfully", 200, true, null);
             try
             {
                 if (dentistId.IsNullOrEmpty())
@@ -53,11 +53,11 @@ namespace Services.Impl
 
                 List<UserDTO> customerDTO = mapper.Map<List<UserDTO>>(customers);
 
-
                 responseDTO.Result = customerDTO;
                 responseDTO.Message = "Get successfully!";
                 return responseDTO;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 responseDTO.IsSuccess = false;
                 responseDTO.StatusCode = 500;
@@ -68,10 +68,9 @@ namespace Services.Impl
 
         public async Task<ResponseDTO> GetAllCustomers(string search, int pageNumber, int rowsPerPage)
         {
-            ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
+            ResponseDTO responseDTO = new ResponseDTO("Get All Customer Successfully", 200, true, null);
             try
-            {                
-
+            {
                 List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
                 if (!search.IsNullOrEmpty())
                 {
@@ -79,10 +78,9 @@ namespace Services.Impl
                     Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
                     customers = customers.Where(c => regex.IsMatch(c.Name) || c.PhoneNumber.Contains(search)).ToList();
                 }
-                
 
                 List<UserDTO> userDTOs = new List<UserDTO>();
-                foreach(var u in customers)
+                foreach (var u in customers)
                 {
                     List<Clinic> clinics = u.CustomerClinics.Select(cc => cc.Clinic).ToList();
                     UserDTO userDTO = mapper.Map<UserDTO>(u);
@@ -90,17 +88,142 @@ namespace Services.Impl
                     userDTOs.Add(userDTO);
                 }
 
-                
                 responseDTO.Result = userDTOs;
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 responseDTO.IsSuccess = false;
-                responseDTO.StatusCode =500;
-                responseDTO.Message= e.Message;
-         
+                responseDTO.StatusCode = 500;
+                responseDTO.Message = e.Message;
             }
             return responseDTO;
         }
 
+        public async Task<ResponseDTO> GetCustomerById(string customerId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("Get Customer Successfully", 200, true, null);
+            try
+            {
+                if (customerId.IsNullOrEmpty())
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "Customer ID is null!";
+                    return responseDTO;
+                }
+
+                Customer customer = await unitOfWork.customerRepo.GetCustomerById(Guid.Parse(customerId));
+                if (customer == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 404;
+                    responseDTO.Message = "Customer not found!";
+                    return responseDTO;
+                }
+
+                UserDTO customerDTO = mapper.Map<UserDTO>(customer);
+                responseDTO.Result = customerDTO;
+                responseDTO.Message = "Get successfully!";
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 500;
+                responseDTO.Message = ex.Message;
+                return responseDTO;
+            }
+        }
+
+        public async Task<ResponseDTO> DeleteCustomer(Guid customerId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("Delete Customer Successfully", 200, true, null);
+            try
+            {
+                Customer model = await unitOfWork.customerRepo.GetCustomerById(customerId);
+                if (model == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message = "There no customer founded yet!";
+                    responseDTO.Result = null;
+                }
+                await unitOfWork.customerRepo.DeleteCustomer(customerId);
+                responseDTO.Message = "Customer delete successfully!";
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 500;
+                responseDTO.Message = ex.Message;
+                return responseDTO;
+            }
+        }
+
+        public async Task<ResponseDTO> CreateCustomer(CustomerDTO customerDto)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("Create Customer Successfully", 200, true, null);
+            try
+            {
+                if (customerDto == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "Customer data is null!";
+                    return responseDTO;
+                }
+                
+                Customer customer = mapper.Map<Customer>(customerDto);
+                unitOfWork.customerRepo.CreateCustomer(customer);
+                
+                ExaminationProfile profile = new ExaminationProfile()
+                {
+                    Customer = customer,
+                    CustomerId = customer.CustomerId, 
+                    Date = DateOnly.FromDateTime(DateTime.Now) 
+                };
+                customer.ExaminationProfiles.Add(profile);
+                
+                await unitOfWork.examProfileRepo.CreateExaminationProfile(profile);
+                
+                
+                responseDTO.Message = "Customer created successfully!";
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 500;
+                responseDTO.Message = ex.Message;
+                return responseDTO;
+            }
+        }
+
+        public async Task<ResponseDTO> UpdateCustomer(CustomerDTO customerDto)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("Update Customer Successfully", 200, true, null);
+            try
+            {
+                if (customerDto == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "Customer data is null!";
+                    return responseDTO;
+                }
+
+                Customer customer = mapper.Map<Customer>(customerDto);
+                await unitOfWork.customerRepo.UpdateCustomer(customer);
+                responseDTO.Message = "Customer updated successfully!";
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 500;
+                responseDTO.Message = ex.Message;
+                return responseDTO;
+            }
+        }
     }
 }
