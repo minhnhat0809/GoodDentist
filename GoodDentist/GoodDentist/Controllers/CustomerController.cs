@@ -49,19 +49,13 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPut("/customers/{customerId}")]
-        public async Task<ActionResult<ResponseDTO>> UpdateCustomer(string customerId, [FromBody] CustomerDTO customerDto)
+        public async Task<ActionResult<ResponseDTO>> UpdateCustomer(string customerId, [FromBody] CustomerRequestDTO customerDto)
         {
-            // Ensure the customerId in the route matches the ID in the DTO if necessary
-            if (customerId != customerDto.CustomerId.ToString())
-            {
-                return BadRequest(new ResponseDTO("Customer ID mismatch", 400, false, null));
-            }
-
             ResponseDTO responseDTO = await customerService.UpdateCustomer(customerDto);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
         [HttpPost("/customers")]
-        public async Task<ActionResult<ResponseDTO>> CreateCustomer([FromBody] CustomerDTO customerDto)
+        public async Task<ActionResult<ResponseDTO>> CreateCustomer([FromBody] CustomerRequestDTO customerDto)
         {
             ResponseDTO responseDTO = await customerService.CreateCustomer(customerDto);
             return StatusCode(responseDTO.StatusCode, responseDTO);

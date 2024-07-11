@@ -13,5 +13,6 @@ namespace Repositories
         Task CreateCustomer(Customer customer);
         Task UpdateCustomer(Customer customer);
         Task DeleteCustomer(Guid customerId);
+        Task<Customer> GetCustomerByPhoneOrEmailOrUsername(string input);
     }
 }

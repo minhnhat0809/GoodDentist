@@ -66,5 +66,14 @@ namespace Repositories.Impl
                 await _repositoryContext.SaveChangesAsync();
             }
         }
+
+        public async Task<Customer> GetCustomerByPhoneOrEmailOrUsername(string input)
+        {
+            var customer = await _repositoryContext.Customers
+                .Where(x=>x.PhoneNumber == input || x.Email == input || x.UserName == input)
+                .Include(x => x.CustomerClinics)
+                .FirstOrDefaultAsync();
+            return customer;
+        }
     }
 }

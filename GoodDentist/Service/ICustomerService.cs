@@ -13,7 +13,7 @@ namespace Services
         Task<ResponseDTO> GetAllCustomers(string search, int pageNumber, int rowsPerPage);
         Task<ResponseDTO> GetCustomerById(string customerId);
         Task<ResponseDTO> DeleteCustomer(Guid userId);
-        Task<ResponseDTO> UpdateCustomer(CustomerDTO customerDto);
-        Task<ResponseDTO> CreateCustomer(CustomerDTO customerDto);
+        Task<ResponseDTO> UpdateCustomer(CustomerRequestDTO customerDto);
+        Task<ResponseDTO> CreateCustomer(CustomerRequestDTO customerDto);
     }
 }
