@@ -23,22 +23,60 @@ namespace Services.Impl
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod)
+        public async Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod, string mode, string customerId)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
             responseListDTO.StatusCode = 200;
             try
             {
-                responseListDTO = await ValidateExamination(examinationDTO, mod);
+                responseListDTO = await ValidateExamination(examinationDTO, mod, mode);
                 if (responseListDTO.Message.Count > 0)
                 {
+                    return responseListDTO;
+                }
+
+                if (mode.Equals("new", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (customerId.IsNullOrEmpty())
+                    {
+                        responseListDTO.Message.Add("Customer Id is null!");
+                        responseListDTO.StatusCode = 400;
+                        responseListDTO.IsSuccess = false;
+                        return responseListDTO;
+                    }
+                    else
+                    {
+                        Customer? customer = await unitOfWork.customerRepo.GetByIdAsync(Guid.Parse(customerId));
+                        if (customer == null)
+                        {
+                            responseListDTO.Message.Add("This customer is not exist!");
+                            responseListDTO.StatusCode = 400;
+                            responseListDTO.IsSuccess = false;
+                            return responseListDTO;
+                        }
+                    }
+
+                    ExaminationProfile examinationProfile = new ExaminationProfile();
+                    examinationProfile.Status = true;
+                    examinationProfile.Date = DateOnly.FromDateTime(DateTime.Now);
+                    examinationProfile.Diagnosis = "Đang cập nhật";
+                    examinationProfile.CustomerId = Guid.Parse(customerId);
+
+                    await unitOfWork.examProfileRepo.CreateAsync(examinationProfile);
+
+                    Examination examinationForNew = mapper.Map<Examination>(examinationDTO);
+                    examinationForNew.ExaminationProfileId = examinationProfile.ExaminationProfileId;
+
+                    await unitOfWork.examinationRepo.CreateAsync(examinationForNew);
+
                     return responseListDTO;
                 }
 
                 Examination examination = mapper.Map<Examination>(examinationDTO);
 
                 await unitOfWork.examinationRepo.CreateAsync(examination);
+
                 return responseListDTO;
             }catch (Exception ex)
             {
@@ -241,7 +279,7 @@ namespace Services.Impl
             responseListDTO.StatusCode = 200;
             try
             {
-                responseListDTO = await ValidateExamination(examinationDTO, mod);
+                responseListDTO = await ValidateExamination(examinationDTO, mod, "");
                 if (responseListDTO.Message.Count > 0)
                 {
                     return responseListDTO;
@@ -267,7 +305,7 @@ namespace Services.Impl
             }
         }
 
-        private async Task<ResponseListDTO> ValidateExamination(ExaminationRequestDTO examinationDTO, string mod)
+        private async Task<ResponseListDTO> ValidateExamination(ExaminationRequestDTO examinationDTO, string mod, string mode)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
@@ -297,6 +335,16 @@ namespace Services.Impl
                 }
             }else if (mod.Equals("c"))
             {
+                if (mode.Equals("old", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (examinationDTO.ExaminationProfileId <= 0) Add("Profile ID is null!");
+                    else
+                    {
+                        ExaminationProfile examinationProfile = await unitOfWork.examProfileRepo.GetExaminationProfileById((int)examinationDTO.ExaminationProfileId);
+                        if (examinationProfile == null) Add("Profile is not existed!");
+                    }
+                }
+
                 if (examinationDTO.Notes.IsNullOrEmpty())
                 {
                     Add("Please input notes for dentist!");

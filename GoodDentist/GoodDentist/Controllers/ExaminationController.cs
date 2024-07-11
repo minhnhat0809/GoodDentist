@@ -60,10 +60,10 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPost("/new-examination")]
-        public async Task<ActionResult<ResponseListDTO>> CreateExamination([FromBody] ExaminationRequestDTO examinationDTO)
+        public async Task<ActionResult<ResponseListDTO>> CreateExamination([FromBody] ExaminationRequestDTO examinationDTO, string mode, string? customerId)
         {
             string mod = "c";
-            ResponseListDTO responseDTO = await examinationService.CreateExamination(examinationDTO, mod);
+            ResponseListDTO responseDTO = await examinationService.CreateExamination(examinationDTO, mod, mode, customerId);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
