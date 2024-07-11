@@ -27,10 +27,10 @@ public class FirebaseStorageService : IFirebaseStorageService
         var newGuid = Guid.NewGuid();
         using var stream = new MemoryStream();
         await file.CopyToAsync(stream);
-        
+
         // Sanitize the file name
         var sanitizedFileName = SanitizeFileName(name);
-        
+
         // Generate a unique file name
         var fileName = $"{sanitizedFileName}-{newGuid}";
 
@@ -38,8 +38,8 @@ public class FirebaseStorageService : IFirebaseStorageService
         var img = await _storageClient.UploadObjectAsync(
             _bucketName, $"image/{imgFolderName}/{fileName}", file.ContentType, stream);
 
-        // Avatar URI to get client image
-        var photoUri = ConvertToFirebaseStorageUrl(img.MediaLink);
+        // Generate a public download URL
+        var photoUri = GenerateDownloadUrl(_bucketName, $"image/{imgFolderName}/{fileName}");
         return photoUri;
     }
     
@@ -83,6 +83,9 @@ public class FirebaseStorageService : IFirebaseStorageService
         // Extract the file path from the URL
         return Uri.UnescapeDataString(uri.LocalPath.Substring(bucketSegment + 3));
     }
-
+    private string GenerateDownloadUrl(string bucketName, string fileName)
+    {
+        return $"https://firebasestorage.googleapis.com/v0/b/{bucketName}/o/{Uri.EscapeDataString(fileName)}?alt=media";
+    }
     
 }
