@@ -11,11 +11,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="User detail">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/UserRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/UserService.cs" afterDir="false" />
-    </list>
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Get User include Clinic" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -382,7 +378,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720021733397</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Get User include Clinic">
+      <option name="closed" value="true" />
+      <created>1720679079575</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1720679079575</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,7 +429,8 @@
     <MESSAGE value="get user" />
     <MESSAGE value="userDto: add user id" />
     <MESSAGE value="User detail" />
-    <option name="LAST_COMMIT_MESSAGE" value="User detail" />
+    <MESSAGE value="Get User include Clinic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Get User include Clinic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -539,10 +544,10 @@
           <line>523</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
             <startOffsets>
-              <option value="19911" />
+              <option value="19872" />
             </startOffsets>
             <endOffsets>
-              <option value="19944" />
+              <option value="19905" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="54" />
@@ -552,10 +557,10 @@
           <line>526</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
             <startOffsets>
-              <option value="20014" />
+              <option value="19975" />
             </startOffsets>
             <endOffsets>
-              <option value="20095" />
+              <option value="20056" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="55" />
@@ -604,10 +609,10 @@
           <line>461</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'getAllUsersByClinic'">
             <startOffsets>
-              <option value="17548" />
+              <option value="17509" />
             </startOffsets>
             <endOffsets>
-              <option value="17657" />
+              <option value="17618" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="62" />
@@ -646,7 +651,7 @@
               <option value="776" />
             </startOffsets>
             <endOffsets>
-              <option value="979" />
+              <option value="1025" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="67" />
