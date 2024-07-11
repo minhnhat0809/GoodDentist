@@ -9,7 +9,7 @@ namespace Services
 {
     public interface ICustomerService
     {
-        Task<ResponseDTO> GetAllCustomerOfDentist(string dentistId);
+        Task<ResponseDTO> GetAllCustomerOfDentist(string dentistId, string search);
         Task<ResponseDTO> GetAllCustomers(string search, int pageNumber, int rowsPerPage);
         Task<ResponseDTO> GetCustomerById(string customerId);
         Task<ResponseDTO> DeleteCustomer(Guid userId);

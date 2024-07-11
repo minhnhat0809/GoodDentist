@@ -4,7 +4,7 @@ namespace BusinessObject.DTO.ViewDTO;
 
 public class ExaminationRequestDTO
 {
-    public int ExaminationId { get; set; }
+    public int? ExaminationId { get; set; }
 
     public int? ExaminationProfileId { get; set; }
 

@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
-using System;
-using System.Threading.Tasks;
-using BusinessObject.DTO.ViewDTO;
-using BusinessObject.Entity;
 
 namespace GoodDentist.Controllers
 {
@@ -20,10 +16,11 @@ namespace GoodDentist.Controllers
             this.customerService = customerService;
         }
 
-        [HttpGet("/customers/dentist")]
-        public async Task<ActionResult<ResponseDTO>> GetAllCustomerOfDentist([FromQuery] string dentistId)
+        [HttpGet("/customers/denitst")]
+        public async Task<ActionResult<ResponseDTO>> GetAllCustomerOfDentist([FromQuery] string dentistId, string? search)
         {
-            ResponseDTO responseDTO = await customerService.GetAllCustomerOfDentist(dentistId);
+            ResponseDTO responseDTO = await customerService.GetAllCustomerOfDentist(dentistId, search);
+
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
