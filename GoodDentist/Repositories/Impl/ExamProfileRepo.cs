@@ -23,7 +23,7 @@ namespace Repositories.Impl
         public async Task<List<ExaminationProfile>> GetProfileByDenitst(string dentistId)
         {
             return await _repositoryContext.ExaminationProfiles
-                .Include(ex => ex.Customer)
+                .Include(ex => ex.Customer).ThenInclude(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
                 .Where(e => e.DentistId.Equals(Guid.Parse(dentistId))).ToListAsync();
         }
 

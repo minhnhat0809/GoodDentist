@@ -25,7 +25,7 @@ namespace Services.Impl
             this.mapper = mapper;
         }
 
-        public async Task<ResponseDTO> GetAllCustomerOfDentist(string dentistId)
+        public async Task<ResponseDTO> GetAllCustomerOfDentist(string dentistId, string search)
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
@@ -51,7 +51,22 @@ namespace Services.Impl
 
                 List<Customer> customers = examinationProfiles.Select(e => e.Customer).ToList();
 
-                List<UserDTO> customerDTO = mapper.Map<List<UserDTO>>(customers);
+                if (!search.IsNullOrEmpty())
+                {
+                    string pattern = $@"\b{Regex.Escape(search)}\b";
+                    Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+                    customers = customers.Where(c => regex.IsMatch(c.Name) || c.PhoneNumber.Contains(search) ||
+                    c.Email.Contains(search)).ToList();
+                }
+
+                List<UserDTO> customerDTO = new List<UserDTO>();
+                foreach (var u in customers)
+                {
+                    List<Clinic> clinics = u.CustomerClinics.Select(cc => cc.Clinic).ToList();
+                    UserDTO userDTO = mapper.Map<UserDTO>(u);
+                    userDTO.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
+                    customerDTO.Add(userDTO);
+                }
 
 
                 responseDTO.Result = customerDTO;

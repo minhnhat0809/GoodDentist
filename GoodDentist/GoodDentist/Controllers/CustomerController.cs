@@ -17,9 +17,9 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("/customers/denitst")]
-        public async Task<ActionResult<ResponseDTO>> GetAllCustomerOfDentist([FromQuery] string dentistId)
+        public async Task<ActionResult<ResponseDTO>> GetAllCustomerOfDentist([FromQuery] string dentistId, string? search)
         {
-            ResponseDTO responseDTO = await customerService.GetAllCustomerOfDentist(dentistId);
+            ResponseDTO responseDTO = await customerService.GetAllCustomerOfDentist(dentistId, search);
 
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
