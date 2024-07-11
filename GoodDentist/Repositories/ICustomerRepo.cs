@@ -10,9 +10,9 @@ namespace Repositories
     {
         Task<List<Customer>> GetAllCustomers(int pageNumber, int rowsPerPage);
         Task<Customer> GetCustomerById(Guid customerId);
-        Task CreateCustomer(Customer customer);
-        Task UpdateCustomer(Customer customer);
-        Task DeleteCustomer(Guid customerId);
+        Task<Customer> CreateCustomer(Customer customer);
+        Task<Customer> UpdateCustomer(Customer customer);
+        Task<Customer> DeleteCustomer(Guid customerId);
         Task<Customer> GetCustomerByPhoneOrEmailOrUsername(string input);
     }
 }

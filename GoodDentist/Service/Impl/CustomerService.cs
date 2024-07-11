@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace Services.Impl
@@ -27,11 +28,13 @@ namespace Services.Impl
         
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IFirebaseStorageService firebaseStorageService;
 
-        public CustomerService(IUnitOfWork unitOfWork, IMapper mapper)
+        public CustomerService(IUnitOfWork unitOfWork, IMapper mapper, IFirebaseStorageService firebaseStorageService)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.firebaseStorageService = firebaseStorageService;
         }
 
         public async Task<ResponseDTO> GetAllCustomerOfDentist(string dentistId, string search)
@@ -146,6 +149,7 @@ namespace Services.Impl
                 }
 
                 UserDTO customerDTO = mapper.Map<UserDTO>(customer);
+                customerDTO.Clinics = mapper.Map<List<ClinicDTO>>(customer.CustomerClinics.Select(x=>x.Clinic).ToList());
                 responseDTO.Result = customerDTO;
                 responseDTO.Message = "Get successfully!";
                 return responseDTO;
@@ -183,71 +187,7 @@ namespace Services.Impl
                 return responseDTO;
             }
         }
-
-        /*public async Task<ResponseDTO> CreateCustomer(CustomerRequestDTO customerDto)
-        {
-            ResponseDTO responseDTO = new ResponseDTO("Create Customer Successfully", 200, true, null);
-            try
-            {
-                if (customerDto == null)
-                {
-                    responseDTO.IsSuccess = false;
-                    responseDTO.StatusCode = 400;
-                    responseDTO.Message = "Customer data is null!";
-                    return responseDTO;
-                }
-
-                Clinic clinic = await unitOfWork.clinicRepo.getClinicById(customerDto.ClinicId);
-                if (clinic == null)
-                {
-                    responseDTO.IsSuccess = false;
-                    responseDTO.StatusCode = 400;
-                    responseDTO.Message = "Clinic is null!";
-                    return responseDTO;
-                }
-                
-                Customer customer = mapper.Map<Customer>(customerDto);
-                customer.CustomerId = Guid.NewGuid();
-                customer.Salt = salting();
-                customer.Password = hashPassword(customerDto.Password, customer.Salt);
-                customer.CreatedDate = DateTime.Now;
-                customer.BackIdCard = null;
-                customer.FrontIdCard = null;
-                
-                CustomerClinic customerClinic = new CustomerClinic()
-                {
-                    ClinicId = Guid.Parse(customerDto.ClinicId),
-                    Status = true,
-                    CustomerId = customer.CustomerId,
-                    Customer = customer,
-                    Clinic = await unitOfWork.clinicRepo.getClinicById(customerDto.ClinicId)
-                };
-                
-                customer.CustomerClinics.Add(customerClinic);
-                
-                ExaminationProfile profile = new ExaminationProfile()
-                {
-                    Customer = customer,
-                    CustomerId = customer.CustomerId, 
-                    Date = DateOnly.FromDateTime(DateTime.Now)
-                };
-                customer.ExaminationProfiles.Add(profile);
-                
-                //await unitOfWork.examProfileRepo.CreateExaminationProfile(profile);
-                await unitOfWork.customerRepo.CreateCustomer(customer);
-                
-
-                responseDTO.Result = customerDto;
-                return responseDTO;
-            }
-            catch (Exception ex)
-            {
-                responseDTO.IsSuccess = false;
-                responseDTO.StatusCode = 500;
-                responseDTO.Message = ex.Message;
-                return responseDTO;
-            }
-        }*/
+        
         public async Task<ResponseDTO> CreateCustomer(CustomerRequestDTO customerDto)
         {
             ResponseDTO responseDTO = new ResponseDTO("Create Customer Successfully", 200, true, null);
@@ -296,6 +236,7 @@ namespace Services.Impl
                 customer.Password = hashPassword(customerDto.Password, customer.Salt);
                 customer.CreatedDate = DateTime.Now;
                 customer.Avatar = null;
+                customer.Status = true;
                 
                 CustomerClinic customerClinic = new CustomerClinic()
                 {
@@ -312,7 +253,8 @@ namespace Services.Impl
                 {
                     Customer = customer,
                     CustomerId = customer.CustomerId, 
-                    Date = DateOnly.FromDateTime(DateTime.Now)
+                    Date = DateOnly.FromDateTime(DateTime.Now),
+                    Status = true
                 };
                 customer.ExaminationProfiles.Add(profile);
 
@@ -358,7 +300,6 @@ namespace Services.Impl
                 return responseDTO;
             }
         }
-        
      
         private byte[] hashPassword(string password, byte[] salt)
         {
@@ -371,6 +312,82 @@ namespace Services.Impl
         private byte[] salting()
         {
             return RandomNumberGenerator.GetBytes(saltSize);
+        }
+        
+        public async Task<ResponseDTO> UploadFile(IFormFile file, Guid customerId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("Upload Customer File Successfully", 200, true, null);
+            try
+            {
+                var model = await unitOfWork.customerRepo.GetCustomerById(customerId);
+                if (model == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message = "Customer not found!";
+                    responseDTO.StatusCode = 404;
+                    responseDTO.Result = null;
+                }
+
+                if (model.Avatar != null)
+                {
+                    // Delete the image before add new one
+                    await firebaseStorageService.DeleteFileAndReference(model.Avatar);
+                }
+
+                // Generate a unique file name
+                var fileName = $"{model.CustomerId}";
+        
+                // Upload image to Firebase Storage
+                var avatar = await firebaseStorageService.UploadFile(fileName, file, "customer");
+
+                // Update the URL in the medical record model
+                model.Avatar = avatar;
+                model = await unitOfWork.customerRepo.UpdateCustomer(model);
+        
+                var viewModel = mapper.Map<CustomerDTO>(model);
+                responseDTO.Result = viewModel;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return responseDTO;
+        }
+    
+        public async Task<ResponseDTO> DeleteFileAndReference(Guid customerId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("Delete Customer File Successfully", 200, true, null);
+
+            try
+            {
+                var model = await unitOfWork.customerRepo.GetCustomerById(customerId);
+                if (model == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message = "Customer not found!";
+                    responseDTO.StatusCode = 404;
+                    responseDTO.Result = null;
+                }
+
+                // Delete image to Firebase Storage
+                await firebaseStorageService.DeleteFileAndReference(model.Avatar);
+
+                // Update the URL in the medical record model;
+                model.Avatar = null;
+                model = await unitOfWork.customerRepo.UpdateCustomer(model);
+
+                var viewModel = mapper.Map<CustomerDTO>(model);
+                responseDTO.Result = viewModel;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return responseDTO;
         }
     }
 }

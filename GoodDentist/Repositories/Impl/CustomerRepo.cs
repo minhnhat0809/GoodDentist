@@ -26,36 +26,34 @@ namespace Repositories.Impl
         public async Task<Customer> GetCustomerById(Guid customerId)
         {
             return await _repositoryContext.Customers
-                .Include(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
-                .FirstOrDefaultAsync(c => c.CustomerId == customerId);
+                .Include(x => x.CustomerClinics)
+                .ThenInclude(x => x.Clinic)
+                .FirstOrDefaultAsync(x => x.CustomerClinics.Any(x => x.CustomerId == customerId));
         }
 
-        public async Task CreateCustomer(Customer customer)
+        public async Task<Customer> CreateCustomer(Customer customer)
         {
             await _repositoryContext.Customers.AddAsync(customer);
             await _repositoryContext.SaveChangesAsync();
+            return customer;
         }
 
-        public async Task UpdateCustomer(Customer customer)
+        public async Task<Customer> UpdateCustomer(Customer customer)
         {
             var existingCustomer = await _repositoryContext.Customers
                 .FirstOrDefaultAsync(c => c.CustomerId == customer.CustomerId);
 
             if (existingCustomer != null)
             {
-                // Update fields as necessary
-                existingCustomer.Name = customer.Name;
-                existingCustomer.Email = customer.Email;
-                existingCustomer.PhoneNumber = customer.PhoneNumber;
-                existingCustomer.Address = customer.Address;
-                // ... any other fields to update
-                
+                _repositoryContext.Entry(existingCustomer).CurrentValues.SetValues(customer);
                 _repositoryContext.Customers.Update(existingCustomer);
                 await _repositoryContext.SaveChangesAsync();
             }
+
+            return existingCustomer;
         }
 
-        public async Task DeleteCustomer(Guid customerId)
+        public async Task<Customer> DeleteCustomer(Guid customerId)
         {
             var customer = await _repositoryContext.Customers
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
@@ -65,6 +63,8 @@ namespace Repositories.Impl
                 _repositoryContext.Customers.Remove(customer);
                 await _repositoryContext.SaveChangesAsync();
             }
+
+            return customer;
         }
 
         public async Task<Customer> GetCustomerByPhoneOrEmailOrUsername(string input)
