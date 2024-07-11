@@ -16,7 +16,7 @@ namespace GoodDentist.Controllers
             this.examinationProfileService = examinationProfileService;
         }
 
-        [HttpGet("/examinations/customer-id")]
+        [HttpGet("/examination-profiles/customer-id")]
         public async Task<ActionResult<ResponseDTO>> GetExaminationProfilesByCustomerId([FromQuery] string customerId)
         {
             ResponseDTO responseDTO = await examinationProfileService.GetExaminationProfilesByCustomerId(customerId);

@@ -156,6 +156,7 @@ namespace Services.Impl
                 else if (actor.Equals("dentist", StringComparison.OrdinalIgnoreCase))
                 {
                     examinations = await unitOfWork.examinationRepo.GetAllExaminationOfDentist(clinicId, userId, selectedDate, pageNumber, rowsPerPage);
+
                 }
                 else if (actor.Equals("customer", StringComparison.OrdinalIgnoreCase))
                 {
@@ -169,7 +170,20 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                List<ExaminationDTO> examinationDTOs = mapper.Map<List<ExaminationDTO>>(examinations);
+                List<ExaminationDTO> examinationDTOs = new List<ExaminationDTO>();
+
+                foreach (var e in examinations)
+                {
+                    ExaminationDTO examinationDTO = mapper.Map<ExaminationDTO>(e);
+                    examinationDTO.CustomerId = e.ExaminationProfile.CustomerId.ToString();
+                    examinationDTO.CustomerName = e.ExaminationProfile.Customer.Name;
+                    examinationDTOs.Add(examinationDTO);
+                }
+               
+                foreach(var s in examinationDTOs)
+                {
+                    s.Status = EnumHelper.GetEnumDescriptionFromInt<ExaminationStatusEnum>(int.Parse(s.Status));
+                }
                 responseDTO.Result = examinationDTOs;
                 responseDTO.Message = "Get successfully!";
             }

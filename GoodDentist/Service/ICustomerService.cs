@@ -10,6 +10,6 @@ namespace Services
     public interface ICustomerService
     {
         Task<ResponseDTO> GetAllCustomerOfDentist(string dentistId);
-        Task<ResponseDTO> GetAllCustomers(string search);
+        Task<ResponseDTO> GetAllCustomers(string search, int pageNumber, int rowsPerPage);
     }
 }

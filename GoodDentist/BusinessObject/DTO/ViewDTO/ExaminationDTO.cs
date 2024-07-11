@@ -19,6 +19,10 @@ namespace BusinessObject.DTO.ViewDTO
 
         public int? DentistSlotId { get; set; }
 
+        public string? CustomerId { get; set; }
+
+        public string? CustomerName {  get; set; }
+
         public string? Diagnosis { get; set; }
 
         public required DateTime TimeStart { get; set; }
@@ -27,6 +31,6 @@ namespace BusinessObject.DTO.ViewDTO
 
         public string? Notes { get; set; }
 
-        public bool? Status { get; set; }
+        public string? Status { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace Repositories
 {
     public interface ICustomerRepo : IRepositoryBase<Customer>
     {
-        Task<List<Customer>> GetAllCustomers();
+        Task<List<Customer>> GetAllCustomers(int pageNumber, int rowsPerPage);
     }
 }
