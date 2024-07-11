@@ -255,7 +255,11 @@ namespace Services.Impl
                 userList = SortUsers(userList, sortField, sortOrder);
 
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
-
+                foreach (var user in users)
+                {
+                    var clinics = userList?.FirstOrDefault(x => x.UserId == user.UserId).ClinicUsers.Select(x=>x.Clinic).ToList();
+                    user.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
+                }
                 return new ResponseDTO("Get users successfully!", 200, true, users);
             }
             catch (Exception ex)
