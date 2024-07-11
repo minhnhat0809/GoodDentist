@@ -15,7 +15,7 @@ public partial class OrderService
 
     public int? Quantity { get; set; }
 
-    public bool? Status { get; set; }
+    public int? Status { get; set; }
 
     public virtual Order? Order { get; set; }
 
