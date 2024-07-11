@@ -11,9 +11,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="reset password + notification controller">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Get User include Clinic" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="master" />
+        <entry key="$PROJECT_DIR$/.." value="huyntv171283" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -54,7 +52,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39edc8d6636bf8ac398568727a2cda2ffc90cd6d7bf9a45d9d43252df59484f/StorageClient.UploadObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6293d1755dba2be55da4743189b3329541121b6a8fba6ed5a6c914fbd4515/StorageClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/AuthService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/ClinicUserRepo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -76,33 +74,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.GoodDentist: IIS Express.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.GoodDentist: http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.GoodDentist: https.executor&quot;: &quot;Run&quot;,
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;huyntv171283&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Debug",
+    ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
+    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propDebugger",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\Admin\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\Admin\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: https">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
@@ -203,7 +201,6 @@
       <workItem from="1718254448748" duration="3832000" />
       <workItem from="1719679624320" duration="1255000" />
       <workItem from="1720018088122" duration="6429000" />
-      <workItem from="1720380595314" duration="12692000" />
     </task>
     <task id="LOCAL-00001" summary="change file location and create repositoryBase">
       <option name="closed" value="true" />
@@ -381,13 +378,13 @@
       <option name="project" value="LOCAL" />
       <updated>1720021733397</updated>
     </task>
-    <task id="LOCAL-00023" summary="reset password + notification controller">
+    <task id="LOCAL-00023" summary="Get User include Clinic">
       <option name="closed" value="true" />
-      <created>1720423032891</created>
+      <created>1720679079575</created>
       <option name="number" value="00023" />
       <option name="presentableId" value="LOCAL-00023" />
       <option name="project" value="LOCAL" />
-      <updated>1720423032891</updated>
+      <updated>1720679079575</updated>
     </task>
     <option name="localTasksCounter" value="24" />
     <servers />
@@ -432,8 +429,8 @@
     <MESSAGE value="get user" />
     <MESSAGE value="userDto: add user id" />
     <MESSAGE value="User detail" />
-    <MESSAGE value="reset password + notification controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="reset password + notification controller" />
+    <MESSAGE value="Get User include Clinic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Get User include Clinic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -504,17 +501,30 @@
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Repositories/Impl/UserRepo.cs</url>
-          <line>26</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\UserRepo.cs" containingFunctionPresentation="Method 'GetAllUsers'">
+          <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
+          <line>110</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'GetUserAsync'">
             <startOffsets>
-              <option value="776" />
+              <option value="3441" />
             </startOffsets>
             <endOffsets>
-              <option value="821" />
+              <option value="3511" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="43" />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/LoginController.cs</url>
+          <line>46</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\LoginController.cs" containingFunctionPresentation="Method 'GetUser'">
+            <startOffsets>
+              <option value="1321" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1420" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs</url>
@@ -531,26 +541,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>519</line>
+          <line>523</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
             <startOffsets>
-              <option value="19589" />
+              <option value="19872" />
             </startOffsets>
             <endOffsets>
-              <option value="19622" />
+              <option value="19905" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>522</line>
+          <line>526</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
             <startOffsets>
-              <option value="19692" />
+              <option value="19975" />
             </startOffsets>
             <endOffsets>
-              <option value="19773" />
+              <option value="20056" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="55" />
@@ -593,6 +603,71 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>461</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'getAllUsersByClinic'">
+            <startOffsets>
+              <option value="17509" />
+            </startOffsets>
+            <endOffsets>
+              <option value="17618" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs</url>
+          <line>59</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\UserController.cs" containingFunctionPresentation="Method 'GetAllUsersByClinic'">
+            <startOffsets>
+              <option value="2228" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2375" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/ClinicUserRepo.cs</url>
+          <line>33</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\ClinicUserRepo.cs" containingFunctionPresentation="Method 'GetAllUsersByClinic'">
+            <startOffsets>
+              <option value="1186" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1218" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/UserRepo.cs</url>
+          <line>26</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\UserRepo.cs" containingFunctionPresentation="Method 'GetAllUsers'">
+            <startOffsets>
+              <option value="776" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1025" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>256</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'getAllUsers'">
+            <startOffsets>
+              <option value="8715" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8773" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="68" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

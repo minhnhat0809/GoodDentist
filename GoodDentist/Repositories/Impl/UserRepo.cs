@@ -24,7 +24,12 @@ namespace Repositories.Impl
 
         public async Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage)
         {
-            return await Paging(pageNumber, rowsPerPage);                      
+            return await _repositoryContext.Users
+                .Include(x => x.ClinicUsers)
+                .ThenInclude(cu => cu.Clinic)
+                .Skip((pageNumber - 1) * rowsPerPage)
+                .Take(rowsPerPage)
+                .ToListAsync();
         }
 
         public string getUserName(string Id)
