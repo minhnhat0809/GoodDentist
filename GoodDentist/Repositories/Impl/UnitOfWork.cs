@@ -36,8 +36,11 @@ namespace Repositories.Impl
 
         public IPrescriptionRepository prescriptionRepo { get; private set; }
 
+        public INotificationRepository NotificationRepository { get; private set; }
+
         public ICustomerRepo customerRepo { get; private set; }
 
+        
         public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
             _repositoryContext = context;
@@ -58,7 +61,9 @@ namespace Repositories.Impl
             generalRepo = new GeneralRepo(_repositoryContext);
             orderRepo = new OrderRepository(_repositoryContext);
             prescriptionRepo = new PrescriptionRepository(_repositoryContext);
+            NotificationRepository = new NotificationRepository(_repositoryContext);
             customerRepo = new CustomerRepo(_repositoryContext);
+
         }
 
         public async Task<int> CompleteAsync()

@@ -20,12 +20,13 @@ namespace GoodDentist.Controllers
         {
             _authService = authService;
             _Response = new ResponseLoginDTO();
-            _ResponseDto = new ResponseDTO("", 200, true, null);
+            
         }
 
         [HttpPost]
         public async Task<ResponseLoginDTO> Login([FromBody]LoginDTO loginDto)
         {
+            _ResponseDto = new ResponseDTO("Login Successfully", 200, true, null);
             try
             {
                 _Response = await _authService.Authenticate(loginDto);
@@ -38,9 +39,11 @@ namespace GoodDentist.Controllers
 
             return _Response;
         }
-        [HttpGet]
-        public async Task<ResponseDTO> GetUser()
+        
+        [HttpGet("users")]
+        public async Task<ResponseDTO> GetUsers()
         {
+            _ResponseDto = new ResponseDTO("Get User Successfully", 200, true, null);
             try
             {
                 // How to take access token and claim the username or user id from it 
@@ -51,6 +54,41 @@ namespace GoodDentist.Controllers
                 var userId = Guid.Parse(userIdString);
                 _ResponseDto = await _authService.GetUserAsync(userId);
                 
+            }
+            catch (Exception e)
+            {
+                _ResponseDto.IsSuccess = false;
+                _ResponseDto.Message = e.Message;
+            }
+
+            return _ResponseDto;
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<ResponseLoginDTO> ResetPassword([FromBody] LoginDTO loginDto)
+        {
+            _Response = new ResponseLoginDTO();
+            try
+            {
+                _Response = await _authService.ResetPassword(loginDto);
+              
+            }
+            catch (Exception e)
+            {
+                _Response.IsSuccess = false;
+                _Response.Message = e.Message;
+            }
+
+            return _Response;
+        }
+
+        [HttpGet("user/{emailOrPhone}")]
+        public async Task<ResponseDTO> GetAccountByEmailOrPhone( string emailOrPhone)
+        {
+            _ResponseDto = new ResponseDTO("Get Account Successfully", 200, true, null);
+            try
+            {
+                _ResponseDto = await _authService.GetAccountByEmailOrPhone(emailOrPhone);
             }
             catch (Exception e)
             {

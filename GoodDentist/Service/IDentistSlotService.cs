@@ -19,12 +19,14 @@ namespace Services
         Task<ResponseDTO> getDentistSlotDetail(int slotId);
 
         Task<ResponseDTO> getAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage,
-            string filterField, string filterValue, string sortField, string sortOrder);
+        string sortField, string sortOrder);
 
         Task<ResponseDTO> getAllDentistSlots(int pageNumber, int rowsPerPage,
-            string filterField, string filterValue, string sortField, string sortOrder);
+        string sortField, string sortOrder);
 
         Task<ResponseDTO> getAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage,
-            string filterField, string filterValue, string sortField, string sortOrder);
+        string sortField, string sortOrder);
+
+        Task<ResponseDTO> GetAllSlotsOfDentistByTimeStart(string clinicId, DateTime timeStart, DateTime timeEnd);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessObject.DTO;
+using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -85,7 +86,7 @@ namespace Services.Impl
         }
 
         public async Task<ResponseDTO> getAllDentistSlots(int pageNumber, int rowsPerPage,
-            string filterField, string filterValue, string sortField, string sortOrder)
+         string sortField, string sortOrder)
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
@@ -93,7 +94,6 @@ namespace Services.Impl
                 List<DentistSlot>? dentistSlotList = await unitOfWork.dentistSlotRepo.GetAllDentistSlots(pageNumber, rowsPerPage);
 
                 List<DentistSlotDTO> dentistSlotDTOList = mapper.Map<List<DentistSlotDTO>>(dentistSlotList);
-                dentistSlotDTOList = FilterDentistSlots(dentistSlotDTOList, filterField, filterValue);
                 dentistSlotDTOList = SortDentistSlots(dentistSlotDTOList, sortField, sortOrder);
 
                 responseDTO.Message = "Get all dentistSlot slots successfully!";
@@ -110,14 +110,13 @@ namespace Services.Impl
         }
 
         public async Task<ResponseDTO> getAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage,
-            string filterField, string filterValue, string sortField, string sortOrder)
+         string sortField, string sortOrder)
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
             {
                 List<DentistSlot>? dentistSlotList = await unitOfWork.dentistSlotRepo.GetAllSlotsOfDentist(dentistId, pageNumber, rowsPerPage);
                 List<DentistSlotDTO> dentistSlotDTOList = mapper.Map<List<DentistSlotDTO>>(dentistSlotList);
-                dentistSlotDTOList = FilterDentistSlots(dentistSlotDTOList, filterField, filterValue);
                 dentistSlotDTOList = SortDentistSlots(dentistSlotDTOList, sortField, sortOrder);
 
                 responseDTO.Message = "Get all slots of dentistSlot successfully!";
@@ -320,42 +319,6 @@ namespace Services.Impl
             return errors;
         }
 
-        private List<DentistSlotDTO> FilterDentistSlots(List<DentistSlotDTO> slots, string filterField, string filterValue)
-        {
-            if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
-            {
-                return slots;
-            }
-
-            switch (filterField.ToLower())
-            {
-                case "dentistname":
-                    return slots.Where(slot => slot.DentistName != null && slot.DentistName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-                case "timestart":
-                    if (DateTime.TryParse(filterValue, out var timeStart))
-                    {
-                        return slots.Where(slot => slot.TimeStart == timeStart).ToList();
-                    }
-                    break;
-                case "timeend":
-                    if (DateTime.TryParse(filterValue, out var timeEnd))
-                    {
-                        return slots.Where(slot => slot.TimeEnd == timeEnd).ToList();
-                    }
-                    break;
-                case "status":
-                    if (bool.TryParse(filterValue, out var status))
-                    {
-                        return slots.Where(slot => slot.Status == status).ToList();
-                    }
-                    break;
-                case "roomnumber":
-                    return slots.Where(slot => slot.RoomNumber != null && slot.RoomNumber.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-            return slots;
-
-        }
-
         private List<DentistSlotDTO> SortDentistSlots(List<DentistSlotDTO> slots, string sortField, string sortOrder)
         {
             if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
@@ -381,14 +344,13 @@ namespace Services.Impl
             return slots;
         }
 
-        public async Task<ResponseDTO> getAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage, string filterField, string filterValue, string sortField, string sortOrder)
+        public async Task<ResponseDTO> getAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage, string sortField, string sortOrder)
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
             {
                 List<DentistSlot>? dentistSlotList = await unitOfWork.dentistSlotRepo.GetAllSlotsOfClinic(clinicId, pageNumber, rowsPerPage);
                 List<DentistSlotDTO> dentistSlotDTOList = mapper.Map<List<DentistSlotDTO>>(dentistSlotList);
-                dentistSlotDTOList = FilterDentistSlots(dentistSlotDTOList, filterField, filterValue);
                 dentistSlotDTOList = SortDentistSlots(dentistSlotDTOList, sortField, sortOrder);
 
                 responseDTO.Message = "Get all slots of dentistSlot successfully!";
@@ -403,5 +365,78 @@ namespace Services.Impl
                 return responseDTO;
             }
         }
+
+        public async Task<ResponseDTO> GetAllSlotsOfDentistByTimeStart(string clinicId, DateTime timeStart, DateTime timeEnd)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
+            try
+            {
+
+                if (clinicId.IsNullOrEmpty())
+                {
+                    return AddError("Clinic Id is null!", 400);
+                }
+
+                Clinic? clinic = await unitOfWork.clinicRepo.getClinicById(clinicId);
+                if (clinic == null)
+                {
+                    return AddError("Clinic is not exist!", 400);
+                }
+
+                List<DentistSlot>? dentistSlotList = await unitOfWork.dentistSlotRepo
+                    .GetAllDentistSlotsByDentistAndTimeStart(clinicId, timeStart, timeEnd);
+
+                List <DentistSlot> dentistSlots = new List<DentistSlot>();  
+
+                if (dentistSlotList.Count > 0)
+                {
+                    foreach (var dl in dentistSlotList)
+                    {
+                        bool check = true;
+                        var examinations = dl.Examinations.ToList();
+                        if (examinations.Count > 0)
+                        {
+                            foreach (var e in examinations)
+                            {
+                                if ((timeStart >= e.TimeStart && timeStart < e.TimeEnd) ||
+                                    (timeStart < e.TimeStart && timeEnd > e.TimeStart))
+                                {
+                                    check = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (check == true)
+                        {
+                            dentistSlots.Add(dl);
+                        }
+                    }
+                }
+
+                List<DentistAndSlotDTO> dentistAndSlots = new List<DentistAndSlotDTO>();
+                foreach (var dl in dentistSlots)
+                {
+                    UserDTO dentist = mapper.Map<UserDTO>(dl.Dentist);
+
+                    DentistAndSlotDTO dentistAndSlot = new DentistAndSlotDTO();
+                    dentistAndSlot.Dentist = mapper.Map<UserDTO>(dl.Dentist);
+                    dentistAndSlot.DentistSlotId = dl.DentistSlotId;
+                    dentistAndSlots.Add(dentistAndSlot);
+                }
+
+                responseDTO.Result = dentistAndSlots;
+            }catch (Exception e)
+            {
+                responseDTO = AddError(e.Message, 500);
+            }
+            return responseDTO;
+        }
+    
+        private ResponseDTO AddError(string message, int statusCode)
+        {
+            ResponseDTO responseDTO = new ResponseDTO(message, statusCode, false, null);
+            return responseDTO;
+        }
+    
     }
 }

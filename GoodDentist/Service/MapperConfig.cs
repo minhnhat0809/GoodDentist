@@ -54,7 +54,9 @@ namespace Services
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.Clinics, opt => opt.Ignore());
 
             CreateMap<DentistSlot, DentistSlotDTO>()
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
@@ -96,6 +98,10 @@ namespace Services
             CreateMap<Clinic, ClinicDTO>().ReverseMap();
             CreateMap<ExaminationRequestDTO, Examination>();
             CreateMap<Examination, ExaminationDTO>();
+        
+            CreateMap<OrderDTO, Order>().ReverseMap();
+            CreateMap<NotificationDTO, Notification>().ReverseMap();
+            CreateMap<NotificationRequestDTO, Notification>().ReverseMap();   
         }
     }
 }

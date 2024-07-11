@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using Repositories.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,5 +30,7 @@ namespace Repositories
 
         ICustomerRepo customerRepo { get; }
         Task<int> CompleteAsync();
+
+        INotificationRepository NotificationRepository { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BusinessObject;
 using BusinessObject.Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,13 @@ namespace Repositories.Impl
     {
         public CustomerRepo(GoodDentistDbContext repositoryContext) : base(repositoryContext)
         {
+        }
+
+        public async Task<List<Customer>> GetAllCustomers()
+        {
+            return await _repositoryContext.Customers
+                .Include(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
+                .ToListAsync();
         }
     }
 }
