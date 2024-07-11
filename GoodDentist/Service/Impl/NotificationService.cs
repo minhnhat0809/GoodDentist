@@ -30,8 +30,6 @@ namespace Services.Impl
             _mapper = mapper;
         }
 
-        
-
         public async Task<List<NotificationDTO>> GetUserNotificationsAsync(Guid userId)
         {
 
@@ -127,8 +125,7 @@ namespace Services.Impl
                 throw new Exception("Failed to update notification.", ex);
             }
         }
-    
-
+        
         public async Task<NotificationDTO> DeleteNotificationAsync(int notificationId)
         {
             try
