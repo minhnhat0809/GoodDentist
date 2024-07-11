@@ -23,16 +23,22 @@ namespace Repositories.Impl
         public async Task<List<ExaminationProfile>> GetProfileByDenitst(string dentistId)
         {
             return await _repositoryContext.ExaminationProfiles
-                .Include(ex => ex.Customer)
+                .Include(ex => ex.Customer).ThenInclude(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
                 .Where(e => e.DentistId.Equals(Guid.Parse(dentistId))).ToListAsync();
         }
 
         public async Task<List<ExaminationProfile>> GetProfilesByCustomerId(string customerId)
         {
             return await _repositoryContext.ExaminationProfiles
-                .Include(ex => ex.Examinations).ThenInclude(e => e.MedicalRecords)
-                .Include(ex => ex.Examinations).ThenInclude(e => e.Orders)
+                .Include(ep => ep.Customer)
+                .Include(ep => ep.Dentist)
+                .Include(ex => ex.Examinations)
+                    .ThenInclude(e => e.MedicalRecords).ThenInclude(mr => mr.RecordType)
+                .Include(ex => ex.Examinations)
+                    .ThenInclude(e => e.Orders).ThenInclude(o => o.OrderServices).ThenInclude(os => os.Service)
                 .Include(ex => ex.Examinations).ThenInclude(e => e.Prescriptions)
+                    .ThenInclude(p => p.MedicinePrescriptions).ThenInclude(mp => mp.Medicine)
+                .Include(ex => ex.Examinations).ThenInclude(e => e.Dentist)
                 .Where(ex => ex.CustomerId.Equals(Guid.Parse(customerId))).ToListAsync();
         }
     }

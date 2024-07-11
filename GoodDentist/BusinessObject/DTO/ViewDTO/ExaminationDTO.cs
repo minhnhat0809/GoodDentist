@@ -31,6 +31,6 @@ namespace BusinessObject.DTO.ViewDTO
 
         public string? Notes { get; set; }
 
-        public string? Status { get; set; }
+        public int? Status { get; set; }
     }
 }

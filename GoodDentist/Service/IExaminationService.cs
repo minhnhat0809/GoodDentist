@@ -15,7 +15,7 @@ namespace Services
     {
         Task<ResponseDTO> GetExaminationById(int examId);
 
-        Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod);
+        Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod, string mode, string customerId);
 
         Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO examinationDTO, string mod);
 
