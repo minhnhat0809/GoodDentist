@@ -66,17 +66,17 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> GetAllCustomers(string search)
+        public async Task<ResponseDTO> GetAllCustomers(string search, int pageNumber, int rowsPerPage)
         {
             ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
             try
-            {
-                string pattern = $@"\b{Regex.Escape(search)}\b";
-                Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            {                
 
-                List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers();
+                List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
                 if (!search.IsNullOrEmpty())
                 {
+                    string pattern = $@"\b{Regex.Escape(search)}\b";
+                    Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
                     customers = customers.Where(c => regex.IsMatch(c.Name) || c.PhoneNumber.Contains(search)).ToList();
                 }
                 

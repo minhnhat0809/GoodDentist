@@ -24,10 +24,10 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpGet("customers")]
-        public async Task<ActionResult<ResponseDTO>> GetAllCustomer([FromQuery] string? search)
+        [HttpGet("/customers")]
+        public async Task<ActionResult<ResponseDTO>> GetAllCustomer([FromQuery] string? search, int? pageNumber = 1, int? rowsPerPage = 5)
         {
-            ResponseDTO responseDTO = await customerService.GetAllCustomers(search);
+            ResponseDTO responseDTO = await customerService.GetAllCustomers(search, pageNumber.Value, rowsPerPage.Value);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
     }

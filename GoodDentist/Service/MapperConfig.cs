@@ -15,6 +15,7 @@ namespace Services
     {
         public MapperConfig()
         {
+
             CreateMap<CreateUserDTO, User>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
             .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Dob.HasValue ? (DateOnly?)DateOnly.FromDateTime(src.Dob.Value) : null))
@@ -81,13 +82,21 @@ namespace Services
             CreateMap<RecordTypeDTO, RecordType>()
                 .ReverseMap();
 
-            CreateMap<RecordTypeCreateDTO, RecordType>()
-                .ReverseMap();
+            CreateMap<RecordTypeCreateDTO, RecordType>().ReverseMap();
             CreateMap<CreateServiceDTO, Service>().ReverseMap();
             CreateMap<MedicalRecordDTO, MedicalRecord>().ReverseMap();
             CreateMap<MedicalRecordRequestDTO, MedicalRecord>().ReverseMap();
             CreateMap<CreateRoomDTO, Room>().ReverseMap();
-            CreateMap<ExaminationDTO, Examination>().ReverseMap();
+            CreateMap<ExaminationDTO, Examination>();
+
+            CreateMap<Examination, ExaminationDTO>()
+                .ForMember(dest => dest.DentistName, opt => opt.MapFrom(src => src.Dentist.Name))
+                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.ExaminationProfile.CustomerId))
+                .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.ExaminationProfile.Customer.Name));
+
+
+
+
             CreateMap<ExaminationRequestDTO, ExaminationDTO>().ReverseMap();
             CreateMap<CreateRoomDTO, Room>().ReverseMap();
 			CreateMap<ClinicServiceDTO, BusinessObject.Entity.ClinicService>().ReverseMap();
