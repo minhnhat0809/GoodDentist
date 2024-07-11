@@ -217,11 +217,7 @@ namespace Services.Impl
                     examinationDTO.CustomerName = e.ExaminationProfile.Customer.Name;
                     examinationDTOs.Add(examinationDTO);
                 }
-               
-                foreach(var s in examinationDTOs)
-                {
-                    s.Status = EnumHelper.GetEnumDescriptionFromInt<ExaminationStatusEnum>(int.Parse(s.Status));
-                }
+
                 responseDTO.Result = examinationDTOs;
                 responseDTO.Message = "Get successfully!";
             }
@@ -260,6 +256,9 @@ namespace Services.Impl
                 }
 
                 ExaminationDTO examinationDTO = mapper.Map<ExaminationDTO>(examination);
+                examinationDTO.CustomerName = examination.ExaminationProfile.Customer.Name;
+                examinationDTO.CustomerId = examination.ExaminationProfile.CustomerId.ToString();
+
                 responseDTO.Result = examinationDTO;
                 return responseDTO;
             }

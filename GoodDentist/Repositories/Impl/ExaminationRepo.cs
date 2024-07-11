@@ -53,7 +53,10 @@ namespace Repositories.Impl
 
         public async Task<Examination?> GetExaminationById(int examId)
         {
-            Examination? examination = await _repositoryContext.Examinations.FirstOrDefaultAsync(ex => ex.ExaminationId == examId);
+            Examination? examination = await _repositoryContext.Examinations
+                .Include(ex => ex.Dentist)
+                .Include(ex => ex.ExaminationProfile).ThenInclude(ep => ep.Customer)
+                .FirstOrDefaultAsync(ex => ex.ExaminationId == examId);
 
             return examination;
         }
