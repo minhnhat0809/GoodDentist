@@ -70,6 +70,9 @@ namespace Services.Impl
 
                     await unitOfWork.examinationRepo.CreateAsync(examinationForNew);
 
+                    ExaminationDTO ExamDTO = mapper.Map<ExaminationDTO>(examinationForNew);
+                    
+                    responseListDTO.Result = ExamDTO;
                     return responseListDTO;
                 }
 
@@ -77,6 +80,9 @@ namespace Services.Impl
 
                 await unitOfWork.examinationRepo.CreateAsync(examination);
 
+                ExaminationDTO examDTO = mapper.Map<ExaminationDTO>(examination);
+                
+                responseListDTO.Result = examDTO;
                 return responseListDTO;
             }catch (Exception ex)
             {
@@ -259,7 +265,7 @@ namespace Services.Impl
                 examinationDTO.CustomerName = examination.ExaminationProfile.Customer.Name;
                 examinationDTO.CustomerId = examination.ExaminationProfile.CustomerId.ToString();
 
-                responseDTO.Result = examinationDTO;
+                responseDTO.Result = examination;
                 return responseDTO;
             }
             catch (Exception ex)
@@ -284,7 +290,7 @@ namespace Services.Impl
                     return responseListDTO;
                 }
 
-                Examination examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId);
+                Examination examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId.Value);
                 examination.ExaminationProfileId = examinationDTO.ExaminationProfileId;
                 examination.DentistSlotId = examinationDTO.DentistSlotId;
                 examination.TimeStart = examinationDTO.TimeStart;
@@ -322,7 +328,7 @@ namespace Services.Impl
                 if (examinationDTO.ExaminationId <= 0) Add("Bad request ID data!");
                 else
                 {
-                    Examination? examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId);
+                    Examination? examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId.Value);
                     if (examination == null) Add("Examination is not existed!");
                 }
 
