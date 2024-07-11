@@ -84,17 +84,27 @@ namespace Services
 
             CreateMap<RecordTypeCreateDTO, RecordType>().ReverseMap();
             CreateMap<CreateServiceDTO, Service>().ReverseMap();
-            CreateMap<MedicalRecordDTO, MedicalRecord>().ReverseMap();
+            CreateMap<MedicalRecordDTO, MedicalRecord>();
+            CreateMap<MedicalRecord, MedicalRecordDTO>()
+                .ForMember(dest => dest.RecordType, opt => opt.MapFrom(src => src.RecordType.RecordName));
             CreateMap<MedicalRecordRequestDTO, MedicalRecord>().ReverseMap();
             CreateMap<CreateRoomDTO, Room>().ReverseMap();
             CreateMap<ExaminationDTO, Examination>();
 
             CreateMap<Examination, ExaminationDTO>()
-                .ForMember(dest => dest.DentistName, opt => opt.MapFrom(src => src.Dentist.Name))
-                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.ExaminationProfile.CustomerId))
-                .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.ExaminationProfile.Customer.Name));
+                .ForMember(dest => dest.ExaminationProfile, opt => opt.Ignore())
+                .ForMember(dest => dest.DentistSlot, opt => opt.Ignore())
+                .ForMember(dest => dest.MedicalRecords, opt => opt.Ignore())
+                .ForMember(dest => dest.Orders, opt => opt.Ignore())
+                .ForMember(dest => dest.Prescriptions, opt => opt.Ignore());
 
+            CreateMap<DentistSlot, DentistslotDTO>()
+                .ForMember(dest => dest.Dentist, opt => opt.Ignore());
+            CreateMap<ExaminationProfile, ExaminationProfileDTO>()
+                .ForMember(dest => dest.Dentist, opt => opt.Ignore())
+                .ForMember(dest => dest.Customer, opt => opt.Ignore());
 
+            CreateMap<Room, RoomDTO>();
 
 
             CreateMap<ExaminationRequestDTO, ExaminationDTO>().ReverseMap();

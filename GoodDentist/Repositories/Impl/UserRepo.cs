@@ -37,7 +37,7 @@ namespace Repositories.Impl
             var userId = Guid.Parse(Id);
             return _repositoryContext.Users
         .Where(user => user.UserId == userId)
-        .Select(u => u.UserName)
+        .Select(u => u.Name)
         .FirstOrDefault();
         }       
     }

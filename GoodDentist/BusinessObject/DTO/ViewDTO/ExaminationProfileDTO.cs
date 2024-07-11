@@ -25,6 +25,6 @@ namespace BusinessObject.DTO.ViewDTO
 
         public virtual UserDTO? Dentist { get; set; }
 
-        public virtual ICollection<ExaminationDTO> Examinations { get; set; } = new List<ExaminationDTO>();
+        //public virtual ICollection<ExaminationDTO> Examinations { get; set; } = new List<ExaminationDTO>();
     }
 }

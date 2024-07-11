@@ -17,7 +17,10 @@ namespace Repositories.Impl
 
         public async Task<ExaminationProfile> GetExaminationProfileById(int id)
         {
-            return await _repositoryContext.ExaminationProfiles.FirstOrDefaultAsync(ep => ep.ExaminationProfileId == id);
+            return await _repositoryContext.ExaminationProfiles
+                .Include(ep => ep.Customer)
+                .Include(ep => ep.Dentist)
+                .FirstOrDefaultAsync(ep => ep.ExaminationProfileId == id);
         }
 
         public async Task<List<ExaminationProfile>> GetProfileByDenitst(string dentistId)
