@@ -379,9 +379,7 @@ namespace Services.Impl
                 return responseDTO;
             }
         }
-
         
-
         private List<User> FilterUsers(List<User> users, string filterField, string filterValue)
         {
             if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))

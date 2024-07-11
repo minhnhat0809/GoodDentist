@@ -11,7 +11,10 @@ namespace Repositories
     {
         Task<ExaminationProfile> GetExaminationProfileById(int id);
         Task<List<ExaminationProfile>> GetProfileByDenitst(string dentistId);
-
         Task<List<ExaminationProfile>> GetProfilesByCustomerId(string customerId);
+        Task<List<ExaminationProfile>> GetAllExaminationProfiles();
+        Task CreateExaminationProfile(ExaminationProfile examinationProfile);
+        Task UpdateExaminationProfile(ExaminationProfile examinationProfile);
+        Task DeleteExaminationProfile(int profileId);
     }
 }

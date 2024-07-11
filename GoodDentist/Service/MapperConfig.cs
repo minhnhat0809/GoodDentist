@@ -120,7 +120,13 @@ namespace Services
         
             CreateMap<OrderDTO, Order>().ReverseMap();
             CreateMap<NotificationDTO, Notification>().ReverseMap();
-            CreateMap<NotificationRequestDTO, Notification>().ReverseMap();   
+            CreateMap<NotificationRequestDTO, Notification>().ReverseMap();
+            CreateMap<ExaminationDTO, Examination>().ReverseMap();
+            CreateMap<ExaminationRequestDTO, Examination>().ReverseMap();
+            CreateMap<CustomerRequestDTO, Customer>()
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
+                .ForMember(dest => dest.Password, opt => opt.Ignore());
+            CreateMap<CustomerDTO, Customer>().ReverseMap();
         }
     }
 }
