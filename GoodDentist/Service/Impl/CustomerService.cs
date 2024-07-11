@@ -295,8 +295,7 @@ namespace Services.Impl
                 customer.Salt = salting();
                 customer.Password = hashPassword(customerDto.Password, customer.Salt);
                 customer.CreatedDate = DateTime.Now;
-                customer.BackIdCard = null;
-                customer.FrontIdCard = null;
+                customer.Avatar = null;
                 
                 CustomerClinic customerClinic = new CustomerClinic()
                 {
@@ -348,6 +347,7 @@ namespace Services.Impl
                 customer = mapper.Map<Customer>(customerDto);
                 await unitOfWork.customerRepo.UpdateCustomer(customer);
                 responseDTO.Message = "Customer updated successfully!";
+                responseDTO.Result = mapper.Map<CustomerDTO>(customer);
                 return responseDTO;
             }
             catch (Exception ex)
