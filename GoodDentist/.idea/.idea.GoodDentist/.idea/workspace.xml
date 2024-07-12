@@ -11,9 +11,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="customer get all remake: add filter, sort">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="get all users : filter clinic and filter value = clinic id (get all user by clinic id)">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/ICustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/ICustomerService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/Impl/CustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/CustomerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/UserService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,12 +59,16 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9a071bbc644f437bba332034f77b433c2c200/9e/68bd6140/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/32/3d5a2fe4/Task`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/8f/29b0a615/AsyncValueTaskMethodBuilder`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/98/ecf961a1/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/bc/0599c07a/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de3edec1170e48a0a2478d8743508635c8e910/cc/f365519b/Monitor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39edc8d6636bf8ac398568727a2cda2ffc90cd6d7bf9a45d9d43252df59484f/StorageClient.UploadObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6293d1755dba2be55da4743189b3329541121b6a8fba6ed5a6c914fbd4515/StorageClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/CustomerController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/CustomerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/UserService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/UserService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/UserService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -209,6 +218,7 @@
       <workItem from="1719679624320" duration="1255000" />
       <workItem from="1720018088122" duration="6429000" />
       <workItem from="1720716305449" duration="2551000" />
+      <workItem from="1720755509889" duration="9639000" />
     </task>
     <task id="LOCAL-00001" summary="change file location and create repositoryBase">
       <option name="closed" value="true" />
@@ -410,7 +420,39 @@
       <option name="project" value="LOCAL" />
       <updated>1720745904379</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fix update customer controller">
+      <option name="closed" value="true" />
+      <created>1720746354834</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1720746354834</updated>
+    </task>
+    <task id="LOCAL-00027" summary="get all customer&amp;user : sort name">
+      <option name="closed" value="true" />
+      <created>1720757970206</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1720757970206</updated>
+    </task>
+    <task id="LOCAL-00028" summary="get all user: filter by search (phone, name, email, username)">
+      <option name="closed" value="true" />
+      <created>1720761064820</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1720761064820</updated>
+    </task>
+    <task id="LOCAL-00029" summary="get all users : filter clinic and filter value = clinic id (get all user by clinic id)">
+      <option name="closed" value="true" />
+      <created>1720763794154</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1720763794154</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,9 +474,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="change file location and create repositoryBase" />
-    <MESSAGE value="rename controller" />
-    <MESSAGE value="role" />
     <MESSAGE value="unit of work/ clinic / dentist slot - crud/ repository/ controller" />
     <MESSAGE value="mapper dto" />
     <MESSAGE value="merge master" />
@@ -456,7 +495,11 @@
     <MESSAGE value="Get User include Clinic" />
     <MESSAGE value="merge commit" />
     <MESSAGE value="customer get all remake: add filter, sort" />
-    <option name="LAST_COMMIT_MESSAGE" value="customer get all remake: add filter, sort" />
+    <MESSAGE value="fix update customer controller" />
+    <MESSAGE value="get all customer&amp;user : sort name" />
+    <MESSAGE value="get all user: filter by search (phone, name, email, username)" />
+    <MESSAGE value="get all users : filter clinic and filter value = clinic id (get all user by clinic id)" />
+    <option name="LAST_COMMIT_MESSAGE" value="get all users : filter clinic and filter value = clinic id (get all user by clinic id)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -567,26 +610,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>523</line>
+          <line>556</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
             <startOffsets>
-              <option value="19872" />
+              <option value="21625" />
             </startOffsets>
             <endOffsets>
-              <option value="19905" />
+              <option value="21658" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>526</line>
+          <line>559</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
             <startOffsets>
-              <option value="19975" />
+              <option value="21728" />
             </startOffsets>
             <endOffsets>
-              <option value="20056" />
+              <option value="21809" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="55" />
@@ -632,13 +675,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>461</line>
+          <line>492</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'getAllUsersByClinic'">
             <startOffsets>
-              <option value="17509" />
+              <option value="19262" />
             </startOffsets>
             <endOffsets>
-              <option value="17618" />
+              <option value="19371" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="62" />
@@ -648,10 +691,10 @@
           <line>59</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\UserController.cs" containingFunctionPresentation="Method 'GetAllUsersByClinic'">
             <startOffsets>
-              <option value="2228" />
+              <option value="2236" />
             </startOffsets>
             <endOffsets>
-              <option value="2375" />
+              <option value="2383" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="63" />
@@ -670,32 +713,6 @@
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Repositories/Impl/UserRepo.cs</url>
-          <line>26</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\UserRepo.cs" containingFunctionPresentation="Method 'GetAllUsers'">
-            <startOffsets>
-              <option value="776" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1025" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>256</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'getAllUsers'">
-            <startOffsets>
-              <option value="8715" />
-            </startOffsets>
-            <endOffsets>
-              <option value="8773" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
           <line>236</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'CreateCustomer'">
@@ -710,26 +727,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs</url>
-          <line>77</line>
+          <line>76</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\CustomerController.cs" containingFunctionPresentation="Method 'UpdateFile'">
             <startOffsets>
-              <option value="3250" />
+              <option value="3202" />
             </startOffsets>
             <endOffsets>
-              <option value="3333" />
+              <option value="3285" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs</url>
-          <line>70</line>
+          <line>69</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\CustomerController.cs" containingFunctionPresentation="Method 'DeleteFile'">
             <startOffsets>
-              <option value="2910" />
+              <option value="2862" />
             </startOffsets>
             <endOffsets>
-              <option value="2993" />
+              <option value="2945" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="76" />
@@ -775,13 +792,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs</url>
-          <line>27</line>
+          <line>28</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\CustomerRepo.cs" containingFunctionPresentation="Method 'GetCustomerById'">
             <startOffsets>
-              <option value="865" />
+              <option value="883" />
             </startOffsets>
             <endOffsets>
-              <option value="1098" />
+              <option value="1116" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="80" />
@@ -804,13 +821,65 @@
           <line>406</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'GetCustomers'">
             <startOffsets>
-              <option value="16133" />
+              <option value="16118" />
             </startOffsets>
             <endOffsets>
-              <option value="16231" />
+              <option value="16216" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>457</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'SortUsers'">
+            <startOffsets>
+              <option value="17261" />
+            </startOffsets>
+            <endOffsets>
+              <option value="17332" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="87" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>269</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'getAllUsers'">
+            <startOffsets>
+              <option value="9355" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9414" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>410</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'FilterUsers'">
+            <startOffsets>
+              <option value="14821" />
+            </startOffsets>
+            <endOffsets>
+              <option value="14890" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="91" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
+          <line>252</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'getAllUsers'">
+            <startOffsets>
+              <option value="8563" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8606" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
