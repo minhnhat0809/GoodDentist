@@ -405,21 +405,7 @@ namespace Services.Impl
             try
             {
                 List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
-                if (filterField.ToLower().Equals("clinic"))
-                {
-                    if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
-                    {
-                        if (!Guid.TryParse(filterValue, out var clinicId))
-                        {
-                            return new ResponseDTO("Invalid clinic ID!", 400, false, null);
-                        }
-
-                        customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
-                        customers = customers
-                            .Where(cus => cus.CustomerClinics.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
-                            .ToList();
-                    }
-                }
+                
                 
                 customers = FilterCustomer(customers, filterField, filterValue);
                 customers = SortCustomer(customers, sortField, sortOrder);
@@ -448,21 +434,13 @@ namespace Services.Impl
             {
                 return customers;
             }
-            if (filterField.Equals("search", StringComparison.OrdinalIgnoreCase))
-            {
-                customers = customers.Where(x =>
-                    x.UserName.ToLower().Contains(filterValue) ||
-                    x.Name.ToLower().Contains(filterValue) ||
-                    (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
-                    (x.Email != null && x.Email.Contains(filterValue))
-                ).ToList();
-            }
+            
             switch (filterField.ToLower())
             {
                 case "username":
                     return customers.Where(u => u.UserName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                 case "dob":
-                    if (DateOnly.TryParse(filterValue, out var dob))
+                    if (DateOnly.TryParse(filterValue, out var dob))    
                     {
                         return customers.Where(u => u.Dob == dob).ToList();
                     }
@@ -484,6 +462,20 @@ namespace Services.Impl
                         return customers.Where(u => u.Status == status).ToList();
                     }
                     break;
+                
+                case "search":
+                    return customers = customers.Where(x =>
+                        x.UserName.ToLower().Contains(filterValue) ||
+                        x.Name.ToLower().Contains(filterValue) ||
+                        (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
+                        (x.Email != null && x.Email.Contains(filterValue))
+                    ).ToList();
+                case "clinic" : 
+                    return customers = customers
+                        .Where(user => user.CustomerClinics.Any(cu => cu.ClinicId.ToString() == filterValue && cu.Status == true))
+                        .ToList();
+                default:
+                    return customers;
             }
             return customers;
         }

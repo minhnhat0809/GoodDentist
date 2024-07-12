@@ -252,8 +252,8 @@ namespace Services.Impl
                 //check gender
                 if (!createUserDTO.Gender.IsNullOrEmpty())
                 {
-                    if (!createUserDTO.Gender.Equals("Nam", StringComparison.OrdinalIgnoreCase) || !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
-                    || !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
+                    if (!createUserDTO.Gender.Equals("Nam", StringComparison.OrdinalIgnoreCase) && !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
+                    && !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
                     {
                         AddError("Invalid gender!");
                     }
@@ -272,10 +272,14 @@ namespace Services.Impl
                 //check email
                 if (!createUserDTO.Email.IsNullOrEmpty())
                 {
-                    if (unitOfWork.userRepo.checkUniqueEmail(createUserDTO.Email))
+                    User user = unitOfWork.userRepo.getUser(createUserDTO.UserName);
+                    if (!user.Email.Equals(createUserDTO.Email))
                     {
-                        AddError("Email is existed!");
-                    }
+                        if (unitOfWork.userRepo.checkUniqueEmail(createUserDTO.Email))
+                        {
+                            AddError("Email is existed!");
+                        }
+                    }                   
                 }
             }
 
@@ -335,27 +339,9 @@ namespace Services.Impl
             List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
             try
             {
-                if (filterField.ToLower().Equals("clinic"))
-                {
-                    if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
-                    {
-                        if (!Guid.TryParse(filterValue, out var clinicId))
-                        {
-                            return new ResponseDTO("Invalid clinic ID!", 400, false, null);
-                        }
-
-                        userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
-                        userList = userList
-                            .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
-                            .ToList();
-                    }
-                }
-                else
-                {
-                    userList = FilterUsers(userList, filterField, filterValue);
-                    userList = SortUsers(userList, sortField, sortOrder);
-                }
-
+                userList = FilterUsers(userList, filterField, filterValue);
+                userList = SortUsers(userList, sortField, sortOrder);
+               
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
                 foreach (var user in users)
                 {
@@ -469,6 +455,12 @@ namespace Services.Impl
                 user.Status = createUserDTO.Status;
                 user.RoleId = createUserDTO.RoleId;
 
+                if (createUserDTO.Reset == true)
+                {
+                    user.Salt = salting();
+                    user.Password = hashPassword("12345678.C", user.Salt);
+                }
+
                 if (clinicUserOld == null)
                 {
                     responseDTO.IsSuccess = false;
@@ -505,7 +497,7 @@ namespace Services.Impl
 
                 unitOfWork.userRepo.UpdateAsync(user);
 
-                UserDTO userDTO = new UserDTO();
+                UserDTO userDTO = mapper.Map<UserDTO>(user);
                 if (createUserDTO.Avatar != null)
                 {
                      userDTO = await UploadFile(createUserDTO.Avatar, user.UserId);
@@ -531,18 +523,8 @@ namespace Services.Impl
             {
                 return users;
             }
-            if (filterField.Equals("search", StringComparison.OrdinalIgnoreCase))
-            {
-                users = users.Where(x =>
-                    x.UserName.ToLower().Contains(filterValue) ||
-                    x.Name.ToLower().Contains(filterValue) ||
-                    (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
-                    (x.Email != null && x.Email.Contains(filterValue))
-                ).ToList();
-            }
-            else
-            {
-                switch (filterField.ToLower())
+            
+            switch (filterField.ToLower())
                 {
                     case "username":
                         return users.Where(u => u.UserName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -572,8 +554,21 @@ namespace Services.Impl
                             return users.Where(u => u.Status == status).ToList();
                         }
                         break;
-                }
-            }
+                    case "search":
+                        return users = users.Where(x =>
+                            x.UserName.ToLower().Contains(filterValue) ||
+                            x.Name.ToLower().Contains(filterValue) ||
+                            (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
+                            (x.Email != null && x.Email.Contains(filterValue))
+                        ).ToList();
+                    case "clinic" : 
+                        return users = users
+                            .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId.ToString() == filterValue && cu.Status == true))
+                            .ToList();
+                    default:
+                        return users;
+                }    
+            
             return users;
         }
         private List<User> SortUsers(List<User> users, string sortField, string sortOrder)
