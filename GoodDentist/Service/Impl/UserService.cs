@@ -386,37 +386,48 @@ namespace Services.Impl
             {
                 return users;
             }
-
-            switch (filterField.ToLower())
+            if (filterField.Equals("search", StringComparison.OrdinalIgnoreCase))
             {
-                case "username":
-                    return users.Where(u => u.UserName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-                case "dob":
-                    if (DateOnly.TryParse(filterValue, out var dob))
-                    {
-                        return users.Where(u => u.Dob == dob).ToList();
-                    }
-                    break;
-                case "gender":
-                    return users.Where(u => u.Gender != null && u.Gender.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-                case "phonenumber":
-                    return users.Where(u => u.PhoneNumber != null && u.PhoneNumber.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-                case "email":
-                    return users.Where(u => u.Email != null && u.Email.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-                case "address":
-                    return users.Where(u => u.Address != null && u.Address.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-                case "roleid":
-                    if (int.TryParse(filterValue, out var roleId))
-                    {
-                        return users.Where(u => u.RoleId == roleId).ToList();
-                    }
-                    break;
-                case "status":
-                    if (bool.TryParse(filterValue, out var status))
-                    {
-                        return users.Where(u => u.Status == status).ToList();
-                    }
-                    break;
+                users = users.Where(x =>
+                    x.UserName.ToLower().Contains(filterValue) ||
+                    x.Name.ToLower().Contains(filterValue) ||
+                    (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
+                    (x.Email != null && x.Email.Contains(filterValue))
+                ).ToList();
+            }
+            else
+            {
+                switch (filterField.ToLower())
+                {
+                    case "username":
+                        return users.Where(u => u.UserName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                    case "dob":
+                        if (DateOnly.TryParse(filterValue, out var dob))
+                        {
+                            return users.Where(u => u.Dob == dob).ToList();
+                        }
+                        break;
+                    case "gender":
+                        return users.Where(u => u.Gender != null && u.Gender.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                    case "phonenumber":
+                        return users.Where(u => u.PhoneNumber != null && u.PhoneNumber.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                    case "email":
+                        return users.Where(u => u.Email != null && u.Email.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                    case "address":
+                        return users.Where(u => u.Address != null && u.Address.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                    case "roleid":
+                        if (int.TryParse(filterValue, out var roleId))
+                        {
+                            return users.Where(u => u.RoleId == roleId).ToList();
+                        }
+                        break;
+                    case "status":
+                        if (bool.TryParse(filterValue, out var status))
+                        {
+                            return users.Where(u => u.Status == status).ToList();
+                        }
+                        break;
+                }
             }
             return users;
         }
@@ -434,10 +445,10 @@ namespace Services.Impl
             {
                 case "username":
                     return isAscending ? users.OrderBy(u => u.UserName).ToList() : users.OrderByDescending(u => u.UserName).ToList();
+                case "name":
+                    return isAscending ? users.OrderBy(u => u.Name).ToList() : users.OrderByDescending(u => u.Name).ToList();
                 case "dob":
                     return isAscending ? users.OrderBy(u => u.Dob).ToList() : users.OrderByDescending(u => u.Dob).ToList();
-                case "name":
-                    return isAscending ? users.OrderBy(u => u.Name).ToList() : users.OrderByDescending(u => u.Dob).ToList();
                 case "gender":
                     return isAscending ? users.OrderBy(u => u.Gender).ToList() : users.OrderByDescending(u => u.Gender).ToList();
                 case "phonenumber":
@@ -454,7 +465,6 @@ namespace Services.Impl
 
             return users;
         }
-
         public async Task<ResponseDTO> getAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder)
         {
             try
