@@ -272,10 +272,14 @@ namespace Services.Impl
                 //check email
                 if (!createUserDTO.Email.IsNullOrEmpty())
                 {
-                    if (unitOfWork.userRepo.checkUniqueEmail(createUserDTO.Email))
+                    User user = await unitOfWork.userRepo.GetByIdAsync(createUserDTO.Email);
+                    if (!user.Email.Equals(createUserDTO.Email))
                     {
-                        AddError("Email is existed!");
-                    }
+                        if (unitOfWork.userRepo.checkUniqueEmail(createUserDTO.Email))
+                        {
+                            AddError("Email is existed!");
+                        }
+                    }                   
                 }
             }
 
@@ -335,27 +339,29 @@ namespace Services.Impl
             List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
             try
             {
-                if (filterField.ToLower().Equals("clinic"))
+                if (!filterField.IsNullOrEmpty())
                 {
-                    if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
+                    if (filterField.ToLower().Equals("clinic"))
                     {
-                        if (!Guid.TryParse(filterValue, out var clinicId))
+                        if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
                         {
-                            return new ResponseDTO("Invalid clinic ID!", 400, false, null);
-                        }
+                            if (!Guid.TryParse(filterValue, out var clinicId))
+                            {
+                                return new ResponseDTO("Invalid clinic ID!", 400, false, null);
+                            }
 
-                        userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
-                        userList = userList
-                            .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
-                            .ToList();
+                            userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
+                            userList = userList
+                                .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
+                                .ToList();
+                        }
+                    }else
+                    {
+                        userList = FilterUsers(userList, filterField, filterValue);
+                        userList = SortUsers(userList, sortField, sortOrder);
                     }
                 }
-                else
-                {
-                    userList = FilterUsers(userList, filterField, filterValue);
-                    userList = SortUsers(userList, sortField, sortOrder);
-                }
-
+               
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
                 foreach (var user in users)
                 {
