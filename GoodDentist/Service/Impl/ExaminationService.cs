@@ -168,6 +168,16 @@ namespace Services.Impl
                 examinations = await unitOfWork.examinationRepo.GetExaminationByProfileId(examProfileId, pageNumber, rowsPerPage);
 
                 List<ExaminationDTO> examinationDTOs = mapper.Map<List<ExaminationDTO>>(examinations);
+                foreach (var ex in examinationDTOs)
+                {
+                    string dentistName = unitOfWork.userRepo.getUserName(ex.ExaminationProfile.DentistId.ToString());
+                    string customerName = await unitOfWork.customerRepo.GetCustomerName(ex.ExaminationProfile.CustomerId.ToString());
+                    ex.DentistName = dentistName;
+                    ex.CustomerName = customerName;
+                    ex.CustomerId = ex.ExaminationProfile.CustomerId.ToString();
+
+
+                }
                 responseDTO.Result = examinationDTOs;
                 responseDTO.Message = "Get successfully!";
                 return responseDTO;

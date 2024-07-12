@@ -21,7 +21,7 @@ namespace BusinessObject.DTO.ViewDTO
 
         public bool? Status { get; set; }
 
-        public UserDTO? Dentist { get; set; } = new UserDTO();
+        public UserDTO? Dentist { get; set; }
 
         public RoomDTO? Room { get; set; }
     }

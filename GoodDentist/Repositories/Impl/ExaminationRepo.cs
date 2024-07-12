@@ -65,7 +65,9 @@ namespace Repositories.Impl
 
         public async Task<List<Examination>> GetExaminationByProfileId(int profileId, int pageNumber, int rowsPerpage )
         {
-            return await _repositoryContext.Examinations.Where(ex => ex.ExaminationProfileId == profileId)
+            return await _repositoryContext.Examinations
+                .Include(ex => ex.DentistSlot)
+                .Where(ex => ex.ExaminationProfileId == profileId)
                 .Skip((pageNumber - 1) * rowsPerpage)
                 .Take(rowsPerpage)
                 .ToListAsync();

@@ -75,5 +75,11 @@ namespace Repositories.Impl
                 .FirstOrDefaultAsync();
             return customer;
         }
+
+        public async Task<string> GetCustomerName(string customerId)
+        {
+            var s = await _repositoryContext.Customers.FirstOrDefaultAsync(c => c.CustomerId.Equals(Guid.Parse(customerId)));
+            return s.Name;
+        }
     }
 }
