@@ -21,6 +21,9 @@ namespace BusinessObject.DTO
         public string? Email { get; set; }
         public string? Address { get; set; }
         public bool? Status { get; set; }
+
+        public bool? statusClinic {get; set;}
+
         public required string ClinicId { get; set; }
         public required int RoleId { get; set; }
         public IFormFile? Avatar { get; set; }
