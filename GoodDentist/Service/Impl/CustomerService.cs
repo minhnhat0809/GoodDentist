@@ -309,7 +309,387 @@ namespace Services.Impl
                 return responseDTO;
             }
         }
-     
+        
+        public async Task<ResponseListDTO> updateCustomer(CustomerRequestDTO customerRequestDto)
+        {
+            ResponseListDTO responseDTO = new ResponseListDTO();
+            responseDTO.StatusCode = 200;
+            responseDTO.IsSuccess = true;
+            mod = false;
+            try
+            {
+                responseDTO = await validateCustomer(customerRequestDto, mod);
+
+                if (responseDTO.IsSuccess == false)
+                {
+                    return responseDTO;
+                }
+
+                var model = await unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerRequestDto.UserName);
+                if (model == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.Message.Add("Customer is not existed!");
+                    responseDTO.StatusCode = 400;
+                    return responseDTO;
+                }
+
+                //check name
+                if (!customerRequestDto.Name.IsNullOrEmpty())
+                {
+                    model.Name = customerRequestDto.Name;
+                }
+
+                //check date of birth
+                if (customerRequestDto.Dob.HasValue)
+                {
+                    model.Dob = customerRequestDto.Dob.Value;
+                }
+
+                //check gender
+                if (!customerRequestDto.Gender.IsNullOrEmpty())
+                {
+                    model.Gender = customerRequestDto.Gender;
+                }
+
+                //check phone number
+                if (!customerRequestDto.PhoneNumber.IsNullOrEmpty())
+                {
+                    model.PhoneNumber = customerRequestDto.PhoneNumber;
+                }
+
+                //check email
+                if (!customerRequestDto.Email.IsNullOrEmpty())
+                {
+                    model.Email = customerRequestDto.Email;
+                }
+
+                if (!customerRequestDto.Address.IsNullOrEmpty())
+                {
+                    model.Address = customerRequestDto.Address;
+                }
+                
+
+                if (customerRequestDto.Reset == true)
+                {
+                    model.Salt = salting();
+                    model.Password = hashPassword("12345678.C", model.Salt);
+                }
+
+                if (model.Status == false && customerRequestDto.Status == true)
+                {
+                    CustomerClinic? customerClinic =
+                        await unitOfWork.customerRepo.GetCustomerClinicByCustomerAndClinic(model.CustomerId,
+                            Guid.Parse((ReadOnlySpan<char>)customerRequestDto.ClinicId));
+                    if (customerClinic == null)
+                    {
+                        customerClinic = new CustomerClinic()
+                        {
+                            ClinicId = Guid.Parse(customerRequestDto.ClinicId),
+                            CustomerId = model.CustomerId,
+                            Status = true
+                        };
+                        //model.CustomerClinics.Add(customerClinic);
+                        await unitOfWork.CustomerClinicRepository.CreateAsync(customerClinic);
+                    }
+                    else
+                    {
+                        customerRequestDto.Status = true;
+                        await unitOfWork.CustomerClinicRepository.UpdateAsync(customerClinic);
+                    }
+                }
+                else
+                {
+                    CustomerClinic? clinicCustomerOld = await unitOfWork.CustomerClinicRepository.GetCustomerClinicByCustomerAndClinicNow(model.CustomerId.ToString());
+
+                    if (clinicCustomerOld == null)
+                    {
+                        responseDTO.IsSuccess = false;
+                        responseDTO.Message.Add("Customer is not belong to any clinics!");
+                        responseDTO.StatusCode = 400;
+                        return responseDTO;
+                    }
+                    if (clinicCustomerOld.Status == false)
+                    {
+                        clinicCustomerOld.Status = false;
+                        await unitOfWork.CustomerClinicRepository.UpdateAsync(clinicCustomerOld);
+                    }
+                    else if (clinicCustomerOld.ClinicId == clinicCustomerOld.ClinicId)
+                    {
+                        CustomerClinic? customerClinicNew = await unitOfWork.CustomerClinicRepository.GetCustomerClinicByCustomerAndClinic(clinicCustomerOld.CustomerId.ToString(), customerRequestDto.ClinicId);
+                        if (customerClinicNew == null)
+                        {
+                            customerClinicNew = new CustomerClinic()
+                            {
+                                ClinicId = Guid.Parse(customerRequestDto.ClinicId),
+                                Customer = model,
+                                Status = true
+                            };
+                            clinicCustomerOld.Status = false;
+
+                            await unitOfWork.CustomerClinicRepository.UpdateAsync(clinicCustomerOld);
+
+                            await unitOfWork.CustomerClinicRepository.CreateAsync(customerClinicNew);
+
+
+                        }
+                        else
+                        {
+                            customerClinicNew.Status = true;
+                            clinicCustomerOld.Status = false;
+
+                            await unitOfWork.CustomerClinicRepository.UpdateAsync(customerClinicNew);
+
+                            await unitOfWork.CustomerClinicRepository.UpdateAsync(clinicCustomerOld);
+
+                        }
+                    }
+                }
+
+                model.Status = customerRequestDto.Status;
+                await unitOfWork.customerRepo.UpdateAsync(model);
+
+                CustomerDTO viewModel = mapper.Map<CustomerDTO>(model);
+                if (viewModel.Avatar != null)
+                {
+                    responseDTO.Result = await UploadFile(customerRequestDto.Avatar, model.CustomerId);
+                }
+
+                responseDTO.Message.Add("Update sucessfully");
+                responseDTO.IsSuccess = true;
+                responseDTO.Result = viewModel;
+                return responseDTO;
+            }
+            catch (Exception ex)
+            {
+                responseDTO.Result = null;
+                responseDTO.Message.Add(ex.Message);
+                responseDTO.IsSuccess = false;
+                return responseDTO;
+            }
+        }
+        
+        private async Task<ResponseListDTO> validateCustomer(CustomerRequestDTO customerRequestDto, bool mod)
+        {
+            ResponseListDTO responseDTO = new ResponseListDTO();
+            responseDTO.IsSuccess = true;
+            responseDTO.StatusCode = 200;
+
+            void AddError(string message)
+            {
+                responseDTO.Message.Add(message);
+                responseDTO.IsSuccess = false;
+                responseDTO.StatusCode = 400;
+            }
+
+            if (mod)
+            {
+                //check cus name
+                if (customerRequestDto.UserName.IsNullOrEmpty())
+                {
+                    AddError("User name cannot be empty!");
+                }
+                else if (Regex.IsMatch(customerRequestDto.UserName, @"[^a-zA-Z0-9]"))
+                {
+                    AddError("Username cannot contain special characters!");
+                }
+                else  if (unitOfWork.userRepo.checkUniqueUserName(customerRequestDto.UserName))
+                {
+                        AddError("User Name is existed!");
+                }
+
+                //check password
+                var validatePwd = validatePassword(customerRequestDto.Password);
+                if (validatePwd.Any())
+                {
+                    responseDTO.Message.AddRange(validatePwd);
+                    responseDTO.IsSuccess = false;
+                }
+
+                //check name
+                if (customerRequestDto.Name.IsNullOrEmpty())
+                {
+                    AddError("Name cannot be empty!");
+                }
+                else if (Regex.IsMatch(customerRequestDto.UserName, @"[^a-zA-Z0-9]"))
+                {
+                    AddError("Name cannot contain special characters!");
+                }
+
+                //check date of birth
+                if (!customerRequestDto.Dob.HasValue)
+                {
+                    AddError("Date of birth is empty!");
+                }
+                else
+                {
+                    DateOnly minDateOfBirth = new DateOnly(1900, 1, 1);
+                    DateOnly maxDateOfBirth = DateOnly.FromDateTime(DateTime.Now); // Or a specific end date if required
+
+                    // Use DateOnly directly from customerRequestDto.Dob
+                    DateOnly dob = customerRequestDto.Dob.Value;
+
+                    if (dob < minDateOfBirth || dob > maxDateOfBirth)
+                    {
+                        AddError("Date of birth is outside the reasonable range");
+                    }
+                }
+
+                //check gender
+                if (customerRequestDto.Gender.IsNullOrEmpty())
+                {
+                    AddError("Gender is empty!");
+                }
+                else if (!customerRequestDto.Gender.Equals("Nam",StringComparison.OrdinalIgnoreCase) && !customerRequestDto.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
+                    && !customerRequestDto.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
+                {
+                    AddError("Invalid gender!");
+                }
+
+                //check phone number
+                if (customerRequestDto.PhoneNumber.IsNullOrEmpty())
+                {
+                    AddError("Phone number is empty!");
+                }
+                else if (!Regex.IsMatch(customerRequestDto.PhoneNumber, @"^\d{10}$"))
+                {
+                        AddError("Phone number must contain exactly 10 digits");
+                    
+                }
+
+                //check email
+                if (customerRequestDto.Email.IsNullOrEmpty())
+                {
+                    AddError("Email is empty!");
+                }
+                else if (unitOfWork.userRepo.checkUniqueEmail(customerRequestDto.Email))
+                {
+                    AddError("Email is existed!");
+                }
+
+                //check address
+                if (customerRequestDto.Address.IsNullOrEmpty())
+                {
+                    AddError("Address is empty!");
+                }
+
+                if (customerRequestDto.Avatar == null)
+                {
+                    AddError("Avatar is empty!");
+                }
+
+            }
+            else
+            {
+                //check user name
+                if (customerRequestDto.UserName.IsNullOrEmpty())
+                {
+                    AddError("User name cannot be empty!");
+                }
+
+                //check name
+                if (!customerRequestDto.Name.IsNullOrEmpty())
+                {
+                    if (Regex.IsMatch(customerRequestDto.UserName, @"[^a-zA-Z0-9]"))
+                    {
+                        AddError("Name cannot contain special characters!");
+                    }
+                }
+
+                //check date of birth
+                if (customerRequestDto.Dob.HasValue)
+                {
+                    DateOnly minDateOfBirth = new DateOnly(1900, 1, 1);
+                    DateOnly maxDateOfBirth = DateOnly.FromDateTime(DateTime.Now); // Or a specific end date if required
+
+                    // Use DateOnly directly from customerRequestDto.Dob
+                    DateOnly dob = customerRequestDto.Dob.Value;
+
+                    if (dob < minDateOfBirth || dob > maxDateOfBirth)
+                    {
+                        AddError("Date of birth is outside the reasonable range");
+                    }
+                }
+
+
+
+                //check gender
+                if (!customerRequestDto.Gender.IsNullOrEmpty())
+                {
+                    if (!customerRequestDto.Gender.Equals("Nam", StringComparison.OrdinalIgnoreCase) && !customerRequestDto.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
+                    && !customerRequestDto.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AddError("Invalid gender!");
+                    }
+                }
+
+                //check phone number
+                if (!customerRequestDto.PhoneNumber.IsNullOrEmpty())
+                {
+                    if (!Regex.IsMatch(customerRequestDto.PhoneNumber, @"^\d{10}$"))
+                    {
+                        AddError("Phone number must contain exactly 10 digits");
+
+                    }
+                }
+
+                //check email
+                if (!customerRequestDto.Email.IsNullOrEmpty())
+                {
+                    Customer customer = await 
+                        unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerRequestDto.Email);
+                    if (!customer.Email.Equals(customerRequestDto.Email))
+                    {
+                        if (unitOfWork.userRepo.checkUniqueEmail(customerRequestDto.Email))
+                        {
+                            AddError("Email is existed!");
+                        }
+                    }                   
+                }
+            }
+
+
+            //status
+            if (customerRequestDto.Status == null)
+            {
+                AddError("Status is empty!");
+            }
+
+            //check clinic
+            if (customerRequestDto.ClinicId.IsNullOrEmpty())
+            {
+                AddError("Please choose a clinic!");
+            }
+            else
+            {
+                Clinic? clinic = await unitOfWork.clinicRepo.getClinicById(customerRequestDto.ClinicId);
+                if (clinic == null)
+                {
+                    AddError("Clinic does not exist!");
+                }
+            }
+
+
+            return responseDTO;
+        }
+
+        private List<string> validatePassword(string password)
+        {
+            List<string> result = new List<string>();
+
+            if (password.Length < 8)
+            {
+                result.Add("Minimum length of Password is 8!");
+            }
+
+            if (!Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$"))
+            {
+                result.Add("Password must has at least one lowercase letter, one uppercase letter, one number and one special character!");
+            }
+
+            return result;
+        }
+
         private byte[] hashPassword(string password, byte[] salt)
         {
             var hashedPassword = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);

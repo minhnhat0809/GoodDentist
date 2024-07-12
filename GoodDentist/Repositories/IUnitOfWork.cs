@@ -29,6 +29,7 @@ namespace Repositories
         IPrescriptionRepository prescriptionRepo { get; }
 
         ICustomerRepo customerRepo { get; }
+        ICustomerClinicRepository CustomerClinicRepository { get; }
         Task<int> CompleteAsync();
 
         INotificationRepository NotificationRepository { get; }
