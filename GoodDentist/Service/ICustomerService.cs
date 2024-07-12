@@ -18,5 +18,6 @@ namespace Services
         Task<ResponseDTO> CreateCustomer(CustomerRequestDTO customerDto);
         Task<ResponseDTO> UploadFile(IFormFile file, Guid customerId);
         Task<ResponseDTO> DeleteFileAndReference(Guid customerId);
+        Task<ResponseDTO> GetCustomers(string search, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
     }
 }
