@@ -272,7 +272,7 @@ namespace Services.Impl
                 //check email
                 if (!createUserDTO.Email.IsNullOrEmpty())
                 {
-                    User user = await unitOfWork.userRepo.GetByIdAsync(createUserDTO.Email);
+                    User user = unitOfWork.userRepo.getUser(createUserDTO.UserName);
                     if (!user.Email.Equals(createUserDTO.Email))
                     {
                         if (unitOfWork.userRepo.checkUniqueEmail(createUserDTO.Email))
