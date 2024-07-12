@@ -128,81 +128,165 @@ namespace Services.Impl
                 responseDTO.StatusCode = 400;
             }
 
-            if (createUserDTO.UserName.IsNullOrEmpty())
-            {
-                AddError("User name cannot be empty!");
-            }
-            else if (Regex.IsMatch(createUserDTO.UserName, @"[^a-zA-Z0-9]"))
-            {
-                AddError("Username cannot contain special characters!");
-            }
-
             if (mod)
             {
-                var validatePwd = validatePassword(createUserDTO.Password);
+                //check user name
+                if (createUserDTO.UserName.IsNullOrEmpty())
+                {
+                    AddError("User name cannot be empty!");
+                }
+                else if (Regex.IsMatch(createUserDTO.UserName, @"[^a-zA-Z0-9]"))
+                {
+                    AddError("Username cannot contain special characters!");
+                }
+                else  if (unitOfWork.userRepo.checkUniqueUserName(createUserDTO.UserName))
+                {
+                        AddError("User Name is existed!");
+                }
 
+                //check password
+                var validatePwd = validatePassword(createUserDTO.Password);
                 if (validatePwd.Any())
                 {
                     responseDTO.Message.AddRange(validatePwd);
                     responseDTO.IsSuccess = false;
                 }
-            }
 
-            if (createUserDTO.Name.IsNullOrEmpty())
-            {
-                AddError("Name cannot be empty!");
-            }
-            else if (Regex.IsMatch(createUserDTO.UserName, @"[^a-zA-Z0-9]"))
-            {
-                AddError("Name cannot contain special characters!");
-            }
+                //check name
+                if (createUserDTO.Name.IsNullOrEmpty())
+                {
+                    AddError("Name cannot be empty!");
+                }
+                else if (Regex.IsMatch(createUserDTO.UserName, @"[^a-zA-Z0-9]"))
+                {
+                    AddError("Name cannot contain special characters!");
+                }
 
-            if (!createUserDTO.Dob.HasValue)
-            {
-                AddError("Date of birth is empty!");
+                //check date of birth
+                if (!createUserDTO.Dob.HasValue)
+                {
+                    AddError("Date of birth is empty!");
+                }
+                else
+                {
+                    DateTime minDateOfBirth = new DateTime(1900, 1, 1);
+                    DateTime maxDateOfBirth = DateTime.Today;
+                    if (createUserDTO.Dob < minDateOfBirth || createUserDTO.Dob > maxDateOfBirth)
+                    {
+                        AddError("Date of birth is outside the reasonable range");
+                    }
+                }
+
+                //check gender
+                if (createUserDTO.Gender.IsNullOrEmpty())
+                {
+                    AddError("Gender is empty!");
+                }
+                else if (!createUserDTO.Gender.Equals("Nam",StringComparison.OrdinalIgnoreCase) || !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
+                    || !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
+                {
+                    AddError("Invalid gender!");
+                }
+
+                //check phone number
+                if (createUserDTO.PhoneNumber.IsNullOrEmpty())
+                {
+                    AddError("Phone number is empty!");
+                }
+                else if (!Regex.IsMatch(createUserDTO.PhoneNumber, @"^\d{10}$"))
+                {
+                        AddError("Phone number must contain exactly 10 digits");
+                    
+                }
+
+                //check email
+                if (createUserDTO.Email.IsNullOrEmpty())
+                {
+                    AddError("Email is empty!");
+                }
+                else if (unitOfWork.userRepo.checkUniqueEmail(createUserDTO.Email))
+                {
+                    AddError("Email is existed!");
+                }
+
+                //check address
+                if (createUserDTO.Address.IsNullOrEmpty())
+                {
+                    AddError("Address is empty!");
+                }
+
+                if (createUserDTO.Avatar == null)
+                {
+                    AddError("Avatar is empty!");
+                }
+
             }
             else
             {
-                DateTime minDateOfBirth = new DateTime(1900, 1, 1);
-                DateTime maxDateOfBirth = DateTime.Today;
-                if (createUserDTO.Dob < minDateOfBirth || createUserDTO.Dob > maxDateOfBirth)
+                //check user name
+                if (createUserDTO.UserName.IsNullOrEmpty())
                 {
-                    AddError("Date of birth is outside the reasonable range");
+                    AddError("User name cannot be empty!");
+                }
+
+                //check name
+                if (!createUserDTO.Name.IsNullOrEmpty())
+                {
+                    if (Regex.IsMatch(createUserDTO.UserName, @"[^a-zA-Z0-9]"))
+                    {
+                        AddError("Name cannot contain special characters!");
+                    }
+                }
+
+                //check date of birth
+                if (createUserDTO.Dob.HasValue)
+                {
+                    DateTime minDateOfBirth = new DateTime(1900, 1, 1);
+                    DateTime maxDateOfBirth = DateTime.Today;
+                    if (createUserDTO.Dob < minDateOfBirth || createUserDTO.Dob > maxDateOfBirth)
+                    {
+                        AddError("Date of birth is outside the reasonable range");
+                    }
+                }
+
+                //check gender
+                if (!createUserDTO.Gender.IsNullOrEmpty())
+                {
+                    if (!createUserDTO.Gender.Equals("Nam", StringComparison.OrdinalIgnoreCase) || !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
+                    || !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AddError("Invalid gender!");
+                    }
+                }
+
+                //check phone number
+                if (!createUserDTO.PhoneNumber.IsNullOrEmpty())
+                {
+                    if (!Regex.IsMatch(createUserDTO.PhoneNumber, @"^\d{10}$"))
+                    {
+                        AddError("Phone number must contain exactly 10 digits");
+
+                    }
+                }
+
+                //check email
+                if (!createUserDTO.Email.IsNullOrEmpty())
+                {
+                    if (unitOfWork.userRepo.checkUniqueEmail(createUserDTO.Email))
+                    {
+                        AddError("Email is existed!");
+                    }
                 }
             }
 
-            if (createUserDTO.Gender.IsNullOrEmpty())
-            {
-                AddError("Gender is empty!");
-            }
 
-            if (createUserDTO.PhoneNumber.IsNullOrEmpty())
-            {
-                AddError("Phone number is empty!");
-            }
-            else
-            {
-                if (!Regex.IsMatch(createUserDTO.PhoneNumber, @"^\d{10}$"))
-                {
-                    AddError("Phone number must contain exactly 10 digits");
-                }
-            }
-
-            if (createUserDTO.Email.IsNullOrEmpty())
-            {
-                AddError("Email is empty!");
-            }
-
-            if (createUserDTO.Address.IsNullOrEmpty())
-            {
-                AddError("Address is empty!");
-            }
-
+            //status
             if (createUserDTO.Status == null)
             {
                 AddError("Status is empty!");
             }
 
+            //check clinic
             if (createUserDTO.ClinicId.IsNullOrEmpty())
             {
                 AddError("Please choose a clinic!");
@@ -216,7 +300,8 @@ namespace Services.Impl
                 }
             }
 
-            if (createUserDTO.RoleId == 0)
+            //check role
+            if (createUserDTO.RoleId <= 0)
             {
                 AddError("Role is empty!");
             }
@@ -327,10 +412,40 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                var userId = user.UserId;
-                ClinicUser? clinicUserOld = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicNow(userId.ToString());
-                user = mapper.Map<User>(createUserDTO);
-                user.UserId = userId;
+                ClinicUser? clinicUserOld = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicNow(user.UserId.ToString());
+
+                //check name
+                if (!createUserDTO.Name.IsNullOrEmpty())
+                {
+                    user.Name = createUserDTO.Name;
+                }
+
+                //check date of birth
+                if (createUserDTO.Dob.HasValue)
+                {
+                    user.Dob = DateOnly.FromDateTime(createUserDTO.Dob.Value);
+                }
+
+                //check gender
+                if (!createUserDTO.Gender.IsNullOrEmpty())
+                {
+                    user.Gender = createUserDTO.Gender;
+                }
+
+                //check phone number
+                if (!createUserDTO.PhoneNumber.IsNullOrEmpty())
+                {
+                    user.PhoneNumber = createUserDTO.PhoneNumber;
+                }
+
+                //check email
+                if (!createUserDTO.Email.IsNullOrEmpty())
+                {
+                    user.Email = createUserDTO.Email;
+                }
+
+                user.Status = createUserDTO.Status;
+                user.RoleId = createUserDTO.RoleId;
 
                 if (clinicUserOld == null)
                 {
@@ -340,7 +455,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                if (!clinicUserOld.ClinicId.Equals(createUserDTO.ClinicId))
+                if (!clinicUserOld.ClinicId.ToString().Equals(createUserDTO.ClinicId, StringComparison.OrdinalIgnoreCase))
                 {
                     ClinicUser? clinicUserNew = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinic(clinicUserOld.UserId.ToString(), createUserDTO.ClinicId);
                     if (clinicUserNew == null)
@@ -367,8 +482,16 @@ namespace Services.Impl
                 }
 
                 unitOfWork.userRepo.UpdateAsync(user);
+
+                UserDTO userDTO = new UserDTO();
+                if (createUserDTO.Avatar != null)
+                {
+                     userDTO = await UploadFile(createUserDTO.Avatar, user.UserId);
+                }
+
                 responseDTO.Message.Add("Update sucessfully");
                 responseDTO.IsSuccess = true;
+                responseDTO.Result = userDTO;
                 return responseDTO;
             }
             catch (Exception ex)
@@ -483,50 +606,6 @@ namespace Services.Impl
                 return new ResponseDTO(ex.Message, 500, false, null);
             }
         }
-
-        /*public async Task<MedicalRecordDTO> UploadFile(IFormFile file, int recordId)
-        {
-            var model = await _unitOfWork.MedicalRecordRepository.GetRecord(recordId);
-            if (model == null)
-            {
-                throw new Exception("Medical record not found.");
-            }
-
-            if (model.Url != null)
-            {
-                // Delete the image before add new one
-                await _firebaseStorageService.DeleteFileAndReference(model.Url);
-            }
-
-            // Generate a unique file name
-            var fileName = $"{model.MedicalRecordId}-{Guid.NewGuid()}";
-        
-            // Upload image to Firebase Storage
-            var url = await _firebaseStorageService.UploadFile(fileName, file, "medical-record");
-
-            // Update the URL in the medical record model
-            model.Url = url;
-            model = await _unitOfWork.MedicalRecordRepository.UpdateRecord(model);
-        
-            return _mapper.Map<MedicalRecordDTO>(model);
-        }
-    
-        public async Task<MedicalRecordDTO> DeleteFileAndReference(int recordId)
-        {
-            var model = await _unitOfWork.MedicalRecordRepository.GetRecord(recordId);
-            if (model == null)
-            {
-                throw new Exception("Medical record not found.");
-            }
-            // Delete image to Firebase Storage
-            await _firebaseStorageService.DeleteFileAndReference(model.Url);
-
-            // Update the URL in the medical record model;
-            model.Url = null;
-            model = await _unitOfWork.MedicalRecordRepository.UpdateRecord(model);
-        
-            return _mapper.Map<MedicalRecordDTO>(model);
-        }*/
         public async Task<UserDTO> UploadFile(IFormFile file, Guid userId)
         {
             var model = await unitOfWork.userRepo.GetByIdAsync(userId);
