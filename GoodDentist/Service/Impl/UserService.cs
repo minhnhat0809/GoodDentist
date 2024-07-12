@@ -247,12 +247,30 @@ namespace Services.Impl
 
         public async Task<ResponseDTO> getAllUsers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder)
         {
+            List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
             try
             {
-                List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
+                if (filterField.ToLower().Equals("clinic"))
+                {
+                    if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!Guid.TryParse(filterValue, out var clinicId))
+                        {
+                            return new ResponseDTO("Invalid clinic ID!", 400, false, null);
+                        }
 
-                userList = FilterUsers(userList, filterField, filterValue);
-                userList = SortUsers(userList, sortField, sortOrder);
+                        userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
+                        userList = userList
+                            .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
+                            .ToList();
+                    }
+                }
+                else
+                {
+                    userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
+                    userList = FilterUsers(userList, filterField, filterValue);
+                    userList = SortUsers(userList, sortField, sortOrder);
+                }
 
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
                 foreach (var user in users)
@@ -431,7 +449,6 @@ namespace Services.Impl
             }
             return users;
         }
-
         private List<User> SortUsers(List<User> users, string sortField, string sortOrder)
         {
             if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
