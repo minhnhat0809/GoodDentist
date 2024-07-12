@@ -16,6 +16,7 @@ namespace Services
         public MapperConfig()
         {
 
+            //USER
             CreateMap<CreateUserDTO, User>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
             .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Dob.HasValue ? (DateOnly?)DateOnly.FromDateTime(src.Dob.Value) : null))
@@ -59,9 +60,14 @@ namespace Services
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId))
             .ForMember(dest => dest.Clinics, opt => opt.Ignore());
 
+            /*----------------------------------------------------*/
+            //DENTIST SLOT
             CreateMap<DentistSlot, DentistSlotDTO>()
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
+            CreateMap<DentistSlot, DentistslotDTO>()
+                .ForMember(dest => dest.Dentist, opt => opt.Ignore());
+            
             CreateMap<DentistSlotDTO, DentistSlot>()
                 .ForMember(dest => dest.TimeStart, opt => opt.MapFrom(src => src.TimeStart))
                 .ForMember(dest => dest.TimeEnd, opt => opt.MapFrom(src => src.TimeEnd))
@@ -73,86 +79,90 @@ namespace Services
                 .ForMember(dest => dest.Examinations, otp => otp.Ignore())
                 .ForMember(dest => dest.Room, otp => otp.Ignore());
 
+            /*----------------------------------------------------*/
+            //MEDICINE
             CreateMap<MedicineDTO, Medicine>()
                 .ReverseMap();
-
+            
+            CreateMap<MedicinePrescription, MedicinePrescriptionDTO>(); 
+            
             CreateMap<MedicineUpdateDTO, Medicine>()
                 .ReverseMap();
 
-            CreateMap<RecordTypeDTO, RecordType>()
-                .ReverseMap();
-
+            /*----------------------------------------------------*/
+            //RECORD TYPE
             CreateMap<RecordTypeCreateDTO, RecordType>().ReverseMap();
             
+            /*----------------------------------------------------*/
+            //SERVICE
             CreateMap<CreateServiceDTO, Service>().ReverseMap();
             
+            CreateMap<Service, ServiceDTO>();
+            
+            /*----------------------------------------------------*/
+            //MEDICAL RECORD
             CreateMap<MedicalRecordRequestDTO, MedicalRecord>().ReverseMap();
             
+            CreateMap<MedicalRecord, MedicalRecordDTO>()
+                .ForMember(dest => dest.RecordType, opt => opt.MapFrom(src => src.RecordType.RecordName));
+            
+            /*----------------------------------------------------*/
+            //ROOM
             CreateMap<CreateRoomDTO, Room>().ReverseMap();
             
-            CreateMap<ExaminationDTO, Examination>();
-
-            CreateMap<Examination, ExaminationDTO>();
-
-            CreateMap<DentistSlot, DentistslotDTO>()
-                
-                .ForMember(dest => dest.Dentist, opt => opt.Ignore());
-            
-            CreateMap<ExaminationProfile, ExaminationProfileDTO>();
-
             CreateMap<Room, RoomDTO>();
             
-            CreateMap<MedicinePrescription, MedicinePrescriptionDTO>();
+            /*----------------------------------------------------*/
+            //EXAMINATION
+            CreateMap<ExaminationDTO, Examination>().ReverseMap();
+            
+            CreateMap<ExaminationRequestDTO, ExaminationDTO>().ReverseMap();
+            
+            CreateMap<ExaminationRequestDTO, Examination>().ReverseMap();
 
-            CreateMap<Service, ServiceDTO>();
-
+            /*----------------------------------------------------*/
+            //EXAMINATION PROFILE
+            CreateMap<ExaminationProfile, ExaminationProfileDTO>();
+            
+            /*----------------------------------------------------*/
+            //ORDER
             CreateMap<Order, OrderDTO>()
                 .ForMember(dest => dest.OrderServices, opt => opt.MapFrom(src => src.OrderServices));
             
             CreateMap<OrderService, OrderServiceDTO>();
             
+            CreateMap<OrderCreateDTO, Order>().ReverseMap();
+            
+            /*----------------------------------------------------*/
+            //PRESCRIPTION
             CreateMap<Prescription, PrescriptionDTO>()
                 .ForMember(dest => dest.MedicinePrescriptions, opt => opt.MapFrom(src => src.MedicinePrescriptions));
-            
-            CreateMap<MedicalRecord, MedicalRecordDTO>()
-                .ForMember(dest => dest.RecordType, opt => opt.MapFrom(src => src.RecordType.RecordName));
-
-            
-            CreateMap<ExaminationRequestDTO, ExaminationDTO>().ReverseMap();
-            
-            CreateMap<CreateRoomDTO, Room>().ReverseMap();
-            
-			CreateMap<ClinicServiceDTO, BusinessObject.Entity.ClinicService>().ReverseMap();
-            
-            CreateMap<OrderDTO, Order>();
-            
-            CreateMap<OrderCreateDTO, Order>().ReverseMap();
             
             CreateMap<PrescriptionDTO, Prescription>();
             
             CreateMap<PrescriptionCreateDTO, Prescription>().ReverseMap();
             
+            /*----------------------------------------------------*/
+            //CLINIC SERVICE
+			CreateMap<ClinicServiceDTO, BusinessObject.Entity.ClinicService>().ReverseMap();
+            
+            /*----------------------------------------------------*/
+            //CLINIC
             CreateMap<Clinic, ClinicDTO>().ReverseMap();
             
-            CreateMap<ExaminationRequestDTO, Examination>();
-            
-            CreateMap<Examination, ExaminationDTO>();
-            
+            /*----------------------------------------------------*/
+           //NOTIFICATION
             CreateMap<NotificationDTO, Notification>().ReverseMap();
             
             CreateMap<NotificationRequestDTO, Notification>().ReverseMap();
             
-            CreateMap<ExaminationDTO, Examination>().ReverseMap();
-            
-            CreateMap<ExaminationRequestDTO, Examination>().ReverseMap();
-            
+            /*----------------------------------------------------*/
+            //CUSTOMER
             CreateMap<CustomerRequestDTO, Customer>()
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
             
             CreateMap<CustomerDTO, Customer>().ReverseMap();
-            
-            CreateMap<MedicalRecordRequestTestDTO, MedicalRecord>().ReverseMap();
         }
     }
 }
