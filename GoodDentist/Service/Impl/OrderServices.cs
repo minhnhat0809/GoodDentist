@@ -81,6 +81,43 @@ namespace Services.Impl
 			}
 		}
 
+		public async Task<ResponseDTO> GetOrderDetails(int orderId)
+		{
+			ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+			try
+			{
+				if (orderId <= 0)
+				{
+					responseDto.IsSuccess = false;
+					responseDto.StatusCode = 400;
+					responseDto.Message = "Order Id is null!";
+					return responseDto;
+				}
+
+				Order? order = await _unitOfWork.orderRepo.GetOrderById(orderId);
+				if (order == null)
+				{
+					responseDto.IsSuccess = false;
+					responseDto.StatusCode = 404;
+					responseDto.Message = "Order is not found!";
+					return responseDto;
+				}
+
+				OrderDTO orderDto = _mapper.Map<OrderDTO>(order);
+
+				responseDto.Result = orderDto;
+				responseDto.Message = "Get successfully!";
+			}
+			catch (Exception e)
+			{
+				responseDto.IsSuccess = false;
+				responseDto.StatusCode = 500;
+				responseDto.Message = e.Message;
+			}
+
+			return responseDto;
+		}
+
 		public async Task<ResponseDTO> AddOrder(OrderCreateDTO orderDTO)
 		{
 			try

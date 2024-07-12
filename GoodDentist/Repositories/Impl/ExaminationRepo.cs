@@ -54,6 +54,7 @@ namespace Repositories.Impl
         public async Task<Examination?> GetExaminationById(int examId)
         {
             Examination? examination = await _repositoryContext.Examinations
+                .Include(ex => ex.ExaminationProfile)
                 .Include(ex => ex.DentistSlot)
                 .Include(ex => ex.MedicalRecords).ThenInclude(mr => mr.RecordType)
                 .Include(ex => ex.Orders).ThenInclude(o => o.OrderServices).ThenInclude(os => os.Service)

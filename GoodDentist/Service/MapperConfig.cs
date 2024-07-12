@@ -83,50 +83,75 @@ namespace Services
                 .ReverseMap();
 
             CreateMap<RecordTypeCreateDTO, RecordType>().ReverseMap();
+            
             CreateMap<CreateServiceDTO, Service>().ReverseMap();
-            CreateMap<MedicalRecordDTO, MedicalRecord>();
-            CreateMap<MedicalRecord, MedicalRecordDTO>()
-                .ForMember(dest => dest.RecordType, opt => opt.MapFrom(src => src.RecordType.RecordName));
+            
             CreateMap<MedicalRecordRequestDTO, MedicalRecord>().ReverseMap();
+            
             CreateMap<CreateRoomDTO, Room>().ReverseMap();
+            
             CreateMap<ExaminationDTO, Examination>();
 
-            CreateMap<Examination, ExaminationDTO>()
-                .ForMember(dest => dest.ExaminationProfile, opt => opt.Ignore())
-                .ForMember(dest => dest.DentistSlot, opt => opt.Ignore())
-                .ForMember(dest => dest.MedicalRecords, opt => opt.Ignore())
-                .ForMember(dest => dest.Orders, opt => opt.Ignore())
-                .ForMember(dest => dest.Prescriptions, opt => opt.Ignore());
+            CreateMap<Examination, ExaminationDTO>();
 
             CreateMap<DentistSlot, DentistslotDTO>()
+                
                 .ForMember(dest => dest.Dentist, opt => opt.Ignore());
-            CreateMap<ExaminationProfile, ExaminationProfileDTO>()
-                .ForMember(dest => dest.Dentist, opt => opt.Ignore())
-                .ForMember(dest => dest.Customer, opt => opt.Ignore());
+            
+            CreateMap<ExaminationProfile, ExaminationProfileDTO>();
 
             CreateMap<Room, RoomDTO>();
+            
+            CreateMap<MedicinePrescription, MedicinePrescriptionDTO>();
 
+            CreateMap<Service, ServiceDTO>();
 
+            CreateMap<Order, OrderDTO>()
+                .ForMember(dest => dest.OrderServices, opt => opt.MapFrom(src => src.OrderServices));
+            
+            CreateMap<OrderService, OrderServiceDTO>();
+            
+            CreateMap<Prescription, PrescriptionDTO>()
+                .ForMember(dest => dest.MedicinePrescriptions, opt => opt.MapFrom(src => src.MedicinePrescriptions));
+            
+            CreateMap<MedicalRecord, MedicalRecordDTO>()
+                .ForMember(dest => dest.RecordType, opt => opt.MapFrom(src => src.RecordType.RecordName));
+
+            
             CreateMap<ExaminationRequestDTO, ExaminationDTO>().ReverseMap();
+            
             CreateMap<CreateRoomDTO, Room>().ReverseMap();
+            
 			CreateMap<ClinicServiceDTO, BusinessObject.Entity.ClinicService>().ReverseMap();
-            CreateMap<OrderDTO, Order>().ReverseMap();
+            
+            CreateMap<OrderDTO, Order>();
+            
             CreateMap<OrderCreateDTO, Order>().ReverseMap();
-            CreateMap<PrescriptionDTO, Prescription>().ReverseMap();
+            
+            CreateMap<PrescriptionDTO, Prescription>();
+            
             CreateMap<PrescriptionCreateDTO, Prescription>().ReverseMap();
+            
             CreateMap<Clinic, ClinicDTO>().ReverseMap();
+            
             CreateMap<ExaminationRequestDTO, Examination>();
+            
             CreateMap<Examination, ExaminationDTO>();
-        
-            CreateMap<OrderDTO, Order>().ReverseMap();
+            
             CreateMap<NotificationDTO, Notification>().ReverseMap();
+            
             CreateMap<NotificationRequestDTO, Notification>().ReverseMap();
+            
             CreateMap<ExaminationDTO, Examination>().ReverseMap();
+            
             CreateMap<ExaminationRequestDTO, Examination>().ReverseMap();
+            
             CreateMap<CustomerRequestDTO, Customer>()
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
+            
             CreateMap<CustomerDTO, Customer>().ReverseMap();
+            
             CreateMap<MedicalRecordRequestTestDTO, MedicalRecord>().ReverseMap();
         }
     }

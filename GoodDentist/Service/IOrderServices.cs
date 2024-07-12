@@ -18,5 +18,7 @@ namespace Services
 		Task<ResponseDTO> UpdateOrder(OrderDTO orderDTO);
 
 		Task<ResponseDTO> DeleteOrder(int orderId);
+
+		Task<ResponseDTO> GetOrderDetails(int orderId);
 	}
 }

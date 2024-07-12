@@ -51,5 +51,13 @@ namespace GoodDentist.Controllers
 
 			return responseDTO;
 		}
+		
+		[HttpGet("/prescription/detail")]
+		public async Task<ActionResult<ResponseDTO>> GetPrescriptionDetails ([FromQuery] int prescriptionId)
+		{
+			ResponseDTO responseDTO = await _prescriptionService.GetPrescriptionDetails(prescriptionId);
+
+			return StatusCode(responseDTO.StatusCode, responseDTO);
+		}
 	}
 }

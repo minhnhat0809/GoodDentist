@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObject;
 using BusinessObject.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Impl
 {
@@ -18,6 +19,13 @@ namespace Repositories.Impl
 		{
 			List<Order> orders = await Paging(pageNumber, pageSize);
 			return orders;
+		}
+
+		public async Task<Order?> GetOrderById(int orderId)
+		{
+			return await _repositoryContext.Orders
+				.Include(o => o.OrderServices).ThenInclude(os => os.Service)
+				.FirstOrDefaultAsync(o => o.OrderId == orderId);
 		}
 	}
 }

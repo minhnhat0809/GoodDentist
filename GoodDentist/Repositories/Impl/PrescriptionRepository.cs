@@ -45,5 +45,12 @@ namespace Repositories.Impl
 			_repositoryContext.Prescriptions.Add(prescription);
 			_repositoryContext.SaveChangesAsync();
 		}
+
+		public async Task<Prescription?> GetPrescriptionById(int prescriptionId)
+		{
+			return await _repositoryContext.Prescriptions
+				.Include(p => p.MedicinePrescriptions).ThenInclude(mp => mp.Medicine)
+				.FirstOrDefaultAsync(p => p.PrescriptionId == prescriptionId);
+		}
 	}
 }

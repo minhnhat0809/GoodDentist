@@ -18,5 +18,7 @@ namespace Services
 		Task<ResponseDTO> UpdatePrescription(PrescriptionDTO prescriptionDTO);
 
 		Task<ResponseDTO> DeletePrescription(int prescriptionId);
+
+		Task<ResponseDTO> GetPrescriptionDetails(int prescriptionId);
 	}
 }

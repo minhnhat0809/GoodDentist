@@ -10,5 +10,7 @@ namespace Repositories
 	public interface IOrderRepository : IRepositoryBase<Order>
 	{
 		Task<List<Order>?> GetAllOrder(int pageNumber, int pageSize);
+
+		Task<Order?> GetOrderById(int orderId);
 	}
 }

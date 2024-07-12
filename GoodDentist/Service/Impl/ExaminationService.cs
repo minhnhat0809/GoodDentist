@@ -273,6 +273,9 @@ namespace Services.Impl
                 }
 
                 ExaminationDTO examinationDTO = mapper.Map<ExaminationDTO>(examination);
+                examinationDTO.DentistName = unitOfWork.userRepo.getUserName(examinationDTO.DentistId);
+                examinationDTO.CustomerId = examinationDTO.ExaminationProfile.CustomerId.ToString();
+                examinationDTO.CustomerName =await unitOfWork.customerRepo.GetCustomerName(examinationDTO.CustomerId);
                 
                 responseDTO.Result = examinationDTO;
                 return responseDTO;

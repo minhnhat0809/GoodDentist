@@ -7,7 +7,7 @@ using Services.Impl;
 
 namespace GoodDentist.Controllers
 {
-	[Route("api/orders")]
+	[Route("orders")]
 	[ApiController]
 	public class OrderController : ControllerBase
 	{
@@ -54,6 +54,14 @@ namespace GoodDentist.Controllers
 			ResponseDTO responseDTO = await _orderservice.UpdateOrder(orderDTO);
 
 			return responseDTO;
+		}
+
+		[HttpGet("/order/detail")]
+		public async Task<ActionResult<ResponseDTO>> GetOrderDetail([FromQuery] int orderId)
+		{
+			ResponseDTO responseDto = await _orderservice.GetOrderDetails(orderId);
+			
+			return StatusCode(responseDto.StatusCode, responseDto);
 		}
 	}
 }

@@ -21,10 +21,9 @@ namespace BusinessObject.DTO.ViewDTO
 
         public bool? Status { get; set; }
 
-        public virtual UserDTO? Customer { get; set; }
+        public UserDTO? Customer { get; set; }
 
-        public virtual UserDTO? Dentist { get; set; }
-
-        //public virtual ICollection<ExaminationDTO> Examinations { get; set; } = new List<ExaminationDTO>();
+        public UserDTO? Dentist { get; set; }
+        
     }
 }

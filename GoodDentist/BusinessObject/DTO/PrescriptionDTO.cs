@@ -21,7 +21,8 @@ namespace BusinessObject.DTO
 		public int? ExaminationId { get; set; }
 
 		public bool? Status { get; set; }
-		public List<PrescriptionMedicineDTO>? MedicinePrescriptions { get; set; } = new List<PrescriptionMedicineDTO>();
+		
+		public ICollection<MedicinePrescriptionDTO>? MedicinePrescriptions { get; set; }
 
 	}
 }

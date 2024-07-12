@@ -8,7 +8,7 @@ namespace BusinessObject.DTO
 {
 	public class OrderDTO
 	{
-		public int OrderId { get; set; }
+		public int? OrderId { get; set; }
 
 		public string? OrderName { get; set; }
 
@@ -19,5 +19,7 @@ namespace BusinessObject.DTO
 		public decimal? Price { get; set; }
 
 		public bool? Status { get; set; }
+		
+		public ICollection<OrderServiceDTO>? OrderServices { get; set; }
 	}
 }

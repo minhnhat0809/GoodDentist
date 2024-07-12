@@ -37,11 +37,11 @@ namespace BusinessObject.DTO.ViewDTO
 
         public ExaminationProfileDTO? ExaminationProfile { get; set; }
 
-        public List<OrderDTO>? Orders {  get; set; }
+        public ICollection<OrderDTO>? Orders {  get; set; }
 
-        public List<PrescriptionDTO>? Prescriptions { get; set; }
+        public ICollection<PrescriptionDTO>? Prescriptions { get; set; }
 
-        public List<MedicalRecordDTO>? MedicalRecords { get; set; }
+        public ICollection<MedicalRecordDTO>? MedicalRecords { get; set; }
 
 
 
