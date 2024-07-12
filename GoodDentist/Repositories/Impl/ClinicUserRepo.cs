@@ -38,5 +38,11 @@ namespace Repositories.Impl
                     .Take(rowsPerPage)
                     .ToListAsync();
         }
+
+        public async Task<ClinicUser?> GetClinicUserByUserAndClinicc(string userId, string clinicId)
+        {
+            return await _repositoryContext.ClinicUsers.FirstOrDefaultAsync(cu => cu.ClinicId.Equals(Guid.Parse(clinicId))
+            && cu.UserId.Equals(Guid.Parse(userId)));
+        }
     }
 }
