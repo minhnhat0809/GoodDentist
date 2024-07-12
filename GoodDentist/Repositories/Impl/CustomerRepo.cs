@@ -17,7 +17,8 @@ namespace Repositories.Impl
         public async Task<List<Customer>> GetAllCustomers(int pageNumber, int rowsPerPage)
         {
             return await _repositoryContext.Customers
-                .Include(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
+                .Include(c => c.CustomerClinics)
+                .ThenInclude(cc => cc.Clinic )
                 .Skip((pageNumber - 1) * rowsPerPage)
                 .Take(rowsPerPage)
                 .ToListAsync();
@@ -74,6 +75,12 @@ namespace Repositories.Impl
                 .Include(x => x.CustomerClinics)
                 .FirstOrDefaultAsync();
             return customer;
+        }
+
+        public async Task<string> GetCustomerName(string customerId)
+        {
+            var s = await _repositoryContext.Customers.FirstOrDefaultAsync(c => c.CustomerId.Equals(Guid.Parse(customerId)));
+            return s.Name;
         }
     }
 }

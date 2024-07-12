@@ -34,6 +34,7 @@ namespace BusinessObject.DTO.ViewDTO
         public int? Status { get; set; }
 
         public DentistslotDTO? DentistSlot { get; set; }
+
         public ExaminationProfileDTO? ExaminationProfile { get; set; }
 
         public List<OrderDTO>? Orders {  get; set; }

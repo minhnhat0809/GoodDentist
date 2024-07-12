@@ -39,6 +39,16 @@ namespace Repositories.Impl
         .Where(user => user.UserId == userId)
         .Select(u => u.Name)
         .FirstOrDefault();
-        }       
+        }
+
+        public bool checkUniqueUserName(string userName)
+        {
+            return _repositoryContext.Users.Any(u => u.UserName.Equals(userName));
+        }
+
+        public bool checkUniqueEmail(string email)
+        {
+            return _repositoryContext.Users.Any(u => u.Email.Equals(email));
+        }
     }
 }

@@ -276,7 +276,7 @@ namespace Services.Impl
         {
             ResponseDTO responseDTO = new ResponseDTO("Update Customer Successfully", 200, true, null);
             try
-            {
+            {   
                 if (customerDto == null)
                 {
                     responseDTO.IsSuccess = false;
@@ -286,6 +286,15 @@ namespace Services.Impl
                 }
 
                 Customer customer = await unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerDto.UserName);
+                
+                if (customer == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "Customer not found!";
+                    return responseDTO;
+                }
+                
                 customer = mapper.Map<Customer>(customerDto);
                 await unitOfWork.customerRepo.UpdateCustomer(customer);
                 responseDTO.Message = "Customer updated successfully!";
@@ -388,6 +397,127 @@ namespace Services.Impl
             }
 
             return responseDTO;
+        }
+
+        public async Task<ResponseDTO> GetCustomers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField,
+            string? sortOrder)
+        {
+            try
+            {
+                List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
+                if (filterField.ToLower().Equals("clinic"))
+                {
+                    if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!Guid.TryParse(filterValue, out var clinicId))
+                        {
+                            return new ResponseDTO("Invalid clinic ID!", 400, false, null);
+                        }
+
+                        customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
+                        customers = customers
+                            .Where(cus => cus.CustomerClinics.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
+                            .ToList();
+                    }
+                }
+                
+                customers = FilterCustomer(customers, filterField, filterValue);
+                customers = SortCustomer(customers, sortField, sortOrder);
+
+                List<CustomerDTO> viewModels = mapper.Map<List<CustomerDTO>>(customers);
+                foreach (var viewModel in viewModels)
+                {
+                    var clinics = customers
+                        .FirstOrDefault(x => x.CustomerId == viewModel.CustomerId)?
+                        .CustomerClinics
+                        .Where(cu => cu.Status==true) 
+                        .Select(cu => cu.Clinic)
+                        .ToList();
+                    viewModel.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
+                }
+                return new ResponseDTO("Get customer successfully!", 200, true, viewModels);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }
+        private List<Customer> FilterCustomer(List<Customer> customers, string filterField, string filterValue)
+        {
+            if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
+            {
+                return customers;
+            }
+            if (filterField.Equals("search", StringComparison.OrdinalIgnoreCase))
+            {
+                customers = customers.Where(x =>
+                    x.UserName.ToLower().Contains(filterValue) ||
+                    x.Name.ToLower().Contains(filterValue) ||
+                    (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
+                    (x.Email != null && x.Email.Contains(filterValue))
+                ).ToList();
+            }
+            switch (filterField.ToLower())
+            {
+                case "username":
+                    return customers.Where(u => u.UserName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "dob":
+                    if (DateOnly.TryParse(filterValue, out var dob))
+                    {
+                        return customers.Where(u => u.Dob == dob).ToList();
+                    }
+                    break;
+                case "name":
+                    return customers.Where(u => u.Name != null && u.Name.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "gender":
+                    return customers.Where(u => u.Gender != null && u.Gender.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "phonenumber":
+                    return customers.Where(u => u.PhoneNumber != null && u.PhoneNumber.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "email":
+                    return customers.Where(u => u.Email != null && u.Email.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "address":
+                    return customers.Where(u => u.Address != null && u.Address.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                
+                case "status":
+                    if (bool.TryParse(filterValue, out var status))
+                    {
+                        return customers.Where(u => u.Status == status).ToList();
+                    }
+                    break;
+            }
+            return customers;
+        }
+
+        private List<Customer> SortCustomer(List<Customer> customers, string sortField, string sortOrder)
+        {
+            if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
+            {
+                return customers;
+            }
+
+            bool isAscending = sortOrder.ToLower() == "asc";
+
+            switch (sortField.ToLower())
+            {
+                case "username":
+                    return isAscending ? customers.OrderBy(u => u.UserName).ToList() : customers.OrderByDescending(u => u.UserName).ToList();
+                case "name":
+                    return isAscending ? customers.OrderBy(u => u.Name).ToList() : customers.OrderByDescending(u => u.Name).ToList();
+                case "dob":
+                    return isAscending ? customers.OrderBy(u => u.Dob).ToList() : customers.OrderByDescending(u => u.Dob).ToList();
+                case "gender":
+                    return isAscending ? customers.OrderBy(u => u.Gender).ToList() : customers.OrderByDescending(u => u.Gender).ToList();
+                case "phonenumber":
+                    return isAscending ? customers.OrderBy(u => u.PhoneNumber).ToList() : customers.OrderByDescending(u => u.PhoneNumber).ToList();
+                case "email":
+                    return isAscending ? customers.OrderBy(u => u.Email).ToList() : customers.OrderByDescending(u => u.Email).ToList();
+                case "address":
+                    return isAscending ? customers.OrderBy(u => u.Address).ToList() : customers.OrderByDescending(u => u.Address).ToList();
+                case "status":
+                    return isAscending ? customers.OrderBy(u => u.Status).ToList() : customers.OrderByDescending(u => u.Status).ToList();
+            }
+
+            return customers;
         }
     }
 }

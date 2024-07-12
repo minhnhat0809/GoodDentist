@@ -12,9 +12,9 @@ public class ExaminationRequestDTO
 
     public string? Diagnosis { get; set; }
 
-    public required DateTime TimeStart { get; set; }
+    public DateTime? TimeStart { get; set; }
 
-    public required DateTime TimeEnd { get; set; }
+    public DateTime? TimeEnd { get; set; }
 
     public string? Notes { get; set; }
 
