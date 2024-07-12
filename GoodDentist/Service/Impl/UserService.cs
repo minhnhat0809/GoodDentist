@@ -252,8 +252,8 @@ namespace Services.Impl
                 //check gender
                 if (!createUserDTO.Gender.IsNullOrEmpty())
                 {
-                    if (!createUserDTO.Gender.Equals("Nam", StringComparison.OrdinalIgnoreCase) || !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
-                    || !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
+                    if (!createUserDTO.Gender.Equals("Nam", StringComparison.OrdinalIgnoreCase) && !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
+                    && !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
                     {
                         AddError("Invalid gender!");
                     }
@@ -511,7 +511,7 @@ namespace Services.Impl
 
                 unitOfWork.userRepo.UpdateAsync(user);
 
-                UserDTO userDTO = new UserDTO();
+                UserDTO userDTO = mapper.Map<UserDTO>(user);
                 if (createUserDTO.Avatar != null)
                 {
                      userDTO = await UploadFile(createUserDTO.Avatar, user.UserId);
