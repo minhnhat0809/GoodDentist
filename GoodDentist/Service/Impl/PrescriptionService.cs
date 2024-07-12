@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.DTO;
+using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -26,10 +27,10 @@ namespace Services.Impl
 		{
 			try
 			{
-				List<Prescription>? prescriptionList = await _unitOfWork.prescriptionRepo.GetAllPrescription(pageNumber, pageSize);
-				var all = prescriptionList.Where(c => c.Status == true);
+				List<Prescription>? prescriptionList = await _unitOfWork.prescriptionRepo.GetPrescriptions(pageNumber, pageSize);
+				
 
-				List<PrescriptionDTO> presctiptionDTOList = _mapper.Map<List<PrescriptionDTO>>(all);
+				List<PrescriptionDTO> presctiptionDTOList = _mapper.Map<List<PrescriptionDTO>>(prescriptionList);
 				return new ResponseDTO("Get all Order successfully!", 200, true, presctiptionDTOList);
 			}
 			catch (Exception ex)
@@ -85,15 +86,42 @@ namespace Services.Impl
 		{
 			try
 			{
-				var check = await CheckValidationAddPrescription(prescriptionDTO);
+				/*var check = await CheckValidationAddPrescription(prescriptionDTO);
 				if (check.IsSuccess == false)
 				{
 					return check;
-				}
-
+				}*/
+				
 				Prescription prescription = _mapper.Map<Prescription>(prescriptionDTO);
-				await _unitOfWork.prescriptionRepo.CreateAsync(prescription);
-				return new ResponseDTO("Create succesfully", 200, true, null);
+				_unitOfWork.prescriptionRepo.CreatePrescription(prescription);
+				
+				if(!prescriptionDTO.Medicines.IsNullOrEmpty())
+				{
+					foreach (var medicineDto in prescriptionDTO.Medicines)
+					{
+						if(_unitOfWork.medicineRepo.GetMedicineByID(medicineDto.MedicineId).Result != null )
+						{
+							MedicinePrescription medicinePrescription = new MedicinePrescription
+							{
+								
+								Prescription = prescription,
+								PrescriptionId = prescription.PrescriptionId,
+								Medicine = _mapper.Map<Medicine>(medicineDto),
+								MedicineId = medicineDto.MedicineId,
+								Quantity = medicineDto.Quantity,
+								Price = medicineDto.Price*medicineDto.Quantity,
+								Status = true,
+
+							};
+							prescription.MedicinePrescriptions.Add(medicinePrescription);
+						}
+					}
+					
+				}
+				
+				
+				await _unitOfWork.prescriptionRepo.UpdatePresription(prescription);
+				return new ResponseDTO("Create successfully", 200, true, _mapper.Map<PrescriptionDTO>(prescription));
 			}
 			catch (Exception ex)
 			{

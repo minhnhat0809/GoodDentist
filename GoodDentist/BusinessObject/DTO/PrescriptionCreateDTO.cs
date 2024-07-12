@@ -20,5 +20,6 @@ namespace BusinessObject.DTO
 
 		public int? ExaminationId { get; set; }
 
+		public List<MedicineDTO>? Medicines { get; set; } = new List<MedicineDTO>();
 	}
 }
