@@ -460,60 +460,7 @@ namespace Services.Impl
             return result;
         }
         
-        public async Task<ResponseDTO> GetAllExaminationTest(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField,
-            string? sortOrder)
-        {
-            try
-            {
-                List<Examination> models = await unitOfWork.examinationRepo.GetAllExaminationsTest(pageNumber, rowsPerPage);
 
-                    
-                
-                
-                List<ExaminationDTO> viewModels = mapper.Map<List<ExaminationDTO>>(models);
-                foreach (var viewModel in viewModels)
-                {
-                    var customer = models.FirstOrDefault(x => x.ExaminationId == viewModel.ExaminationId).ExaminationProfile.Customer;
-                    viewModel.CustomerId = customer.CustomerId.ToString();
-                    viewModel.CustomerName = customer.Name;
-                }
-                return new ResponseDTO("Get Examinations successfully!", 200, true, viewModels);
-            }
-            catch (Exception ex)
-            {
-                return new ResponseDTO(ex.Message, 500, false, null);
-            }
-        }
-        private List<Examination> FilterExamination(List<Examination> examinations, string filterField, string filterValue)
-        {
-            if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
-            {
-                return examinations;
-            }
-            switch (filterField.ToLower())
-            {
-                default:
-                    return examinations;
-            }
-            return examinations;
-        }
-
-        private List<Examination> SortCustomer(List<Examination> examinations, string sortField, string sortOrder)
-        {
-            if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
-            {
-                return examinations;
-            }
-
-            bool isAscending = sortOrder.ToLower() == "asc";
-
-            switch (sortField.ToLower())
-            {
-                default:
-                    return examinations;
-            }
-
-            return examinations;
-        }
+        
     }
 }

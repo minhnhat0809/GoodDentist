@@ -51,23 +51,6 @@ namespace Repositories.Impl
             return await _repositoryContext.Examinations.Where(ex => ex.DentistSlotId == dentistSlotId).ToListAsync();
         }
 
-        public async Task<List<Examination>> GetAllExaminationsTest(int pageNumber, int rowsPerPage)
-        {
-            int skip = (pageNumber - 1) * rowsPerPage;
-            var examinations = await _repositoryContext.Examinations
-                .Include(x => x.Dentist)
-                .Include(x => x.DentistSlot)
-                .Include(x => x.ExaminationProfile).ThenInclude(x=>x.Customer)
-                .Include(x => x.MedicalRecords)
-                .Include(x => x.Orders)
-                .Include(x => x.Prescriptions)
-                .Skip(skip)
-                .Take(rowsPerPage)
-                .ToListAsync();
-            return examinations;
-        }
-
-
         public async Task<Examination?> GetExaminationById(int examId)
         {
             Examination? examination = await _repositoryContext.Examinations
