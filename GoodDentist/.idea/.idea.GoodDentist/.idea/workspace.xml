@@ -11,14 +11,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="get all users : filter clinic and filter value = clinic id (get all user by clinic id)">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/PrescriptionMedicineDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/ICustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/ICustomerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/CustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/CustomerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/UserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/MedicineDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/MedicineDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PrescriptionCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PrescriptionCreateDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PrescriptionDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PrescriptionDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IPrescriptionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IPrescriptionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/PrescriptionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/PrescriptionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/PrescriptionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/PrescriptionService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,33 +91,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Debug",
-    ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
-    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "huyntv171283",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propDebugger",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.GoodDentist: IIS Express.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Launch Settings Profile.GoodDentist: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.GoodDentist: https.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;huyntv171283&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\Admin\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Admin\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: https">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
@@ -596,19 +597,6 @@
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Repositories/Impl/RepositoryBase.cs</url>
-          <line>19</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\RepositoryBase.cs" containingFunctionPresentation="Method 'Paging'">
-            <startOffsets>
-              <option value="731" />
-            </startOffsets>
-            <endOffsets>
-              <option value="902" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
           <line>556</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
@@ -880,6 +868,32 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/PrescriptionService.cs</url>
+          <line>29</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PrescriptionService.cs" containingFunctionPresentation="Method 'GetAllPrescription'">
+            <startOffsets>
+              <option value="717" />
+            </startOffsets>
+            <endOffsets>
+              <option value="830" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/PrescriptionService.cs</url>
+          <line>95</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PrescriptionService.cs" containingFunctionPresentation="Method 'AddPrescription'">
+            <startOffsets>
+              <option value="2909" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2971" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="105" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

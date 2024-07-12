@@ -14,4 +14,5 @@ public interface IMedicalRecordService
     Task<MedicalRecordDTO> UpdateRecord(MedicalRecordRequestDTO record);
     Task<MedicalRecordDTO> UploadFile(IFormFile file, int recordId);
     Task<MedicalRecordDTO> DeleteFileAndReference(int recordId);
+    Task<ResponseDTO> CreateRecordTest(MedicalRecordRequestTestDTO record);
 }

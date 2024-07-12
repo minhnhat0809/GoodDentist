@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 
 namespace BusinessObject.DTO
@@ -20,5 +21,7 @@ namespace BusinessObject.DTO
 		public int? ExaminationId { get; set; }
 
 		public bool? Status { get; set; }
+		public List<PrescriptionMedicineDTO>? MedicinePrescriptions { get; set; } = new List<PrescriptionMedicineDTO>();
+
 	}
 }

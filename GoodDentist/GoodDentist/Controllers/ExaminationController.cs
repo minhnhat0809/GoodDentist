@@ -81,5 +81,7 @@ namespace GoodDentist.Controllers
             ResponseDTO responseDTO = await examinationService.DeleteExamination(examId);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
+        
+        
     }
 }
