@@ -52,7 +52,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPut("/customers/{customerId}")]
-        public async Task<ActionResult<ResponseDTO>> UpdateCustomer(string customerId, [FromBody] CustomerRequestDTO customerDto)
+        public async Task<ActionResult<ResponseDTO>> UpdateCustomer([FromBody] CustomerRequestDTO customerDto)
         {
             ResponseDTO responseDTO = await customerService.UpdateCustomer(customerDto);
             return StatusCode(responseDTO.StatusCode, responseDTO);

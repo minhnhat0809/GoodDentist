@@ -276,7 +276,7 @@ namespace Services.Impl
         {
             ResponseDTO responseDTO = new ResponseDTO("Update Customer Successfully", 200, true, null);
             try
-            {
+            {   
                 if (customerDto == null)
                 {
                     responseDTO.IsSuccess = false;
@@ -286,6 +286,15 @@ namespace Services.Impl
                 }
 
                 Customer customer = await unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerDto.UserName);
+                
+                if (customer == null)
+                {
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 400;
+                    responseDTO.Message = "Customer not found!";
+                    return responseDTO;
+                }
+                
                 customer = mapper.Map<Customer>(customerDto);
                 await unitOfWork.customerRepo.UpdateCustomer(customer);
                 responseDTO.Message = "Customer updated successfully!";
