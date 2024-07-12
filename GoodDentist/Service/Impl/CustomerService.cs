@@ -389,5 +389,99 @@ namespace Services.Impl
 
             return responseDTO;
         }
+
+        public async Task<ResponseDTO> GetCustomers(string search, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField,
+            string? sortOrder)
+        {
+            try
+            {
+                List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
+                if (!search.IsNullOrEmpty())
+                {
+                    string pattern = $@"\b{Regex.Escape(search)}\b";
+                    Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+                    customers = customers.Where(c => regex.IsMatch(c.Name) || c.PhoneNumber.Contains(search)).ToList();
+                }
+                customers = FilterCustomer(customers, filterField, filterValue);
+                customers = SortCustomer(customers, sortField, sortOrder);
+
+                List<CustomerDTO> viewModels = mapper.Map<List<CustomerDTO>>(customers);
+                foreach (var viewModel in viewModels)
+                {
+                    var clinics = customers?.FirstOrDefault(x => x.CustomerId == viewModel.CustomerId).CustomerClinics.Select(x=>x.Clinic).ToList();
+                    viewModel.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
+                }
+                return new ResponseDTO("Get customer successfully!", 200, true, viewModels);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }
+        private List<Customer> FilterCustomer(List<Customer> customers, string filterField, string filterValue)
+        {
+            if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
+            {
+                return customers;
+            }
+
+            switch (filterField.ToLower())
+            {
+                case "username":
+                    return customers.Where(u => u.UserName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "dob":
+                    if (DateOnly.TryParse(filterValue, out var dob))
+                    {
+                        return customers.Where(u => u.Dob == dob).ToList();
+                    }
+                    break;
+                case "gender":
+                    return customers.Where(u => u.Gender != null && u.Gender.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "phonenumber":
+                    return customers.Where(u => u.PhoneNumber != null && u.PhoneNumber.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "email":
+                    return customers.Where(u => u.Email != null && u.Email.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                case "address":
+                    return customers.Where(u => u.Address != null && u.Address.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                
+                case "status":
+                    if (bool.TryParse(filterValue, out var status))
+                    {
+                        return customers.Where(u => u.Status == status).ToList();
+                    }
+                    break;
+            }
+            return customers;
+        }
+
+        private List<Customer> SortCustomer(List<Customer> customers, string sortField, string sortOrder)
+        {
+            if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
+            {
+                return customers;
+            }
+
+            bool isAscending = sortOrder.ToLower() == "asc";
+
+            switch (sortField.ToLower())
+            {
+                case "username":
+                    return isAscending ? customers.OrderBy(u => u.UserName).ToList() : customers.OrderByDescending(u => u.UserName).ToList();
+                case "dob":
+                    return isAscending ? customers.OrderBy(u => u.Dob).ToList() : customers.OrderByDescending(u => u.Dob).ToList();
+                case "gender":
+                    return isAscending ? customers.OrderBy(u => u.Gender).ToList() : customers.OrderByDescending(u => u.Gender).ToList();
+                case "phonenumber":
+                    return isAscending ? customers.OrderBy(u => u.PhoneNumber).ToList() : customers.OrderByDescending(u => u.PhoneNumber).ToList();
+                case "email":
+                    return isAscending ? customers.OrderBy(u => u.Email).ToList() : customers.OrderByDescending(u => u.Email).ToList();
+                case "address":
+                    return isAscending ? customers.OrderBy(u => u.Address).ToList() : customers.OrderByDescending(u => u.Address).ToList();
+                case "status":
+                    return isAscending ? customers.OrderBy(u => u.Status).ToList() : customers.OrderByDescending(u => u.Status).ToList();
+            }
+
+            return customers;
+        }
     }
 }

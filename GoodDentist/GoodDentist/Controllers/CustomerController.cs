@@ -25,9 +25,15 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("/customers")]
-        public async Task<ActionResult<ResponseDTO>> GetAllCustomer([FromQuery] string? search, int? pageNumber = 1, int? rowsPerPage = 5)
+        public async Task<ActionResult<ResponseDTO>> GetAllCustomer(
+            [FromQuery] string? search,
+            [FromQuery] int pageNumber = 1, int rowsPerPage = 5,
+            [FromQuery] string? filterField = null,
+            [FromQuery] string? filterValue = null,
+            [FromQuery] string? sortField = null,
+            [FromQuery] string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = await customerService.GetAllCustomers(search, pageNumber.Value, rowsPerPage.Value);
+            ResponseDTO responseDTO = await customerService.GetCustomers(search, pageNumber,rowsPerPage,filterField,filterValue,sortField,sortOrder);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
@@ -72,5 +78,7 @@ namespace GoodDentist.Controllers
             ResponseDTO responseDTO = await customerService.UploadFile(uploadFile, customerId);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
+        
+        
     }
 }

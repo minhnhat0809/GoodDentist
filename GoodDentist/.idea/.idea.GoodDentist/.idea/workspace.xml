@@ -13,9 +13,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/CustomerDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/CustomerDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/ICustomerRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/ICustomerRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/CustomerRepo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/ICustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/ICustomerService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/Impl/CustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/CustomerService.cs" afterDir="false" />
     </list>
@@ -93,7 +92,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "huyntv171283",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -691,7 +690,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
-          <line>239</line>
+          <line>236</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'CreateCustomer'">
             <startOffsets>
               <option value="9772" />
@@ -704,26 +703,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs</url>
-          <line>71</line>
+          <line>77</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\CustomerController.cs" containingFunctionPresentation="Method 'UpdateFile'">
             <startOffsets>
-              <option value="3001" />
+              <option value="3269" />
             </startOffsets>
             <endOffsets>
-              <option value="3084" />
+              <option value="3352" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs</url>
-          <line>64</line>
+          <line>70</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\CustomerController.cs" containingFunctionPresentation="Method 'DeleteFile'">
             <startOffsets>
-              <option value="2661" />
+              <option value="2929" />
             </startOffsets>
             <endOffsets>
-              <option value="2744" />
+              <option value="3012" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="76" />
@@ -792,6 +791,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
+          <line>397</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'GetCustomers'">
+            <startOffsets>
+              <option value="15816" />
+            </startOffsets>
+            <endOffsets>
+              <option value="15914" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="82" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
