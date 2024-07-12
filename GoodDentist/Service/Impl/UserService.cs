@@ -332,17 +332,39 @@ namespace Services.Impl
 
         public async Task<ResponseDTO> getAllUsers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder)
         {
+            List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
             try
             {
-                List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
+                if (filterField.ToLower().Equals("clinic"))
+                {
+                    if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!Guid.TryParse(filterValue, out var clinicId))
+                        {
+                            return new ResponseDTO("Invalid clinic ID!", 400, false, null);
+                        }
 
-                userList = FilterUsers(userList, filterField, filterValue);
-                userList = SortUsers(userList, sortField, sortOrder);
+                        userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
+                        userList = userList
+                            .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
+                            .ToList();
+                    }
+                }
+                else
+                {
+                    userList = FilterUsers(userList, filterField, filterValue);
+                    userList = SortUsers(userList, sortField, sortOrder);
+                }
 
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
                 foreach (var user in users)
                 {
-                    var clinics = userList?.FirstOrDefault(x => x.UserId == user.UserId).ClinicUsers.Select(x=>x.Clinic).ToList();
+                    var clinics = userList
+                        .FirstOrDefault(x => x.UserId == user.UserId)?
+                        .ClinicUsers
+                        .Where(cu => cu.Status==true) 
+                        .Select(cu => cu.Clinic)
+                        .ToList();
                     user.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
                 }
                 return new ResponseDTO("Get users successfully!", 200, true, users);
@@ -554,7 +576,6 @@ namespace Services.Impl
             }
             return users;
         }
-
         private List<User> SortUsers(List<User> users, string sortField, string sortOrder)
         {
             if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))

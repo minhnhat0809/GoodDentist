@@ -32,7 +32,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("all-users")]
-        public async Task<ActionResult<ResponseDTO>> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage,
+        public async Task<ActionResult<ResponseDTO>> GetAllUsers([FromQuery] int pageNumber = 1, int rowsPerPage = 5,
             [FromQuery] string? filterField = null,
             [FromQuery] string? filterValue = null,
             [FromQuery] string? sortField = null,
