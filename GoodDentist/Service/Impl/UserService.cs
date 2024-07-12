@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using BusinessObject.DTO.ViewDTO;
 using Microsoft.AspNetCore.Http;
+using System.Collections.ObjectModel;
 
 namespace Services.Impl
 {
@@ -472,6 +473,11 @@ namespace Services.Impl
                     user.Email = createUserDTO.Email;
                 }
 
+                if (!createUserDTO.Address.IsNullOrEmpty())
+                {
+                    user.Address = createUserDTO.Address;
+                }
+              
                 user.Status = createUserDTO.Status;
                 user.RoleId = createUserDTO.RoleId;
 
@@ -488,6 +494,9 @@ namespace Services.Impl
                     responseDTO.StatusCode = 400;
                     return responseDTO;
                 }
+   //             unitOfWork.clinicUserRepo.Detach(clinicUserOld);
+
+                ICollection <ClinicUser> clinicUsers = new List<ClinicUser>();
 
                 if (!clinicUserOld.ClinicId.ToString().Equals(createUserDTO.ClinicId, StringComparison.OrdinalIgnoreCase))
                 {
@@ -502,20 +511,27 @@ namespace Services.Impl
                         };
                         clinicUserOld.Status = false;
 
-                        unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
-                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                        clinicUsers.Add(clinicUserOld);
+                        await unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
+                        clinicUsers.Add(clinicUserNew);
+                        
                     }
                     else
                     {
                         clinicUserNew.Status = true;
                         clinicUserOld.Status = false;
 
-                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserNew);
-                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserNew);
+                        clinicUsers.Add(clinicUserNew);
+                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                        clinicUsers.Add(clinicUserOld);
                     }
                 }
 
-                unitOfWork.userRepo.UpdateAsync(user);
+                var s = unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicNow(user.UserId.ToString()).Result;
+                user.ClinicUsers = clinicUsers;
+                await unitOfWork.userRepo.UpdateAsync(user);
 
                 UserDTO userDTO = mapper.Map<UserDTO>(user);
                 if (createUserDTO.Avatar != null)
