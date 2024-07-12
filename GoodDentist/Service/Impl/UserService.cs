@@ -474,10 +474,12 @@ namespace Services.Impl
                     responseDTO.StatusCode = 400;
                     return responseDTO;
                 }
-
-                ICollection <ClinicUser> clinicUsers = new List<ClinicUser>();
-
-                if (!clinicUserOld.ClinicId.ToString().Equals(createUserDTO.ClinicId, StringComparison.OrdinalIgnoreCase))
+                if (user.Status == false)
+                {
+                    clinicUserOld.Status = false;
+                    await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                }
+                else if (!clinicUserOld.ClinicId.ToString().Equals(createUserDTO.ClinicId, StringComparison.OrdinalIgnoreCase))
                 {
                     ClinicUser? clinicUserNew = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinic(clinicUserOld.UserId.ToString(), createUserDTO.ClinicId);
                     if (clinicUserNew == null)
@@ -491,9 +493,9 @@ namespace Services.Impl
                         clinicUserOld.Status = false;
 
                         await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
-                        clinicUsers.Add(clinicUserOld);
+                        
                         await unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
-                        clinicUsers.Add(clinicUserNew);
+                        
                         
                     }
                     else
@@ -502,12 +504,11 @@ namespace Services.Impl
                         clinicUserOld.Status = false;
 
                         await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserNew);
-                        clinicUsers.Add(clinicUserNew);
+                        
                         await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
-                        clinicUsers.Add(clinicUserOld);
+                        
                     }
                 }
-                user.ClinicUsers = clinicUsers;
                 await unitOfWork.userRepo.UpdateAsync(user);
 
                 UserDTO userDTO = mapper.Map<UserDTO>(user);
