@@ -504,7 +504,7 @@ namespace Services.Impl
                     }
                     else if (!clinicUserOld.ClinicId.ToString().Equals(createUserDTO.ClinicId, StringComparison.OrdinalIgnoreCase))
                     {
-                        ClinicUser? clinicUserNew = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinic(clinicUserOld.UserId.ToString(), createUserDTO.ClinicId);
+                        ClinicUser? clinicUserNew = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicc(clinicUserOld.UserId.ToString(), createUserDTO.ClinicId);
                         if (clinicUserNew == null)
                         {
                             clinicUserNew = new ClinicUser()
@@ -513,7 +513,7 @@ namespace Services.Impl
                                 UserId = user.UserId,
                                 Status = true
                             };
-                            clinicUserOld.Status = false;
+                            clinicUserOld.Status = true;
 
                             await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
 
