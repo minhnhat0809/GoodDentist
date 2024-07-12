@@ -19,5 +19,7 @@ namespace Repositories
 
         Task<List<Examination>> GetExaminationByProfileId(int profileId, int pageNumber, int rowsPerpage);
         Task<List<Examination>> GetAllExaminationOfDentistSlot(int dentistSlotId);
+
+        Task<List<Examination>> GetAllExaminationsTest(int pageNumber, int rowsPerpage);
     }
 }

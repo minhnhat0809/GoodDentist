@@ -32,5 +32,7 @@ namespace Services
         Task<ResponseDTO> GetAllExaminationOfExaminationProfile(int examProfileId, int pageNumber, int rowsPerPage,
            string? sortField = null,
            string? sortOrder = "asc");
+
+        Task<ResponseDTO> GetAllExaminationTest(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
     }
 }

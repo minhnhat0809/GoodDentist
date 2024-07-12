@@ -81,5 +81,17 @@ namespace GoodDentist.Controllers
             ResponseDTO responseDTO = await examinationService.DeleteExamination(examId);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
+        
+        [HttpGet("examination-test")]
+        public async Task<ActionResult<ResponseDTO>> GetAllExaminationTest(
+            [FromQuery] int pageNumber = 1, int rowsPerPage = 5,
+            [FromQuery] string? filterField = null,
+            [FromQuery] string? filterValue = null,
+            [FromQuery] string? sortField = null,
+            [FromQuery] string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = await examinationService.GetAllExaminationTest(pageNumber,rowsPerPage,filterField,filterValue,sortField,sortOrder);
+            return StatusCode(responseDTO.StatusCode, responseDTO);
+        }
     }
 }
