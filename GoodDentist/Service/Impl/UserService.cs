@@ -469,6 +469,12 @@ namespace Services.Impl
                 user.Status = createUserDTO.Status;
                 user.RoleId = createUserDTO.RoleId;
 
+                if (createUserDTO.Reset == true)
+                {
+                    user.Salt = salting();
+                    user.Password = hashPassword("12345678.C", user.Salt);
+                }
+
                 if (clinicUserOld == null)
                 {
                     responseDTO.IsSuccess = false;

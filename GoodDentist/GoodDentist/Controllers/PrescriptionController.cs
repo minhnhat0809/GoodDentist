@@ -11,11 +11,9 @@ namespace GoodDentist.Controllers
 	public class PrescriptionController : ControllerBase
 	{
 		private readonly IPrescriptionService _prescriptionService;
-		private readonly IDistributedCache _distributedCache;
         public PrescriptionController(IPrescriptionService prescriptionService, IDistributedCache distributedCache)
         {
             this._prescriptionService = prescriptionService;
-			this._distributedCache = distributedCache;
         }
 		[HttpPost("new-prescription")]
 		public async Task<ResponseDTO> AddPrescription([FromBody] PrescriptionCreateDTO prescriptionDTO)
