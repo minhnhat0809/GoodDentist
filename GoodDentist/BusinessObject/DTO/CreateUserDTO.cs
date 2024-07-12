@@ -24,7 +24,7 @@ namespace BusinessObject.DTO
         public required string ClinicId { get; set; }
         public required int RoleId { get; set; }
         public IFormFile? Avatar { get; set; }
-
+        public string? ImageUrl { get; set; }
         public bool? Reset { get; set; }
     }
     
