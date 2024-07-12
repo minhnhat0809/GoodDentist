@@ -467,6 +467,7 @@ namespace Services.Impl
             {
                 List<Examination> models = await unitOfWork.examinationRepo.GetAllExaminationsTest(pageNumber, rowsPerPage);
 
+                    
                 
                 
                 List<ExaminationDTO> viewModels = mapper.Map<List<ExaminationDTO>>(models);
@@ -482,6 +483,37 @@ namespace Services.Impl
             {
                 return new ResponseDTO(ex.Message, 500, false, null);
             }
+        }
+        private List<Examination> FilterExamination(List<Examination> examinations, string filterField, string filterValue)
+        {
+            if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
+            {
+                return examinations;
+            }
+            switch (filterField.ToLower())
+            {
+                default:
+                    return examinations;
+            }
+            return examinations;
+        }
+
+        private List<Examination> SortCustomer(List<Examination> examinations, string sortField, string sortOrder)
+        {
+            if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
+            {
+                return examinations;
+            }
+
+            bool isAscending = sortOrder.ToLower() == "asc";
+
+            switch (sortField.ToLower())
+            {
+                default:
+                    return examinations;
+            }
+
+            return examinations;
         }
     }
 }

@@ -13,16 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="get all users/customers : filter clinic &amp; filter value by clinic Id">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/MedicalRecordRequestDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/MedicalRecordRequestDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ExaminationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ExaminationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/MedicalRecordsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/MedicalRecordsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IExaminationRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IExaminationRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ExaminationRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ExaminationRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IExaminationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IExaminationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IMedicalRecordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IMedicalRecordService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,33 +86,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Debug",
-    ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
-    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "huyntv171283",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propDebugger",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.GoodDentist: IIS Express.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Launch Settings Profile.GoodDentist: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.GoodDentist: https.executor&quot;: &quot;Debug&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;huyntv171283&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\Admin\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Admin\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: https">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
@@ -557,32 +548,6 @@
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/GoodDentist/Controllers/MedicalRecordsController.cs</url>
-          <line>27</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\MedicalRecordsController.cs" containingFunctionPresentation="Method 'GetMedicalRecords'">
-            <startOffsets>
-              <option value="763" />
-            </startOffsets>
-            <endOffsets>
-              <option value="818" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs</url>
-          <line>31</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\MedicalRecordService.cs" containingFunctionPresentation="Method 'GetRecords'">
-            <startOffsets>
-              <option value="1004" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1072" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/AuthService.cs</url>
           <line>110</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\AuthService.cs" containingFunctionPresentation="Method 'GetUserAsync'">
@@ -620,32 +585,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>635</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
-            <startOffsets>
-              <option value="24676" />
-            </startOffsets>
-            <endOffsets>
-              <option value="24709" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/UserService.cs</url>
-          <line>638</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\UserService.cs" containingFunctionPresentation="Method 'UploadFile'">
-            <startOffsets>
-              <option value="24779" />
-            </startOffsets>
-            <endOffsets>
-              <option value="24860" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
@@ -713,19 +652,6 @@
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
-          <line>236</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'CreateCustomer'">
-            <startOffsets>
-              <option value="9772" />
-            </startOffsets>
-            <endOffsets>
-              <option value="10070" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GoodDentist/Controllers/CustomerController.cs</url>
           <line>76</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\GoodDentist\Controllers\CustomerController.cs" containingFunctionPresentation="Method 'UpdateFile'">
@@ -750,32 +676,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="76" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
-          <line>329</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'UploadFile'">
-            <startOffsets>
-              <option value="13233" />
-            </startOffsets>
-            <endOffsets>
-              <option value="13303" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="77" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
-          <line>372</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'DeleteFileAndReference'">
-            <startOffsets>
-              <option value="14802" />
-            </startOffsets>
-            <endOffsets>
-              <option value="14872" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="78" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/FirebaseStorageService.cs</url>
@@ -804,32 +704,6 @@
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
-          <line>141</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'GetCustomerById'">
-            <startOffsets>
-              <option value="5628" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5718" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="81" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/CustomerService.cs</url>
-          <line>406</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'GetCustomers'">
-            <startOffsets>
-              <option value="16118" />
-            </startOffsets>
-            <endOffsets>
-              <option value="16216" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="82" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/ExaminationService.cs</url>
           <line>467</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\ExaminationService.cs" containingFunctionPresentation="Method 'GetAllExaminationTest'">
@@ -854,19 +728,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="96" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/MedicalRecordService.cs</url>
-          <line>119</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\MedicalRecordService.cs" containingFunctionPresentation="Method 'CreateRecordTest'">
-            <startOffsets>
-              <option value="4245" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4333" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="97" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
