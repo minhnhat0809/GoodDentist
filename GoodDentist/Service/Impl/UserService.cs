@@ -513,7 +513,7 @@ namespace Services.Impl
                                 UserId = user.UserId,
                                 Status = true
                             };
-                            clinicUserOld.Status = true;
+                            clinicUserOld.Status = false;
 
                             await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
 
