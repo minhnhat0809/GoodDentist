@@ -15,5 +15,7 @@ namespace Repositories
 
         Task<List<User>> GetAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage);
 
+        Task<ClinicUser?> GetClinicUserByUserAndClinicc(string userId, string clinicId);
+
     }
 }
