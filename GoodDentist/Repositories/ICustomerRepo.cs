@@ -14,7 +14,7 @@ namespace Repositories
         Task<Customer> UpdateCustomer(Customer customer);
         Task<Customer> DeleteCustomer(Guid customerId);
         Task<Customer> GetCustomerByPhoneOrEmailOrUsername(string input);
-
+        Task<CustomerClinic?> GetCustomerClinicByCustomerAndClinic(Guid customerId, Guid clinicId);
         Task<string> GetCustomerName(string customerId);
     }
 }

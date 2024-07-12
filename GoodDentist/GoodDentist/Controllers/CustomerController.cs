@@ -50,15 +50,22 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpPut("/customers/{customerId}")]
+        /*[HttpPut("/customers/{customerId}")]
         public async Task<ActionResult<ResponseDTO>> UpdateCustomer([FromBody] CustomerRequestDTO customerDto)
         {
             ResponseDTO responseDTO = await customerService.UpdateCustomer(customerDto);
             return StatusCode(responseDTO.StatusCode, responseDTO);
+        }*/
+        
+        [HttpPut("/customer")]
+        public async Task<ActionResult<ResponseDTO>> UpdateCustomer([FromForm]CustomerRequestDTO customerRequestDto)
+        {
+            ResponseListDTO responseDTO = await customerService.updateCustomer(customerRequestDto);
+            return StatusCode(responseDTO.StatusCode, responseDTO);
         }
         
         [HttpPost("/customers")]
-        public async Task<ActionResult<ResponseDTO>> CreateCustomer([FromBody] CustomerRequestDTO customerDto)
+        public async Task<ActionResult<ResponseDTO>> CreateCustomer([FromForm] CustomerRequestDTO customerDto)
         {
             ResponseDTO responseDTO = await customerService.CreateCustomer(customerDto);
             return StatusCode(responseDTO.StatusCode, responseDTO);

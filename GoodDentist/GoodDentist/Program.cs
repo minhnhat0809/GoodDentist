@@ -66,7 +66,7 @@ builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 builder.Services.AddScoped<IExamProfileRepo, ExamProfileRepo>();
-
+builder.Services.AddScoped<ICustomerClinicRepository, CustomerClinicRepository>();
 
 
 builder.Services.AddControllers().AddJsonOptions(options =>

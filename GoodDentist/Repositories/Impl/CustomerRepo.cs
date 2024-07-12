@@ -76,7 +76,11 @@ namespace Repositories.Impl
                 .FirstOrDefaultAsync();
             return customer;
         }
-
+        public async Task<CustomerClinic?> GetCustomerClinicByCustomerAndClinic(Guid customerId, Guid clinicId)
+        {
+            return await _repositoryContext.CustomerClinics.FirstOrDefaultAsync(cu => cu.ClinicId.Equals(clinicId)
+                && cu.CustomerId.Equals(customerId));
+        }
         public async Task<string> GetCustomerName(string customerId)
         {
             var s = await _repositoryContext.Customers.FirstOrDefaultAsync(c => c.CustomerId.Equals(Guid.Parse(customerId)));
