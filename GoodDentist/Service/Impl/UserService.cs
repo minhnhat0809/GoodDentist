@@ -267,7 +267,6 @@ namespace Services.Impl
                 }
                 else
                 {
-                    userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
                     userList = FilterUsers(userList, filterField, filterValue);
                     userList = SortUsers(userList, sortField, sortOrder);
                 }
@@ -275,7 +274,12 @@ namespace Services.Impl
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
                 foreach (var user in users)
                 {
-                    var clinics = userList?.FirstOrDefault(x => x.UserId == user.UserId).ClinicUsers.Select(x=>x.Clinic).ToList();
+                    var clinics = userList
+                        .FirstOrDefault(x => x.UserId == user.UserId)?
+                        .ClinicUsers
+                        .Where(cu => cu.Status==true) 
+                        .Select(cu => cu.Clinic)
+                        .ToList();
                     user.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
                 }
                 return new ResponseDTO("Get users successfully!", 200, true, users);

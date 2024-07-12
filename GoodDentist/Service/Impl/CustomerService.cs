@@ -399,25 +399,40 @@ namespace Services.Impl
             return responseDTO;
         }
 
-        public async Task<ResponseDTO> GetCustomers(string search, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField,
+        public async Task<ResponseDTO> GetCustomers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField,
             string? sortOrder)
         {
             try
             {
                 List<Customer> customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
-                if (!search.IsNullOrEmpty())
+                if (filterField.ToLower().Equals("clinic"))
                 {
-                    string pattern = $@"\b{Regex.Escape(search)}\b";
-                    Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-                    customers = customers.Where(c => regex.IsMatch(c.Name) || c.PhoneNumber.Contains(search)).ToList();
+                    if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!Guid.TryParse(filterValue, out var clinicId))
+                        {
+                            return new ResponseDTO("Invalid clinic ID!", 400, false, null);
+                        }
+
+                        customers = await unitOfWork.customerRepo.GetAllCustomers(pageNumber, rowsPerPage);
+                        customers = customers
+                            .Where(cus => cus.CustomerClinics.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
+                            .ToList();
+                    }
                 }
+                
                 customers = FilterCustomer(customers, filterField, filterValue);
                 customers = SortCustomer(customers, sortField, sortOrder);
 
                 List<CustomerDTO> viewModels = mapper.Map<List<CustomerDTO>>(customers);
                 foreach (var viewModel in viewModels)
                 {
-                    var clinics = customers?.FirstOrDefault(x => x.CustomerId == viewModel.CustomerId).CustomerClinics.Select(x=>x.Clinic).ToList();
+                    var clinics = customers
+                        .FirstOrDefault(x => x.CustomerId == viewModel.CustomerId)?
+                        .CustomerClinics
+                        .Where(cu => cu.Status==true) 
+                        .Select(cu => cu.Clinic)
+                        .ToList();
                     viewModel.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
                 }
                 return new ResponseDTO("Get customer successfully!", 200, true, viewModels);
@@ -433,7 +448,15 @@ namespace Services.Impl
             {
                 return customers;
             }
-
+            if (filterField.Equals("search", StringComparison.OrdinalIgnoreCase))
+            {
+                customers = customers.Where(x =>
+                    x.UserName.ToLower().Contains(filterValue) ||
+                    x.Name.ToLower().Contains(filterValue) ||
+                    (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
+                    (x.Email != null && x.Email.Contains(filterValue))
+                ).ToList();
+            }
             switch (filterField.ToLower())
             {
                 case "username":
@@ -444,6 +467,8 @@ namespace Services.Impl
                         return customers.Where(u => u.Dob == dob).ToList();
                     }
                     break;
+                case "name":
+                    return customers.Where(u => u.Name != null && u.Name.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                 case "gender":
                     return customers.Where(u => u.Gender != null && u.Gender.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                 case "phonenumber":

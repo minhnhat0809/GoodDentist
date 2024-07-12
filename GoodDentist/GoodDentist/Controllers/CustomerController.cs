@@ -26,14 +26,13 @@ namespace GoodDentist.Controllers
 
         [HttpGet("/customers")]
         public async Task<ActionResult<ResponseDTO>> GetAllCustomer(
-            [FromQuery] string? search,
             [FromQuery] int pageNumber = 1, int rowsPerPage = 5,
             [FromQuery] string? filterField = null,
             [FromQuery] string? filterValue = null,
             [FromQuery] string? sortField = null,
             [FromQuery] string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = await customerService.GetCustomers(search, pageNumber,rowsPerPage,filterField,filterValue,sortField,sortOrder);
+            ResponseDTO responseDTO = await customerService.GetCustomers(pageNumber,rowsPerPage,filterField,filterValue,sortField,sortOrder);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 

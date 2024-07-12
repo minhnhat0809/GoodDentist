@@ -17,7 +17,8 @@ namespace Repositories.Impl
         public async Task<List<Customer>> GetAllCustomers(int pageNumber, int rowsPerPage)
         {
             return await _repositoryContext.Customers
-                .Include(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
+                .Include(c => c.CustomerClinics)
+                .ThenInclude(cc => cc.Clinic )
                 .Skip((pageNumber - 1) * rowsPerPage)
                 .Take(rowsPerPage)
                 .ToListAsync();
