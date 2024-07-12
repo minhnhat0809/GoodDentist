@@ -576,7 +576,11 @@ namespace Services.Impl
                             (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
                             (x.Email != null && x.Email.Contains(filterValue))
                         ).ToList();
-                    case "clinic" : 
+                    case "clinic" :
+                    if (filterValue.Equals("all",StringComparison.OrdinalIgnoreCase))
+                    {
+                        break;
+                    }
                         return users = users
                             .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId.ToString() == filterValue && cu.Status == true))
                             .ToList();

@@ -286,7 +286,7 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO examinationDTO, string mod)
+        public async Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO examinationDTO, string mod, string services)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
