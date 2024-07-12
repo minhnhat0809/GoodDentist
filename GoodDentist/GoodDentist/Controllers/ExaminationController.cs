@@ -68,10 +68,10 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPut("examination")]
-        public async Task<ActionResult<ResponseListDTO>> UpdateExamination([FromBody] ExaminationRequestDTO examinationDTO, List<int> services)
+        public async Task<ActionResult<ResponseListDTO>> UpdateExamination([FromBody] ExaminationRequestDTO examinationDTO)
         {
             string mod = "c";
-            ResponseListDTO responseDTO = await examinationService.UpdateExamination(examinationDTO, mod, services);
+            ResponseListDTO responseDTO = await examinationService.UpdateExamination(examinationDTO, mod);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 

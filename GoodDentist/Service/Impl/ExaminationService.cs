@@ -286,7 +286,7 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO examinationDTO, string mod, List<int> services)
+        public async Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO examinationDTO, string mod)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
@@ -301,6 +301,7 @@ namespace Services.Impl
 
                 Examination examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId.Value);
                 examination.ExaminationProfileId = examinationDTO.ExaminationProfileId;
+
                 if (!examination.DentistSlotId.HasValue)
                 {
                     examination.DentistSlotId = examinationDTO.DentistSlotId;
@@ -372,42 +373,48 @@ namespace Services.Impl
                 //check dentist and overlap 
                 if (examinationDTO.DentistSlotId.HasValue)
                 {
-                    DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByID(examinationDTO.DentistSlotId.Value);
-                    if (dentistSlot == null)
+                    Examination? examination = await unitOfWork.examinationRepo.GetByIdAsync(examinationDTO.ExaminationId);
+                    if (examination == null) Add("Examination is not existed!");
+
+                    if (examinationDTO.DentistSlotId.Value != examination.DentistSlotId)
                     {
-                        Add("Dentist slot is not exist!");
-                    }
-                    else
-                    {
-                        if (!examinationDTO.TimeStart.HasValue || !examinationDTO.TimeEnd.HasValue)
+                        DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByID(examinationDTO.DentistSlotId.Value);
+                        if (dentistSlot == null)
                         {
-                            Add("Time start and time end is null!");
+                            Add("Dentist slot is not exist!");
                         }
                         else
                         {
-                            string check = await CheckAvailableSlot((int)examinationDTO.DentistSlotId, examinationDTO.TimeStart.Value, examinationDTO.TimeEnd.Value);
-                            if (!check.IsNullOrEmpty())
+                            if (!examinationDTO.TimeStart.HasValue || !examinationDTO.TimeEnd.HasValue)
                             {
-                                Add(check);
+                                Add("Time start and time end is null!");
                             }
                             else
                             {
-                                var examinations = dentistSlot.Examinations.ToList();
-                                if (examinations.Count > 0)
+                                string check = await CheckAvailableSlot((int)examinationDTO.DentistSlotId, examinationDTO.TimeStart.Value, examinationDTO.TimeEnd.Value);
+                                if (!check.IsNullOrEmpty())
                                 {
-                                    foreach (var e in examinations)
+                                    Add(check);
+                                }
+                                else
+                                {
+                                    var examinations = dentistSlot.Examinations.ToList();
+                                    if (examinations.Count > 0)
                                     {
-                                        if ((examinationDTO.TimeStart >= e.TimeStart && examinationDTO.TimeStart < e.TimeEnd) ||
-                                            (examinationDTO.TimeStart < e.TimeStart && examinationDTO.TimeEnd > e.TimeStart))
+                                        foreach (var e in examinations)
                                         {
-                                            Add("There is an appointment at :" + e.TimeStart + "-" + e.TimeEnd);
-                                            break;
+                                            if ((examinationDTO.TimeStart >= e.TimeStart && examinationDTO.TimeStart < e.TimeEnd) ||
+                                                (examinationDTO.TimeStart < e.TimeStart && examinationDTO.TimeEnd > e.TimeStart))
+                                            {
+                                                Add("There is an appointment at :" + e.TimeStart + "-" + e.TimeEnd);
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
+                    }  
                 }
 
             }

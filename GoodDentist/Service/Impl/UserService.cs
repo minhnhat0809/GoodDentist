@@ -421,8 +421,6 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                ClinicUser? clinicUserOld = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicNow(user.UserId.ToString());
-
                 //check name
                 if (!createUserDTO.Name.IsNullOrEmpty())
                 {
@@ -457,8 +455,7 @@ namespace Services.Impl
                 {
                     user.Address = createUserDTO.Address;
                 }
-              
-                user.Status = createUserDTO.Status;
+                
                 user.RoleId = createUserDTO.RoleId;
 
                 if (createUserDTO.Reset == true)
@@ -467,48 +464,77 @@ namespace Services.Impl
                     user.Password = hashPassword("12345678.C", user.Salt);
                 }
 
-                if (clinicUserOld == null)
+                if (user.Status == false && createUserDTO.Status == true)
                 {
-                    responseDTO.IsSuccess = false;
-                    responseDTO.Message.Add("User is not belong to any clinics!");
-                    responseDTO.StatusCode = 400;
-                    return responseDTO;
-                }
-                if (user.Status == false)
-                {
-                    clinicUserOld.Status = false;
-                    await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
-                }
-                else if (!clinicUserOld.ClinicId.ToString().Equals(createUserDTO.ClinicId, StringComparison.OrdinalIgnoreCase))
-                {
-                    ClinicUser? clinicUserNew = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinic(clinicUserOld.UserId.ToString(), createUserDTO.ClinicId);
-                    if (clinicUserNew == null)
+                    ClinicUser? clinicUser = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicc(user.UserId.ToString(), createUserDTO.ClinicId);
+
+                    if (clinicUser == null)
                     {
-                        clinicUserNew = new ClinicUser()
+                        clinicUser = new ClinicUser()
                         {
                             ClinicId = Guid.Parse(createUserDTO.ClinicId),
                             UserId = user.UserId,
                             Status = true
                         };
-                        clinicUserOld.Status = false;
 
-                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
-                        
-                        await unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
-                        
-                        
+                        await unitOfWork.clinicUserRepo.CreateAsync(clinicUser);
                     }
                     else
                     {
-                        clinicUserNew.Status = true;
-                        clinicUserOld.Status = false;
+                        clinicUser.Status = false;
 
-                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserNew);
-                        
-                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
-                        
+                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUser);
                     }
                 }
+                else
+                {
+                    ClinicUser? clinicUserOld = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicNow(user.UserId.ToString());
+
+                    if (clinicUserOld == null)
+                    {
+                        responseDTO.IsSuccess = false;
+                        responseDTO.Message.Add("User is not belong to any clinics!");
+                        responseDTO.StatusCode = 400;
+                        return responseDTO;
+                    }
+                    if (createUserDTO.Status == false)
+                    {
+                        clinicUserOld.Status = false;
+                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                    }
+                    else if (!clinicUserOld.ClinicId.ToString().Equals(createUserDTO.ClinicId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        ClinicUser? clinicUserNew = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinic(clinicUserOld.UserId.ToString(), createUserDTO.ClinicId);
+                        if (clinicUserNew == null)
+                        {
+                            clinicUserNew = new ClinicUser()
+                            {
+                                ClinicId = Guid.Parse(createUserDTO.ClinicId),
+                                UserId = user.UserId,
+                                Status = true
+                            };
+                            clinicUserOld.Status = false;
+
+                            await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+
+                            await unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
+
+
+                        }
+                        else
+                        {
+                            clinicUserNew.Status = true;
+                            clinicUserOld.Status = false;
+
+                            await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserNew);
+
+                            await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+
+                        }
+                    }
+                }
+
+                user.Status = createUserDTO.Status;
                 await unitOfWork.userRepo.UpdateAsync(user);
 
                 UserDTO userDTO = mapper.Map<UserDTO>(user);
