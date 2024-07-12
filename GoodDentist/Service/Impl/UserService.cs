@@ -481,7 +481,7 @@ namespace Services.Impl
                     }
                     else
                     {
-                        clinicUser.Status = false;
+                        clinicUser.Status = true;
 
                         await unitOfWork.clinicUserRepo.UpdateAsync(clinicUser);
                     }
