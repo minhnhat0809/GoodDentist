@@ -339,28 +339,8 @@ namespace Services.Impl
             List<User> userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
             try
             {
-                if (!filterField.IsNullOrEmpty())
-                {
-                    if (filterField.ToLower().Equals("clinic"))
-                    {
-                        if (filterField.Equals("clinic", StringComparison.OrdinalIgnoreCase))
-                        {
-                            if (!Guid.TryParse(filterValue, out var clinicId))
-                            {
-                                return new ResponseDTO("Invalid clinic ID!", 400, false, null);
-                            }
-
-                            userList = await unitOfWork.userRepo.GetAllUsers(pageNumber, rowsPerPage);
-                            userList = userList
-                                .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId == clinicId && cu.Status == true))
-                                .ToList();
-                        }
-                    }else
-                    {
-                        userList = FilterUsers(userList, filterField, filterValue);
-                        userList = SortUsers(userList, sortField, sortOrder);
-                    }
-                }
+                userList = FilterUsers(userList, filterField, filterValue);
+                userList = SortUsers(userList, sortField, sortOrder);
                
                 List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
                 foreach (var user in users)
@@ -543,18 +523,8 @@ namespace Services.Impl
             {
                 return users;
             }
-            if (filterField.Equals("search", StringComparison.OrdinalIgnoreCase))
-            {
-                users = users.Where(x =>
-                    x.UserName.ToLower().Contains(filterValue) ||
-                    x.Name.ToLower().Contains(filterValue) ||
-                    (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
-                    (x.Email != null && x.Email.Contains(filterValue))
-                ).ToList();
-            }
-            else
-            {
-                switch (filterField.ToLower())
+            
+            switch (filterField.ToLower())
                 {
                     case "username":
                         return users.Where(u => u.UserName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -584,8 +554,21 @@ namespace Services.Impl
                             return users.Where(u => u.Status == status).ToList();
                         }
                         break;
-                }
-            }
+                    case "search":
+                        return users = users.Where(x =>
+                            x.UserName.ToLower().Contains(filterValue) ||
+                            x.Name.ToLower().Contains(filterValue) ||
+                            (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
+                            (x.Email != null && x.Email.Contains(filterValue))
+                        ).ToList();
+                    case "clinic" : 
+                        return users = users
+                            .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId.ToString() == filterValue && cu.Status == true))
+                            .ToList();
+                    default:
+                        return users;
+                }    
+            
             return users;
         }
         private List<User> SortUsers(List<User> users, string sortField, string sortOrder)
