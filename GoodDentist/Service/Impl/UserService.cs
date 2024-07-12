@@ -474,7 +474,6 @@ namespace Services.Impl
                     responseDTO.StatusCode = 400;
                     return responseDTO;
                 }
-   //             unitOfWork.clinicUserRepo.Detach(clinicUserOld);
 
                 ICollection <ClinicUser> clinicUsers = new List<ClinicUser>();
 
