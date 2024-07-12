@@ -436,6 +436,8 @@ namespace Services.Impl
                     return isAscending ? users.OrderBy(u => u.UserName).ToList() : users.OrderByDescending(u => u.UserName).ToList();
                 case "dob":
                     return isAscending ? users.OrderBy(u => u.Dob).ToList() : users.OrderByDescending(u => u.Dob).ToList();
+                case "name":
+                    return isAscending ? users.OrderBy(u => u.Name).ToList() : users.OrderByDescending(u => u.Dob).ToList();
                 case "gender":
                     return isAscending ? users.OrderBy(u => u.Gender).ToList() : users.OrderByDescending(u => u.Gender).ToList();
                 case "phonenumber":
