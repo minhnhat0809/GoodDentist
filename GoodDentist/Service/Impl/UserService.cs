@@ -183,8 +183,8 @@ namespace Services.Impl
                 {
                     AddError("Gender is empty!");
                 }
-                else if (!createUserDTO.Gender.Equals("Nam",StringComparison.OrdinalIgnoreCase) || !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
-                    || !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
+                else if (!createUserDTO.Gender.Equals("Nam",StringComparison.OrdinalIgnoreCase) && !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
+                    && !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
                 {
                     AddError("Invalid gender!");
                 }
@@ -507,8 +507,6 @@ namespace Services.Impl
                         clinicUsers.Add(clinicUserOld);
                     }
                 }
-
-                var s = unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicNow(user.UserId.ToString()).Result;
                 user.ClinicUsers = clinicUsers;
                 await unitOfWork.userRepo.UpdateAsync(user);
 
