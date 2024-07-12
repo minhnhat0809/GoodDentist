@@ -71,7 +71,7 @@ namespace GoodDentist.Controllers
         public async Task<ActionResult<ResponseListDTO>> UpdateExamination([FromBody] ExaminationRequestDTO examinationDTO, string services)
         {
             string mod = "c";
-            ResponseListDTO responseDTO = await examinationService.UpdateExamination(examinationDTO, mod);
+            ResponseListDTO responseDTO = await examinationService.UpdateExamination(examinationDTO, mod, services);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 

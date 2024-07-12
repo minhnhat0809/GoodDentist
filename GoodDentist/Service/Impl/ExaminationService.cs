@@ -273,35 +273,7 @@ namespace Services.Impl
                 }
 
                 ExaminationDTO examinationDTO = mapper.Map<ExaminationDTO>(examination);
-                examinationDTO.Orders = mapper.Map<List<OrderDTO>>(examination.Orders);
-                examinationDTO.MedicalRecords = mapper.Map<List<MedicalRecordDTO>>(examination.MedicalRecords);
-                examinationDTO.Prescriptions = mapper.Map<List<PrescriptionDTO>>(examination.Prescriptions);
-
-                User? dentist = await unitOfWork.userRepo.GetByIdAsync(examination.DentistId);
-                if (dentist != null) examinationDTO.DentistName = dentist.Name;
-
-                examinationDTO.DentistSlot = mapper.Map<DentistslotDTO>(examination.DentistSlot);
-                examinationDTO.DentistSlot.Dentist = mapper.Map<UserDTO>(dentist);
-
-                Room? room = await unitOfWork.roomRepo.GetByIdAsync(examination.DentistSlot.RoomId);
-                if (room != null) examinationDTO.DentistSlot.Room = mapper.Map<RoomDTO>(room);
-
-                ExaminationProfile examinationProfile = await unitOfWork.examProfileRepo.GetExaminationProfileById(examinationDTO.ExaminationProfileId.Value);
-                if (examinationProfile != null)
-                {
-                    examinationDTO.ExaminationProfile = mapper.Map<ExaminationProfileDTO>(examinationProfile);
-
-                    Customer? customer = await unitOfWork.customerRepo.GetByIdAsync(examinationProfile.CustomerId);
-                    User? dentist1 = await unitOfWork.userRepo.GetByIdAsync(examinationProfile.DentistId);
-                    if (customer != null)
-                    {
-                        examinationDTO.ExaminationProfile.Customer = mapper.Map<UserDTO>(customer);
-                        examinationDTO.ExaminationProfile.Dentist = mapper.Map<UserDTO>(dentist1);
-                        examinationDTO.CustomerName = customer.Name;
-                        examinationDTO.CustomerId = customer.CustomerId.ToString();
-                    }
-                }
-
+                
                 responseDTO.Result = examinationDTO;
                 return responseDTO;
             }
@@ -314,7 +286,7 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO examinationDTO, string mod)
+        public async Task<ResponseListDTO> UpdateExamination(ExaminationRequestDTO examinationDTO, string mod, string services)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;

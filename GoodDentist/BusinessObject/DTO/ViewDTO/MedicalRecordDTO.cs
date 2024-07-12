@@ -16,7 +16,5 @@ public class MedicalRecordDTO
 
     public bool? Status { get; set; }
 
-    //public virtual Examination? Examination { get; set; }
-
     public string? RecordType { get; set; }
 }

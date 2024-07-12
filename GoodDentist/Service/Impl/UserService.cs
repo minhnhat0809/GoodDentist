@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using BusinessObject.DTO.ViewDTO;
 using Microsoft.AspNetCore.Http;
+using System.Collections.ObjectModel;
 
 namespace Services.Impl
 {
@@ -182,8 +183,8 @@ namespace Services.Impl
                 {
                     AddError("Gender is empty!");
                 }
-                else if (!createUserDTO.Gender.Equals("Nam",StringComparison.OrdinalIgnoreCase) || !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
-                    || !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
+                else if (!createUserDTO.Gender.Equals("Nam",StringComparison.OrdinalIgnoreCase) && !createUserDTO.Gender.Equals("Nữ", StringComparison.OrdinalIgnoreCase)
+                    && !createUserDTO.Gender.Equals("Khác", StringComparison.OrdinalIgnoreCase))
                 {
                     AddError("Invalid gender!");
                 }
@@ -452,6 +453,11 @@ namespace Services.Impl
                     user.Email = createUserDTO.Email;
                 }
 
+                if (!createUserDTO.Address.IsNullOrEmpty())
+                {
+                    user.Address = createUserDTO.Address;
+                }
+              
                 user.Status = createUserDTO.Status;
                 user.RoleId = createUserDTO.RoleId;
 
@@ -469,6 +475,8 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
+                ICollection <ClinicUser> clinicUsers = new List<ClinicUser>();
+
                 if (!clinicUserOld.ClinicId.ToString().Equals(createUserDTO.ClinicId, StringComparison.OrdinalIgnoreCase))
                 {
                     ClinicUser? clinicUserNew = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinic(clinicUserOld.UserId.ToString(), createUserDTO.ClinicId);
@@ -482,20 +490,25 @@ namespace Services.Impl
                         };
                         clinicUserOld.Status = false;
 
-                        unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
-                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                        clinicUsers.Add(clinicUserOld);
+                        await unitOfWork.clinicUserRepo.CreateAsync(clinicUserNew);
+                        clinicUsers.Add(clinicUserNew);
+                        
                     }
                     else
                     {
                         clinicUserNew.Status = true;
                         clinicUserOld.Status = false;
 
-                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserNew);
-                        unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserNew);
+                        clinicUsers.Add(clinicUserNew);
+                        await unitOfWork.clinicUserRepo.UpdateAsync(clinicUserOld);
+                        clinicUsers.Add(clinicUserOld);
                     }
                 }
-
-                unitOfWork.userRepo.UpdateAsync(user);
+                user.ClinicUsers = clinicUsers;
+                await unitOfWork.userRepo.UpdateAsync(user);
 
                 UserDTO userDTO = mapper.Map<UserDTO>(user);
                 if (createUserDTO.Avatar != null)
@@ -561,7 +574,11 @@ namespace Services.Impl
                             (x.PhoneNumber != null && x.PhoneNumber.Contains(filterValue)) ||
                             (x.Email != null && x.Email.Contains(filterValue))
                         ).ToList();
-                    case "clinic" : 
+                    case "clinic" :
+                    if (filterValue.Equals("all",StringComparison.OrdinalIgnoreCase))
+                    {
+                        break;
+                    }
                         return users = users
                             .Where(user => user.ClinicUsers.Any(cu => cu.ClinicId.ToString() == filterValue && cu.Status == true))
                             .ToList();
