@@ -1,4 +1,6 @@
-﻿namespace BusinessObject.DTO.ViewDTO
+﻿using BusinessObject.DTO.OrderServiceDTOs.View;
+
+namespace BusinessObject.DTO.PaymentDTOs.View
 {
     public class PaymentDTO
     {

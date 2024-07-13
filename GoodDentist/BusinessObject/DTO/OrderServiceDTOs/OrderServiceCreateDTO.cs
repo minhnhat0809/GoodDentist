@@ -1,8 +1,10 @@
+﻿using BusinessObject.DTO.PaymentDTOs.View;
 using BusinessObject.DTO.ServiceDTOs.View;
+using BusinessObject.Entity;
 
-namespace BusinessObject.DTO.OrderServiceDTOs.View;
+namespace BusinessObject.DTO.OrderServiceDTOs;
 
-public class OrderServiceDTO
+public class OrderServiceCreateDTO
 {
     public int OrderServiceId { get; set; }
 
@@ -15,7 +17,4 @@ public class OrderServiceDTO
     public int? Quantity { get; set; }
 
     public int? Status { get; set; }
-
-    public ServiceDTO? Service { get; set; }
-    
 }

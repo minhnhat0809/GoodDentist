@@ -33,6 +33,7 @@ using BusinessObject.DTO.CustomerDTOs.View;
 using BusinessObject.DTO.ExaminationProfileDTOs.View;
 using BusinessObject.DTO.MedicalRecordDTOs.View;
 using BusinessObject.DTO.NotificationDTOs.View;
+using BusinessObject.DTO.OrderServiceDTOs;
 
 namespace Services
 {
