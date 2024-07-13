@@ -30,6 +30,7 @@ public class CustomerDTO
 
     public bool? Status { get; set; }
 
-    public virtual ICollection<ClinicDTO> Clinics { get; set; } = new List<ClinicDTO>();
+    public ICollection<ClinicDTO> Clinics { get; set; } = new List<ClinicDTO>();
 
+    public ICollection<ExaminationProfileDTO> ExaminationProfiles { get; set; } = new List<ExaminationProfileDTO>();
 }

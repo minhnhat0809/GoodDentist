@@ -50,7 +50,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                User dentist = await unitOfWork.userRepo.GetByIdAsync(Guid.Parse(dentistId));
+                User? dentist = await unitOfWork.userRepo.GetByIdAsync(Guid.Parse(dentistId));
                 if (dentist == null)
                 {
                     responseDTO.IsSuccess = false;
@@ -850,7 +850,7 @@ namespace Services.Impl
                     ).ToList();
                 case "clinic" : 
                     return customers = customers
-                        .Where(user => user.CustomerClinics.Any(cu => cu.ClinicId.ToString() == filterValue && cu.Status == true))
+                        .Where(user => user.CustomerClinics.Any(cu => cu.ClinicId.Equals(Guid.Parse(filterValue)) && cu.Status == true))
                         .ToList();
                 default:
                     return customers;

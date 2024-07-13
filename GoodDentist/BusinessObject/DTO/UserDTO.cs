@@ -23,6 +23,8 @@ namespace BusinessObject.DTO
         public int RoleId { get; set; }
         public string? Avatar { get; set; }
         public ICollection<ClinicDTO>? Clinics { get; set; }
+
+        public ICollection<ExaminationProfileDTO>? ExaminationProfiles {  get; set; }
     }
 
     

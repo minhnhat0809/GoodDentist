@@ -49,13 +49,6 @@ namespace GoodDentist.Controllers
             ResponseDTO responseDTO = await customerService.DeleteCustomer(customerId);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
-
-        /*[HttpPut("/customers/{customerId}")]
-        public async Task<ActionResult<ResponseDTO>> UpdateCustomer([FromBody] CustomerRequestDTO customerDto)
-        {
-            ResponseDTO responseDTO = await customerService.UpdateCustomer(customerDto);
-            return StatusCode(responseDTO.StatusCode, responseDTO);
-        }*/
         
         [HttpPut("customer")]
         public async Task<ActionResult<ResponseDTO>> UpdateCustomer([FromForm]CustomerRequestDTO customerRequestDto)

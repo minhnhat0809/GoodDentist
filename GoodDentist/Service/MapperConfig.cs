@@ -65,8 +65,7 @@ namespace Services
             CreateMap<DentistSlot, DentistSlotDTO>()
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
-            CreateMap<DentistSlot, DentistslotDTO>()
-                .ForMember(dest => dest.Dentist, opt => opt.Ignore());
+            CreateMap<DentistSlot, DentistslotDTO>();
             
             CreateMap<DentistSlotDTO, DentistSlot>()
                 .ForMember(dest => dest.TimeStart, opt => opt.MapFrom(src => src.TimeStart))
