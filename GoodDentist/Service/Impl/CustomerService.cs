@@ -834,15 +834,13 @@ namespace Services.Impl
                 case "email":
                     return customers.Where(u => u.Email != null && u.Email.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                 case "address":
-                    return customers.Where(u => u.Address != null && u.Address.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-                
+                    return customers.Where(u => u.Address != null && u.Address.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();               
                 case "status":
                     if (bool.TryParse(filterValue, out var status))
                     {
                         return customers.Where(u => u.Status == status).ToList();
                     }
-                    break;
-                
+                    break;               
                 case "search":
                     return customers = customers.Where(x =>
                         x.UserName.ToLower().Contains(filterValue) ||

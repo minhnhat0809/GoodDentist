@@ -16,14 +16,14 @@ namespace GoodDentist.Controllers
             this.examinationService = examinationService;
         }
 
-        [HttpGet("/examination/detail")]
+        [HttpGet("examination/detail")]
         public async Task<ActionResult<ResponseDTO>> GetExaminationDetail([FromQuery] int examId)
         {
             ResponseDTO responseDTO = await examinationService.GetExaminationById(examId);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpGet("/clinic")]
+        [HttpGet("clinic")]
         public async Task<ActionResult<ResponseDTO>> GetAllExaminationsOfClinic([FromQuery] string clinicId, [FromQuery] int pageNumber, [FromQuery] int rowsPerPage,
            [FromQuery] string? sortField = null,
            [FromQuery] string? sortOrder = "asc")
@@ -34,7 +34,7 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpGet("/clinic/user")]
+        [HttpGet("clinic/user")]
         public async Task<ActionResult<ResponseDTO>> GetAllExaminationsOfUser([FromQuery] string clinicId, string userId,
             DateOnly selectedDate,
             string actor , int pageNumber, int rowsPerPage,
@@ -47,7 +47,7 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpGet("/profile")]
+        [HttpGet("profile")]
         public async Task<ActionResult<ResponseDTO>> GetAllExaminationsOfExaminationProfile([FromQuery] int profileId,
            [FromQuery] int? pageNumber=1, [FromQuery] int? rowsPerPage=5,
            [FromQuery] string? sortField = null,
@@ -59,7 +59,7 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpPost("/examination")]
+        [HttpPost("examination")]
         public async Task<ActionResult<ResponseListDTO>> CreateExamination([FromBody] ExaminationRequestDTO examinationDTO, string mode, string? customerId)
         {
             string mod = "c";
@@ -67,7 +67,7 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpPut("/examination")]
+        [HttpPut("examination")]
         public async Task<ActionResult<ResponseListDTO>> UpdateExamination([FromBody] ExaminationRequestDTO examinationDTO)
         {
             string mod = "c";
@@ -75,7 +75,7 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpDelete("/examination")]
+        [HttpDelete("examination")]
         public async Task<ActionResult<ResponseDTO>> DeleteExamination([FromQuery] int examId)
         {
             ResponseDTO responseDTO = await examinationService.DeleteExamination(examId);

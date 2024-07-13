@@ -5,7 +5,7 @@ using Services;
 
 namespace GoodDentist.Controllers
 {
-    [Route("[controller]")]
+    [Route("/customers")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace GoodDentist.Controllers
             this.customerService = customerService;
         }
 
-        [HttpGet("/customers/denitst")]
+        [HttpGet("denitst")]
         public async Task<ActionResult<ResponseDTO>> GetAllCustomerOfDentist([FromQuery] string dentistId, string? search)
         {
             ResponseDTO responseDTO = await customerService.GetAllCustomerOfDentist(dentistId, search);
@@ -24,7 +24,7 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpGet("/customers")]
+        [HttpGet]
         public async Task<ActionResult<ResponseDTO>> GetAllCustomer(
             [FromQuery] int pageNumber = 1, int rowsPerPage = 5,
             [FromQuery] string? filterField = null,
@@ -36,14 +36,14 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpGet("/customers/{customerId}")]
+        [HttpGet("customer/{customerId}")]
         public async Task<ActionResult<ResponseDTO>> GetCustomerById(string customerId)
         {
             ResponseDTO responseDTO = await customerService.GetCustomerById(customerId);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpDelete("/customers/{customerId}")]
+        [HttpDelete("customer/{customerId}")]
         public async Task<ActionResult<ResponseDTO>> DeleteCustomer(Guid customerId)
         {
             ResponseDTO responseDTO = await customerService.DeleteCustomer(customerId);
@@ -57,28 +57,28 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }*/
         
-        [HttpPut("/customer")]
+        [HttpPut("customer")]
         public async Task<ActionResult<ResponseDTO>> UpdateCustomer([FromForm]CustomerRequestDTO customerRequestDto)
         {
             ResponseListDTO responseDTO = await customerService.updateCustomer(customerRequestDto);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
         
-        [HttpPost("/customers")]
+        [HttpPost("customer")]
         public async Task<ActionResult<ResponseDTO>> CreateCustomer([FromForm] CustomerRequestDTO customerDto)
         {
             ResponseDTO responseDTO = await customerService.CreateCustomer(customerDto);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
         
-        [HttpDelete("/customers/avatar/{customerId}")]
+        [HttpDelete("customer/avatar/{customerId}")]
         public async Task<ActionResult<ResponseDTO>> DeleteFile(Guid customerId)
         {
             ResponseDTO responseDTO = await customerService.DeleteFileAndReference(customerId);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpPut("/customers/avatar/{customerId}")]
+        [HttpPut("customer/avatar/{customerId}")]
         public async Task<ActionResult<ResponseDTO>> UpdateFile(Guid customerId, IFormFile uploadFile)
         {
             ResponseDTO responseDTO = await customerService.UploadFile(uploadFile, customerId);
