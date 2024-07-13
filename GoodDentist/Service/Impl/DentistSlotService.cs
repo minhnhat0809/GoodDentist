@@ -431,7 +431,56 @@ namespace Services.Impl
             }
             return responseDTO;
         }
-    
+
+        public async Task<ResponseDTO> GetAllDentistSlotsByDentistAndDate(string clinicId, string dentistId, DateOnly selectedDate)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
+            try
+            {
+                if (clinicId.IsNullOrEmpty())
+                {
+                    return AddError("Clinic Id is null!", 400);
+                }
+
+                Clinic? clinic = await unitOfWork.clinicRepo.getClinicById(clinicId);
+                if (clinic == null)
+                {
+                    return AddError("Clinic is not found!",404);
+                }
+
+                if (dentistId.IsNullOrEmpty())
+                {
+                    return AddError("Dentist Id is null!", 400);
+                }
+
+                User? dentist = await unitOfWork.userRepo.GetByIdAsync(Guid.Parse(dentistId));
+                if (dentist == null)
+                {
+                    return AddError("Dentist is not found!", 404);
+                }
+
+                DateOnly minDate = new DateOnly(1990,01,01);
+                DateOnly maxDate = selectedDate.AddYears(1);
+
+                if (selectedDate < minDate || selectedDate > maxDate)
+                {
+                    return AddError("Selected date is out of range!", 400);
+                }
+
+                List<DentistSlot>? dentistSlots = await unitOfWork.dentistSlotRepo.GetAllSlotsOfDentistByDate(clinicId, dentistId, selectedDate);
+
+                List<DentistslotDTO> dentistslotDTOs = mapper.Map<List<DentistslotDTO>>(dentistSlots);
+
+                responseDTO.Result = dentistslotDTOs;
+
+            }catch (Exception ex)
+            {
+                AddError(ex.Message, 500);
+            }
+            return responseDTO;
+        }
+
+
         private ResponseDTO AddError(string message, int statusCode)
         {
             ResponseDTO responseDTO = new ResponseDTO(message, statusCode, false, null);
