@@ -24,7 +24,7 @@ namespace BusinessObject.DTO
         public string? Avatar { get; set; }
         public ICollection<ClinicDTO>? Clinics { get; set; }
 
-        public ICollection<ExaminationProfileDTO>? ExaminationProfiles {  get; set; }
+        public ICollection<ExaminationProfileForExamDTO>? ExaminationProfiles {  get; set; }
     }
 
     

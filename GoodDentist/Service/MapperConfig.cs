@@ -121,8 +121,9 @@ namespace Services
 
             /*----------------------------------------------------*/
             //EXAMINATION PROFILE
+            CreateMap<ExaminationProfile, ExaminationProfileForExamDTO>();
             CreateMap<ExaminationProfile, ExaminationProfileDTO>();
-            
+
             /*----------------------------------------------------*/
             //ORDER
             CreateMap<Order, OrderDTO>()

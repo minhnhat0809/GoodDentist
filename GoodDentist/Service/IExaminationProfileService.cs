@@ -8,8 +8,8 @@ namespace Services
     {
         Task<ResponseDTO> GetExaminationProfilesByCustomerId(string customerId);
         Task<ResponseDTO> GetAllExaminationProfiles();
-        Task<ResponseDTO> CreateExaminationProfile(ExaminationProfileDTO examinationProfileDTO);
-        Task<ResponseDTO> UpdateExaminationProfile(ExaminationProfileDTO examinationProfileDTO);
+        Task<ResponseDTO> CreateExaminationProfile(ExaminationProfileForExamDTO examinationProfileDTO);
+        Task<ResponseDTO> UpdateExaminationProfile(ExaminationProfileForExamDTO examinationProfileDTO);
         Task<ResponseDTO> DeleteExaminationProfile(int id);
     }
 }

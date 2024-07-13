@@ -35,7 +35,7 @@ namespace BusinessObject.DTO.ViewDTO
 
         public DentistslotDTO? DentistSlot { get; set; }
 
-        public ExaminationProfileDTO? ExaminationProfile { get; set; }
+        public ExaminationProfileForExamDTO? ExaminationProfile { get; set; }
 
         public ICollection<OrderDTO>? Orders {  get; set; }
 

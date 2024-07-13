@@ -26,7 +26,7 @@ namespace Services.Impl
             try
             {
                 List<ExaminationProfile> examinationProfiles = await examProfileRepo.GetProfilesByCustomerId(customerId);
-                responseDTO.Result = examinationProfiles;
+                responseDTO.Result = mapper.Map<List<ExaminationProfileDTO>>(examinationProfiles);
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace Services.Impl
             return responseDTO;
         }
 
-        public async Task<ResponseDTO> CreateExaminationProfile(ExaminationProfileDTO examinationProfileDTO)
+        public async Task<ResponseDTO> CreateExaminationProfile(ExaminationProfileForExamDTO examinationProfileDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO("Create Examination Successfully", 201, true, null);
             try
@@ -72,7 +72,7 @@ namespace Services.Impl
             return responseDTO;
         }
 
-        public async Task<ResponseDTO> UpdateExaminationProfile(ExaminationProfileDTO examinationProfileDTO)
+        public async Task<ResponseDTO> UpdateExaminationProfile(ExaminationProfileForExamDTO examinationProfileDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO("Update Examination Successfully", 200, true, null);
             try

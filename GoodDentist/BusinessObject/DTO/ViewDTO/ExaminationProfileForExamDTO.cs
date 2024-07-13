@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTO.ViewDTO
 {
-    public class ExaminationProfileDTO
+    public class ExaminationProfileForExamDTO
     {
         public int ExaminationProfileId { get; set; }
 
@@ -23,7 +24,6 @@ namespace BusinessObject.DTO.ViewDTO
         public UserDTO? Customer { get; set; }
 
         public UserDTO? Dentist { get; set; }
-
-        public List<ExaminationDTO>? Examinations { get; set; }
+        
     }
 }

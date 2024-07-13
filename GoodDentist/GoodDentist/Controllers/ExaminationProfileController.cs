@@ -33,14 +33,14 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPost("/examination-profiles")]
-        public async Task<ActionResult<ResponseDTO>> CreateExaminationProfile([FromBody] ExaminationProfileDTO examinationProfileDTO)
+        public async Task<ActionResult<ResponseDTO>> CreateExaminationProfile([FromBody] ExaminationProfileForExamDTO examinationProfileDTO)
         {
             ResponseDTO responseDTO = await examinationProfileService.CreateExaminationProfile(examinationProfileDTO);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
         [HttpPut("/examination-profiles")]
-        public async Task<ActionResult<ResponseDTO>> UpdateExaminationProfile([FromBody] ExaminationProfileDTO examinationProfileDTO)
+        public async Task<ActionResult<ResponseDTO>> UpdateExaminationProfile([FromBody] ExaminationProfileForExamDTO examinationProfileDTO)
         {
             ResponseDTO responseDTO = await examinationProfileService.UpdateExaminationProfile(examinationProfileDTO);
             return StatusCode(responseDTO.StatusCode, responseDTO);
