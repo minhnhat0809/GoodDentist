@@ -13,6 +13,7 @@ namespace Repositories
 
 		Task<Order?> GetOrderById(int orderId);
 
+		Task<Order> DeleteOrder(int orderId);
 		Task<Order> CreateOrder(Order order);
 		Task<Order> UpdateOrder(Order order);
 	}
