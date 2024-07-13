@@ -30,6 +30,8 @@ namespace Repositories
 
         ICustomerRepo customerRepo { get; }
         ICustomerClinicRepository CustomerClinicRepository { get; }
+
+        IPaymentRepo paymentRepo { get; }
         Task<int> CompleteAsync();
 
         INotificationRepository NotificationRepository { get; }
