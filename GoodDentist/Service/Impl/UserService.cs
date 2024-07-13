@@ -275,7 +275,7 @@ namespace Services.Impl
                 //check email
                 if (!createUserDTO.Email.IsNullOrEmpty())
                 {
-                    User user = unitOfWork.userRepo.getUser(createUserDTO.UserName);
+                    User? user = unitOfWork.userRepo.getUser(createUserDTO.UserName);
                     if (!user.Email.Equals(createUserDTO.Email))
                     {
                         if (unitOfWork.userRepo.checkUniqueEmail(createUserDTO.Email))

@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessObject.DTO.ClinicDTOs.View;
-using BusinessObject.DTO.ExaminationProfileDTOs.View;
-using BusinessObject.Entity;
 
 namespace BusinessObject.DTO.UserDTOs.View
 {
-    public class UserDTO
+    public class UserForExamDTO
     {
         public Guid UserId { get; set; }
         public string? UserName { get; set; }
@@ -23,10 +20,5 @@ namespace BusinessObject.DTO.UserDTOs.View
         public bool? Status { get; set; }
         public int RoleId { get; set; }
         public string? Avatar { get; set; }
-        public ICollection<ClinicDTO>? Clinics { get; set; }
-
-        public ICollection<ExaminationProfileForExamDTO>? ExaminationProfiles { get; set; }
     }
-
-
 }
