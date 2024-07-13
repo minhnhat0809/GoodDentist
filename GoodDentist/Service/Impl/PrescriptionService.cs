@@ -65,17 +65,12 @@ namespace Services.Impl
 			try
 			{
 				var prescription = await _unitOfWork.prescriptionRepo.GetByIdAsync(prescriptionId);
-				if (prescription == null||prescription.Status == false)
+				if (prescription == null)
 				{
 					return new ResponseDTO("This prescription is not exist!", 400, false, null);
 				}
-				prescription.Status = false;
-				var result = await _unitOfWork.prescriptionRepo.DeleteAsync(prescription);
-				if (result)
-				{
-					return new ResponseDTO("Prescription Delete succesfully!", 201, true, null);
-				}
-				return new ResponseDTO("Prescription Delete unsucessfully!", 400, false, null);
+				prescription = await _unitOfWork.prescriptionRepo.DeletePrescription(prescriptionId);
+				return new ResponseDTO("Prescription Delete successfully!", 200, true, _mapper.Map<PrescriptionDTO>(prescription));
 			}
 			catch (Exception ex)
 			{
@@ -173,7 +168,7 @@ namespace Services.Impl
 			try
 			{
 				Prescription prescription = await _unitOfWork.prescriptionRepo.GetByIdAsync(prescriptionDTO.PrescriptionId);
-				if (prescription == null || prescription.Status == false)
+				if (prescription == null )
 				{
 					return new ResponseDTO("This prescription is not exist!", 400, false, null);
 				}
@@ -198,7 +193,7 @@ namespace Services.Impl
 								MedicineId = medicine.MedicineId,
 								Quantity = medicineDto.MedicineId,
 								Price = medicine.Price * medicineDto.Quantity,
-								Status = true
+								Status = prescriptionDTO.Status
 								
 							};
 							prescription.MedicinePrescriptions.Add(medicinePrescription);

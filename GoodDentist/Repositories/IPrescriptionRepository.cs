@@ -13,7 +13,7 @@ namespace Repositories
 		Task<List<Prescription>?> GetPrescriptions(int pageNumber, int pageSize);
 		Task<Prescription> UpdatePrescription(Prescription prescription);
 		Task<Prescription> CreatePrescription(Prescription prescription);
-
+		Task<Prescription> DeletePrescription(int prescriptionId);
 		Task<Prescription?> GetPrescriptionById(int prescriptionId);
 	}
 }

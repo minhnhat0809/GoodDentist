@@ -59,6 +59,25 @@ namespace Repositories.Impl
 			 return prescription;
 		}
 
+		public async Task<Prescription> DeletePrescription(int prescriptionId)
+		{
+			var model = await _repositoryContext.Prescriptions
+				.Include(x => x.MedicinePrescriptions)
+				.ThenInclude(x => x.Medicine)
+				.FirstOrDefaultAsync(x => x.PrescriptionId == prescriptionId);
+			if (model != null)
+			{
+				model.Status = false;
+				foreach (var medicinePrescription in model.MedicinePrescriptions)
+				{
+					medicinePrescription.Status = false;
+				}
+
+				await _repositoryContext.SaveChangesAsync();
+			}
+			return model;
+		}
+
 		public async Task<Prescription?> GetPrescriptionById(int prescriptionId)
 		{
 			return await _repositoryContext.Prescriptions
