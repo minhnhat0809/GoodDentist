@@ -19,6 +19,7 @@ using BusinessObject.DTO.CustomerDTOs;
 using BusinessObject.DTO.ClinicDTOs.View;
 using BusinessObject.DTO.CustomerDTOs.View;
 using BusinessObject.DTO.UserDTOs;
+using BusinessObject.DTO.ExaminationProfileDTOs.View;
 
 namespace Services.Impl
 {
@@ -75,16 +76,9 @@ namespace Services.Impl
                     c.Email.Contains(search)).ToList();
                 }
 
-                List<UserDTO> customerDTO = new List<UserDTO>();
-                foreach (var u in customers)
-                {
-                    List<Clinic> clinics = u.CustomerClinics.Select(cc => cc.Clinic).ToList();
-                    UserDTO userDTO = mapper.Map<UserDTO>(u);
-                    userDTO.Clinics = mapper.Map<List<ClinicDTO>>(clinics);
-                    customerDTO.Add(userDTO);
-                }
+                List<CustomerDTOForPhuc> customerDTOs = mapper.Map<List<CustomerDTOForPhuc>>(customers);
 
-                responseDTO.Result = customerDTO;
+                responseDTO.Result = customerDTOs;
                 responseDTO.Message = "Get successfully!";
                 return responseDTO;
             }
@@ -732,7 +726,7 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> GetCustomersByClinic(string clinicId)
+        public async Task<ResponseDTO> GetCustomersByClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder)
         {
             ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
             try
@@ -748,7 +742,9 @@ namespace Services.Impl
                     return AddError("Clinic is not found!", 404);
                 }
 
-                List<Customer> customers = await unitOfWork.customerRepo.GetCustomersByClinic(clinicId);
+                List<Customer> customers = await unitOfWork.customerRepo.GetCustomersByClinic(clinicId, pageNumber, rowsPerPage);
+                customers = FilterCustomer(customers, filterField, filterValue);
+                customers = SortCustomer(customers, sortField, sortOrder);
 
                 List<CustomerDTO> customerDTOs = mapper.Map<List<CustomerDTO>>(customers);
 

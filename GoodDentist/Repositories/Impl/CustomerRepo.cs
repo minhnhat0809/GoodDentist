@@ -90,12 +90,14 @@ namespace Repositories.Impl
             return s.Name;
         }
 
-        public Task<List<Customer>> GetCustomersByClinic(string clinicId)
+        public Task<List<Customer>> GetCustomersByClinic(string clinicId, int pageNumber, int rowsPerPage)
         {
             return _repositoryContext.Customers
                 .Include(c => c.ExaminationProfiles)
                 .Include(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
                 .Where(c => c.CustomerClinics.Any(cc => cc.ClinicId.Equals(Guid.Parse(clinicId)) && cc.Status == true))
+                .Skip((pageNumber - 1) * rowsPerPage)
+                .Take(rowsPerPage)
                 .ToListAsync();
         }
     }

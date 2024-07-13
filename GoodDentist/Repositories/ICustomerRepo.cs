@@ -16,6 +16,6 @@ namespace Repositories
         Task<CustomerClinic?> GetCustomerClinicByCustomerAndClinic(Guid customerId, Guid clinicId);
         Task<string> GetCustomerName(string customerId);
 
-        Task<List<Customer>> GetCustomersByClinic(string clinicId);
+        Task<List<Customer>> GetCustomersByClinic(string clinicId, int pageNumber, int rowsPerPage);
     }
 }
