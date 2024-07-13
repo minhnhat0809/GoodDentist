@@ -1,5 +1,6 @@
 ﻿using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.DTO.ClinicServiceDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.Extensions.Caching.Distributed;
 using System;

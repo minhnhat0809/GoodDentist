@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.DTO;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.PrescriptionDTOs;
+using BusinessObject.DTO.PrescriptionDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -13,7 +14,7 @@ using StackExchange.Redis;
 
 namespace Services.Impl
 {
-	public class PrescriptionService : IPrescriptionService
+    public class PrescriptionService : IPrescriptionService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
@@ -82,43 +83,43 @@ namespace Services.Impl
 			}
 		}
 
-		public async Task<ResponseDTO> GetPrescriptionDetails(int prescriptionId)
-		{
-			ResponseDTO responseDto = new ResponseDTO("",200,true,null);
-			try
-			{
-				if (prescriptionId <= 0)
-				{
-					responseDto.IsSuccess = false;
-					responseDto.Message = "Prescription Id is null!";
-					responseDto.StatusCode = 400;
-					return responseDto;
-				}
+        public async Task<ResponseDTO> GetPrescriptionDetails(int prescriptionId)
+        {
+            ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+            try
+            {
+                if (prescriptionId <= 0)
+                {
+                    responseDto.IsSuccess = false;
+                    responseDto.Message = "Prescription Id is null!";
+                    responseDto.StatusCode = 400;
+                    return responseDto;
+                }
 
-				Prescription? prescription = await _unitOfWork.prescriptionRepo.GetPrescriptionById(prescriptionId);
-				if (prescription == null)
-				{
-					responseDto.IsSuccess = false;
-					responseDto.Message = "Prescription is not found!";
-					responseDto.StatusCode = 404;
-					return responseDto;
-				}
+                Prescription? prescription = await _unitOfWork.prescriptionRepo.GetPrescriptionById(prescriptionId);
+                if (prescription == null)
+                {
+                    responseDto.IsSuccess = false;
+                    responseDto.Message = "Prescription is not found!";
+                    responseDto.StatusCode = 404;
+                    return responseDto;
+                }
 
-				PrescriptionDTO prescriptionDto = _mapper.Map<PrescriptionDTO>(prescription);
-				
-				responseDto.Message = "Get successfully!";
-				responseDto.Result = prescriptionDto;
-			}
-			catch (Exception e)
-			{
-				responseDto.Message = e.Message;
-				responseDto.IsSuccess = false;
-				responseDto.StatusCode = 500;
-			}
-			return responseDto;
-		}
+                PrescriptionDTO prescriptionDto = _mapper.Map<PrescriptionDTO>(prescription);
 
-		public async Task<ResponseDTO> AddPrescription(PrescriptionCreateDTO prescriptionDTO)
+                responseDto.Message = "Get successfully!";
+                responseDto.Result = prescriptionDto;
+            }
+            catch (Exception e)
+            {
+                responseDto.Message = e.Message;
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+            }
+            return responseDto;
+        }
+
+        public async Task<ResponseDTO> AddPrescription(PrescriptionCreateDTO prescriptionDTO)
 		{
 			try
 			{

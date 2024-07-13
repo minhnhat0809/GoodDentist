@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessObject.DTO;
+using BusinessObject.DTO.PrescriptionDTOs;
+using BusinessObject.DTO.PrescriptionDTOs.View;
 
 namespace Services
 {
-	public interface IPrescriptionService
+    public interface IPrescriptionService
 	{
 		Task<ResponseDTO> GetAllPrescription(int pageNumber, int pageSize);
 
@@ -19,6 +21,6 @@ namespace Services
 
 		Task<ResponseDTO> DeletePrescription(int prescriptionId);
 
-		Task<ResponseDTO> GetPrescriptionDetails(int prescriptionId);
-	}
+        Task<ResponseDTO> GetPrescriptionDetails(int prescriptionId);
+    }
 }

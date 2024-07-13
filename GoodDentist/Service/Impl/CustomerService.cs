@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BusinessObject.DTO;
-using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -15,6 +14,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using BusinessObject.DTO.UserDTOs.View;
+using BusinessObject.DTO.CustomerDTOs;
+using BusinessObject.DTO.ClinicDTOs.View;
+using BusinessObject.DTO.CustomerDTOs.View;
 
 namespace Services.Impl
 {

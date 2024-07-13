@@ -1,5 +1,5 @@
 ﻿using BusinessObject.DTO;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.ExaminationDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;

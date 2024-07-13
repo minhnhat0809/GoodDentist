@@ -1,11 +1,12 @@
-﻿using BusinessObject.DTO.ViewDTO;
-using BusinessObject.DTO;
+﻿using BusinessObject.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Services.Impl;
 using BusinessObject.Entity;
+using BusinessObject.DTO.NotificationDTOs;
+using BusinessObject.DTO.NotificationDTOs.View;
 
 namespace GoodDentist.Controllers
 {

@@ -1,4 +1,6 @@
 ﻿using BusinessObject.DTO;
+using BusinessObject.DTO.PrescriptionDTOs;
+using BusinessObject.DTO.PrescriptionDTOs.View;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -6,7 +8,7 @@ using Services;
 
 namespace GoodDentist.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class PrescriptionController : ControllerBase
 	{
@@ -51,13 +53,13 @@ namespace GoodDentist.Controllers
 
 			return responseDTO;
 		}
-		
-		[HttpGet("/prescription/detail")]
-		public async Task<ActionResult<ResponseDTO>> GetPrescriptionDetails ([FromQuery] int prescriptionId)
-		{
-			ResponseDTO responseDTO = await _prescriptionService.GetPrescriptionDetails(prescriptionId);
 
-			return StatusCode(responseDTO.StatusCode, responseDTO);
-		}
-	}
+        [HttpGet("/prescription/detail")]
+        public async Task<ActionResult<ResponseDTO>> GetPrescriptionDetails([FromQuery] int prescriptionId)
+        {
+            ResponseDTO responseDTO = await _prescriptionService.GetPrescriptionDetails(prescriptionId);
+
+            return StatusCode(responseDTO.StatusCode, responseDTO);
+        }
+    }
 }

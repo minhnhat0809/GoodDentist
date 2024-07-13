@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using BusinessObject.DTO.UserDTOs.View;
+using BusinessObject.DTO.UserDTOs;
 
 namespace Services
 {

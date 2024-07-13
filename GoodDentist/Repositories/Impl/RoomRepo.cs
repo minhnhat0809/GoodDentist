@@ -1,5 +1,5 @@
 ﻿using BusinessObject;
-using BusinessObject.DTO;
+using BusinessObject.DTO.RoomDTOs;
 using BusinessObject.Entity;
 using Microsoft.Extensions.Caching.Distributed;
 using System;

@@ -1,13 +1,38 @@
 ﻿using AutoMapper;
-using BusinessObject.DTO;
 using BusinessObject.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessObject.DTO.ViewDTO;
-using DentistSlotDTO = BusinessObject.DTO.DentistSlotDTO;
+using CreateDentistSlotDTO = BusinessObject.DTO.DentistSlotDTOs.CreateDentistSlotDTO;
+using BusinessObject.DTO.ExaminationDTOs.View;
+using BusinessObject.DTO.UserDTOs.View;
+using BusinessObject.DTO.RoomDTOs.View;
+using BusinessObject.DTO.RoomDTOs;
+using BusinessObject.DTO.UserDTOs;
+using BusinessObject.DTO.ServiceDTOs;
+using BusinessObject.DTO.ServiceDTOs.View;
+using BusinessObject.DTO.DentistSlotDTOs.View;
+using BusinessObject.DTO.CustomerDTOs;
+using BusinessObject.DTO.MedicineDTOs;
+using BusinessObject.DTO.OrderDTOs;
+using BusinessObject.DTO.OrderDTOs.View;
+using BusinessObject.DTO.MedicineDTOs.View;
+using BusinessObject.DTO.ExaminationDTOs;
+using BusinessObject.DTO.MedicalRecordDTOs;
+using BusinessObject.DTO.NotificationDTOs;
+using BusinessObject.DTO.PrescriptionDTOs.View;
+using BusinessObject.DTO.PrescriptionDTOs;
+using BusinessObject.DTO.RecordTypeDTOs;
+using BusinessObject.DTO.MedicinePrescriptionDTOs.View;
+using BusinessObject.DTO.OrderServiceDTOs.View;
+using BusinessObject.DTO.ClinicServiceDTOs.View;
+using BusinessObject.DTO.ClinicDTOs.View;
+using BusinessObject.DTO.CustomerDTOs.View;
+using BusinessObject.DTO.ExaminationProfileDTOs.View;
+using BusinessObject.DTO.MedicalRecordDTOs.View;
+using BusinessObject.DTO.NotificationDTOs.View;
 
 namespace Services
 {
@@ -62,12 +87,12 @@ namespace Services
 
             /*----------------------------------------------------*/
             //DENTIST SLOT
-            CreateMap<DentistSlot, DentistSlotDTO>()
+            CreateMap<DentistSlot, CreateDentistSlotDTO>()
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
-            CreateMap<DentistSlot, DentistslotDTO>();
+            CreateMap<DentistSlot, DentistSlotForExamDTO>();
             
-            CreateMap<DentistSlotDTO, DentistSlot>()
+            CreateMap<CreateDentistSlotDTO, DentistSlot>()
                 .ForMember(dest => dest.TimeStart, opt => opt.MapFrom(src => src.TimeStart))
                 .ForMember(dest => dest.TimeEnd, opt => opt.MapFrom(src => src.TimeEnd))
                 .ForMember(dest => dest.Status, otp => otp.MapFrom(src => src.Status))

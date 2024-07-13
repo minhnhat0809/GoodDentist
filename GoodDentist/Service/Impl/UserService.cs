@@ -11,9 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using BusinessObject.DTO.ViewDTO;
 using Microsoft.AspNetCore.Http;
 using System.Collections.ObjectModel;
+using BusinessObject.DTO.UserDTOs.View;
+using BusinessObject.DTO.UserDTOs;
+using BusinessObject.DTO.ClinicDTOs.View;
 
 namespace Services.Impl
 {

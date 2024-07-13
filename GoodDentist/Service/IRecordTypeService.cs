@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessObject.DTO;
+using BusinessObject.DTO.RecordTypeDTOs;
+using BusinessObject.DTO.RecordTypeDTOs.View;
 
 namespace Services
 {

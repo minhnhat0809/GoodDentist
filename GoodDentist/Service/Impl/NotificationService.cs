@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BusinessObject.DTO;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.NotificationDTOs;
+using BusinessObject.DTO.NotificationDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
 using Repositories;

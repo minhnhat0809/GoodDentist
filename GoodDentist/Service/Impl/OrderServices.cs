@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.DTO;
+using BusinessObject.DTO.OrderDTOs;
+using BusinessObject.DTO.OrderDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -13,7 +15,7 @@ using static StackExchange.Redis.Role;
 
 namespace Services.Impl
 {
-	public class OrderServices : IOrderServices
+    public class OrderServices : IOrderServices
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
@@ -81,44 +83,44 @@ namespace Services.Impl
 			}
 		}
 
-		public async Task<ResponseDTO> GetOrderDetails(int orderId)
-		{
-			ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
-			try
-			{
-				if (orderId <= 0)
-				{
-					responseDto.IsSuccess = false;
-					responseDto.StatusCode = 400;
-					responseDto.Message = "Order Id is null!";
-					return responseDto;
-				}
+        public async Task<ResponseDTO> GetOrderDetails(int orderId)
+        {
+            ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+            try
+            {
+                if (orderId <= 0)
+                {
+                    responseDto.IsSuccess = false;
+                    responseDto.StatusCode = 400;
+                    responseDto.Message = "Order Id is null!";
+                    return responseDto;
+                }
 
-				Order? order = await _unitOfWork.orderRepo.GetOrderById(orderId);
-				if (order == null)
-				{
-					responseDto.IsSuccess = false;
-					responseDto.StatusCode = 404;
-					responseDto.Message = "Order is not found!";
-					return responseDto;
-				}
+                Order? order = await _unitOfWork.orderRepo.GetOrderById(orderId);
+                if (order == null)
+                {
+                    responseDto.IsSuccess = false;
+                    responseDto.StatusCode = 404;
+                    responseDto.Message = "Order is not found!";
+                    return responseDto;
+                }
 
-				OrderDTO orderDto = _mapper.Map<OrderDTO>(order);
+                OrderDTO orderDto = _mapper.Map<OrderDTO>(order);
 
-				responseDto.Result = orderDto;
-				responseDto.Message = "Get successfully!";
-			}
-			catch (Exception e)
-			{
-				responseDto.IsSuccess = false;
-				responseDto.StatusCode = 500;
-				responseDto.Message = e.Message;
-			}
+                responseDto.Result = orderDto;
+                responseDto.Message = "Get successfully!";
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+                responseDto.Message = e.Message;
+            }
 
-			return responseDto;
-		}
+            return responseDto;
+        }
 
-		public async Task<ResponseDTO> AddOrder(OrderCreateDTO orderDTO)
+        public async Task<ResponseDTO> AddOrder(OrderCreateDTO orderDTO)
 		{
 			try
 			{

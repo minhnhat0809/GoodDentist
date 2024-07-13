@@ -1,4 +1,4 @@
-﻿using BusinessObject.DTO;
+﻿using BusinessObject.DTO.RoomDTOs;
 using BusinessObject.Entity;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-	public interface IRoomRepo : IRepositoryBase<Room>
+    public interface IRoomRepo : IRepositoryBase<Room>
 	{
 		bool CheckDuplicateRoom(CreateRoomDTO roomDTO);
 		Task<List<Room>> GetAllRoom(int pageNumber, int rowsPerPage);

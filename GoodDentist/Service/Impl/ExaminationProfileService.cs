@@ -5,7 +5,8 @@ using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.ExaminationDTOs.View;
+using BusinessObject.DTO.ExaminationProfileDTOs.View;
 
 namespace Services.Impl
 {

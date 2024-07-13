@@ -1,6 +1,6 @@
 ﻿using BusinessObject.DTO;
 using System.Threading.Tasks;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.ExaminationDTOs.View;
 
 namespace Services
 {

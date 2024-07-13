@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.DTO.RecordTypeDTOs;
+using BusinessObject.DTO.RecordTypeDTOs.View;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;

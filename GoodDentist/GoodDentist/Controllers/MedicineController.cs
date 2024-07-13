@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.DTO.MedicineDTOs;
+using BusinessObject.DTO.MedicineDTOs.View;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;

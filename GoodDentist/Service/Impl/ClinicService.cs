@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.ClinicDTOs;
+using BusinessObject.DTO.ClinicDTOs.View;
 using BusinessObject.Entity;
 using Repositories;
 

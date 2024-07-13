@@ -1,4 +1,5 @@
 ﻿using BusinessObject.DTO;
+using BusinessObject.DTO.DentistSlotDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -58,14 +59,14 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPost("/dentist-slot")]
-        public async Task<ResponseListDTO> CreateDentistSlot([FromBody] DentistSlotDTO dentistSlotDTO)
+        public async Task<ResponseListDTO> CreateDentistSlot([FromBody] CreateDentistSlotDTO dentistSlotDTO)
         {
             ResponseListDTO responseDTO = await dentistSlotService.createDentistSlot(dentistSlotDTO);
             return responseDTO;
         }
 
         [HttpPut("/dentist-slot")]
-        public async Task<ResponseListDTO> UpdateDentistSlot([FromBody] DentistSlotDTO dentistSlotDTO)
+        public async Task<ResponseListDTO> UpdateDentistSlot([FromBody] CreateDentistSlotDTO dentistSlotDTO)
         {
             ResponseListDTO responseDTO = await dentistSlotService.updateDentistSlot(dentistSlotDTO);
             return responseDTO;
