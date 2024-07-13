@@ -12,11 +12,9 @@ namespace GoodDentist.Controllers
 	public class OrderController : ControllerBase
 	{
 		private readonly IOrderServices _orderservice;
-		private readonly IDistributedCache _distributedCache;
-        public OrderController(IOrderServices orderService, IDistributedCache distributedCache)
+        public OrderController(IOrderServices orderService)
         {
             this._orderservice = orderService;
-			this._distributedCache = distributedCache;
         }
 
 		[HttpPost("new-order")]

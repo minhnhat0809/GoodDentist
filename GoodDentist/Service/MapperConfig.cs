@@ -96,7 +96,7 @@ namespace Services
             //SERVICE
             CreateMap<CreateServiceDTO, Service>().ReverseMap();
             
-            CreateMap<Service, ServiceDTO>();
+            CreateMap<Service, ServiceDTO>().ReverseMap();
             
             /*----------------------------------------------------*/
             //MEDICAL RECORD
@@ -128,9 +128,11 @@ namespace Services
             CreateMap<Order, OrderDTO>()
                 .ForMember(dest => dest.OrderServices, opt => opt.MapFrom(src => src.OrderServices));
             
-            CreateMap<OrderService, OrderServiceDTO>();
+            CreateMap<OrderServiceDTO, OrderService>().ReverseMap();
+            CreateMap<OrderServiceCreateDTO, OrderService>().ReverseMap();
             
             CreateMap<OrderCreateDTO, Order>().ReverseMap();
+            CreateMap<OrderDTO, Order>().ReverseMap();
             
             /*----------------------------------------------------*/
             //PRESCRIPTION

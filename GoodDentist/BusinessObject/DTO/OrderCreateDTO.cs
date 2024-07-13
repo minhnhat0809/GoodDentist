@@ -17,5 +17,10 @@ namespace BusinessObject.DTO
 		public decimal? Price { get; set; }
 
 		public bool? Status { get; set; }
+		
+		public int? PaymentId { get; set; }
+
+		//public ICollection<OrderServiceCreateDTO>? OrderServices { get; set; } = new List<OrderServiceCreateDTO>();
+		public ICollection<ServiceDTO> Services { get; set; } = new List<ServiceDTO>();
 	}
 }

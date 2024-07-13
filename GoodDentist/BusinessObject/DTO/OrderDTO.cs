@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.DTO.ViewDTO;
 
 namespace BusinessObject.DTO
 {
@@ -20,6 +21,7 @@ namespace BusinessObject.DTO
 
 		public bool? Status { get; set; }
 		
+		public virtual ExaminationDTO? Examination { get; set; }
 		public ICollection<OrderServiceDTO>? OrderServices { get; set; }
 	}
 }

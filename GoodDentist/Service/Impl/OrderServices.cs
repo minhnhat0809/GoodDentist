@@ -71,9 +71,9 @@ namespace Services.Impl
 				var result = await _unitOfWork.orderRepo.DeleteAsync(order);
 				if (result)
 				{
-					return new ResponseDTO("Order Delete succesfully!", 201, true, null);
+					return new ResponseDTO("Order Delete successfully!", 200, true, null);
 				}
-				return new ResponseDTO("Order Delete unsucessfully!", 400, false, null);
+				return new ResponseDTO("Order Delete unsuccessfully!", 400, false, null);
 			}
 			catch (Exception ex)
 			{
@@ -122,15 +122,37 @@ namespace Services.Impl
 		{
 			try
 			{
-				var check = await CheckValidationAddOrder(orderDTO);
+				/*var check = await CheckValidationAddOrder(orderDTO);
 				if (check.IsSuccess == false)
 				{
 					return check;
+				}*/
+				
+				// map to model
+				Order model = _mapper.Map<Order>(orderDTO);
+				model = await _unitOfWork.orderRepo.CreateOrder(model);
+				if(!orderDTO.Services.IsNullOrEmpty()){
+					List<Service> services = _mapper.Map<List<Service>>(orderDTO.Services);
+					
+					foreach (Service service in services)
+					{
+						OrderService orderService = new OrderService
+						{
+							Order = model,
+							Price = service.Price,
+							Quantity = 1,
+							Status = 1,
+							Service = service,
+							OrderId = model.OrderId,
+							ServiceId = service.ServiceId
+						};
+						model.OrderServices.Add(orderService);
+					}
 				}
-
-				Order order = _mapper.Map<Order>(orderDTO);
-				await _unitOfWork.orderRepo.CreateAsync(order);
-				return new ResponseDTO("Create succesfully", 200, true, null);
+				model.Examination = await _unitOfWork.examinationRepo.GetExaminationById(orderDTO.ExaminationId.Value);
+				
+				await _unitOfWork.orderRepo.UpdateOrder(model);
+				return new ResponseDTO("Create successfully", 200, true, _mapper.Map<OrderDTO>(model));
 			}
 			catch (Exception ex)
 			{
@@ -138,6 +160,9 @@ namespace Services.Impl
 			}
 		}
 
+		
+		
+		
 		public async Task<ResponseDTO> UpdateOrder(OrderDTO orderDTO)
 		{
 			try
