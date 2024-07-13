@@ -146,8 +146,8 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                UserDTO customerDTO = mapper.Map<UserDTO>(customer);
-                customerDTO.Clinics = mapper.Map<List<ClinicDTO>>(customer.CustomerClinics.Select(x=>x.Clinic).ToList());
+                CustomerDTOForPhuc customerDTO = mapper.Map<CustomerDTOForPhuc>(customer);
+                //customerDTO.Clinics = mapper.Map<List<ClinicDTO>>(customer.CustomerClinics.Select(x=>x.Clinic).ToList());
                 responseDTO.Result = customerDTO;
                 responseDTO.Message = "Get successfully!";
                 return responseDTO;

@@ -160,7 +160,8 @@ namespace Services
 
             CreateMap<ExaminationProfile, ExaminationProfileDTO>();
 
-            CreateMap<ExaminationProfile, ExaminationProfileForCustomerDTO>();
+            CreateMap<ExaminationProfile, ExaminationProfileForCustomerDTO>()
+                .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer));
 
             /*----------------------------------------------------*/
             //ORDER
@@ -207,7 +208,9 @@ namespace Services
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
             
             CreateMap<Customer, CustomerDTO>()
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId));
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId))
+                .ForMember(dest => dest.Clinics, opt => opt.MapFrom(src => src.CustomerClinics.Select(cc => cc.Clinic)));
+
 
             CreateMap<Customer, CustomerDTOForPhuc>()
                 .ForMember(dest => dest.Clinics, opt => opt.MapFrom(src => src.CustomerClinics.Select(cc => cc.Clinic)));

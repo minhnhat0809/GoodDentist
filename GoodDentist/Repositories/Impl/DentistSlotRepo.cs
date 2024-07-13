@@ -83,10 +83,12 @@ namespace Repositories.Impl
         public async Task<List<DentistSlot>?> GetAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage)
         {
             List<DentistSlot> dentistSlots = await _repositoryContext.DentistSlots
-                .Include(dl => dl.Dentist)
+                .Include(dl => dl.Dentist).ThenInclude(d => d.ClinicUsers)
                 .Include(dl => dl.Room)
                 .Include(dl => dl.Examinations)
-                .Where(dl => dl.DentistId.Equals(dentistId))
+                .Where(dl => dl.DentistId.Equals(Guid.Parse(dentistId)) &&
+                 dl.Room.ClinicId.Equals(dl.Dentist.ClinicUsers
+                     .FirstOrDefault(cu => cu.Status == true && cu.UserId.Equals(dl.DentistId)).ClinicId))
                 .Skip((pageNumber - 1) * rowsPerPage)
                 .Take(rowsPerPage)
                 .ToListAsync();

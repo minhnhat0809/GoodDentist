@@ -28,6 +28,7 @@ namespace Repositories.Impl
         public async Task<Customer> GetCustomerById(Guid customerId)
         {
             return await _repositoryContext.Customers
+                .Include(c => c.ExaminationProfiles).ThenInclude(ep => ep.Dentist)
                 .Include(x => x.CustomerClinics)
                 .ThenInclude(x => x.Clinic)
                 .FirstOrDefaultAsync(x => x.CustomerClinics.Any(x => x.CustomerId == customerId));

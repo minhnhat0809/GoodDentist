@@ -22,7 +22,7 @@ namespace BusinessObject.DTO.ExaminationProfileDTOs.View
 
         public bool? Status { get; set; }
 
-        public CustomerDTOForPhuc? Customer { get; set; }
+        public CustomerForExamDTO? Customer { get; set; }
 
         public UserForExamDTO? Dentist { get; set; }
     }

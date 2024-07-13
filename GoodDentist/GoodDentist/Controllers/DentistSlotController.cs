@@ -35,6 +35,20 @@ namespace GoodDentist.Controllers
 
             return responseDTO;
         }
+        
+        [HttpGet("clinic/dentist")]
+        public async Task<ResponseDTO> GetAllSlotsOfDentistByClinic([FromQuery] string dentistId,
+            [FromQuery] string clinicId,
+            [FromQuery] int pageNumber,
+            [FromQuery] int rowsPerPage,
+            [FromQuery] string? sortField = null,
+            [FromQuery] string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = await dentistSlotService.getAllSlotsOfDentist(dentistId, pageNumber, rowsPerPage, sortField, sortOrder);
+
+            return responseDTO;
+        }
+
 
         [HttpGet("/clinic")]
         public async Task<ResponseDTO> GetAllSlotsOfClinic([FromQuery] int pageNumber,
