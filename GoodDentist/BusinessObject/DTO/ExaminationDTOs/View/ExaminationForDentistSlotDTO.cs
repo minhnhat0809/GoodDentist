@@ -1,10 +1,4 @@
-﻿using BusinessObject.DTO.DentistSlotDTOs.View;
-using BusinessObject.DTO.ExaminationProfileDTOs.View;
-using BusinessObject.DTO.MedicalRecordDTOs.View;
-using BusinessObject.DTO.OrderDTOs.View;
-using BusinessObject.DTO.PrescriptionDTOs.View;
-using BusinessObject.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTO.ExaminationDTOs.View
 {
-    public class ExaminationDTO
+    public class ExaminationForDentistSlotDTO
     {
         public int ExaminationId { get; set; }
 
@@ -37,18 +31,5 @@ namespace BusinessObject.DTO.ExaminationDTOs.View
         public string? Notes { get; set; }
 
         public int? Status { get; set; }
-
-        public DentistSlotForExamDTO? DentistSlot { get; set; }
-
-        public ExaminationProfileForExamDTO? ExaminationProfile { get; set; }
-
-        public ICollection<OrderDTO>? Orders { get; set; }
-
-        public ICollection<PrescriptionDTO>? Prescriptions { get; set; }
-
-        public ICollection<MedicalRecordDTO>? MedicalRecords { get; set; }
-
-
-
     }
 }

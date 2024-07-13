@@ -18,6 +18,7 @@ using BusinessObject.DTO.UserDTOs.View;
 using BusinessObject.DTO.CustomerDTOs;
 using BusinessObject.DTO.ClinicDTOs.View;
 using BusinessObject.DTO.CustomerDTOs.View;
+using BusinessObject.DTO.UserDTOs;
 
 namespace Services.Impl
 {
@@ -224,7 +225,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                Clinic clinic = await unitOfWork.clinicRepo.getClinicById(customerDto.ClinicId);
+                Clinic? clinic = await unitOfWork.clinicRepo.getClinicById(customerDto.ClinicId);
                 if (clinic == null)
                 {
                     responseDTO.IsSuccess = false;
@@ -235,8 +236,6 @@ namespace Services.Impl
                 
                 Customer customer = mapper.Map<Customer>(customerDto);
                 customer.CustomerId = Guid.NewGuid();
-                customer.Salt = salting();
-                customer.Password = hashPassword(customerDto.Password, customer.Salt);
                 customer.CreatedDate = DateTime.Now;
                 customer.Avatar = null;
                 customer.Status = true;
@@ -263,6 +262,8 @@ namespace Services.Impl
 
                 await unitOfWork.customerRepo.CreateCustomer(customer);
 
+                var userDTO = await UploadFile(customerDto.Avatar, customer.CustomerId);
+
                 responseDTO.Result = customerDto;
                 return responseDTO;
             }
@@ -288,7 +289,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                Customer customer = await unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerDto.UserName);
+                Customer customer = await unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerDto.PhoneNumber);
                 
                 if (customer == null)
                 {
@@ -328,7 +329,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                var model = await unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerRequestDto.UserName);
+                var model = await unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerRequestDto.PhoneNumber);
                 if (model == null)
                 {
                     responseDTO.IsSuccess = false;
@@ -372,12 +373,6 @@ namespace Services.Impl
                     model.Address = customerRequestDto.Address;
                 }
                 
-
-                if (customerRequestDto.Reset == true)
-                {
-                    model.Salt = salting();
-                    model.Password = hashPassword("12345678.C", model.Salt);
-                }
 
                 if (model.Status == false && customerRequestDto.Status == true)
                 {
@@ -486,38 +481,7 @@ namespace Services.Impl
             }
 
             if (mod)
-            {
-                //check cus name
-                if (customerRequestDto.UserName.IsNullOrEmpty())
-                {
-                    AddError("User name cannot be empty!");
-                }
-                else if (Regex.IsMatch(customerRequestDto.UserName, @"[^a-zA-Z0-9]"))
-                {
-                    AddError("Username cannot contain special characters!");
-                }
-                else  if (unitOfWork.userRepo.checkUniqueUserName(customerRequestDto.UserName))
-                {
-                        AddError("User Name is existed!");
-                }
-
-                //check password
-                var validatePwd = validatePassword(customerRequestDto.Password);
-                if (validatePwd.Any())
-                {
-                    responseDTO.Message.AddRange(validatePwd);
-                    responseDTO.IsSuccess = false;
-                }
-
-                //check name
-                if (customerRequestDto.Name.IsNullOrEmpty())
-                {
-                    AddError("Name cannot be empty!");
-                }
-                else if (Regex.IsMatch(customerRequestDto.UserName, @"[^a-zA-Z0-9]"))
-                {
-                    AddError("Name cannot contain special characters!");
-                }
+            {                
 
                 //check date of birth
                 if (!customerRequestDto.Dob.HasValue)
@@ -583,21 +547,7 @@ namespace Services.Impl
 
             }
             else
-            {
-                //check user name
-                if (customerRequestDto.UserName.IsNullOrEmpty())
-                {
-                    AddError("User name cannot be empty!");
-                }
-
-                //check name
-                if (!customerRequestDto.Name.IsNullOrEmpty())
-                {
-                    if (Regex.IsMatch(customerRequestDto.UserName, @"[^a-zA-Z0-9]"))
-                    {
-                        AddError("Name cannot contain special characters!");
-                    }
-                }
+            {               
 
                 //check date of birth
                 if (customerRequestDto.Dob.HasValue)
@@ -676,36 +626,6 @@ namespace Services.Impl
             return responseDTO;
         }
 
-        private List<string> validatePassword(string password)
-        {
-            List<string> result = new List<string>();
-
-            if (password.Length < 8)
-            {
-                result.Add("Minimum length of Password is 8!");
-            }
-
-            if (!Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$"))
-            {
-                result.Add("Password must has at least one lowercase letter, one uppercase letter, one number and one special character!");
-            }
-
-            return result;
-        }
-
-        private byte[] hashPassword(string password, byte[] salt)
-        {
-            var hashedPassword = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
-
-            var pwdString = string.Join(Convert.ToBase64String(salt), Convert.ToBase64String(hashedPassword));
-            return Convert.FromBase64String(pwdString);
-        }
-
-        private byte[] salting()
-        {
-            return RandomNumberGenerator.GetBytes(saltSize);
-        }
-        
         public async Task<ResponseDTO> UploadFile(IFormFile file, Guid customerId)
         {
             ResponseDTO responseDTO = new ResponseDTO("Upload Customer File Successfully", 200, true, null);
@@ -797,7 +717,7 @@ namespace Services.Impl
                 foreach (var viewModel in viewModels)
                 {
                     var clinics = customers
-                        .FirstOrDefault(x => x.CustomerId == viewModel.CustomerId)?
+                        .FirstOrDefault(x => x.CustomerId == viewModel.UserId)?
                         .CustomerClinics
                         .Where(cu => cu.Status==true) 
                         .Select(cu => cu.Clinic)
@@ -811,6 +731,37 @@ namespace Services.Impl
                 return new ResponseDTO(ex.Message, 500, false, null);
             }
         }
+
+        public async Task<ResponseDTO> GetCustomersByClinic(string clinicId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO("",200,true,null);
+            try
+            {
+                if (clinicId.IsNullOrEmpty())
+                {
+                    return AddError("Clinic Id is null!", 400);
+                }
+
+                Clinic? clinic = await unitOfWork.clinicRepo.GetByIdAsync(Guid.Parse(clinicId));
+                if (clinic == null)
+                {
+                    return AddError("Clinic is not found!", 404);
+                }
+
+                List<Customer> customers = await unitOfWork.customerRepo.GetCustomersByClinic(clinicId);
+
+                List<CustomerDTO> customerDTOs = mapper.Map<List<CustomerDTO>>(customers);
+
+                responseDTO.Result = customerDTOs;
+
+            }catch (Exception e)
+            {
+                responseDTO = AddError(e.Message, 500);
+            }
+
+            return responseDTO;
+        }
+
         private List<Customer> FilterCustomer(List<Customer> customers, string filterField, string filterValue)
         {
             if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
@@ -892,5 +843,12 @@ namespace Services.Impl
 
             return customers;
         }
+
+        private ResponseDTO AddError(string message, int statusCode)
+        {
+            ResponseDTO responseDTO = new ResponseDTO(message, statusCode, false, null);
+            return responseDTO;
+        }
+
     }
 }

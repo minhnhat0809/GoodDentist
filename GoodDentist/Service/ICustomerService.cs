@@ -20,5 +20,6 @@ namespace Services
         Task<ResponseDTO> DeleteFileAndReference(Guid customerId);
         Task<ResponseDTO> GetCustomers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
         Task<ResponseListDTO> updateCustomer(CustomerRequestDTO customerRequestDto);
+        Task<ResponseDTO> GetCustomersByClinic(string clinicId);
     }
 }

@@ -22,8 +22,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+/*----------------------------------------------------*/
 // singleton
 builder.Services.AddSingleton<IFirebaseStorageService, FirebaseStorageService>();
+
+/*----------------------------------------------------*/
 //service
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
@@ -45,7 +49,7 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IExaminationProfileService, ExaminationProfileService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
-
+/*----------------------------------------------------*/
 // repo
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -70,12 +74,15 @@ builder.Services.AddScoped<IExamProfileRepo, ExamProfileRepo>();
 builder.Services.AddScoped<ICustomerClinicRepository, CustomerClinicRepository>();
 
 builder.Services.AddScoped<IPaymentRepo, PaymentRepo>();
-
+/*----------------------------------------------------*/
+//Json
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.WriteIndented = true;
 });
+
+/*----------------------------------------------------*/
 // authen & author
 builder.Services.AddSwaggerGen(c =>
 {
@@ -120,19 +127,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
+/*----------------------------------------------------*/
 // database
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+/*----------------------------------------------------*/
 //redis
 builder.Services.AddStackExchangeRedisCache(redis =>
 {
     redis.Configuration = "localhost:6379";
 });
 
+/*----------------------------------------------------*/
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 
+/*----------------------------------------------------*/
 //cors
 builder.Services.AddCors(opts =>
 {

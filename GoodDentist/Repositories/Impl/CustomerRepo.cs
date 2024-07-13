@@ -1,6 +1,7 @@
 ﻿using BusinessObject;
 using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +72,9 @@ namespace Repositories.Impl
         public async Task<Customer> GetCustomerByPhoneOrEmailOrUsername(string input)
         {
             var customer = await _repositoryContext.Customers
-                .Where(x=>x.PhoneNumber == input || x.Email == input || x.UserName == input)
+                .Where(x => x.PhoneNumber.Equals(input, StringComparison.OrdinalIgnoreCase) ||
+                x.Email.Equals(input, StringComparison.OrdinalIgnoreCase) ||
+                x.UserName.Equals(input, StringComparison.OrdinalIgnoreCase))
                 .Include(x => x.CustomerClinics)
                 .FirstOrDefaultAsync();
             return customer;
@@ -85,6 +88,15 @@ namespace Repositories.Impl
         {
             var s = await _repositoryContext.Customers.FirstOrDefaultAsync(c => c.CustomerId.Equals(Guid.Parse(customerId)));
             return s.Name;
+        }
+
+        public Task<List<Customer>> GetCustomersByClinic(string clinicId)
+        {
+            return _repositoryContext.Customers
+                .Include(c => c.ExaminationProfiles)
+                .Include(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
+                .Where(c => c.CustomerClinics.Any(cc => cc.ClinicId.Equals(Guid.Parse(clinicId)) && cc.Status == true))
+                .ToListAsync();
         }
     }
 }

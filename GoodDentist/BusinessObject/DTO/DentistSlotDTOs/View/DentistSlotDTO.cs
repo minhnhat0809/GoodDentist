@@ -1,4 +1,5 @@
-﻿using BusinessObject.DTO.RoomDTOs.View;
+﻿using BusinessObject.DTO.ExaminationDTOs.View;
+using BusinessObject.DTO.RoomDTOs.View;
 using BusinessObject.DTO.UserDTOs.View;
 using BusinessObject.Entity;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTO.DentistSlotDTOs.View
 {
-    public class DentistSlotForExamDTO
+    public class DentistSlotDTO
     {
         public int DentistSlotId { get; set; }
 
@@ -23,7 +24,9 @@ namespace BusinessObject.DTO.DentistSlotDTOs.View
 
         public bool? Status { get; set; }
 
-        public UserForExamDTO? Dentist { get; set; }
+        public UserDTO? Dentist { get; set; }
+
+        public ICollection<ExaminationForDentistSlotDTO> Examinations { get; set; } = new List<ExaminationForDentistSlotDTO>();
 
         public RoomDTO? Room { get; set; }
     }

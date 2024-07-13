@@ -1,20 +1,16 @@
 ﻿using BusinessObject.DTO.ClinicDTOs.View;
-using BusinessObject.DTO.ExaminationDTOs.View;
+using BusinessObject.DTO.ExaminationProfileDTOs.View;
 using BusinessObject.Entity;
 
 namespace BusinessObject.DTO.CustomerDTOs.View;
 
 public class CustomerDTO
 {
-    public Guid CustomerId { get; set; }
+    public Guid UserId { get; set; }
 
     public string UserName { get; set; } = null!;
 
     public string Name { get; set; } = null!;
-
-    public byte[]? Salt { get; set; }
-
-    public byte[]? Password { get; set; }
 
     public DateOnly? Dob { get; set; }
 

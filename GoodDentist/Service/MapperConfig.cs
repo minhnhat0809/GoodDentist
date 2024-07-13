@@ -34,7 +34,7 @@ using BusinessObject.DTO.ExaminationProfileDTOs.View;
 using BusinessObject.DTO.MedicalRecordDTOs.View;
 using BusinessObject.DTO.NotificationDTOs.View;
 using BusinessObject.DTO.OrderServiceDTOs;
-
+using BusinessObject.DTO.DentistSlotDTOs;
 namespace Services
 {
     public class MapperConfig : Profile
@@ -42,6 +42,7 @@ namespace Services
         public MapperConfig()
         {
 
+            /*----------------------------------------------------*/
             //USER
             CreateMap<CreateUserDTO, User>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
@@ -86,13 +87,17 @@ namespace Services
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId))
             .ForMember(dest => dest.Clinics, opt => opt.Ignore());
 
+            CreateMap<User, UserForExamDTO>();
+
             /*----------------------------------------------------*/
             //DENTIST SLOT
             CreateMap<DentistSlot, CreateDentistSlotDTO>()
                 .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
 
             CreateMap<DentistSlot, DentistSlotForExamDTO>();
-            
+
+            CreateMap<DentistSlot, DentistSlotDTO>();
+
             CreateMap<CreateDentistSlotDTO, DentistSlot>()
                 .ForMember(dest => dest.TimeStart, opt => opt.MapFrom(src => src.TimeStart))
                 .ForMember(dest => dest.TimeEnd, opt => opt.MapFrom(src => src.TimeEnd))
@@ -145,6 +150,8 @@ namespace Services
             
             CreateMap<ExaminationRequestDTO, Examination>().ReverseMap();
 
+            CreateMap<Examination, ExaminationForDentistSlotDTO>().ReverseMap();
+
             /*----------------------------------------------------*/
             //EXAMINATION PROFILE
             CreateMap<ExaminationProfile, ExaminationProfileForExamDTO>();
@@ -194,7 +201,8 @@ namespace Services
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
             
-            CreateMap<CustomerDTO, Customer>().ReverseMap();
+            CreateMap<Customer, CustomerDTO>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId));
         }
     }
 }
