@@ -37,6 +37,13 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
+        [HttpGet("clinic")]
+        public async Task<ActionResult<ResponseDTO>> GetCustomersByClinic(string clinicId)
+        {
+            ResponseDTO responseDTO = await customerService.GetCustomersByClinic(clinicId);
+            return StatusCode(responseDTO.StatusCode, responseDTO);
+        }
+
         [HttpGet("customer/{customerId}")]
         public async Task<ActionResult<ResponseDTO>> GetCustomerById(string customerId)
         {

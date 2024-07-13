@@ -12,10 +12,6 @@ public class CustomerDTO
 
     public string Name { get; set; } = null!;
 
-    public byte[]? Salt { get; set; }
-
-    public byte[]? Password { get; set; }
-
     public DateOnly? Dob { get; set; }
 
     public string? Gender { get; set; }

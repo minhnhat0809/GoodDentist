@@ -15,5 +15,7 @@ namespace Repositories
         Task<Customer> GetCustomerByPhoneOrEmailOrUsername(string input);
         Task<CustomerClinic?> GetCustomerClinicByCustomerAndClinic(Guid customerId, Guid clinicId);
         Task<string> GetCustomerName(string customerId);
+
+        Task<List<Customer>> GetCustomersByClinic(string clinicId);
     }
 }

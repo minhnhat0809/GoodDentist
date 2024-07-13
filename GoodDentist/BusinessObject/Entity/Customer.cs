@@ -27,6 +27,8 @@ public partial class Customer
 
     public string? Address { get; set; }
 
+    public string? Anamnesis { get; set; }
+
     public string? Avatar { get; set; }
 
     public bool? Status { get; set; }

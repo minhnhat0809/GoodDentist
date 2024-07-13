@@ -25,7 +25,7 @@ namespace Services.Impl
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod, string mode, string customerId)
+        public async Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod, string mode, string? customerId)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
@@ -65,7 +65,7 @@ namespace Services.Impl
                     examinationProfile.Diagnosis = "Đang cập nhật";
                     examinationProfile.CustomerId = Guid.Parse(customerId);
 
-                    unitOfWork.examProfileRepo.CreateAsync(examinationProfile);
+                    await unitOfWork.examProfileRepo.CreateAsync(examinationProfile);
                     
                     Examination examinationForNew = mapper.Map<Examination>(examinationDTO);
                     examinationForNew.ExaminationProfileId = examinationProfile.ExaminationProfileId;
@@ -516,8 +516,6 @@ namespace Services.Impl
             }
             return result;
         }
-        
-
-        
+               
     }
 }
