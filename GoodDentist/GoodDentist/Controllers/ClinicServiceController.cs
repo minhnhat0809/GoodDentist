@@ -1,5 +1,5 @@
 ﻿using BusinessObject.DTO;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.ClinicServiceDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using Services.Impl;
 
 namespace GoodDentist.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class ClinicServiceController : ControllerBase
 	{

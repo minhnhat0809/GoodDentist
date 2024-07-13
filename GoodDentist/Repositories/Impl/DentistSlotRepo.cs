@@ -1,5 +1,4 @@
 ﻿using BusinessObject;
-using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -104,6 +103,7 @@ namespace Repositories.Impl
         {
             return await _repositoryContext.DentistSlots
                 .Include(dl => dl.Room)
+                .Include(dl => dl.Dentist)
                 .Include(dl => dl.Examinations)
                 .FirstOrDefaultAsync(dl => dl.DentistSlotId == Id);
         }

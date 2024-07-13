@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.DTO.MedicineDTOs;
+using BusinessObject.DTO.MedicineDTOs.View;
 using BusinessObject.Entity;
 
 namespace Services

@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Microsoft.AspNetCore.Http;
+using BusinessObject.DTO.CustomerDTOs;
 
 namespace Services
 {

@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.DTO.ServiceDTOs;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
 
 namespace Services.Impl
 {
-	public class ServiceService : IServiceService
+    public class ServiceService : IServiceService
 	{
 		private readonly IMapper mapper;
 		private readonly IUnitOfWork unitOfWork;

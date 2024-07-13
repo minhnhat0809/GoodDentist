@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BusinessObject.DTO;
 using Services;
+using BusinessObject.DTO.MedicalRecordDTOs;
 
 namespace GoodDentist.Controllers
 {

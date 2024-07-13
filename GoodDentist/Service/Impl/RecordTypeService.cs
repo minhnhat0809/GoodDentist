@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.DTO;
+using BusinessObject.DTO.RecordTypeDTOs;
+using BusinessObject.DTO.RecordTypeDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;

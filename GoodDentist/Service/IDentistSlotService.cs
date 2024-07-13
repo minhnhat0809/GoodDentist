@@ -1,4 +1,5 @@
 ﻿using BusinessObject.DTO;
+using BusinessObject.DTO.DentistSlotDTOs;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace Services
     {
         Task<ResponseDTO> deleteDentistSlot(int slotId);
 
-        Task<ResponseListDTO> createDentistSlot(DentistSlotDTO dentistSlotDTO);
+        Task<ResponseListDTO> createDentistSlot(CreateDentistSlotDTO dentistSlotDTO);
 
-        Task<ResponseListDTO> updateDentistSlot(DentistSlotDTO dentistSlotDTO);
+        Task<ResponseListDTO> updateDentistSlot(CreateDentistSlotDTO dentistSlotDTO);
 
         Task<ResponseDTO> getDentistSlotDetail(int slotId);
 

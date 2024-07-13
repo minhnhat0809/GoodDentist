@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.DTO.MedicineDTOs;
+using BusinessObject.DTO.MedicineDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;

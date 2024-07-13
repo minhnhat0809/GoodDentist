@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject.DTO;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.ExaminationDTOs;
+using BusinessObject.DTO.ExaminationDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;

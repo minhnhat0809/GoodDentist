@@ -1,5 +1,6 @@
 ﻿using BusinessObject.DTO;
-using BusinessObject.DTO.ViewDTO;
+using BusinessObject.DTO.MedicalRecordDTOs;
+using BusinessObject.DTO.MedicalRecordDTOs.View;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

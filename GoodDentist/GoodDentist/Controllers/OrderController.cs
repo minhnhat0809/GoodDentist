@@ -1,4 +1,6 @@
 ﻿using BusinessObject.DTO;
+using BusinessObject.DTO.OrderDTOs;
+using BusinessObject.DTO.OrderDTOs.View;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -7,7 +9,7 @@ using Services.Impl;
 
 namespace GoodDentist.Controllers
 {
-	[Route("orders")]
+    [Route("orders")]
 	[ApiController]
 	public class OrderController : ControllerBase
 	{

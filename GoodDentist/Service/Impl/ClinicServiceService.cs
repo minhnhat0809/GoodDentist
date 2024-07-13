@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.DTO;
+using BusinessObject.DTO.ClinicServiceDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Repositories;
 
 namespace Services.Impl
 {
-	public class ClinicServiceService : IClinicServiceService
+    public class ClinicServiceService : IClinicServiceService
 	{
 		private readonly IMapper mapper;
 		private readonly IUnitOfWork unitOfWork;
