@@ -20,4 +20,6 @@ public partial class Prescription
     public virtual Examination? Examination { get; set; }
 
     public virtual ICollection<MedicinePrescription> MedicinePrescriptions { get; set; } = new List<MedicinePrescription>();
+
+    public virtual ICollection<PaymentPrescription> PaymentPrescriptions { get; set; } = new List<PaymentPrescription>();
 }
