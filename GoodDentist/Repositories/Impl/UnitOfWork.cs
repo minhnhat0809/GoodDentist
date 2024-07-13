@@ -41,7 +41,6 @@ namespace Repositories.Impl
         public ICustomerRepo customerRepo { get; private set; }
 
         
-        public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
 		public IPaymentRepo paymentRepo { get; private set; }
 
 		public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)

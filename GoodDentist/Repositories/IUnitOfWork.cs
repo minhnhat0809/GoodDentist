@@ -29,7 +29,6 @@ namespace Repositories
         IPrescriptionRepository prescriptionRepo { get; }
 
         ICustomerRepo customerRepo { get; }
-        IExamProfileRepo examProfileRepo { get; }
         IPaymentRepo paymentRepo { get; }
         Task<int> CompleteAsync();
 
