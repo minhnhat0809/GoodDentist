@@ -42,13 +42,14 @@ namespace Services.Impl
 
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
+                responseDTO.Result = mapper.Map<DentistSlotDTO>(dentistSlot);
                 return responseDTO;
             }
             catch (Exception ex)
             {
                 responseDTO.Message.Add(ex.Message);
                 responseDTO.IsSuccess = false;
-                //responseDTO.StatusCode = 500;
+                responseDTO.StatusCode = 500;
                 return responseDTO;
             }
         }
@@ -95,7 +96,7 @@ namespace Services.Impl
             {
                 List<DentistSlot>? dentistSlotList = await unitOfWork.dentistSlotRepo.GetAllDentistSlots(pageNumber, rowsPerPage);
 
-                List<CreateDentistSlotDTO> dentistSlotDTOList = mapper.Map<List<CreateDentistSlotDTO>>(dentistSlotList);
+                List<DentistSlotDTO> dentistSlotDTOList = mapper.Map<List<DentistSlotDTO>>(dentistSlotList);
                 dentistSlotDTOList = SortDentistSlots(dentistSlotDTOList, sortField, sortOrder);
 
                 responseDTO.Message = "Get all dentistSlot slots successfully!";
@@ -118,7 +119,7 @@ namespace Services.Impl
             try
             {
                 List<DentistSlot>? dentistSlotList = await unitOfWork.dentistSlotRepo.GetAllSlotsOfDentist(dentistId, pageNumber, rowsPerPage);
-                List<CreateDentistSlotDTO> dentistSlotDTOList = mapper.Map<List<CreateDentistSlotDTO>>(dentistSlotList);
+                List<DentistSlotDTO> dentistSlotDTOList = mapper.Map<List<DentistSlotDTO>>(dentistSlotList);
                 dentistSlotDTOList = SortDentistSlots(dentistSlotDTOList, sortField, sortOrder);
 
                 responseDTO.Message = "Get all slots of dentistSlot successfully!";
@@ -193,6 +194,7 @@ namespace Services.Impl
 
                 responseDTO.Message.Add("Update sucessfully");
                 responseDTO.IsSuccess = true;
+                responseDTO.Result = mapper.Map<DentistSlotDTO>(dentistSlot);
                 return responseDTO;
             }
             catch (Exception ex)
@@ -319,7 +321,7 @@ namespace Services.Impl
             return errors;
         }
 
-        private List<CreateDentistSlotDTO> SortDentistSlots(List<CreateDentistSlotDTO> slots, string sortField, string sortOrder)
+        private List<DentistSlotDTO> SortDentistSlots(List<DentistSlotDTO> slots, string sortField, string sortOrder)
         {
             if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
             {
@@ -331,7 +333,7 @@ namespace Services.Impl
             switch (sortField.ToLower())
             {
                 case "dentistname":
-                    return isAscending ? slots.OrderBy(slot => slot.DentistName).ToList() : slots.OrderByDescending(slot => slot.DentistName).ToList();
+                    return isAscending ? slots.OrderBy(slot => slot.Dentist.Name).ToList() : slots.OrderByDescending(slot => slot.Dentist.Name).ToList();
                 case "timestart":
                     return isAscending ? slots.OrderBy(slot => slot.TimeStart).ToList() : slots.OrderByDescending(slot => slot.TimeStart).ToList();
                 case "timeend":
@@ -339,7 +341,7 @@ namespace Services.Impl
                 case "status":
                     return isAscending ? slots.OrderBy(slot => slot.Status).ToList() : slots.OrderByDescending(slot => slot.Status).ToList();
                 case "roomnumber":
-                    return isAscending ? slots.OrderBy(slot => slot.RoomNumber).ToList() : slots.OrderByDescending(slot => slot.RoomNumber).ToList();
+                    return isAscending ? slots.OrderBy(slot => slot.Room.RoomNumber).ToList() : slots.OrderByDescending(slot => slot.Room.RoomNumber).ToList();
             }
             return slots;
         }
@@ -350,7 +352,7 @@ namespace Services.Impl
             try
             {
                 List<DentistSlot>? dentistSlotList = await unitOfWork.dentistSlotRepo.GetAllSlotsOfClinic(clinicId, pageNumber, rowsPerPage);
-                List<CreateDentistSlotDTO> dentistSlotDTOList = mapper.Map<List<CreateDentistSlotDTO>>(dentistSlotList);
+                List<DentistSlotDTO> dentistSlotDTOList = mapper.Map<List<DentistSlotDTO>>(dentistSlotList);
                 dentistSlotDTOList = SortDentistSlots(dentistSlotDTOList, sortField, sortOrder);
 
                 responseDTO.Message = "Get all slots of dentistSlot successfully!";
@@ -469,7 +471,7 @@ namespace Services.Impl
 
                 List<DentistSlot>? dentistSlots = await unitOfWork.dentistSlotRepo.GetAllSlotsOfDentistByDate(clinicId, dentistId, selectedDate);
 
-                List<DentistSlotForExamDTO> dentistslotDTOs = mapper.Map<List<DentistSlotForExamDTO>>(dentistSlots);
+                List<DentistSlotDTO> dentistslotDTOs = mapper.Map<List<DentistSlotDTO>>(dentistSlots);
 
                 responseDTO.Result = dentistslotDTOs;
 

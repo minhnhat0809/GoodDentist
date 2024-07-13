@@ -18,7 +18,9 @@ namespace Repositories.Impl
         public async Task<List<DentistSlot>?> GetAllDentistSlots(int pageNumber, int rowsPerPage)
         {
             List<DentistSlot> dentistSlots = await _repositoryContext.DentistSlots
+                .Include(dl => dl.Dentist)
                 .Include(dl => dl.Room)
+                .Include(dl => dl.Examinations)
                 .Skip((pageNumber - 1) * rowsPerPage)
                 .Take(rowsPerPage)
                 .ToListAsync(); ;
@@ -66,23 +68,37 @@ namespace Repositories.Impl
 
         public async Task<List<DentistSlot>?> GetAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage)
         {
-            List<DentistSlot> dentistSlots = await Paging(pageNumber, rowsPerPage);
-            dentistSlots.Where(dl => dl.Room.Clinic.ClinicId.Equals(Guid.Parse(clinicId))).ToList();
+            List<DentistSlot> dentistSlots = await _repositoryContext.DentistSlots
+                .Include(dl => dl.Dentist)
+                .Include(dl => dl.Room)
+                .Include(dl => dl.Examinations)
+                .Where(dl => dl.Room.Clinic.ClinicId.Equals(Guid.Parse(clinicId)))
+                .Skip((pageNumber - 1) * rowsPerPage)
+                .Take(rowsPerPage)
+                .ToListAsync();
+
             return dentistSlots;
         }
 
         public async Task<List<DentistSlot>?> GetAllSlotsOfDentist(string dentistId, int pageNumber, int rowsPerPage)
         {
-            List<DentistSlot> dentistSlots = await Paging(pageNumber, rowsPerPage);
-            dentistSlots.Where(dl => dl.DentistId.Equals(dentistId)).ToList();
+            List<DentistSlot> dentistSlots = await _repositoryContext.DentistSlots
+                .Include(dl => dl.Dentist)
+                .Include(dl => dl.Room)
+                .Include(dl => dl.Examinations)
+                .Where(dl => dl.DentistId.Equals(dentistId))
+                .Skip((pageNumber - 1) * rowsPerPage)
+                .Take(rowsPerPage)
+                .ToListAsync();
             return dentistSlots;
         }
 
         public async Task<List<DentistSlot>?> GetAllSlotsOfDentistByDate(string clinicId, string dentistId, DateOnly selectedDate)
         {
             return await _repositoryContext.DentistSlots
-                .Include(dl => dl.Room)
                 .Include(dl => dl.Dentist)
+                .Include(dl => dl.Room)
+                .Include(dl => dl.Examinations)
                 .Where(dl => dl.DentistId.Equals(Guid.Parse(dentistId)) &&
                 dl.TimeStart.HasValue &&
                 dl.TimeStart.Value.Date == selectedDate.ToDateTime(new TimeOnly(0, 0)) &&

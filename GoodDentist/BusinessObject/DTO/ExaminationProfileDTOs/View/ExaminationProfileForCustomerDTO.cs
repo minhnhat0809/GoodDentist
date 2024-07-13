@@ -1,6 +1,5 @@
 ﻿using BusinessObject.DTO.CustomerDTOs.View;
 using BusinessObject.DTO.UserDTOs.View;
-using BusinessObject.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTO.ExaminationProfileDTOs.View
 {
-    public class ExaminationProfileForExamDTO
+    public class ExaminationProfileForCustomerDTO
     {
         public int ExaminationProfileId { get; set; }
 
@@ -23,9 +22,8 @@ namespace BusinessObject.DTO.ExaminationProfileDTOs.View
 
         public bool? Status { get; set; }
 
-        public CustomerForExamDTO? Customer { get; set; }
+        public CustomerDTOForPhuc? Customer { get; set; }
 
         public UserForExamDTO? Dentist { get; set; }
-
     }
 }
