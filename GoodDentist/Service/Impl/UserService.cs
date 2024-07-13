@@ -748,5 +748,24 @@ namespace Services.Impl
                 return responseDTO;
             }
         }
+
+        public async Task<ResponseDTO> getAllDentistsByClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder)
+        {
+            try
+            {
+                List<User> userList = await unitOfWork.clinicUserRepo.GetAllDentistsByClinic(clinicId, pageNumber, rowsPerPage);
+
+                userList = FilterUsers(userList, filterField, filterValue);
+                userList = SortUsers(userList, sortField, sortOrder);
+
+                List<UserDTO> users = mapper.Map<List<UserDTO>>(userList);
+
+                return new ResponseDTO("Get users successfully!", 200, true, users);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }
     }
 }

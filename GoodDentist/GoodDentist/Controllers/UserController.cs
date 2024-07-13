@@ -49,6 +49,18 @@ namespace GoodDentist.Controllers
             return responseDTO;
         }
 
+        [HttpGet("all-dentists-by-clinic")]
+        public async Task<ActionResult<ResponseDTO>> GetAllDentistsByClinic([FromQuery] string clinicId,
+           [FromQuery] int pageNumber, int rowsPerPage,
+           [FromQuery] string? filterField = null,
+           [FromQuery] string? filterValue = null,
+           [FromQuery] string? sortField = null,
+           [FromQuery] string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = await userService.getAllDentistsByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            return StatusCode(responseDTO.StatusCode, responseDTO);
+        }
+
         [HttpGet("all-users-by-clinic")]
         public async Task<ActionResult<ResponseDTO>> GetAllUsersByClinic([FromQuery] string clinicId,
            [FromQuery] int pageNumber, int rowsPerPage,

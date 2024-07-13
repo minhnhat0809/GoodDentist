@@ -17,7 +17,7 @@ namespace Services
         Task<ResponseDTO> getAllUsers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
 
         Task<ResponseDTO> getAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
-
+        Task<ResponseDTO> getAllDentistsByClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
         Task<ResponseDTO> deleteUser(string userName);
 
         Task<ResponseListDTO> updateUser(CreateUserDTO createUserDTO);

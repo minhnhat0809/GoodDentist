@@ -29,11 +29,21 @@ namespace Repositories.Impl
             return clinicUserList.FirstOrDefault();
         }
 
-        public async Task<List<User?>> GetAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage)
+        public async Task<List<User>> GetAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage)
         {
-            return await _repositoryContext.ClinicUsers
-                    .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId)) && cu.Status == true)
-                    .Select(cu => cu.User)
+            return await _repositoryContext.Users
+                   .Include(u => u.ClinicUsers)
+                   .Where(cu => cu.ClinicUsers.Any(cu => cu.ClinicId.Equals(Guid.Parse(clinicId))))
+                   .Skip((pageNumber - 1) * rowsPerPage)
+                   .Take(rowsPerPage)
+                   .ToListAsync();
+        }
+
+        public async Task<List<User>> GetAllDentistsByClinic(string clinicId, int pageNumber, int rowsPerPage)
+        {
+            return await _repositoryContext.Users
+                    .Include(u => u.ClinicUsers)
+                    .Where(cu => cu.ClinicUsers.Any(cu => cu.ClinicId.Equals(Guid.Parse(clinicId)) && cu.Status == true))                  
                     .Skip((pageNumber - 1) * rowsPerPage)
                     .Take(rowsPerPage)
                     .ToListAsync();
