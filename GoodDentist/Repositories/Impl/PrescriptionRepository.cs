@@ -29,21 +29,34 @@ namespace Repositories.Impl
 			return models;
 		}
 
-		public async Task<Prescription> UpdatePresription(Prescription prescription)
+		public async Task<Prescription> UpdatePrescription(Prescription prescription)
 		{
 			var model = await _repositoryContext.Prescriptions
 				.Include(x => x.MedicinePrescriptions)
 				.ThenInclude(x => x.Medicine)
 				.FirstOrDefaultAsync(x => x.PrescriptionId == prescription.PrescriptionId);
-			_repositoryContext.Entry(model).CurrentValues.SetValues(prescription);
-			_repositoryContext.SaveChangesAsync();
+			if (model != null)
+			{
+				
+				_repositoryContext.Entry(model).CurrentValues.SetValues(prescription);
+				_repositoryContext.MedicinePrescriptions.RemoveRange(model.MedicinePrescriptions);
+				await _repositoryContext.SaveChangesAsync();
+
+				foreach (var medicinePrescription in prescription.MedicinePrescriptions)
+				{
+					model.MedicinePrescriptions.Add(medicinePrescription);
+				}
+
+				await _repositoryContext.SaveChangesAsync();
+			}
 			return model;
 		}
 
-		public void CreatePrescription(Prescription prescription)
+		public async Task<Prescription> CreatePrescription(Prescription prescription)
 		{
 			_repositoryContext.Prescriptions.Add(prescription);
-			_repositoryContext.SaveChangesAsync();
+			 await _repositoryContext.SaveChangesAsync();
+			 return prescription;
 		}
 
 		public async Task<Prescription?> GetPrescriptionById(int prescriptionId)

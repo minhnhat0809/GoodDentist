@@ -10,7 +10,7 @@ namespace BusinessObject.DTO.PrescriptionDTOs
 {
     public class PrescriptionCreateDTO
     {
-
+    
         public DateTime? DateTime { get; set; }
 
         public string? Note { get; set; }
@@ -21,6 +21,6 @@ namespace BusinessObject.DTO.PrescriptionDTOs
 
         public int? ExaminationId { get; set; }
 
-        public List<MedicineDTO>? Medicines { get; set; } = new List<MedicineDTO>();
+        public ICollection<MedicineDTO>? Medicines { get; set; } = new List<MedicineDTO>();
     }
 }

@@ -9,7 +9,7 @@ namespace BusinessObject.DTO.MedicineDTOs.View
     public class MedicineDTO
     {
         public int MedicineId { get; set; }
-        public string MedicineName { get; set; } = null!;
+        public string? MedicineName { get; set; } 
 
         public string? Type { get; set; }
 

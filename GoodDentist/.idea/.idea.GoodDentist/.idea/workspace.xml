@@ -11,8 +11,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="fix conflict while merge">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="commit">
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/MedicinePrescriptionDTOs/MedicinePrescriptionCreateDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/PrescriptionDTOs/PrescriptionUpdateDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/MedicineDTOs/MedicineUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/MedicineDTOs/MedicineUpdateDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/MedicineDTOs/View/MedicineDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/MedicineDTOs/View/MedicineDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/MedicinePrescriptionDTOs/View/PrescriptionMedicineDTO.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PrescriptionDTOs/PrescriptionCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PrescriptionDTOs/PrescriptionCreateDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/PrescriptionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/PrescriptionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IPrescriptionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IPrescriptionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/PrescriptionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/PrescriptionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IPrescriptionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IPrescriptionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/PrescriptionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/PrescriptionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -485,7 +497,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720872474303</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="commit">
+      <option name="closed" value="true" />
+      <created>1720873333996</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1720873333996</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -528,11 +548,11 @@
     <MESSAGE value="get all customer&amp;user : sort name" />
     <MESSAGE value="get all user: filter by search (phone, name, email, username)" />
     <MESSAGE value="get all users : filter clinic and filter value = clinic id (get all user by clinic id)" />
-    <MESSAGE value="commit" />
     <MESSAGE value="Create Order : Add Order include Services" />
     <MESSAGE value="fix merge main" />
     <MESSAGE value="fix conflict while merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix conflict while merge" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -610,18 +630,6 @@
           <option name="timeStamp" value="79" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/PrescriptionService.cs</url>
-          <line>29</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PrescriptionService.cs" containingFunctionPresentation="Method 'GetAllPrescription'" />
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/PrescriptionService.cs</url>
-          <line>131</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PrescriptionService.cs" containingFunctionPresentation="Method 'AddPrescription'" />
-          <option name="timeStamp" value="105" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Repositories/Impl/CustomerClinicRepository.cs</url>
           <line>37</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\CustomerClinicRepository.cs" containingFunctionPresentation="Method 'GetCustomerClinicByCustomerAndClinicNow'" />
@@ -665,6 +673,45 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/PrescriptionService.cs</url>
+          <line>131</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PrescriptionService.cs" containingFunctionPresentation="Method 'AddPrescription'">
+            <startOffsets>
+              <option value="4262" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4333" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/PrescriptionRepository.cs</url>
+          <line>33</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\PrescriptionRepository.cs" containingFunctionPresentation="Method 'UpdatePrescription'">
+            <startOffsets>
+              <option value="1008" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1215" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/PrescriptionService.cs</url>
+          <line>174</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PrescriptionService.cs" containingFunctionPresentation="Method 'UpdatePrescription'">
+            <startOffsets>
+              <option value="5651" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5759" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="131" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -190,7 +190,7 @@ namespace Services
             CreateMap<PrescriptionDTO, Prescription>();
 
             CreateMap<PrescriptionCreateDTO, Prescription>().ReverseMap();
-
+            CreateMap<PrescriptionUpdateDTO, Prescription>().ReverseMap();
             /*----------------------------------------------------*/
             //CLINIC SERVICE
             CreateMap<ClinicServiceDTO, BusinessObject.Entity.ClinicService>().ReverseMap();
