@@ -11,14 +11,13 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         _repositoryContext = repositoryContext;
     }
-    public Task<List<T>> FindAllAsync() => _repositoryContext.Set<T>().AsNoTracking().ToListAsync();
+    public Task<List<T>> FindAllAsync() => _repositoryContext.Set<T>().ToListAsync();
     public Task<List<T>> FindByConditionAsync(Expression<Func<T, bool>> expression) =>
-        _repositoryContext.Set<T>().Where(expression).AsNoTracking().ToListAsync();
+        _repositoryContext.Set<T>().Where(expression).ToListAsync();
 
     public async Task<List<T>> Paging(int pageNumber, int pageSize)
     {
-        return await _repositoryContext.Set<T>()
-            .AsNoTracking()
+        return await _repositoryContext.Set<T>()           
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

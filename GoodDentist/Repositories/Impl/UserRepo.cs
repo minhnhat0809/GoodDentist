@@ -24,7 +24,12 @@ namespace Repositories.Impl
 
         public async Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage)
         {
-            return await Paging(pageNumber, rowsPerPage);                      
+            return await _repositoryContext.Users
+                .Include(x => x.ClinicUsers)
+                .ThenInclude(cu => cu.Clinic)
+                .Skip((pageNumber - 1) * rowsPerPage)
+                .Take(rowsPerPage)
+                .ToListAsync();
         }
 
         public string getUserName(string Id)
@@ -32,8 +37,18 @@ namespace Repositories.Impl
             var userId = Guid.Parse(Id);
             return _repositoryContext.Users
         .Where(user => user.UserId == userId)
-        .Select(u => u.UserName)
+        .Select(u => u.Name)
         .FirstOrDefault();
-        }       
+        }
+
+        public bool checkUniqueUserName(string userName)
+        {
+            return _repositoryContext.Users.Any(u => u.UserName.Equals(userName));
+        }
+
+        public bool checkUniqueEmail(string email)
+        {
+            return _repositoryContext.Users.Any(u => u.Email.Equals(email));
+        }
     }
 }

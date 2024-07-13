@@ -111,4 +111,48 @@ public class MedicalRecordService : IMedicalRecordService
         
         return _mapper.Map<MedicalRecordDTO>(model);
     }
+    
+    public async Task<ResponseDTO> CreateRecordTest(MedicalRecordRequestTestDTO record)
+    {
+        ResponseDTO responseDTO = new ResponseDTO("Upload Customer File Successfully", 200, true, null);
+        try
+        {
+            var model = await _unitOfWork.MedicalRecordRepository.GetRecord(record.MedicalRecordId);
+            if (model == null)
+            {
+                var createModel = _mapper.Map<MedicalRecord>(record);
+                model = await _unitOfWork.MedicalRecordRepository.CreateRecord(createModel);
+                if (model.MedicalRecordId != null)
+                {
+                    if (model == null)
+                    {
+                        throw new Exception("Medical record not found.");
+                    }
+
+                    if (model.Url != null)
+                    {
+                        // Delete the image before add new one
+                        await _firebaseStorageService.DeleteFileAndReference(model.Url);
+                    }
+
+                    // Generate a unique file name
+                    var fileName = $"{model.MedicalRecordId}-{Guid.NewGuid()}";
+
+                    // Upload image to Firebase Storage
+                    var url = await _firebaseStorageService.UploadFile(fileName, record.UploadFile, "medical-record");
+
+                    // Update the URL in the medical record model
+                    model.Url = url;
+                    model = await _unitOfWork.MedicalRecordRepository.UpdateRecord(model);
+                    responseDTO.Result = _mapper.Map<MedicalRecordDTO>(model);
+                }
+            }
+        }catch(Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+
+        return responseDTO;
+    }
 }

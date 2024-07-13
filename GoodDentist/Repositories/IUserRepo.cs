@@ -15,5 +15,9 @@ namespace Repositories
         Task<List<User>> GetAllUsers(int pageNumber, int rowsPerPage);        
 
         string getUserName(string Id);
+
+        bool checkUniqueUserName(string userName);
+
+        bool checkUniqueEmail(string email);
     }
 }

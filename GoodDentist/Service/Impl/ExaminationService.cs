@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,22 +24,66 @@ namespace Services.Impl
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod)
+        public async Task<ResponseListDTO> CreateExamination(ExaminationRequestDTO examinationDTO, string mod, string mode, string customerId)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
             responseListDTO.StatusCode = 200;
             try
             {
-                responseListDTO = await ValidateExamination(examinationDTO, mod);
+                responseListDTO = await ValidateExamination(examinationDTO, mod, mode);
                 if (responseListDTO.Message.Count > 0)
                 {
+                    return responseListDTO;
+                }
+
+                if (mode.Equals("new", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (customerId.IsNullOrEmpty())
+                    {
+                        responseListDTO.Message.Add("Customer Id is null!");
+                        responseListDTO.StatusCode = 400;
+                        responseListDTO.IsSuccess = false;
+                        return responseListDTO;
+                    }
+                    else
+                    {
+                        Customer? customer = await unitOfWork.customerRepo.GetByIdAsync(Guid.Parse(customerId));
+                        if (customer == null)
+                        {
+                            responseListDTO.Message.Add("This customer is not exist!");
+                            responseListDTO.StatusCode = 400;
+                            responseListDTO.IsSuccess = false;
+                            return responseListDTO;
+                        }
+                    }
+
+                    ExaminationProfile examinationProfile = new ExaminationProfile();
+                    examinationProfile.Status = true;
+                    examinationProfile.Date = DateOnly.FromDateTime(DateTime.Now);
+                    examinationProfile.Diagnosis = "Đang cập nhật";
+                    examinationProfile.CustomerId = Guid.Parse(customerId);
+
+                    unitOfWork.examProfileRepo.CreateAsync(examinationProfile);
+                    
+                    Examination examinationForNew = mapper.Map<Examination>(examinationDTO);
+                    examinationForNew.ExaminationProfileId = examinationProfile.ExaminationProfileId;
+
+                    await unitOfWork.examinationRepo.CreateAsync(examinationForNew);
+
+                    ExaminationDTO ExamDTO = mapper.Map<ExaminationDTO>(examinationForNew);
+                    
+                    responseListDTO.Result = ExamDTO;
                     return responseListDTO;
                 }
 
                 Examination examination = mapper.Map<Examination>(examinationDTO);
 
                 await unitOfWork.examinationRepo.CreateAsync(examination);
+
+                ExaminationDTO examDTO = mapper.Map<ExaminationDTO>(examination);
+                
+                responseListDTO.Result = examDTO;
                 return responseListDTO;
             }catch (Exception ex)
             {
@@ -123,6 +168,16 @@ namespace Services.Impl
                 examinations = await unitOfWork.examinationRepo.GetExaminationByProfileId(examProfileId, pageNumber, rowsPerPage);
 
                 List<ExaminationDTO> examinationDTOs = mapper.Map<List<ExaminationDTO>>(examinations);
+                foreach (var ex in examinationDTOs)
+                {
+                    string dentistName = unitOfWork.userRepo.getUserName(ex.ExaminationProfile.DentistId.ToString());
+                    string customerName = await unitOfWork.customerRepo.GetCustomerName(ex.ExaminationProfile.CustomerId.ToString());
+                    ex.DentistName = dentistName;
+                    ex.CustomerName = customerName;
+                    ex.CustomerId = ex.ExaminationProfile.CustomerId.ToString();
+
+
+                }
                 responseDTO.Result = examinationDTOs;
                 responseDTO.Message = "Get successfully!";
                 return responseDTO;
@@ -156,6 +211,7 @@ namespace Services.Impl
                 else if (actor.Equals("dentist", StringComparison.OrdinalIgnoreCase))
                 {
                     examinations = await unitOfWork.examinationRepo.GetAllExaminationOfDentist(clinicId, userId, selectedDate, pageNumber, rowsPerPage);
+
                 }
                 else if (actor.Equals("customer", StringComparison.OrdinalIgnoreCase))
                 {
@@ -169,7 +225,16 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                List<ExaminationDTO> examinationDTOs = mapper.Map<List<ExaminationDTO>>(examinations);
+                List<ExaminationDTO> examinationDTOs = new List<ExaminationDTO>();
+
+                foreach (var e in examinations)
+                {
+                    ExaminationDTO examinationDTO = mapper.Map<ExaminationDTO>(e);
+                    examinationDTO.CustomerId = e.ExaminationProfile.CustomerId.ToString();
+                    examinationDTO.CustomerName = e.ExaminationProfile.Customer.Name;
+                    examinationDTOs.Add(examinationDTO);
+                }
+
                 responseDTO.Result = examinationDTOs;
                 responseDTO.Message = "Get successfully!";
             }
@@ -208,6 +273,10 @@ namespace Services.Impl
                 }
 
                 ExaminationDTO examinationDTO = mapper.Map<ExaminationDTO>(examination);
+                examinationDTO.DentistName = unitOfWork.userRepo.getUserName(examinationDTO.DentistId);
+                examinationDTO.CustomerId = examinationDTO.ExaminationProfile.CustomerId.ToString();
+                examinationDTO.CustomerName =await unitOfWork.customerRepo.GetCustomerName(examinationDTO.CustomerId);
+                
                 responseDTO.Result = examinationDTO;
                 return responseDTO;
             }
@@ -227,19 +296,39 @@ namespace Services.Impl
             responseListDTO.StatusCode = 200;
             try
             {
-                responseListDTO = await ValidateExamination(examinationDTO, mod);
+                responseListDTO = await ValidateExamination(examinationDTO, mod, "");
                 if (responseListDTO.Message.Count > 0)
                 {
                     return responseListDTO;
                 }
 
-                Examination examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId);
+                Examination examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId.Value);
                 examination.ExaminationProfileId = examinationDTO.ExaminationProfileId;
-                examination.DentistSlotId = examinationDTO.DentistSlotId;
-                examination.TimeStart = examinationDTO.TimeStart;
-                examination.TimeEnd = examinationDTO.TimeEnd;
-                examination.Status = examinationDTO.Status;
-                examination.Diagnosis = examinationDTO.Diagnosis;
+
+                if (!examination.DentistSlotId.HasValue)
+                {
+                    examination.DentistSlotId = examinationDTO.DentistSlotId;
+                }
+
+                if (!examinationDTO.TimeStart.HasValue)
+                {
+                    examination.TimeStart = examinationDTO.TimeStart;
+                }
+
+                if (!examinationDTO.TimeEnd.HasValue)
+                {
+                    examination.TimeEnd = examinationDTO.TimeEnd;
+                }
+
+                if (!examinationDTO.Diagnosis.IsNullOrEmpty())
+                {
+                    examination.Diagnosis = examinationDTO.Diagnosis;
+                }
+
+                if (examinationDTO.Status.HasValue)
+                {
+                    examination.Status = examinationDTO.Status;
+                }
 
                 await unitOfWork.examinationRepo.UpdateAsync(examination);
                 return responseListDTO;
@@ -253,7 +342,7 @@ namespace Services.Impl
             }
         }
 
-        private async Task<ResponseListDTO> ValidateExamination(ExaminationRequestDTO examinationDTO, string mod)
+        private async Task<ResponseListDTO> ValidateExamination(ExaminationRequestDTO examinationDTO, string mod, string mode)
         {
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
@@ -268,68 +357,139 @@ namespace Services.Impl
 
             if (mod.Equals("u"))
             {
-                if (examinationDTO.ExaminationId <= 0) Add("Bad request ID data!");
+                //check examination
+                if (!examinationDTO.ExaminationId.HasValue) Add("Bad request ID data!");
                 else
                 {
-                    Examination? examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId);
+                    Examination? examination = await unitOfWork.examinationRepo.GetExaminationById(examinationDTO.ExaminationId.Value);
                     if (examination == null) Add("Examination is not existed!");
                 }
 
-                if (examinationDTO.ExaminationProfileId <= 0) Add("Profile ID is null!");
+                //check profile
+                if (!examinationDTO.ExaminationProfileId.HasValue) Add("Profile ID is null!");
                 else
                 {
                     ExaminationProfile examinationProfile = await unitOfWork.examProfileRepo.GetExaminationProfileById((int)examinationDTO.ExaminationProfileId);
                     if(examinationProfile == null) Add("Profile is not existed!");
                 }
-            }else if (mod.Equals("c"))
+
+                //check dentist and overlap 
+                if (examinationDTO.DentistSlotId.HasValue)
+                {
+                    Examination? examination = await unitOfWork.examinationRepo.GetByIdAsync(examinationDTO.ExaminationId);
+                    if (examination == null) Add("Examination is not existed!");
+
+                    if (examinationDTO.DentistSlotId.Value != examination.DentistSlotId)
+                    {
+                        DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByID(examinationDTO.DentistSlotId.Value);
+                        if (dentistSlot == null)
+                        {
+                            Add("Dentist slot is not exist!");
+                        }
+                        else
+                        {
+                            if (!examinationDTO.TimeStart.HasValue || !examinationDTO.TimeEnd.HasValue)
+                            {
+                                Add("Time start and time end is null!");
+                            }
+                            else
+                            {
+                                string check = await CheckAvailableSlot((int)examinationDTO.DentistSlotId, examinationDTO.TimeStart.Value, examinationDTO.TimeEnd.Value);
+                                if (!check.IsNullOrEmpty())
+                                {
+                                    Add(check);
+                                }
+                                else
+                                {
+                                    var examinations = dentistSlot.Examinations.ToList();
+                                    if (examinations.Count > 0)
+                                    {
+                                        foreach (var e in examinations)
+                                        {
+                                            if ((examinationDTO.TimeStart >= e.TimeStart && examinationDTO.TimeStart < e.TimeEnd) ||
+                                                (examinationDTO.TimeStart < e.TimeStart && examinationDTO.TimeEnd > e.TimeStart))
+                                            {
+                                                Add("There is an appointment at :" + e.TimeStart + "-" + e.TimeEnd);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }  
+                }
+
+            }
+            else if (mod.Equals("c"))
             {
+                //new or old customer
+                if (mode.Equals("old", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (examinationDTO.ExaminationProfileId <= 0) Add("Profile ID is null!");
+                    else
+                    {
+                        ExaminationProfile examinationProfile = await unitOfWork.examProfileRepo.GetExaminationProfileById((int)examinationDTO.ExaminationProfileId);
+                        if (examinationProfile == null) Add("Profile is not existed!");
+                    }
+                }
+
+                //check note
                 if (examinationDTO.Notes.IsNullOrEmpty())
                 {
                     Add("Please input notes for dentist!");
                 }
-            }
 
-            if (examinationDTO.Diagnosis.IsNullOrEmpty()) Add("Diagnose is empty!");
+                //check diagnosis
+                if (examinationDTO.Diagnosis.IsNullOrEmpty()) Add("Diagnose is empty!");
 
+                //check status
+                if (!examinationDTO.Status.HasValue) Add("Status is empty!");
 
-            if (!examinationDTO.Status.HasValue) Add("Status is empty!");
-
-            if (examinationDTO.DentistSlotId <= 0) 
-            {
-                Add("Dentist slot ID is empty!");
-            }
-            else
-            {
-                DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByID(examinationDTO.DentistSlotId.Value);
-                if (dentistSlot == null)
+                //check dentist and overlap 
+                if (examinationDTO.DentistSlotId <= 0)
                 {
-                    Add("Dentist slot is not exist!");
+                    Add("Dentist slot ID is empty!");
                 }
                 else
                 {
-                    string check = await CheckAvailableSlot((int)examinationDTO.DentistSlotId, examinationDTO.TimeStart, examinationDTO.TimeEnd);
-                    if (!check.IsNullOrEmpty())
+                    DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByID(examinationDTO.DentistSlotId.Value);
+                    if (dentistSlot == null)
                     {
-                        Add(check);
+                        Add("Dentist slot is not exist!");
                     }
                     else
                     {
-                        var examinations = dentistSlot.Examinations.ToList();
-                        if (examinations.Count > 0)
+                        if (!examinationDTO.TimeStart.HasValue || !examinationDTO.TimeEnd.HasValue)
                         {
-                            foreach(var e in examinations)
+                            Add("Time start and time end is null!");
+                        }
+                        else
+                        {
+                            string check = await CheckAvailableSlot((int)examinationDTO.DentistSlotId, examinationDTO.TimeStart.Value, examinationDTO.TimeEnd.Value);
+                            if (!check.IsNullOrEmpty())
                             {
-                                if ((examinationDTO.TimeStart >= e.TimeStart && examinationDTO.TimeStart < e.TimeEnd) || 
-                                    (examinationDTO.TimeStart < e.TimeStart && examinationDTO.TimeEnd > e.TimeStart))
+                                Add(check);
+                            }
+                            else
+                            {
+                                var examinations = dentistSlot.Examinations.ToList();
+                                if (examinations.Count > 0)
                                 {
-                                    Add("There is an appointment at :" + e.TimeStart + "-" + e.TimeEnd);
-                                    break;
+                                    foreach (var e in examinations)
+                                    {
+                                        if ((examinationDTO.TimeStart >= e.TimeStart && examinationDTO.TimeStart < e.TimeEnd) ||
+                                            (examinationDTO.TimeStart < e.TimeStart && examinationDTO.TimeEnd > e.TimeStart))
+                                        {
+                                            Add("There is an appointment at :" + e.TimeStart + "-" + e.TimeEnd);
+                                            break;
+                                        }
+                                    }
                                 }
                             }
-                        }
+                        }                       
                     }
                 }
-                
             }
             return responseListDTO;
         }
@@ -355,5 +515,8 @@ namespace Services.Impl
             }
             return result;
         }
+        
+
+        
     }
 }

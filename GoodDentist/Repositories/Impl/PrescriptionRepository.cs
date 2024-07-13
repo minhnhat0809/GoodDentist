@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObject;
 using BusinessObject.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Impl
 {
@@ -17,6 +18,39 @@ namespace Repositories.Impl
 		{
 			List<Prescription> prescriptions = await Paging(pageNumber, pageSize);
 			return prescriptions;
+		}
+
+		public async Task<List<Prescription>> GetPrescriptions(int pageNumber, int pageSize)
+		{
+			var models = await _repositoryContext.Prescriptions
+				.Include(x => x.MedicinePrescriptions)
+				.ThenInclude(x=>x.Medicine)
+				.ToListAsync();
+			return models;
+		}
+
+		public async Task<Prescription> UpdatePresription(Prescription prescription)
+		{
+			var model = await _repositoryContext.Prescriptions
+				.Include(x => x.MedicinePrescriptions)
+				.ThenInclude(x => x.Medicine)
+				.FirstOrDefaultAsync(x => x.PrescriptionId == prescription.PrescriptionId);
+			_repositoryContext.Entry(model).CurrentValues.SetValues(prescription);
+			_repositoryContext.SaveChangesAsync();
+			return model;
+		}
+
+		public void CreatePrescription(Prescription prescription)
+		{
+			_repositoryContext.Prescriptions.Add(prescription);
+			_repositoryContext.SaveChangesAsync();
+		}
+
+		public async Task<Prescription?> GetPrescriptionById(int prescriptionId)
+		{
+			return await _repositoryContext.Prescriptions
+				.Include(p => p.MedicinePrescriptions).ThenInclude(mp => mp.Medicine)
+				.FirstOrDefaultAsync(p => p.PrescriptionId == prescriptionId);
 		}
 	}
 }

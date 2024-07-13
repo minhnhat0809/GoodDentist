@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BusinessObject.Entity;
 
-namespace BusinessObject.Entity;
+namespace BusinessObject.DTO.ViewDTO;
 
-public partial class Customer
+public class CustomerDTO
 {
     public Guid CustomerId { get; set; }
 
@@ -31,7 +30,7 @@ public partial class Customer
 
     public bool? Status { get; set; }
 
-    public virtual ICollection<CustomerClinic> CustomerClinics { get; set; } = new List<CustomerClinic>();
+    public ICollection<ClinicDTO> Clinics { get; set; } = new List<ClinicDTO>();
 
-    public virtual ICollection<ExaminationProfile> ExaminationProfiles { get; set; } = new List<ExaminationProfile>();
+    public ICollection<ExaminationProfileDTO> ExaminationProfiles { get; set; } = new List<ExaminationProfileDTO>();
 }

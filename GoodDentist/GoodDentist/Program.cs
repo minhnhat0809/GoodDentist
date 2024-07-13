@@ -67,6 +67,7 @@ builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 builder.Services.AddScoped<IExamProfileRepo, ExamProfileRepo>();
+builder.Services.AddScoped<ICustomerClinicRepository, CustomerClinicRepository>();
 
 builder.Services.AddScoped<IPaymentRepo, PaymentRepo>();
 
@@ -155,4 +156,4 @@ app.UseCors("CORSPolicy");
 app.MapControllers();
 
 app.Run();
-// dotnet ef dbcontext scaffold "Server=(local);Initial Catalog=Good_Dentist_DB;Persist Security Info=False;User ID=sa;Password=12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Entity" --context-dir ".\"
+//dotnet ef dbcontext scaffold "Server=(local);Initial Catalog=Good_Dentist_DB;Persist Security Info=False;User ID=sa;Password=12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Entity" --context-dir ".\"  --force

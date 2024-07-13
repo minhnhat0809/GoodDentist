@@ -32,7 +32,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("all-users")]
-        public async Task<ActionResult<ResponseDTO>> GetAllUsers([FromQuery] int pageNumber, int rowsPerPage,
+        public async Task<ActionResult<ResponseDTO>> GetAllUsers([FromQuery] int pageNumber = 1, int rowsPerPage = 5,
             [FromQuery] string? filterField = null,
             [FromQuery] string? filterValue = null,
             [FromQuery] string? sortField = null,
@@ -47,6 +47,18 @@ namespace GoodDentist.Controllers
         {
             ResponseDTO responseDTO = await userService.GetUser(userId);
             return responseDTO;
+        }
+
+        [HttpGet("all-dentists-by-clinic")]
+        public async Task<ActionResult<ResponseDTO>> GetAllDentistsByClinic([FromQuery] string clinicId,
+           [FromQuery] int pageNumber, int rowsPerPage,
+           [FromQuery] string? filterField = null,
+           [FromQuery] string? filterValue = null,
+           [FromQuery] string? sortField = null,
+           [FromQuery] string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = await userService.getAllDentistsByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
+            return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
         [HttpGet("all-users-by-clinic")]
@@ -69,7 +81,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPut("user")]
-        public async Task<ActionResult<ResponseDTO>> UpdateUser([FromBody] CreateUserDTO createUserDTO)
+        public async Task<ActionResult<ResponseDTO>> UpdateUser([FromForm] CreateUserDTO createUserDTO)
         {
 			ResponseListDTO responseDTO = await userService.updateUser(createUserDTO);
             return StatusCode(responseDTO.StatusCode, responseDTO);

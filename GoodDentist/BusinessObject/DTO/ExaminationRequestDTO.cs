@@ -4,7 +4,7 @@ namespace BusinessObject.DTO.ViewDTO;
 
 public class ExaminationRequestDTO
 {
-    public int ExaminationId { get; set; }
+    public int? ExaminationId { get; set; }
 
     public int? ExaminationProfileId { get; set; }
 
@@ -12,9 +12,9 @@ public class ExaminationRequestDTO
 
     public string? Diagnosis { get; set; }
 
-    public required DateTime TimeStart { get; set; }
+    public DateTime? TimeStart { get; set; }
 
-    public required DateTime TimeEnd { get; set; }
+    public DateTime? TimeEnd { get; set; }
 
     public string? Notes { get; set; }
 

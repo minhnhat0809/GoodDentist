@@ -28,5 +28,7 @@ namespace Services
         string sortField, string sortOrder);
 
         Task<ResponseDTO> GetAllSlotsOfDentistByTimeStart(string clinicId, DateTime timeStart, DateTime timeEnd);
+
+        Task<ResponseDTO> GetAllDentistSlotsByDentistAndDate(string clinicId, string dentistId, DateOnly selectedDate);
     }
 }

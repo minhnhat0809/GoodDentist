@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.DTO;
+using BusinessObject.DTO.ViewDTO;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -26,10 +27,10 @@ namespace Services.Impl
 		{
 			try
 			{
-				List<Prescription>? prescriptionList = await _unitOfWork.prescriptionRepo.GetAllPrescription(pageNumber, pageSize);
-				var all = prescriptionList.Where(c => c.Status == true);
+				List<Prescription>? prescriptionList = await _unitOfWork.prescriptionRepo.GetPrescriptions(pageNumber, pageSize);
+				
 
-				List<PrescriptionDTO> presctiptionDTOList = _mapper.Map<List<PrescriptionDTO>>(all);
+				List<PrescriptionDTO> presctiptionDTOList = _mapper.Map<List<PrescriptionDTO>>(prescriptionList);
 				return new ResponseDTO("Get all Order successfully!", 200, true, presctiptionDTOList);
 			}
 			catch (Exception ex)
@@ -81,19 +82,82 @@ namespace Services.Impl
 			}
 		}
 
+		public async Task<ResponseDTO> GetPrescriptionDetails(int prescriptionId)
+		{
+			ResponseDTO responseDto = new ResponseDTO("",200,true,null);
+			try
+			{
+				if (prescriptionId <= 0)
+				{
+					responseDto.IsSuccess = false;
+					responseDto.Message = "Prescription Id is null!";
+					responseDto.StatusCode = 400;
+					return responseDto;
+				}
+
+				Prescription? prescription = await _unitOfWork.prescriptionRepo.GetPrescriptionById(prescriptionId);
+				if (prescription == null)
+				{
+					responseDto.IsSuccess = false;
+					responseDto.Message = "Prescription is not found!";
+					responseDto.StatusCode = 404;
+					return responseDto;
+				}
+
+				PrescriptionDTO prescriptionDto = _mapper.Map<PrescriptionDTO>(prescription);
+				
+				responseDto.Message = "Get successfully!";
+				responseDto.Result = prescriptionDto;
+			}
+			catch (Exception e)
+			{
+				responseDto.Message = e.Message;
+				responseDto.IsSuccess = false;
+				responseDto.StatusCode = 500;
+			}
+			return responseDto;
+		}
+
 		public async Task<ResponseDTO> AddPrescription(PrescriptionCreateDTO prescriptionDTO)
 		{
 			try
 			{
-				var check = await CheckValidationAddPrescription(prescriptionDTO);
+				/*var check = await CheckValidationAddPrescription(prescriptionDTO);
 				if (check.IsSuccess == false)
 				{
 					return check;
-				}
-
+				}*/
+				
 				Prescription prescription = _mapper.Map<Prescription>(prescriptionDTO);
-				await _unitOfWork.prescriptionRepo.CreateAsync(prescription);
-				return new ResponseDTO("Create succesfully", 200, true, null);
+				_unitOfWork.prescriptionRepo.CreatePrescription(prescription);
+				
+				if(!prescriptionDTO.Medicines.IsNullOrEmpty())
+				{
+					foreach (var medicineDto in prescriptionDTO.Medicines)
+					{
+						if(_unitOfWork.medicineRepo.GetMedicineByID(medicineDto.MedicineId).Result != null )
+						{
+							MedicinePrescription medicinePrescription = new MedicinePrescription
+							{
+								
+								Prescription = prescription,
+								PrescriptionId = prescription.PrescriptionId,
+								Medicine = _mapper.Map<Medicine>(medicineDto),
+								MedicineId = medicineDto.MedicineId,
+								Quantity = medicineDto.Quantity,
+								Price = medicineDto.Price*medicineDto.Quantity,
+								Status = true,
+
+							};
+							prescription.MedicinePrescriptions.Add(medicinePrescription);
+						}
+					}
+					
+				}
+				
+				
+				await _unitOfWork.prescriptionRepo.UpdatePresription(prescription);
+				return new ResponseDTO("Create successfully", 200, true, _mapper.Map<PrescriptionDTO>(prescription));
 			}
 			catch (Exception ex)
 			{

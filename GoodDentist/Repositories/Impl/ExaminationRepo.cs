@@ -34,7 +34,11 @@ namespace Repositories.Impl
 
         public async Task<List<Examination>> GetAllExaminationOfDentist(string clinicId, string userId, DateOnly selectedDate, int pageNumber, int rowsPerpage)
         {
-            return await _repositoryContext.Examinations.Where(ex => ex.DentistId.Equals(Guid.Parse(userId)) 
+            return await _repositoryContext.Examinations
+            .Include(ex => ex.Dentist)
+            .Include(ex => ex.ExaminationProfile)
+                .ThenInclude(ex => ex.Customer)
+            .Where(ex => ex.DentistId.Equals(Guid.Parse(userId)) 
             && ex.DentistSlot.Room.ClinicId.Equals(Guid.Parse(clinicId)) 
             && ex.TimeStart.Value.Date == selectedDate.ToDateTime(TimeOnly.MinValue).Date)
                 .Skip((pageNumber - 1) * rowsPerpage)
@@ -49,14 +53,24 @@ namespace Repositories.Impl
 
         public async Task<Examination?> GetExaminationById(int examId)
         {
-            Examination? examination = await _repositoryContext.Examinations.FirstOrDefaultAsync(ex => ex.ExaminationId == examId);
+            Examination? examination = await _repositoryContext.Examinations
+                .Include(ex => ex.ExaminationProfile).ThenInclude(ex => ex.Dentist)
+                .Include(ex => ex.ExaminationProfile).ThenInclude(ex => ex.Customer)
+                .Include(ex => ex.DentistSlot).ThenInclude(dl => dl.Room)
+                .Include(ex => ex.DentistSlot).ThenInclude(dl => dl.Dentist)
+                .Include(ex => ex.MedicalRecords).ThenInclude(mr => mr.RecordType)
+                .Include(ex => ex.Orders).ThenInclude(o => o.OrderServices).ThenInclude(os => os.Service)
+                .Include(ex => ex.Prescriptions).ThenInclude(p => p.MedicinePrescriptions).ThenInclude(mp => mp.Medicine)
+                .FirstOrDefaultAsync(ex => ex.ExaminationId == examId);  
 
             return examination;
         }
 
         public async Task<List<Examination>> GetExaminationByProfileId(int profileId, int pageNumber, int rowsPerpage )
         {
-            return await _repositoryContext.Examinations.Where(ex => ex.ExaminationProfileId == profileId)
+            return await _repositoryContext.Examinations
+                .Include(ex => ex.DentistSlot)
+                .Where(ex => ex.ExaminationProfileId == profileId)
                 .Skip((pageNumber - 1) * rowsPerpage)
                 .Take(rowsPerpage)
                 .ToListAsync();

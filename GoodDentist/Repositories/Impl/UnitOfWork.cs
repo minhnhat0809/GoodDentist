@@ -39,11 +39,11 @@ namespace Repositories.Impl
         public INotificationRepository NotificationRepository { get; private set; }
 
         public ICustomerRepo customerRepo { get; private set; }
+        public ICustomerClinicRepository CustomerClinicRepository { get; }
 
-        
-		public IPaymentRepo paymentRepo { get; private set; }
+        public IPaymentRepo paymentRepo { get; private set; }
 
-		public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
+        public UnitOfWork(GoodDentistDbContext context, IDistributedCache cache)
         {
             _repositoryContext = context;
             userRepo = new UserRepo(_repositoryContext);

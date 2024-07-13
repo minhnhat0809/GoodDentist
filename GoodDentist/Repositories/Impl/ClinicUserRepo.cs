@@ -17,7 +17,7 @@ namespace Repositories.Impl
 
         public async Task<ClinicUser?> GetClinicUserByUserAndClinic(string userId, string clinicId)
         {
-            List<ClinicUser> clinicUserList = await FindByConditionAsync(cu => cu.ClinicId.Equals(clinicId) && cu.UserId.Equals(userId));
+            List<ClinicUser> clinicUserList = await FindByConditionAsync(cu => cu.ClinicId.Equals(clinicId) && cu.UserId.Equals(userId) && cu.Status == true);
 
             return clinicUserList.FirstOrDefault();
         }
@@ -29,14 +29,30 @@ namespace Repositories.Impl
             return clinicUserList.FirstOrDefault();
         }
 
-        public async Task<List<User?>> GetAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage)
+        public async Task<List<User>> GetAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage)
         {
-            return await _repositoryContext.ClinicUsers
-                    .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId)))
-                    .Select(cu => cu.User)
+            return await _repositoryContext.Users
+                   .Include(u => u.ClinicUsers)
+                   .Where(cu => cu.ClinicUsers.Any(cu => cu.ClinicId.Equals(Guid.Parse(clinicId))))
+                   .Skip((pageNumber - 1) * rowsPerPage)
+                   .Take(rowsPerPage)
+                   .ToListAsync();
+        }
+
+        public async Task<List<User>> GetAllDentistsByClinic(string clinicId, int pageNumber, int rowsPerPage)
+        {
+            return await _repositoryContext.Users
+                    .Include(u => u.ClinicUsers)
+                    .Where(cu => cu.ClinicUsers.Any(cu => cu.ClinicId.Equals(Guid.Parse(clinicId)) && cu.Status == true))                  
                     .Skip((pageNumber - 1) * rowsPerPage)
                     .Take(rowsPerPage)
                     .ToListAsync();
+        }
+
+        public async Task<ClinicUser?> GetClinicUserByUserAndClinicc(string userId, string clinicId)
+        {
+            return await _repositoryContext.ClinicUsers.FirstOrDefaultAsync(cu => cu.ClinicId.Equals(Guid.Parse(clinicId))
+            && cu.UserId.Equals(Guid.Parse(userId)));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BusinessObject.DTO
 {
     public class MedicineDTO
     {
-
+        public int MedicineId { get; set; }
         public string MedicineName { get; set; } = null!;
 
         public string? Type { get; set; }
