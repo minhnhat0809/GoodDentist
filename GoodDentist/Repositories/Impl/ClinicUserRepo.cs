@@ -32,7 +32,7 @@ namespace Repositories.Impl
         public async Task<List<User?>> GetAllUsersByClinic(string clinicId, int pageNumber, int rowsPerPage)
         {
             return await _repositoryContext.ClinicUsers
-                    .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId)))
+                    .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId)) && cu.Status == true)
                     .Select(cu => cu.User)
                     .Skip((pageNumber - 1) * rowsPerPage)
                     .Take(rowsPerPage)
