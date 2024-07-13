@@ -20,7 +20,7 @@ namespace BusinessObject.DTO.OrderDTOs.View
         public decimal? Price { get; set; }
 
         public bool? Status { get; set; }
-
+        
         public ICollection<OrderServiceDTO>? OrderServices { get; set; }
     }
 }

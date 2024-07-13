@@ -38,9 +38,14 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("clinic")]
-        public async Task<ActionResult<ResponseDTO>> GetCustomersByClinic(string clinicId)
+        public async Task<ActionResult<ResponseDTO>> GetCustomersByClinic([FromQuery] string clinicId,
+           [FromQuery] int pageNumber, int rowsPerPage,
+           [FromQuery] string? filterField = null,
+           [FromQuery] string? filterValue = null,
+           [FromQuery] string? sortField = null,
+           [FromQuery] string? sortOrder = "asc")
         {
-            ResponseDTO responseDTO = await customerService.GetCustomersByClinic(clinicId);
+            ResponseDTO responseDTO = await customerService.GetCustomersByClinic(clinicId, pageNumber, rowsPerPage, filterField, filterValue, sortField, sortOrder);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 

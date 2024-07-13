@@ -7,6 +7,7 @@ using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.DTO.OrderDTOs;
 using BusinessObject.DTO.OrderDTOs.View;
+using BusinessObject.DTO.ServiceDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -73,9 +74,9 @@ namespace Services.Impl
 				var result = await _unitOfWork.orderRepo.DeleteAsync(order);
 				if (result)
 				{
-					return new ResponseDTO("Order Delete succesfully!", 201, true, null);
+					return new ResponseDTO("Order Delete successfully!", 200, true, null);
 				}
-				return new ResponseDTO("Order Delete unsucessfully!", 400, false, null);
+				return new ResponseDTO("Order Delete unsuccessfully!", 400, false, null);
 			}
 			catch (Exception ex)
 			{
@@ -124,15 +125,43 @@ namespace Services.Impl
 		{
 			try
 			{
-				var check = await CheckValidationAddOrder(orderDTO);
+				/*var check = await CheckValidationAddOrder(orderDTO);
 				if (check.IsSuccess == false)
 				{
 					return check;
+				}*/
+				
+				// map to model
+				Order model = _mapper.Map<Order>(orderDTO);
+				model.Price = 0;
+				if(!orderDTO.Services.IsNullOrEmpty())
+				{
+					foreach (ServiceToOrderDTO serviceDto in orderDTO.Services)
+					{
+						var service = await _unitOfWork.serviceRepo.GetByIdAsync(serviceDto.ServiceId);
+						if (service!=null)
+						{
+							OrderService orderService = new OrderService
+							{
+								Price = service.Price,
+								Quantity = serviceDto.Quantity,
+								Status = 1,
+								ServiceId = service.ServiceId
+							};
+							model.OrderServices.Add(orderService);
+							model.Price += service.Price * serviceDto.Quantity;
+						}
+					}
 				}
 
-				Order order = _mapper.Map<Order>(orderDTO);
-				await _unitOfWork.orderRepo.CreateAsync(order);
-				return new ResponseDTO("Create succesfully", 200, true, null);
+				if (orderDTO.ExaminationId != null) 
+				{
+					model.Examination =
+						await _unitOfWork.examinationRepo.GetExaminationById(orderDTO.ExaminationId.Value);
+				}
+				
+				await _unitOfWork.orderRepo.CreateOrder(model);
+				return new ResponseDTO("Create successfully", 200, true, _mapper.Map<OrderDTO>(model));
 			}
 			catch (Exception ex)
 			{
@@ -140,32 +169,57 @@ namespace Services.Impl
 			}
 		}
 
-		public async Task<ResponseDTO> UpdateOrder(OrderDTO orderDTO)
+		
+		
+		
+		public async Task<ResponseDTO> UpdateOrder(OrderUpdateDTO orderDTO)
 		{
 			try
 			{
-				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderDTO.OrderId);
-				if (order == null || order.Status == false)
+				Order model = await _unitOfWork.orderRepo.GetOrderById(orderDTO.OrderId);
+				
+				if (model == null || model.Status == false)
 				{
 					return new ResponseDTO("This order is not exist!", 400, false, null);
-				}
+				}/*
 				var check = await CheckValidationUpdateOrder(orderDTO);
 				if (check.IsSuccess == false)
 				{
 					return check;
+				}*/
+				// map to model
+				model = _mapper.Map<Order>(orderDTO);
+				model.Price = 0;
+				if(!orderDTO.Services.IsNullOrEmpty())
+				{
+					foreach (ServiceToOrderDTO serviceDto in orderDTO.Services)
+					{
+						var service = await _unitOfWork.serviceRepo.GetByIdAsync(serviceDto.ServiceId);
+						if (service!=null)
+						{
+							OrderService orderService = new OrderService
+							{
+								Order = model,
+								OrderId = model.OrderId,
+								Price = service.Price,
+								Quantity = serviceDto.Quantity,
+								Status = 1,
+								ServiceId = service.ServiceId,
+								Service = service
+							};
+							model.OrderServices.Add(orderService);
+							model.Price += service.Price * serviceDto.Quantity;
+						}
+					}
 				}
-				int orderId = order.OrderId;
 
-				_unitOfWork.orderRepo.Detach(order);
-
-				var updateOrder = _mapper.Map<Order>(orderDTO);
-
-				updateOrder.OrderId = orderId;
-
-				_unitOfWork.orderRepo.Attach(updateOrder);
-
-				await _unitOfWork.orderRepo.UpdateAsync(updateOrder);
-				return new ResponseDTO("Update Sucessfully!", 201, true, null);
+				if (orderDTO.ExaminationId != null) 
+				{
+					model.Examination =
+						await _unitOfWork.examinationRepo.GetExaminationById(orderDTO.ExaminationId.Value);
+				}
+				await _unitOfWork.orderRepo.UpdateOrder(model);
+				return new ResponseDTO("Update Successfully!", 200, true, _mapper.Map<OrderDTO>(model));
 			}
 			catch (Exception ex)
 			{
