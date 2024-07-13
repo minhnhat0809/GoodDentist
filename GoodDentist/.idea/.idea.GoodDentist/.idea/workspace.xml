@@ -11,13 +11,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="commit">
-      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/OrderServiceDTOs/OrderServiceCreateDTO.cs" afterDir="false" />
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="fix merge main">
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/OrderDTOs/OrderUpdateDTO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/OrderDTOs/OrderCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/OrderDTOs/OrderCreateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/OrderDTOs/View/OrderDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/OrderDTOs/View/OrderDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/OrderServiceDTOs/View/OrderServiceDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/OrderServiceDTOs/View/OrderServiceDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ViewDTO/PaymentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ServiceDTOs/View/ServiceDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ServiceDTOs/View/ServiceDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/OrderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/OrderController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IOrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IOrderServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -462,7 +464,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720862017077</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="fix merge main">
+      <option name="closed" value="true" />
+      <created>1720863155807</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1720863155807</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,7 +494,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="merge master" />
     <MESSAGE value="clinic update" />
     <MESSAGE value="login hash and salt" />
     <MESSAGE value="Login - Authentication - Authorize - JwtAccessToken" />
@@ -509,7 +518,8 @@
     <MESSAGE value="get all users : filter clinic and filter value = clinic id (get all user by clinic id)" />
     <MESSAGE value="commit" />
     <MESSAGE value="Create Order : Add Order include Services" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create Order : Add Order include Services" />
+    <MESSAGE value="fix merge main" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix merge main" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -669,6 +679,45 @@
           <line>327</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\CustomerService.cs" containingFunctionPresentation="Method 'updateCustomer'" />
           <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
+          <line>134</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'AddOrder'">
+            <startOffsets>
+              <option value="3992" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4035" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs</url>
+          <line>52</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\OrderRepository.cs" containingFunctionPresentation="Method 'UpdateOrder'">
+            <startOffsets>
+              <option value="1482" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1659" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
+          <line>210</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'UpdateOrder'">
+            <startOffsets>
+              <option value="6144" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6195" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="128" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

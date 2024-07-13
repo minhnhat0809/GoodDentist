@@ -20,6 +20,6 @@ namespace BusinessObject.DTO.OrderDTOs
 
         public bool? Status { get; set; }
 
-        public ICollection<ServiceDTO> Services = new List<ServiceDTO>();
+        public ICollection<ServiceToOrderDTO> Services { get; set; } = new List<ServiceToOrderDTO>();
     }
 }

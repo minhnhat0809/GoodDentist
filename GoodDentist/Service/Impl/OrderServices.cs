@@ -7,6 +7,7 @@ using AutoMapper;
 using BusinessObject.DTO;
 using BusinessObject.DTO.OrderDTOs;
 using BusinessObject.DTO.OrderDTOs.View;
+using BusinessObject.DTO.ServiceDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -132,28 +133,34 @@ namespace Services.Impl
 				
 				// map to model
 				Order model = _mapper.Map<Order>(orderDTO);
-				model = await _unitOfWork.orderRepo.CreateOrder(model);
-				if(!orderDTO.Services.IsNullOrEmpty()){
-					List<Service> services = _mapper.Map<List<Service>>(orderDTO.Services);
-					
-					foreach (Service service in services)
+				model.Price = 0;
+				if(!orderDTO.Services.IsNullOrEmpty())
+				{
+					foreach (ServiceToOrderDTO serviceDto in orderDTO.Services)
 					{
-						OrderService orderService = new OrderService
+						var service = await _unitOfWork.serviceRepo.GetByIdAsync(serviceDto.ServiceId);
+						if (service!=null)
 						{
-							Order = model,
-							Price = service.Price,
-							Quantity = 1,
-							Status = 1,
-							Service = service,
-							OrderId = model.OrderId,
-							ServiceId = service.ServiceId
-						};
-						model.OrderServices.Add(orderService);
+							OrderService orderService = new OrderService
+							{
+								Price = service.Price,
+								Quantity = serviceDto.Quantity,
+								Status = 1,
+								ServiceId = service.ServiceId
+							};
+							model.OrderServices.Add(orderService);
+							model.Price += service.Price * serviceDto.Quantity;
+						}
 					}
 				}
-				model.Examination = await _unitOfWork.examinationRepo.GetExaminationById(orderDTO.ExaminationId.Value);
+
+				if (orderDTO.ExaminationId != null) 
+				{
+					model.Examination =
+						await _unitOfWork.examinationRepo.GetExaminationById(orderDTO.ExaminationId.Value);
+				}
 				
-				await _unitOfWork.orderRepo.UpdateOrder(model);
+				await _unitOfWork.orderRepo.CreateOrder(model);
 				return new ResponseDTO("Create successfully", 200, true, _mapper.Map<OrderDTO>(model));
 			}
 			catch (Exception ex)
@@ -165,32 +172,54 @@ namespace Services.Impl
 		
 		
 		
-		public async Task<ResponseDTO> UpdateOrder(OrderDTO orderDTO)
+		public async Task<ResponseDTO> UpdateOrder(OrderUpdateDTO orderDTO)
 		{
 			try
 			{
-				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderDTO.OrderId);
-				if (order == null || order.Status == false)
+				Order model = await _unitOfWork.orderRepo.GetOrderById(orderDTO.OrderId);
+				
+				if (model == null || model.Status == false)
 				{
 					return new ResponseDTO("This order is not exist!", 400, false, null);
-				}
+				}/*
 				var check = await CheckValidationUpdateOrder(orderDTO);
 				if (check.IsSuccess == false)
 				{
 					return check;
+				}*/
+				// map to model
+				model = _mapper.Map<Order>(orderDTO);
+				model.Price = 0;
+				if(!orderDTO.Services.IsNullOrEmpty())
+				{
+					foreach (ServiceToOrderDTO serviceDto in orderDTO.Services)
+					{
+						var service = await _unitOfWork.serviceRepo.GetByIdAsync(serviceDto.ServiceId);
+						if (service!=null)
+						{
+							OrderService orderService = new OrderService
+							{
+								Order = model,
+								OrderId = model.OrderId,
+								Price = service.Price,
+								Quantity = serviceDto.Quantity,
+								Status = 1,
+								ServiceId = service.ServiceId,
+								Service = service
+							};
+							model.OrderServices.Add(orderService);
+							model.Price += service.Price * serviceDto.Quantity;
+						}
+					}
 				}
-				int orderId = order.OrderId;
 
-				_unitOfWork.orderRepo.Detach(order);
-
-				var updateOrder = _mapper.Map<Order>(orderDTO);
-
-				updateOrder.OrderId = orderId;
-
-				_unitOfWork.orderRepo.Attach(updateOrder);
-
-				await _unitOfWork.orderRepo.UpdateAsync(updateOrder);
-				return new ResponseDTO("Update Sucessfully!", 201, true, null);
+				if (orderDTO.ExaminationId != null) 
+				{
+					model.Examination =
+						await _unitOfWork.examinationRepo.GetExaminationById(orderDTO.ExaminationId.Value);
+				}
+				await _unitOfWork.orderRepo.UpdateOrder(model);
+				return new ResponseDTO("Update Successfully!", 200, true, _mapper.Map<OrderDTO>(model));
 			}
 			catch (Exception ex)
 			{

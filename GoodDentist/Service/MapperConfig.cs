@@ -154,11 +154,15 @@ namespace Services
             //ORDER
             CreateMap<Order, OrderDTO>()
                 .ForMember(dest => dest.OrderServices, opt => opt.MapFrom(src => src.OrderServices));
-            
+            // order - create
             CreateMap<OrderServiceDTO, OrderService>().ReverseMap();
             CreateMap<OrderServiceCreateDTO, OrderService>().ReverseMap();
-            
             CreateMap<OrderCreateDTO, Order>().ReverseMap();
+            
+            // order - update
+            CreateMap<ServiceToOrderDTO, Service>().ReverseMap();
+            CreateMap<OrderUpdateDTO, Order>().ReverseMap();
+            
             CreateMap<OrderDTO, Order>().ReverseMap();
             
             /*----------------------------------------------------*/

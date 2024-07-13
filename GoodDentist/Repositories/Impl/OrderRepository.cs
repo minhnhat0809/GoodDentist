@@ -31,6 +31,7 @@ namespace Repositories.Impl
 		{
 			return await _repositoryContext.Orders
 				.Include(o => o.OrderServices).ThenInclude(os => os.Service)
+				.Include(x=>x.Examination)
 				.FirstOrDefaultAsync(o => o.OrderId == orderId);
 		}
 
@@ -49,18 +50,28 @@ namespace Repositories.Impl
 
 		public async Task<Order> UpdateOrder(Order order)
 		{
-			var model = await _repositoryContext.Orders
-				.Include(x=>x.OrderServices)
-				.ThenInclude(x=>x.Service)
-				.FirstOrDefaultAsync(x => x.OrderName == order.OrderName);
-			if (model != null)
-			{
-				_repositoryContext.Entry(model).CurrentValues.SetValues(order);
-				_repositoryContext.SaveChanges();
-				return  await _repositoryContext.Orders.FirstOrDefaultAsync(x => x.OrderName == order.OrderName);
-			}
+				var model = await _repositoryContext.Orders
+					.Include(x => x.OrderServices)
+					.ThenInclude(x => x.Service)
+					.FirstOrDefaultAsync(x => x.OrderName == order.OrderName);
 
-			return null;
+				if (model != null)
+				{
+					_repositoryContext.Entry(model).CurrentValues.SetValues(order);
+					_repositoryContext.OrderServices.RemoveRange(model.OrderServices);
+					await _repositoryContext.SaveChangesAsync();
+					
+					foreach (var os in order.OrderServices)
+					{
+						model.OrderServices.Add(os);	
+					}
+					await _repositoryContext.SaveChangesAsync();
+					
+					return model;
+				}
+
+				return null;
+		
 		}
 	}
 }

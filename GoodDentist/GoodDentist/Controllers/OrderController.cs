@@ -49,7 +49,7 @@ namespace GoodDentist.Controllers
 		}
 
 		[HttpPut("update-order")]
-		public async Task<ResponseDTO> UpdateOrder([FromBody] OrderDTO orderDTO)
+		public async Task<ResponseDTO> UpdateOrder([FromBody] OrderUpdateDTO orderDTO)
 		{
 			ResponseDTO responseDTO = await _orderservice.UpdateOrder(orderDTO);
 
