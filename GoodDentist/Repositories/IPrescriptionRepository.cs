@@ -11,9 +11,9 @@ namespace Repositories
 	{
 		Task<List<Prescription>?> GetAllPrescription(int pageNumber, int pageSize);
 		Task<List<Prescription>?> GetPrescriptions(int pageNumber, int pageSize);
-		Task<Prescription> UpdatePresription(Prescription prescription);
-		void CreatePrescription(Prescription prescription);
-
+		Task<Prescription> UpdatePrescription(Prescription prescription);
+		Task<Prescription> CreatePrescription(Prescription prescription);
+		Task<Prescription> DeletePrescription(int prescriptionId);
 		Task<Prescription?> GetPrescriptionById(int prescriptionId);
 	}
 }

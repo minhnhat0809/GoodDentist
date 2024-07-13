@@ -65,17 +65,12 @@ namespace Services.Impl
 			try
 			{
 				var prescription = await _unitOfWork.prescriptionRepo.GetByIdAsync(prescriptionId);
-				if (prescription == null||prescription.Status == false)
+				if (prescription == null)
 				{
 					return new ResponseDTO("This prescription is not exist!", 400, false, null);
 				}
-				prescription.Status = false;
-				var result = await _unitOfWork.prescriptionRepo.DeleteAsync(prescription);
-				if (result)
-				{
-					return new ResponseDTO("Prescription Delete succesfully!", 201, true, null);
-				}
-				return new ResponseDTO("Prescription Delete unsucessfully!", 400, false, null);
+				prescription = await _unitOfWork.prescriptionRepo.DeletePrescription(prescriptionId);
+				return new ResponseDTO("Prescription Delete successfully!", 200, true, _mapper.Map<PrescriptionDTO>(prescription));
 			}
 			catch (Exception ex)
 			{
@@ -130,34 +125,36 @@ namespace Services.Impl
 				}*/
 				
 				Prescription prescription = _mapper.Map<Prescription>(prescriptionDTO);
-				_unitOfWork.prescriptionRepo.CreatePrescription(prescription);
-				
+				prescription.Total = 0;
 				if(!prescriptionDTO.Medicines.IsNullOrEmpty())
 				{
 					foreach (var medicineDto in prescriptionDTO.Medicines)
 					{
-						if(_unitOfWork.medicineRepo.GetMedicineByID(medicineDto.MedicineId).Result != null )
+						var medicine = await _unitOfWork.medicineRepo.GetByIdAsync(medicineDto.MedicineId);
+						if(medicine != null)
 						{
+							// check Medicine quantity is valid? 
 							MedicinePrescription medicinePrescription = new MedicinePrescription
 							{
-								
-								Prescription = prescription,
-								PrescriptionId = prescription.PrescriptionId,
-								Medicine = _mapper.Map<Medicine>(medicineDto),
-								MedicineId = medicineDto.MedicineId,
-								Quantity = medicineDto.Quantity,
-								Price = medicineDto.Price*medicineDto.Quantity,
-								Status = true,
 
+								MedicineId = medicine.MedicineId,
+								Quantity = medicineDto.MedicineId,
+								Price = medicine.Price * medicineDto.Quantity,
+								Status = true
+								
 							};
 							prescription.MedicinePrescriptions.Add(medicinePrescription);
+							prescription.Total += medicinePrescription.Price;
 						}
 					}
-					
 				}
-				
-				
-				await _unitOfWork.prescriptionRepo.UpdatePresription(prescription);
+
+				if (prescriptionDTO.ExaminationId != null)
+				{
+					prescription.Examination =
+						await _unitOfWork.examinationRepo.GetExaminationById(prescriptionDTO.ExaminationId.Value);
+				}
+				await _unitOfWork.prescriptionRepo.CreatePrescription(prescription);
 				return new ResponseDTO("Create successfully", 200, true, _mapper.Map<PrescriptionDTO>(prescription));
 			}
 			catch (Exception ex)
@@ -166,32 +163,52 @@ namespace Services.Impl
 			}
 		}
 
-		public async Task<ResponseDTO> UpdatePrescription(PrescriptionDTO prescriptionDTO)
+		public async Task<ResponseDTO> UpdatePrescription(PrescriptionUpdateDTO prescriptionDTO)
 		{
 			try
 			{
-				var prescription = await _unitOfWork.prescriptionRepo.GetByIdAsync(prescriptionDTO.PrescriptionId);
-				if (prescription == null || prescription.Status == false)
+				Prescription prescription = await _unitOfWork.prescriptionRepo.GetByIdAsync(prescriptionDTO.PrescriptionId);
+				if (prescription == null )
 				{
 					return new ResponseDTO("This prescription is not exist!", 400, false, null);
 				}
-				var check = await CheckValidationUpdatePrescription(prescriptionDTO);
+				/*var check = await CheckValidationUpdatePrescription(prescriptionDTO);
 				if (check.IsSuccess == false)
 				{
 					return check;
+				}*/
+				prescription = _mapper.Map<Prescription>(prescriptionDTO);
+				prescription.Total = 0;
+				if(!prescriptionDTO.Medicines.IsNullOrEmpty())
+				{
+					foreach (var medicineDto in prescriptionDTO.Medicines)
+					{
+						var medicine = await _unitOfWork.medicineRepo.GetByIdAsync(medicineDto.MedicineId);
+						if(medicine != null)
+						{
+							// check Medicine quantity is valid? 
+							MedicinePrescription medicinePrescription = new MedicinePrescription
+							{
+
+								MedicineId = medicine.MedicineId,
+								Quantity = medicineDto.MedicineId,
+								Price = medicine.Price * medicineDto.Quantity,
+								Status = prescriptionDTO.Status
+								
+							};
+							prescription.MedicinePrescriptions.Add(medicinePrescription);
+							prescription.Total += medicinePrescription.Price;
+						}
+					}
 				}
-				int prescriptionId = prescription.PrescriptionId;
 
-				_unitOfWork.prescriptionRepo.Detach(prescription);
-
-				var prescriptionUpdate = _mapper.Map<Prescription>(prescriptionDTO);
-
-				prescriptionUpdate.PrescriptionId = prescriptionId;
-
-				_unitOfWork.prescriptionRepo.Attach(prescriptionUpdate);
-
-				await _unitOfWork.prescriptionRepo.UpdateAsync(prescriptionUpdate);
-				return new ResponseDTO("Update Sucessfully!", 201, true, null);
+				if (prescriptionDTO.ExaminationId != null)
+				{
+					prescription.Examination =
+						await _unitOfWork.examinationRepo.GetExaminationById(prescriptionDTO.ExaminationId.Value);
+				}
+				await _unitOfWork.prescriptionRepo.UpdatePrescription(prescription);
+				return new ResponseDTO("Update Successfully!", 201, true, _mapper.Map<PrescriptionDTO>(prescription));
 				
 			}
 			catch (Exception ex)

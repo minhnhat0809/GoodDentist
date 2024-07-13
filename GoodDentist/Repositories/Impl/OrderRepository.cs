@@ -35,6 +35,29 @@ namespace Repositories.Impl
 				.FirstOrDefaultAsync(o => o.OrderId == orderId);
 		}
 
+		public async Task<Order> DeleteOrder(int orderId)
+		{
+			var model = await _repositoryContext.Orders
+				.Include(x => x.OrderServices)
+				.ThenInclude(x => x.Service)
+				.FirstOrDefaultAsync(x => x.OrderId == orderId);
+
+			if (model != null)
+			{
+				model.Status = false;
+					
+				foreach (var os in model.OrderServices)
+				{
+					os.Status = 0;
+				}
+				await _repositoryContext.SaveChangesAsync();
+					
+				return model;
+			}
+
+			return null;
+		}
+
 		public async Task<Order> CreateOrder(Order order)
 		{
 			var model = await _repositoryContext.Orders.FirstOrDefaultAsync(x => x.OrderName == order.OrderName);

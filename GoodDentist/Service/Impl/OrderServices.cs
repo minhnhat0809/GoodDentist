@@ -66,17 +66,13 @@ namespace Services.Impl
 			try
 			{
 				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderId);
-				if (order == null || order.Status == false)
+				if (order == null)
 				{
 					return new ResponseDTO("This order is not exist!", 400, false, null);
 				}
-				order.Status = false;
-				var result = await _unitOfWork.orderRepo.DeleteAsync(order);
-				if (result)
-				{
-					return new ResponseDTO("Order Delete successfully!", 200, true, null);
-				}
-				return new ResponseDTO("Order Delete unsuccessfully!", 400, false, null);
+
+				order = await _unitOfWork.orderRepo.DeleteOrder(orderId);
+				return new ResponseDTO("Order Delete successfully!", 200, true, _mapper.Map<OrderDTO>(order));
 			}
 			catch (Exception ex)
 			{
@@ -169,16 +165,13 @@ namespace Services.Impl
 			}
 		}
 
-		
-		
-		
 		public async Task<ResponseDTO> UpdateOrder(OrderUpdateDTO orderDTO)
 		{
 			try
 			{
 				Order model = await _unitOfWork.orderRepo.GetOrderById(orderDTO.OrderId);
 				
-				if (model == null || model.Status == false)
+				if (model == null)
 				{
 					return new ResponseDTO("This order is not exist!", 400, false, null);
 				}/*
@@ -203,7 +196,7 @@ namespace Services.Impl
 								OrderId = model.OrderId,
 								Price = service.Price,
 								Quantity = serviceDto.Quantity,
-								Status = 1,
+								Status = orderDTO.Status == true ? 1 : 0,
 								ServiceId = service.ServiceId,
 								Service = service
 							};

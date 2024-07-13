@@ -13,9 +13,9 @@ namespace GoodDentist.Controllers
 	public class PrescriptionController : ControllerBase
 	{
 		private readonly IPrescriptionService _prescriptionService;
-        public PrescriptionController(IPrescriptionService prescriptionService, IDistributedCache distributedCache)
+        public PrescriptionController(IPrescriptionService prescriptionService)
         {
-            this._prescriptionService = prescriptionService;
+            _prescriptionService = prescriptionService;
         }
 		[HttpPost("new-prescription")]
 		public async Task<ResponseDTO> AddPrescription([FromBody] PrescriptionCreateDTO prescriptionDTO)
@@ -47,7 +47,7 @@ namespace GoodDentist.Controllers
 		}
 
 		[HttpPut("update-prescription")]
-		public async Task<ResponseDTO> UpdatePrescription([FromBody] PrescriptionDTO prescriptionDTO)
+		public async Task<ResponseDTO> UpdatePrescription([FromBody] PrescriptionUpdateDTO prescriptionDTO)
 		{
 			ResponseDTO responseDTO = await _prescriptionService.UpdatePrescription(prescriptionDTO);
 
