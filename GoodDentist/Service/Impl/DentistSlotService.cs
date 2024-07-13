@@ -148,7 +148,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                DentistSlotForExamDTO dentistSlotDTO = mapper.Map<DentistSlotForExamDTO>(dentistSlot);
+                DentistSlotDTO dentistSlotDTO = mapper.Map<DentistSlotDTO>(dentistSlot);
 
                 responseDTO.Message = "Get dentistSlot slot detail successfully!";
                 responseDTO.Result = dentistSlotDTO;

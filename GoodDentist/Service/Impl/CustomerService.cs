@@ -717,7 +717,7 @@ namespace Services.Impl
                 foreach (var viewModel in viewModels)
                 {
                     var clinics = customers
-                        .FirstOrDefault(x => x.CustomerId == viewModel.CustomerId)?
+                        .FirstOrDefault(x => x.CustomerId == viewModel.UserId)?
                         .CustomerClinics
                         .Where(cu => cu.Status==true) 
                         .Select(cu => cu.Clinic)

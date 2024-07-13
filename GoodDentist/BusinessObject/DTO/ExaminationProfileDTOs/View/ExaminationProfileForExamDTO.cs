@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessObject.DTO.ExaminationDTOs.View
+namespace BusinessObject.DTO.ExaminationProfileDTOs.View
 {
     public class ExaminationProfileForExamDTO
     {
@@ -22,9 +22,9 @@ namespace BusinessObject.DTO.ExaminationDTOs.View
 
         public bool? Status { get; set; }
 
-        public UserDTO? Customer { get; set; }
+        public UserForExamDTO? Customer { get; set; }
 
-        public UserDTO? Dentist { get; set; }
+        public UserForExamDTO? Dentist { get; set; }
 
     }
 }

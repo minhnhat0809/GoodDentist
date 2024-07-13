@@ -37,6 +37,9 @@ namespace Repositories.Impl
                 case "Room":
                     total = await goodDentistDbContext.Medicines.CountAsync();
                     break;
+                case "Customer":
+                    total = await goodDentistDbContext.Customers.CountAsync();
+                    break;
                 default:
                     break;
             }

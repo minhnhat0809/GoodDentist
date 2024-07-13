@@ -1,7 +1,6 @@
 
 using System.Text;
 using BusinessObject;
-using BusinessObject.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,8 +10,6 @@ using Services;
 using Services.Impl;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
-using ClinicService = BusinessObject.Entity.ClinicService;
-using BusinessObject.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +19,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+/*----------------------------------------------------*/
 // singleton
 builder.Services.AddSingleton<IFirebaseStorageService, FirebaseStorageService>();
+
+/*----------------------------------------------------*/
 //service
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDentistSlotService, DentistSlotService>();
@@ -44,7 +45,7 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IExaminationProfileService, ExaminationProfileService>();
 
-
+/*----------------------------------------------------*/
 // repo
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -68,12 +69,15 @@ builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 builder.Services.AddScoped<IExamProfileRepo, ExamProfileRepo>();
 builder.Services.AddScoped<ICustomerClinicRepository, CustomerClinicRepository>();
 
-
+/*----------------------------------------------------*/
+//Json
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.WriteIndented = true;
 });
+
+/*----------------------------------------------------*/
 // authen & author
 builder.Services.AddSwaggerGen(c =>
 {
@@ -118,19 +122,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
+/*----------------------------------------------------*/
 // database
 builder.Services.AddDbContext<GoodDentistDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+/*----------------------------------------------------*/
 //redis
 builder.Services.AddStackExchangeRedisCache(redis =>
 {
     redis.Configuration = "localhost:6379";
 });
 
+/*----------------------------------------------------*/
 //mapper
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
 
+/*----------------------------------------------------*/
 //cors
 builder.Services.AddCors(opts =>
 {

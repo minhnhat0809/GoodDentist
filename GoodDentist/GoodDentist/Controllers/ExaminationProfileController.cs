@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using System.Threading.Tasks;
-using BusinessObject.DTO.ExaminationDTOs.View;
+using BusinessObject.DTO.ExaminationProfileDTOs.View;
 
 namespace GoodDentist.Controllers
 {
