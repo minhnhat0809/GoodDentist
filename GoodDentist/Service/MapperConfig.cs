@@ -35,6 +35,9 @@ using BusinessObject.DTO.MedicalRecordDTOs.View;
 using BusinessObject.DTO.NotificationDTOs.View;
 using BusinessObject.DTO.OrderServiceDTOs;
 using BusinessObject.DTO.DentistSlotDTOs;
+using BusinessObject.DTO.PaymentDTOs;
+using BusinessObject.DTO.PaymentDTOs.View;
+
 namespace Services
 {
     public class MapperConfig : Profile
@@ -231,7 +234,19 @@ namespace Services
             CreateMap<Customer, CustomerForExamDTO>()
             .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Dob.HasValue ? new DateTime(src.Dob.Value.Year, src.Dob.Value.Month, src.Dob.Value.Day) : (DateTime?)null))            
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId));
+            
+            
+            /*----------------------------------------------------*/
+            // PAYMENT
+            CreateMap<PaymentAll, PaymentAllDTO>().ReverseMap();
+            CreateMap<Payment, PaymentDTO>().ReverseMap();
+            CreateMap<PaymentPrescription, PaymentPrescriptionDTO>().ReverseMap();
+            
+            CreateMap<PaymentAllCreateDTO, Payment>().ReverseMap();
+            CreateMap<PaymentAllUpdateDTO, Payment>().ReverseMap();
 
+    
+            /*----------------------------------------------------*/
         }
     }
 }

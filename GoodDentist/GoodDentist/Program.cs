@@ -73,7 +73,7 @@ builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 builder.Services.AddScoped<IExamProfileRepo, ExamProfileRepo>();
 builder.Services.AddScoped<ICustomerClinicRepository, CustomerClinicRepository>();
 
-builder.Services.AddScoped<IPaymentRepo, PaymentRepo>();
+builder.Services.AddScoped<IPaymentAllRepo, PaymentAllRepo>();
 /*----------------------------------------------------*/
 //Json
 builder.Services.AddControllers().AddJsonOptions(options =>
