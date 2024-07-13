@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.DTO.ServiceDTOs.View;
+using BusinessObject.Entity;
 
 namespace BusinessObject.DTO.OrderDTOs
 {
@@ -17,5 +19,7 @@ namespace BusinessObject.DTO.OrderDTOs
         public decimal? Price { get; set; }
 
         public bool? Status { get; set; }
+
+        public ICollection<ServiceToOrderDTO> Services { get; set; } = new List<ServiceToOrderDTO>();
     }
 }

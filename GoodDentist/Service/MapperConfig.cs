@@ -1,5 +1,11 @@
 ﻿using AutoMapper;
 using BusinessObject.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using CreateDentistSlotDTO = BusinessObject.DTO.DentistSlotDTOs.CreateDentistSlotDTO;
 using BusinessObject.DTO.ExaminationDTOs.View;
 using BusinessObject.DTO.UserDTOs.View;
 using BusinessObject.DTO.RoomDTOs.View;
@@ -27,8 +33,8 @@ using BusinessObject.DTO.CustomerDTOs.View;
 using BusinessObject.DTO.ExaminationProfileDTOs.View;
 using BusinessObject.DTO.MedicalRecordDTOs.View;
 using BusinessObject.DTO.NotificationDTOs.View;
+using BusinessObject.DTO.OrderServiceDTOs;
 using BusinessObject.DTO.DentistSlotDTOs;
-
 namespace Services
 {
     public class MapperConfig : Profile
@@ -160,11 +166,17 @@ namespace Services
             //ORDER
             CreateMap<Order, OrderDTO>()
                 .ForMember(dest => dest.OrderServices, opt => opt.MapFrom(src => src.OrderServices));
-            
-            CreateMap<OrderService, OrderServiceDTO>();
-            
+            // order - create
+            CreateMap<OrderServiceDTO, OrderService>().ReverseMap();
+            CreateMap<OrderServiceCreateDTO, OrderService>().ReverseMap();
             CreateMap<OrderCreateDTO, Order>().ReverseMap();
-            
+
+            // order - update
+            CreateMap<ServiceToOrderDTO, Service>().ReverseMap();
+            CreateMap<OrderUpdateDTO, Order>().ReverseMap();
+
+            CreateMap<OrderDTO, Order>().ReverseMap();
+
             /*----------------------------------------------------*/
             //PRESCRIPTION
             CreateMap<Prescription, PrescriptionDTO>()

@@ -12,5 +12,8 @@ namespace Repositories
 		Task<List<Order>?> GetAllOrder(int pageNumber, int pageSize);
 
 		Task<Order?> GetOrderById(int orderId);
+
+		Task<Order> CreateOrder(Order order);
+		Task<Order> UpdateOrder(Order order);
 	}
 }
