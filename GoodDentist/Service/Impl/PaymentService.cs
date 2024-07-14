@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessObject.DTO;
+using BusinessObject.DTO.PaymentDTOs;
 using BusinessObject.DTO.PaymentDTOs.View;
 using BusinessObject.Entity;
+using Microsoft.IdentityModel.Tokens;
 using Repositories;
 
 namespace Services.Impl
@@ -52,13 +54,51 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> CreatePayment(PaymentAllDTO paymentDTO)
+        public async Task<ResponseDTO> CreatePayment(PaymentAllCreateDTO paymentDTO)
         {
             try
             {
-                var payment = _mapper.Map<PaymentAll>(paymentDTO);
-                await _unitOfWork.paymentAllRepo.CreatePayment(payment);
-                return new ResponseDTO("Create payment successfully!", 201, true, paymentDTO);
+                var model = _mapper.Map<PaymentAll>(paymentDTO);
+                if (paymentDTO.Prescription != null)
+                {
+                    Prescription prescription =
+                        await _unitOfWork.prescriptionRepo.GetPrescriptionById(paymentDTO.Prescription.PrescriptionId);
+                    if (prescription != null && prescription.Status == true)
+                    {
+                        PaymentPrescription paymentPrescription = new PaymentPrescription()
+                        {
+                            Prescription = prescription,
+                            Status = true,
+                            PrescriptionId = prescription.PrescriptionId,
+                            Price = prescription.Total,
+                            PaymentDetail = prescription.Note
+                        };
+                        model.PaymentPrescription = paymentPrescription;
+                    }
+                }
+                
+                if (paymentDTO.Order != null)
+                {
+                    Order order = await _unitOfWork.orderRepo.GetOrderById(paymentDTO.Order.OrderId.Value);
+                    if (order != null && order.Status == false)
+                    {
+                        foreach (OrderService orderService in order.OrderServices)
+                        {
+                            Payment payment = new Payment()
+                            {
+                                Price = orderService.Price,
+                                Status = true,
+                                OrderService = orderService,
+                                PaymentDetail = orderService.Quantity.ToString(),
+                                OrderServiceId = orderService.OrderId
+                            };
+                            model.Payment = payment;
+                        }
+                    }
+                }
+                
+                await _unitOfWork.paymentAllRepo.CreatePayment(model);
+                return new ResponseDTO("Create payment successfully!", 201, true, _mapper.Map<PaymentAllDTO>(model));
             }
             catch (Exception ex)
             {
@@ -66,7 +106,7 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> UpdatePayment(PaymentAllDTO paymentDTO)
+        public async Task<ResponseDTO> UpdatePayment(PaymentAllUpdateDTO paymentDTO)
         {
             try
             {

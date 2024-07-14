@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using System.Threading.Tasks;
+using BusinessObject.DTO.PaymentDTOs;
 using BusinessObject.DTO.PaymentDTOs.View;
 
 namespace GoodDentist.Controllers
@@ -32,7 +33,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePayment([FromBody] PaymentAllDTO paymentDTO)
+        public async Task<IActionResult> CreatePayment([FromBody] PaymentAllCreateDTO paymentDTO)
         {
             if (paymentDTO == null)
             {
@@ -44,13 +45,8 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePayment(int id, [FromBody] PaymentAllDTO paymentDTO)
+        public async Task<IActionResult> UpdatePayment([FromBody] PaymentAllUpdateDTO paymentDTO)
         {
-            if (paymentDTO == null || id != paymentDTO.PaymentAllId)
-            {
-                return BadRequest(new ResponseDTO("Invalid data", 400, false, null));
-            }
-
             var responseDTO = await _paymentService.UpdatePayment(paymentDTO);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
