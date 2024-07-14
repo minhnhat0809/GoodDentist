@@ -51,7 +51,8 @@ namespace Repositories.Impl
             var payment = await _repositoryContext.PaymentAlls.FindAsync(id);
             if (payment != null)
             {
-                _repositoryContext.PaymentAlls.Remove(payment);
+                payment.Status = false;
+                //_repositoryContext.PaymentAlls.Remove(payment);
                 await _repositoryContext.SaveChangesAsync();
             }
         }

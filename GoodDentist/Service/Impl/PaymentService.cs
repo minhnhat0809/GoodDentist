@@ -77,25 +77,25 @@ namespace Services.Impl
                     }
                 }
                 
-                if (paymentDTO.Order != null)
-                {
-                    Order order = await _unitOfWork.orderRepo.GetOrderById(paymentDTO.Order.OrderId.Value);
-                    if (order != null && order.Status == false)
-                    {
-                        foreach (OrderService orderService in order.OrderServices)
-                        {
-                            Payment payment = new Payment()
-                            {
-                                Price = orderService.Price,
-                                Status = true,
-                                OrderService = orderService,
-                                PaymentDetail = orderService.Quantity.ToString(),
-                                OrderServiceId = orderService.OrderId
-                            };
-                            model.Payment = payment;
-                        }
-                    }
-                }
+                // if (paymentDTO.Order != null)
+                // {
+                //     Order order = await _unitOfWork.orderRepo.GetOrderById(paymentDTO.Order.OrderId.Value);
+                //     if (order != null && order.Status == false)
+                //     {
+                //         foreach (OrderService orderService in order.OrderServices)
+                //         {
+                //             Payment payment = new Payment()
+                //             {
+                //                 Price = orderService.Price,
+                //                 Status = true,
+                //                 OrderService = orderService,
+                //                 PaymentDetail = orderService.Quantity.ToString(),
+                //                 OrderServiceId = orderService.OrderId
+                //             };
+                //             model.Payment = payment;
+                //         }
+                //     }
+                // }
                 
                 await _unitOfWork.paymentAllRepo.CreatePayment(model);
                 return new ResponseDTO("Create payment successfully!", 201, true, _mapper.Map<PaymentAllDTO>(model));
