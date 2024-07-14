@@ -163,7 +163,7 @@ namespace Services.Impl
 
         public async Task<ResponseDTO> DeleteCustomer(Guid customerId)
         {
-            ResponseDTO responseDTO = new ResponseDTO("Delete Customer Successfully", 200, true, null);
+            ResponseDTO responseDTO = new ResponseDTO("Delete Customer Successfully", 200, true, "");
             try
             {
                 Customer model = await unitOfWork.customerRepo.GetCustomerById(customerId);
