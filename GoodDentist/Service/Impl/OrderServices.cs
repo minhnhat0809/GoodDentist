@@ -117,6 +117,33 @@ namespace Services.Impl
             return responseDto;
         }
 
+        public async Task<ResponseDTO> UpdateOrderAfterPayment(int orderId, int orderServiceId)
+        {
+	        try
+	        {
+		        Order? order = await _unitOfWork.orderRepo.GetOrderById(orderId);
+		        if (order != null)
+		        {
+			        List<OrderService> orderServices = order.OrderServices.ToList();
+			        foreach (OrderService? orderService in orderServices)
+			        {
+				        // if any order service paid
+				        if (orderService.OrderServiceId == orderServiceId)
+				        {
+					        // set status to be paid AS false
+					        orderService.Status = 0;
+				        }
+						// Update Order Price when one service BEING PAID.
+				        order.Price -= orderService.Price;
+			        }
+		        } return new ResponseDTO("Order not found!", 404, false, null);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }
+
         public async Task<ResponseDTO> AddOrder(OrderCreateDTO orderDTO)
 		{
 			try

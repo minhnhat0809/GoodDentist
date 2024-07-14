@@ -15,7 +15,7 @@ namespace Repositories.Impl
         public async Task<List<PaymentAll>> GetAllPayment(int pageNumber, int rowsPerPage)
         {
             return await _repositoryContext.PaymentAlls
-                .Include(x => x.Payment)
+                .Include(x => x.Payments)
                 .Include(x => x.PaymentPrescription)
                 .Skip((pageNumber - 1) * rowsPerPage)
                 .Take(rowsPerPage)
@@ -25,7 +25,7 @@ namespace Repositories.Impl
         public async Task<PaymentAll> GetPaymentById(int id)
         {
             PaymentAll? model =  await _repositoryContext.PaymentAlls
-                .Include(x => x.Payment)
+                .Include(x => x.Payments)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == id);
             return model;
@@ -41,16 +41,16 @@ namespace Repositories.Impl
         public async Task UpdatePayment(PaymentAll paymentAll)
         {
             PaymentAll? model =  await _repositoryContext.PaymentAlls
-                .Include(x => x.Payment)
+                .Include(x => x.Payments)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == paymentAll.PaymentAllId);
             if (model != null)
             {
                 
                 _repositoryContext.Entry(model).CurrentValues.SetValues(paymentAll);
-                if(model.Payment != null)
+                if(model.Payments != null)
                 {
-                    _repositoryContext.Payments.RemoveRange(model.Payment);
+                    _repositoryContext.Payments.RemoveRange(model.Payments);
                 }
                 if(model.PaymentPrescription != null)
                 {
@@ -58,7 +58,7 @@ namespace Repositories.Impl
                 }
                 await _repositoryContext.SaveChangesAsync();
 
-                model.Payment = paymentAll.Payment;
+                model.Payments = paymentAll.Payments;
                 model.PaymentPrescription = paymentAll.PaymentPrescription;
                 
                 await _repositoryContext.SaveChangesAsync();
@@ -68,14 +68,14 @@ namespace Repositories.Impl
         public async Task DeletePayment(int id)
         {
             PaymentAll? model =  await _repositoryContext.PaymentAlls
-                .Include(x => x.Payment)
+                .Include(x => x.Payments)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == id);
             if (model != null)
             {
-                if(model.Payment != null)
+                if(model.Payments != null)
                 {
-                    _repositoryContext.Payments.RemoveRange(model.Payment);
+                    _repositoryContext.Payments.RemoveRange(model.Payments);
                 }
                 if(model.PaymentPrescription != null)
                 {

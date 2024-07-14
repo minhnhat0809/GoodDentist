@@ -22,5 +22,7 @@ namespace Services
 		Task<ResponseDTO> DeleteOrder(int orderId);
 
         Task<ResponseDTO> GetOrderDetails(int orderId);
-    }
+
+        Task<ResponseDTO> UpdateOrderAfterPayment(int orderId, int orderServiceId);
+	}
 }
