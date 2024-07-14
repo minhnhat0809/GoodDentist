@@ -69,20 +69,38 @@ namespace Services.Impl
                     
                     Examination examinationForNew = mapper.Map<Examination>(examinationDTO);
                     examinationForNew.ExaminationProfileId = examinationProfile.ExaminationProfileId;
-
+                    DentistSlot? dentistSlotForNew = await unitOfWork.dentistSlotRepo.GetByIdAsync(examinationDTO.DentistSlotId);
+                    examinationForNew.DentistId = dentistSlotForNew.DentistId;
                     await unitOfWork.examinationRepo.CreateAsync(examinationForNew);
 
-                    ExaminationDTO ExamDTO = mapper.Map<ExaminationDTO>(examinationForNew);
+                    Examination? Examination = await unitOfWork.examinationRepo.GetExaminationById(examinationForNew.ExaminationId);
+                    
+                    ExaminationDTO ExamDTO = mapper.Map<ExaminationDTO>(Examination);
+                    
+                    ExamDTO.DentistName = unitOfWork.userRepo.getUserName(Examination.DentistId.ToString());
+                    ExamDTO.CustomerId = Examination.ExaminationProfile.CustomerId.ToString();
+                    ExamDTO.CustomerName =await unitOfWork.customerRepo.GetCustomerName(ExamDTO.CustomerId);
                     
                     responseListDTO.Result = ExamDTO;
                     return responseListDTO;
                 }
 
                 Examination examination = mapper.Map<Examination>(examinationDTO);
+                DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetByIdAsync(examinationDTO.DentistSlotId);
+                examination.DentistId = dentistSlot.DentistId;
 
                 await unitOfWork.examinationRepo.CreateAsync(examination);
-
-                ExaminationDTO examDTO = mapper.Map<ExaminationDTO>(examination);
+                
+                Examination? ExaminatioN = await unitOfWork.examinationRepo.GetExaminationById(examination.ExaminationId);
+                
+                
+                
+                ExaminationDTO examDTO = mapper.Map<ExaminationDTO>(ExaminatioN);
+                
+                
+                examDTO.DentistName = unitOfWork.userRepo.getUserName(ExaminatioN.DentistId.ToString());
+                examDTO.CustomerId = ExaminatioN.ExaminationProfile.CustomerId.ToString();
+                examDTO.CustomerName =await unitOfWork.customerRepo.GetCustomerName(examDTO.CustomerId);
                 
                 responseListDTO.Result = examDTO;
                 return responseListDTO;
@@ -458,6 +476,9 @@ namespace Services.Impl
                     if (dentistSlot == null)
                     {
                         Add("Dentist slot is not exist!");
+                    }else if (dentistSlot.Status != true)
+                    {
+                        Add("Dentist slot is closed!");
                     }
                     else
                     {
