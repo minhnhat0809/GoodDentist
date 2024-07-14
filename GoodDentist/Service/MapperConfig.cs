@@ -208,6 +208,7 @@ namespace Services
             /*----------------------------------------------------*/
             //CUSTOMER
             CreateMap<CustomerRequestDTO, Customer>()
+                .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => DateOnly.FromDateTime(src.Dob.Value)))
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
             
             CreateMap<Customer, CustomerDTO>()

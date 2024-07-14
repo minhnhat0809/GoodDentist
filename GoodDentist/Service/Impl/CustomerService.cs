@@ -231,6 +231,7 @@ namespace Services.Impl
                 Customer customer = mapper.Map<Customer>(customerDto);
                 customer.CustomerId = Guid.NewGuid();
                 customer.CreatedDate = DateTime.Now;
+                customer.UserName = "";
                 customer.Avatar = null;
                 customer.Status = true;
                 
@@ -256,9 +257,9 @@ namespace Services.Impl
 
                 await unitOfWork.customerRepo.CreateCustomer(customer);
 
-                var userDTO = await UploadFile(customerDto.Avatar, customer.CustomerId);
+                var userDTo = await UploadFile(customerDto.Avatar, customer.CustomerId);
 
-                responseDTO.Result = customerDto;
+                responseDTO.Result = userDTo;
                 return responseDTO;
             }
             catch (Exception ex)
