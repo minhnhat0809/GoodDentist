@@ -13,5 +13,7 @@ namespace Repositories
 	{
 		Task<List<Service>> GetAllService(int pageNumber, int rowsPerPage);
 		Task<Service> GetServiceByID(int serviceId);
+
+		Task<List<Service>?> GetServicesByClinic(string clinicId);
 	}
 }

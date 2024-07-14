@@ -23,11 +23,16 @@ namespace GoodDentist.Controllers
 			return responseDTO;
 		}
 
-		/*[HttpGet("clinic")]
-		public async Task<ResponseDTO> GetAllServiceByClinic([FromQuery] string clinicId,)
+		[HttpGet("clinic")]
+		public async Task<ActionResult<ResponseDTO>> GetAllServiceByClinic([FromQuery] string clinicId,
+			string? filterField,
+			string? filterValue,
+			int? pageNumber = 1,
+			int? rowsPerPage = 5)
 		{
-			
-		}*/
+			ResponseDTO responseDto = await serviceService.GetAllServicesByClinic(clinicId, filterField, filterValue, pageNumber, rowsPerPage);
+			return StatusCode(responseDto.StatusCode, responseDto);
+		}
 		
 		[HttpPost("new-service")]
 		public async Task<ResponseDTO> CreateService([FromBody] CreateServiceDTO model)

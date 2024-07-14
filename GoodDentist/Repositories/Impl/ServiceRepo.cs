@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessObject;
 using BusinessObject.DTO;
 using BusinessObject.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Repositories.Impl
@@ -28,6 +29,15 @@ namespace Repositories.Impl
 		{
 			Service service = _repositoryContext.Services.Where(t=>t.ServiceId==serviceId).FirstOrDefault();
 			return service;
+		}
+
+		public async Task<List<Service>?> GetServicesByClinic(string clinicId)
+		{
+			return await _repositoryContext.Services
+				.Include(s => s.ClinicServices)
+				.Where(s => s.ClinicServices.Select(cs => cs.ClinicId).Equals(Guid.Parse(clinicId)
+				))
+				.ToListAsync();
 		}
 	}
 }
