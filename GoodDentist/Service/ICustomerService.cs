@@ -14,12 +14,12 @@ namespace Services
         Task<ResponseDTO> GetAllCustomers(string search, int pageNumber, int rowsPerPage);
         Task<ResponseDTO> GetCustomerById(string customerId);
         Task<ResponseDTO> DeleteCustomer(Guid userId);
-        Task<ResponseDTO> UpdateCustomer(CustomerRequestDTO customerDto);
+        //Task<ResponseDTO> UpdateCustomer(CustomerRequestDTO customerDto);
         Task<ResponseDTO> CreateCustomer(CustomerRequestDTO customerDto);
         Task<ResponseDTO> UploadFile(IFormFile file, Guid customerId);
         Task<ResponseDTO> DeleteFileAndReference(Guid customerId);
         Task<ResponseDTO> GetCustomers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
-        Task<ResponseListDTO> updateCustomer(CustomerRequestDTO customerRequestDto);
+        Task<ResponseListDTO> UpdateCustomer(CustomerUpdateRequestDTO customerUpdateRequestDto);
         Task<ResponseDTO> GetCustomersByClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
     }
 }

@@ -36,7 +36,16 @@ namespace Repositories.Impl
             {
                 List<User?> users = await _repositoryContext.ClinicUsers
                     .Include(cu => cu.User)
-                    .ThenInclude(u => u.DentistSlots)
+                        .ThenInclude(u => u.DentistSlots).ThenInclude(dl => dl.Room)
+                    .Include(cu => cu.User)
+                        .ThenInclude(u => u.DentistSlots)
+                            .ThenInclude(dl => dl.Examinations)
+                                .ThenInclude(ex => ex.Dentist)
+                    .Include(cu => cu.User)
+                        .ThenInclude(u => u.DentistSlots)
+                            .ThenInclude(dl => dl.Examinations)
+                                .ThenInclude(ex => ex.ExaminationProfile)
+                                    .ThenInclude(ep => ep.Customer)
                     .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId))
                     && cu.Status == true).Select(cu => cu.User).ToListAsync();
                 dentistSlots = users
@@ -49,9 +58,16 @@ namespace Repositories.Impl
             {
                 List<User?> users = await _repositoryContext.ClinicUsers
                     .Include(cu => cu.User)
-                    .ThenInclude(u => u.DentistSlots).ThenInclude(dl => dl.Examinations)
+                        .ThenInclude(u => u.DentistSlots).ThenInclude(dl => dl.Room)
                     .Include(cu => cu.User)
-                    .ThenInclude(u => u.DentistSlots).ThenInclude(dl => dl.Room)
+                        .ThenInclude(u => u.DentistSlots)
+                            .ThenInclude(dl => dl.Examinations)
+                                .ThenInclude(ex => ex.Dentist)
+                    .Include(cu => cu.User)
+                        .ThenInclude(u => u.DentistSlots)
+                            .ThenInclude(dl => dl.Examinations)
+                                .ThenInclude(ex => ex.ExaminationProfile)
+                                    .ThenInclude(ep => ep.Customer)
                     .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId))
                     && cu.Status == true && cu.User.RoleId == 2).Select(cu => cu.User).ToListAsync();
 

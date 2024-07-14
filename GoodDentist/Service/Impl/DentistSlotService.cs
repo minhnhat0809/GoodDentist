@@ -415,8 +415,9 @@ namespace Services.Impl
                     }
                 }
 
-                List<DentistAndSlotDTO> dentistAndSlots = new List<DentistAndSlotDTO>();
-                foreach (var dl in dentistSlots)
+                List<DentistSlotDTO> dentistSlotDTos = mapper.Map<List<DentistSlotDTO>>(dentistSlotList);
+                
+                /*foreach (var dl in dentistSlots)
                 {
                     UserDTO dentist = mapper.Map<UserDTO>(dl.Dentist);
 
@@ -424,9 +425,10 @@ namespace Services.Impl
                     dentistAndSlot.Dentist = mapper.Map<UserDTO>(dl.Dentist);
                     dentistAndSlot.DentistSlotId = dl.DentistSlotId;
                     dentistAndSlots.Add(dentistAndSlot);
-                }
+                }*/
 
-                responseDTO.Result = dentistAndSlots;
+                responseDTO.Result = dentistSlotDTos;
+                
             }catch (Exception e)
             {
                 responseDTO = AddError(e.Message, 500);

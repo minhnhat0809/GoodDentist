@@ -11,6 +11,7 @@ namespace Repositories.Impl
         Task<List<CustomerClinic>> GetCustomerClinicsByCustomer(string customerId);
         Task<CustomerClinic?> GetCustomerClinicByCustomerAndClinicNow(string userId);
     }
+    
     public class CustomerClinicRepository : RepositoryBase<CustomerClinic>, ICustomerClinicRepository
     {
         public CustomerClinicRepository(GoodDentistDbContext repositoryContext) : base(repositoryContext)
