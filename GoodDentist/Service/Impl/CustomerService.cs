@@ -163,7 +163,7 @@ namespace Services.Impl
 
         public async Task<ResponseDTO> DeleteCustomer(Guid customerId)
         {
-            ResponseDTO responseDTO = new ResponseDTO("Delete Customer Successfully", 200, true, null);
+            ResponseDTO responseDTO = new ResponseDTO("Delete Customer Successfully", 200, true, "");
             try
             {
                 Customer model = await unitOfWork.customerRepo.GetCustomerById(customerId);
@@ -231,6 +231,7 @@ namespace Services.Impl
                 Customer customer = mapper.Map<Customer>(customerDto);
                 customer.CustomerId = Guid.NewGuid();
                 customer.CreatedDate = DateTime.Now;
+                customer.UserName = "";
                 customer.Avatar = null;
                 customer.Status = true;
                 
@@ -255,10 +256,15 @@ namespace Services.Impl
                 customer.ExaminationProfiles.Add(profile);
 
                 await unitOfWork.customerRepo.CreateCustomer(customer);
-
-                var userDTO = await UploadFile(customerDto.Avatar, customer.CustomerId);
-
-                responseDTO.Result = customerDto;
+                
+                if (customerDto.Avatar != null)
+                {
+                    await UploadFile(customerDto.Avatar, customer.CustomerId);
+                }
+                
+                var userDTo = mapper.Map<CustomerDTO>(customer);
+                
+                responseDTO.Result = userDTo;
                 return responseDTO;
             }
             catch (Exception ex)
@@ -270,7 +276,7 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> UpdateCustomer(CustomerRequestDTO customerDto)
+        /*public async Task<ResponseDTO> UpdateCustomer(CustomerRequestDTO customerDto)
         {
             ResponseDTO responseDTO = new ResponseDTO("Update Customer Successfully", 200, true, null);
             try
@@ -306,9 +312,9 @@ namespace Services.Impl
                 responseDTO.Message = ex.Message;
                 return responseDTO;
             }
-        }
+        }*/
         
-        public async Task<ResponseListDTO> updateCustomer(CustomerRequestDTO customerRequestDto)
+        public async Task<ResponseListDTO> UpdateCustomer(CustomerUpdateRequestDTO customerUpdateRequestDto)
         {
             ResponseListDTO responseDTO = new ResponseListDTO();
             responseDTO.StatusCode = 200;
@@ -316,83 +322,94 @@ namespace Services.Impl
             mod = false;
             try
             {
-                responseDTO = await validateCustomer(customerRequestDto, mod);
+                CustomerRequestDTO customerRequestDTo = mapper.Map<CustomerRequestDTO>(customerUpdateRequestDto);
+                responseDTO = await validateCustomer(customerRequestDTo, mod);
 
                 if (responseDTO.IsSuccess == false)
                 {
                     return responseDTO;
                 }
 
-                var model = await unitOfWork.customerRepo.GetCustomerByPhoneOrEmailOrUsername(customerRequestDto.PhoneNumber);
-                if (model == null)
+                if (customerUpdateRequestDto.UserId.IsNullOrEmpty())
                 {
                     responseDTO.IsSuccess = false;
-                    responseDTO.Message.Add("Customer is not existed!");
                     responseDTO.StatusCode = 400;
+                    responseDTO.Message.Add("Customer Id is null!");
                     return responseDTO;
                 }
 
-                //check name
-                if (!customerRequestDto.Name.IsNullOrEmpty())
+                Customer? customer = await unitOfWork.customerRepo.GetByIdAsync(Guid.Parse(customerUpdateRequestDto.UserId));
+
+                if (customer == null)
                 {
-                    model.Name = customerRequestDto.Name;
+                    responseDTO.IsSuccess = false;
+                    responseDTO.StatusCode = 404;
+                    responseDTO.Message.Add("Customer is not found!");
+                    return responseDTO;
+                }
+                
+                //check name
+                if (!customerUpdateRequestDto.Name.IsNullOrEmpty())
+                {
+                    customer.Name = customerUpdateRequestDto.Name;
                 }
 
                 //check date of birth
-                if (customerRequestDto.Dob.HasValue)
+                if (customerUpdateRequestDto.Dob.HasValue)
                 {
-                    model.Dob = customerRequestDto.Dob.Value;
+                    customer.Dob = DateOnly.FromDateTime(customerUpdateRequestDto.Dob.Value);
                 }
 
                 //check gender
-                if (!customerRequestDto.Gender.IsNullOrEmpty())
+                if (!customerUpdateRequestDto.Gender.IsNullOrEmpty())
                 {
-                    model.Gender = customerRequestDto.Gender;
+                    customer.Gender = customerUpdateRequestDto.Gender;
                 }
 
                 //check phone number
-                if (!customerRequestDto.PhoneNumber.IsNullOrEmpty())
+                if (!customerUpdateRequestDto.PhoneNumber.IsNullOrEmpty())
                 {
-                    model.PhoneNumber = customerRequestDto.PhoneNumber;
+                    customer.PhoneNumber = customerUpdateRequestDto.PhoneNumber;
                 }
 
                 //check email
-                if (!customerRequestDto.Email.IsNullOrEmpty())
+                if (!customerUpdateRequestDto.Email.IsNullOrEmpty())
                 {
-                    model.Email = customerRequestDto.Email;
+                    customer.Email = customerUpdateRequestDto.Email;
                 }
 
-                if (!customerRequestDto.Address.IsNullOrEmpty())
+                if (!customerUpdateRequestDto.Address.IsNullOrEmpty())
                 {
-                    model.Address = customerRequestDto.Address;
+                    customer.Address = customerUpdateRequestDto.Address;
                 }
                 
 
-                if (model.Status == false && customerRequestDto.Status == true)
+                if (customer.Status == false && customerUpdateRequestDto.Status == true)
                 {
                     CustomerClinic? customerClinic =
-                        await unitOfWork.customerRepo.GetCustomerClinicByCustomerAndClinic(model.CustomerId,
-                            Guid.Parse((ReadOnlySpan<char>)customerRequestDto.ClinicId));
+                        await unitOfWork.customerRepo.GetCustomerClinicByCustomerAndClinic(customer.CustomerId,
+                            Guid.Parse((ReadOnlySpan<char>)customerUpdateRequestDto.ClinicId));
                     if (customerClinic == null)
                     {
                         customerClinic = new CustomerClinic()
                         {
-                            ClinicId = Guid.Parse(customerRequestDto.ClinicId),
-                            CustomerId = model.CustomerId,
+                            ClinicId = Guid.Parse(customerUpdateRequestDto.ClinicId),
+                            CustomerId = customer.CustomerId,
                             Status = true
                         };
-                        //model.CustomerClinics.Add(customerClinic);
+                        
                         await unitOfWork.CustomerClinicRepository.CreateAsync(customerClinic);
                     }
                     else
                     {
-                        customerRequestDto.Status = true;
+                        customerClinic.Status = true;
                         await unitOfWork.CustomerClinicRepository.UpdateAsync(customerClinic);
                     }
                 }
                 else
                 {
-                    CustomerClinic? clinicCustomerOld = await unitOfWork.CustomerClinicRepository.GetCustomerClinicByCustomerAndClinicNow(model.CustomerId.ToString());
+                    CustomerClinic? clinicCustomerOld = await unitOfWork.CustomerClinicRepository
+                        .GetCustomerClinicByCustomerAndClinicNow(customer.CustomerId.ToString());
 
                     if (clinicCustomerOld == null)
                     {
@@ -401,20 +418,21 @@ namespace Services.Impl
                         responseDTO.StatusCode = 400;
                         return responseDTO;
                     }
-                    if (clinicCustomerOld.Status == false)
+                    
+                    if (customerUpdateRequestDto.Status == false)
                     {
                         clinicCustomerOld.Status = false;
                         await unitOfWork.CustomerClinicRepository.UpdateAsync(clinicCustomerOld);
                     }
-                    else if (clinicCustomerOld.ClinicId == clinicCustomerOld.ClinicId)
+                    else if (!clinicCustomerOld.ClinicId.ToString().Equals(customerUpdateRequestDto.ClinicId, StringComparison.OrdinalIgnoreCase))
                     {
-                        CustomerClinic? customerClinicNew = await unitOfWork.CustomerClinicRepository.GetCustomerClinicByCustomerAndClinic(clinicCustomerOld.CustomerId.ToString(), customerRequestDto.ClinicId);
+                        CustomerClinic? customerClinicNew = await unitOfWork.CustomerClinicRepository.GetCustomerClinicByCustomerAndClinic(clinicCustomerOld.CustomerId.ToString(), customerUpdateRequestDto.ClinicId);
                         if (customerClinicNew == null)
                         {
                             customerClinicNew = new CustomerClinic()
                             {
-                                ClinicId = Guid.Parse(customerRequestDto.ClinicId),
-                                Customer = model,
+                                ClinicId = Guid.Parse(customerUpdateRequestDto.ClinicId),
+                                Customer = customer,
                                 Status = true
                             };
                             clinicCustomerOld.Status = false;
@@ -438,18 +456,22 @@ namespace Services.Impl
                     }
                 }
 
-                model.Status = customerRequestDto.Status;
-                await unitOfWork.customerRepo.UpdateAsync(model);
+                customer.Status = customerUpdateRequestDto.Status;
+                customer.Anamnesis = customerUpdateRequestDto.Anamnesis;
+                
+                await unitOfWork.customerRepo.UpdateAsync(customer);
 
-                CustomerDTO viewModel = mapper.Map<CustomerDTO>(model);
+                CustomerDTO viewModel = mapper.Map<CustomerDTO>(customer);
                 if (viewModel.Avatar != null)
-                {
-                    responseDTO.Result = await UploadFile(customerRequestDto.Avatar, model.CustomerId);
+                { 
+                    await UploadFile(customerUpdateRequestDto.Avatar, customer.CustomerId);
                 }
+                
+                var userDTo = mapper.Map<CustomerDTO>(customer);
 
                 responseDTO.Message.Add("Update sucessfully");
                 responseDTO.IsSuccess = true;
-                responseDTO.Result = viewModel;
+                responseDTO.Result = userDTo;
                 return responseDTO;
             }
             catch (Exception ex)
@@ -488,7 +510,7 @@ namespace Services.Impl
                     DateOnly maxDateOfBirth = DateOnly.FromDateTime(DateTime.Now); // Or a specific end date if required
 
                     // Use DateOnly directly from customerRequestDto.Dob
-                    DateOnly dob = customerRequestDto.Dob.Value;
+                    DateOnly dob = DateOnly.FromDateTime(customerRequestDto.Dob.Value);
 
                     if (dob < minDateOfBirth || dob > maxDateOfBirth)
                     {
@@ -550,7 +572,7 @@ namespace Services.Impl
                     DateOnly maxDateOfBirth = DateOnly.FromDateTime(DateTime.Now); // Or a specific end date if required
 
                     // Use DateOnly directly from customerRequestDto.Dob
-                    DateOnly dob = customerRequestDto.Dob.Value;
+                    DateOnly dob = DateOnly.FromDateTime(customerRequestDto.Dob.Value);
 
                     if (dob < minDateOfBirth || dob > maxDateOfBirth)
                     {
@@ -625,7 +647,7 @@ namespace Services.Impl
             ResponseDTO responseDTO = new ResponseDTO("Upload Customer File Successfully", 200, true, null);
             try
             {
-                var model = await unitOfWork.customerRepo.GetCustomerById(customerId);
+                Customer? model = await unitOfWork.customerRepo.GetCustomerById(customerId);
                 if (model == null)
                 {
                     responseDTO.IsSuccess = false;

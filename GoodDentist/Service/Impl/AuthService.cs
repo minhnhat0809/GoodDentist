@@ -5,6 +5,7 @@ using System.Text;
 using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
+using BusinessObject.DTO.UserDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -144,7 +145,9 @@ public class AuthService : IAuthService
     {
         try
         {
-            _responseDto.Result = await _unitOfWork.userRepo.GetByIdAsync(userId);
+            User? user = await _unitOfWork.userRepo.GetUserById(userId.ToString());
+            var userDTO = _mapper.Map<UserDTO>(user);
+            _responseDto.Result = userDTO;
         }
         catch (Exception e)
         {

@@ -9,6 +9,7 @@ using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
 using BusinessObject.DTO.ServiceDTOs;
+using BusinessObject.DTO.ServiceDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -131,6 +132,51 @@ namespace Services.Impl
 			}
 		}
 
+		public async Task<ResponseDTO> GetAllServicesByClinic(string clinicId, string? filterField, string? filterValue, int? pageNumber,
+			int? rowsPerPage)
+		{
+			ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+			try
+			{
+				if (clinicId.IsNullOrEmpty())
+				{
+					return AddError("Clinic Id is null!",400);
+				}
+
+				Clinic? clinic = await unitOfWork.clinicRepo.GetByIdAsync(Guid.Parse(clinicId));
+				if (clinic == null)
+				{
+					return AddError("Clinic is not found!",404);
+				}
+
+				List<Service> services = new List<Service>();
+				
+				if (!filterField.IsNullOrEmpty())
+				{
+					if (filterField.ToLower().Equals("status"))
+					{
+						services = await unitOfWork.serviceRepo.GetServicesByClinicByFilter(filterValue, clinicId,
+							pageNumber.Value, rowsPerPage.Value);
+					}
+				}
+				else
+				{
+					services = await unitOfWork.serviceRepo.GetServicesByClinic(clinicId, pageNumber.Value, rowsPerPage.Value);
+
+				}				
+				services = await Filter(services, filterField, filterValue);
+
+				List<ServiceDTO> serviceDtos = mapper.Map<List<ServiceDTO>>(services);
+
+				responseDto.Result = serviceDtos;
+			}
+			catch (Exception e)
+			{
+				responseDto = AddError(e.Message, 500);
+			}
+			return responseDto;
+		}
+
 
 		public async Task<ResponseDTO> getAllService(int pageNumber, int rowsPerPage)
 		{
@@ -146,6 +192,42 @@ namespace Services.Impl
 			{
 				return new ResponseDTO(ex.Message, 500, false, null);
 			}
+		}
+
+		public async Task<List<Service>> Filter(List<Service> services, string? filterField, string? filterValue)
+		{
+			if (filterField.IsNullOrEmpty() || filterValue.IsNullOrEmpty())
+			{
+				return services;
+			}
+
+			if (services.IsNullOrEmpty())
+			{
+				return services;
+			}
+
+			switch (filterField.ToLower())
+			{
+				case "servicename":
+					services = services.Where(s => s.ServiceName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+					break;
+				case "price":
+					decimal number;
+					if (decimal.TryParse(filterValue, out number))
+					{
+						services = services.Where(s => s.Price.Value.Equals(decimal.Parse(filterValue))).ToList();
+					}
+					break;
+				default:
+					return services;
+			}
+			return services;
+		}
+		
+		private ResponseDTO AddError(string message, int statusCode)
+		{
+			ResponseDTO responseDTO = new ResponseDTO(message, statusCode, false, null);
+			return responseDTO;
 		}
 	}
 }

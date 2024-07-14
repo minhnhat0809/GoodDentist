@@ -25,24 +25,43 @@ namespace Services.Impl
             this.mapper = mapper;
         }
 
-        public async Task<ResponseListDTO> createDentistSlot(CreateDentistSlotDTO dentistSlotDTO)
+        public async Task<ResponseListDTO> createDentistSlot(List<CreateDentistSlotDTO> dentistSlotDTO)
         {
             ResponseListDTO responseDTO = new ResponseListDTO();
             responseDTO.IsSuccess = true;
             try
             {
-                responseDTO = await validateDentistSlot(dentistSlotDTO);
+                List<DentistSlot> dentistSlots = new List<DentistSlot>();
+                foreach (var dl in dentistSlotDTO)
+                {
+                    responseDTO = await validateDentistSlot(mapper.Map<UpdateDentistSlotDTO>(dl));
+                    if (responseDTO.IsSuccess == true)
+                    {
+                        DentistSlot? dentistSlott = await unitOfWork.dentistSlotRepo
+                            .GetDentistSlotByDentistAndTimeStart(dl.DentistId.ToString(), dl.TimeStart.Value);
+
+                        if (dentistSlott != null)
+                        {
+                            dentistSlott.Status = true;
+                            await unitOfWork.dentistSlotRepo.UpdateAsync(dentistSlott);
+                        }
+                        else
+                        {
+                            DentistSlot dentistSlot = mapper.Map<DentistSlot>(dl);
+                            dentistSlots.Add(dentistSlot);
+                            await unitOfWork.dentistSlotRepo.CreateAsync(dentistSlot);  
+                        }
+                    }
+                }
+
                 if (responseDTO.IsSuccess == false)
                 {
                     return responseDTO;
                 }
-
-                DentistSlot dentistSlot = mapper.Map<DentistSlot>(dentistSlotDTO);
-                await unitOfWork.dentistSlotRepo.CreateAsync(dentistSlot);
-
+                
                 responseDTO.Message.Add("Create sucessfully");
                 responseDTO.IsSuccess = true;
-                responseDTO.Result = mapper.Map<DentistSlotDTO>(dentistSlot);
+                responseDTO.Result = mapper.Map<List<DentistSlotDTO>>(dentistSlots);
                 return responseDTO;
             }
             catch (Exception ex)
@@ -164,7 +183,7 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseListDTO> updateDentistSlot(CreateDentistSlotDTO dentistSlotDTO)
+        public async Task<ResponseListDTO> updateDentistSlot(UpdateDentistSlotDTO dentistSlotDTO)
         {
             ResponseListDTO responseDTO = new ResponseListDTO();
             try
@@ -206,7 +225,7 @@ namespace Services.Impl
             }
         }
 
-        private async Task<ResponseListDTO> validateDentistSlot(CreateDentistSlotDTO dentistSlotDTO)
+        private async Task<ResponseListDTO> validateDentistSlot(UpdateDentistSlotDTO dentistSlotDTO)
         {
             ResponseListDTO responseDTO = new ResponseListDTO();
             responseDTO.IsSuccess = true;
@@ -303,10 +322,10 @@ namespace Services.Impl
                 errors.Add("This clinic does not have this room !!!");
             }
 
-            DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByDentistAndTimeStart(dentistId, timeStart);
+            DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetValidDentistSlotByDentistAndTimeStart(dentistId, timeStart);
             if (dentistSlot != null)
             {
-                errors.Add("This dentist already has this slot.");
+                errors.Add("This dentist already has this slot ["+dentistSlot.TimeStart.Value.TimeOfDay +"-"+dentistSlot.TimeEnd.Value.TimeOfDay+"]");
             }
             else
             {
@@ -415,8 +434,9 @@ namespace Services.Impl
                     }
                 }
 
-                List<DentistAndSlotDTO> dentistAndSlots = new List<DentistAndSlotDTO>();
-                foreach (var dl in dentistSlots)
+                List<DentistAndSlotDTO> dentistSlotDTos = mapper.Map<List<DentistAndSlotDTO>>(dentistSlots);
+                
+                /*foreach (var dl in dentistSlots)
                 {
                     UserDTO dentist = mapper.Map<UserDTO>(dl.Dentist);
 
@@ -424,9 +444,10 @@ namespace Services.Impl
                     dentistAndSlot.Dentist = mapper.Map<UserDTO>(dl.Dentist);
                     dentistAndSlot.DentistSlotId = dl.DentistSlotId;
                     dentistAndSlots.Add(dentistAndSlot);
-                }
+                }*/
 
-                responseDTO.Result = dentistAndSlots;
+                responseDTO.Result = dentistSlotDTos;
+                
             }catch (Exception e)
             {
                 responseDTO = AddError(e.Message, 500);

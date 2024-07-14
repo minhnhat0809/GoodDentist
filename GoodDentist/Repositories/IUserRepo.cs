@@ -19,5 +19,7 @@ namespace Repositories
         bool checkUniqueUserName(string userName);
 
         bool checkUniqueEmail(string email);
+
+        Task<User?> GetUserById(string userId);
     }
 }

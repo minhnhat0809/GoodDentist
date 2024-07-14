@@ -64,9 +64,9 @@ namespace GoodDentist.Controllers
         }
         
         [HttpPut("customer")]
-        public async Task<ActionResult<ResponseDTO>> UpdateCustomer([FromForm]CustomerRequestDTO customerRequestDto)
+        public async Task<ActionResult<ResponseDTO>> UpdateCustomer([FromForm]CustomerUpdateRequestDTO customerRequestDto)
         {
-            ResponseListDTO responseDTO = await customerService.updateCustomer(customerRequestDto);
+            ResponseListDTO responseDTO = await customerService.UpdateCustomer(customerRequestDto);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
         

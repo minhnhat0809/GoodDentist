@@ -36,7 +36,16 @@ namespace Repositories.Impl
             {
                 List<User?> users = await _repositoryContext.ClinicUsers
                     .Include(cu => cu.User)
-                    .ThenInclude(u => u.DentistSlots)
+                        .ThenInclude(u => u.DentistSlots).ThenInclude(dl => dl.Room)
+                    .Include(cu => cu.User)
+                        .ThenInclude(u => u.DentistSlots)
+                            .ThenInclude(dl => dl.Examinations)
+                                .ThenInclude(ex => ex.Dentist)
+                    .Include(cu => cu.User)
+                        .ThenInclude(u => u.DentistSlots)
+                            .ThenInclude(dl => dl.Examinations)
+                                .ThenInclude(ex => ex.ExaminationProfile)
+                                    .ThenInclude(ep => ep.Customer)
                     .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId))
                     && cu.Status == true).Select(cu => cu.User).ToListAsync();
                 dentistSlots = users
@@ -49,9 +58,16 @@ namespace Repositories.Impl
             {
                 List<User?> users = await _repositoryContext.ClinicUsers
                     .Include(cu => cu.User)
-                    .ThenInclude(u => u.DentistSlots).ThenInclude(dl => dl.Examinations)
+                        .ThenInclude(u => u.DentistSlots).ThenInclude(dl => dl.Room)
                     .Include(cu => cu.User)
-                    .ThenInclude(u => u.DentistSlots).ThenInclude(dl => dl.Room)
+                        .ThenInclude(u => u.DentistSlots)
+                            .ThenInclude(dl => dl.Examinations)
+                                .ThenInclude(ex => ex.Dentist)
+                    .Include(cu => cu.User)
+                        .ThenInclude(u => u.DentistSlots)
+                            .ThenInclude(dl => dl.Examinations)
+                                .ThenInclude(ex => ex.ExaminationProfile)
+                                    .ThenInclude(ep => ep.Customer)
                     .Where(cu => cu.ClinicId.Equals(Guid.Parse(clinicId))
                     && cu.Status == true && cu.User.RoleId == 2).Select(cu => cu.User).ToListAsync();
 
@@ -65,6 +81,14 @@ namespace Repositories.Impl
                     .ToList();
             }
             return dentistSlots;
+        }
+
+        public async Task<DentistSlot?> GetDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart)
+        {
+            List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.DentistId.Equals(Guid.Parse(dentistId))
+                                                                              && dl.TimeStart.Equals(timeStart));
+
+            return dentistSlots.FirstOrDefault();
         }
 
         public async Task<List<DentistSlot>?> GetAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage)
@@ -111,10 +135,10 @@ namespace Repositories.Impl
                 .ToListAsync();
         }
 
-        public async Task<DentistSlot?> GetDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart)
+        public async Task<DentistSlot?> GetValidDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart)
         {
             List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.DentistId.Equals(Guid.Parse(dentistId))
-            && dl.TimeStart.Equals(timeStart));
+            && dl.TimeStart.Equals(timeStart) && dl.Status == true);
 
             return dentistSlots.FirstOrDefault();
         }
@@ -130,7 +154,8 @@ namespace Repositories.Impl
 
         public async Task<DentistSlot?> GetDentistSlotsByRoomAndTimeStart(int roomId, DateTime timeStart)
         {
-            List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.RoomId == roomId && dl.TimeStart.Equals(timeStart));
+            List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.RoomId == roomId && dl.TimeStart.Equals(timeStart)&&
+                                                                              dl.Status==true);
             return dentistSlots.FirstOrDefault();
         }
     }

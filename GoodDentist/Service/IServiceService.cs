@@ -14,5 +14,9 @@ namespace Services
 		Task<ResponseDTO> createService(CreateServiceDTO serviceDTO);
 		Task<ResponseDTO> updateService(CreateServiceDTO model);
 		Task<ResponseDTO> deleteService(int serviceID);
+
+		Task<ResponseDTO> GetAllServicesByClinic(string clinicId, string? filterField, string? filterValue,
+			int? pageNumber,
+			int? rowsPerPage);
 	}
 }

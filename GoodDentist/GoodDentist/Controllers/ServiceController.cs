@@ -12,11 +12,9 @@ namespace GoodDentist.Controllers
 	public class ServiceController : ControllerBase
 	{
 		private readonly IServiceService serviceService;
-		private readonly IDistributedCache distributedCache;
-		public ServiceController(IServiceService serviceService, IDistributedCache distributedCache)
+		public ServiceController(IServiceService serviceService)
 		{
 			this.serviceService = serviceService;
-			this.distributedCache = distributedCache;
 		}
 		[HttpGet("all-services")]
 		public async Task<ResponseDTO> GetAllService([FromQuery] int pageNumber, int rowsPerPage)
@@ -24,6 +22,18 @@ namespace GoodDentist.Controllers
 			ResponseDTO responseDTO = await serviceService.getAllService(pageNumber, rowsPerPage);
 			return responseDTO;
 		}
+
+		[HttpGet("clinic")]
+		public async Task<ActionResult<ResponseDTO>> GetAllServiceByClinic([FromQuery] string clinicId,
+			string? filterField,
+			string? filterValue,
+			int? pageNumber = 1,
+			int? rowsPerPage = 5)
+		{
+			ResponseDTO responseDto = await serviceService.GetAllServicesByClinic(clinicId, filterField, filterValue, pageNumber, rowsPerPage);
+			return StatusCode(responseDto.StatusCode, responseDto);
+		}
+		
 		[HttpPost("new-service")]
 		public async Task<ResponseDTO> CreateService([FromBody] CreateServiceDTO model)
 		{

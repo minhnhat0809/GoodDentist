@@ -490,7 +490,8 @@ namespace Services.Impl
                 }
                 else
                 {
-                    ClinicUser? clinicUserOld = await unitOfWork.clinicUserRepo.GetClinicUserByUserAndClinicNow(user.UserId.ToString());
+                    ClinicUser? clinicUserOld = await unitOfWork.clinicUserRepo
+                        .GetClinicUserByUserAndClinicNow(user.UserId.ToString());
 
                     if (clinicUserOld == null)
                     {
