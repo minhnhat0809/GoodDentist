@@ -4,7 +4,7 @@ namespace BusinessObject.DTO.CustomerDTOs;
 
 public class CustomerUpdateRequestDTO
 {
-    public required string CustomerId { get; set; }
+    public required string UserId { get; set; }
     
     public string Name { get; set; } = null!;
 

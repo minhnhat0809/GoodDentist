@@ -330,7 +330,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                if (customerUpdateRequestDto.CustomerId.IsNullOrEmpty())
+                if (customerUpdateRequestDto.UserId.IsNullOrEmpty())
                 {
                     responseDTO.IsSuccess = false;
                     responseDTO.StatusCode = 400;
@@ -338,7 +338,7 @@ namespace Services.Impl
                     return responseDTO;
                 }
 
-                Customer? customer = await unitOfWork.customerRepo.GetByIdAsync(Guid.Parse(customerUpdateRequestDto.CustomerId));
+                Customer? customer = await unitOfWork.customerRepo.GetByIdAsync(Guid.Parse(customerUpdateRequestDto.UserId));
 
                 if (customer == null)
                 {
@@ -457,6 +457,8 @@ namespace Services.Impl
                 }
 
                 customer.Status = customerUpdateRequestDto.Status;
+                customer.Anamnesis = customerUpdateRequestDto.Anamnesis;
+                
                 await unitOfWork.customerRepo.UpdateAsync(customer);
 
                 CustomerDTO viewModel = mapper.Map<CustomerDTO>(customer);
