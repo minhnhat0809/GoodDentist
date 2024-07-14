@@ -256,9 +256,14 @@ namespace Services.Impl
                 customer.ExaminationProfiles.Add(profile);
 
                 await unitOfWork.customerRepo.CreateCustomer(customer);
-
-                var userDTo = await UploadFile(customerDto.Avatar, customer.CustomerId);
-
+                
+                if (customerDto.Avatar != null)
+                {
+                    await UploadFile(customerDto.Avatar, customer.CustomerId);
+                }
+                
+                var userDTo = mapper.Map<CustomerDTO>(customer);
+                
                 responseDTO.Result = userDTo;
                 return responseDTO;
             }
