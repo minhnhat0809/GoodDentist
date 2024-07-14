@@ -1,21 +1,20 @@
-﻿using BusinessObject.DTO.PaymentDTOs.View;
+﻿using BusinessObject.DTO.OrderDTOs.View;
+using BusinessObject.DTO.PaymentDTOs.View;
+using BusinessObject.DTO.PrescriptionDTOs.View;
 
 namespace BusinessObject.DTO.PaymentDTOs;
 
 public class PaymentAllUpdateDTO
 {
-    public string PaymentAllId { get; set; }
+    public int PaymentAllId { get; set; }
     public string? PaymentDetail { get; set; }
 
     public decimal? Total { get; set; }
 
-    public int? PaymentId { get; set; }
-
-    public int? PaymentPrescriptionId { get; set; }
-
     public bool? Status { get; set; }
 
-    public virtual PaymentDTO? Payment { get; set; }
+    public PrescriptionDTO? Prescription { get; set; }
 
-    public virtual PaymentPrescriptionDTO? PaymentPrescription { get; set; }
+    public OrderDTO? Order { get; set; }
+    
 }

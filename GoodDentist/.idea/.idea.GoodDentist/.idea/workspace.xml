@@ -11,7 +11,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Prescription Delete: Inactive Prescription Include Medicines">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Payment delete">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/PaymentAllUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/PaymentAllUpdateDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IMedicineService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IMedicineService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/MedicineService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/MedicineService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/Impl/PaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/PaymentService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -501,7 +506,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720954835914</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Payment delete">
+      <option name="closed" value="true" />
+      <created>1720955241646</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1720955241646</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +536,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="clinic crud - paging / sorting / filtering" />
     <MESSAGE value="db set up" />
     <MESSAGE value="medical record - crud" />
     <MESSAGE value="upload &amp; delete file in firebase" />
@@ -548,7 +560,8 @@
     <MESSAGE value="merge conflict" />
     <MESSAGE value="Prescription Delete: Inactive Prescription Include Medicines" />
     <MESSAGE value="IPayment" />
-    <option name="LAST_COMMIT_MESSAGE" value="IPayment" />
+    <MESSAGE value="Payment delete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Payment delete" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -708,6 +721,58 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs</url>
+          <line>42</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\PaymentAllRepo.cs" containingFunctionPresentation="Method 'UpdatePayment'">
+            <startOffsets>
+              <option value="1414" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1651" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs</url>
+          <line>69</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\PaymentAllRepo.cs" containingFunctionPresentation="Method 'DeletePayment'">
+            <startOffsets>
+              <option value="2506" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2722" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="133" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/PaymentService.cs</url>
+          <line>165</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PaymentService.cs" containingFunctionPresentation="Method 'DeletePayment'">
+            <startOffsets>
+              <option value="7110" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7181" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/MedicineService.cs</url>
+          <line>99</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\MedicineService.cs" containingFunctionPresentation="Method 'UpdateMedicineAfterPaymentPrescription'">
+            <startOffsets>
+              <option value="3627" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3726" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="135" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

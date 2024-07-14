@@ -22,5 +22,7 @@ namespace Services
         Task<ResponseDTO> UpdateMedicine(MedicineUpdateDTO medicineDTO);
 
         Task<ResponseDTO> DeleteMedicine(int medicineId);
+        
+        Task<ResponseDTO> UpdateMedicineAfterPaymentPrescription(int prescriptionId);
     }
 }

@@ -110,9 +110,48 @@ namespace Services.Impl
         {
             try
             {
-                var payment = _mapper.Map<PaymentAll>(paymentDTO);
-                await _unitOfWork.paymentAllRepo.UpdatePayment(payment);
-                return new ResponseDTO("Update payment successfully!", 200, true, paymentDTO);
+                PaymentAll model = await _unitOfWork.paymentAllRepo.GetPaymentById(paymentDTO.PaymentAllId);
+                if (model != null)
+                {
+                    if (model.Status == true)
+                    {
+                        model = _mapper.Map<PaymentAll>(paymentDTO);
+
+                        if (paymentDTO.Prescription != null)
+                        {
+                            Prescription? prescription =
+                                await _unitOfWork.prescriptionRepo.GetPrescriptionById(paymentDTO.Prescription
+                                    .PrescriptionId);
+                            if (prescription != null && prescription.Status == true)
+                            {
+                                PaymentPrescription paymentPrescription = new PaymentPrescription()
+                                {
+                                    Prescription = prescription,
+                                    Status = true,
+                                    PrescriptionId = prescription.PrescriptionId,
+                                    Price = prescription.Total,
+                                    PaymentDetail = prescription.Note
+                                };
+                                model.PaymentPrescription = paymentPrescription;
+                            }
+                        }
+
+                        if (paymentDTO.Status == true)
+                        {
+                           
+                            await _unitOfWork.paymentAllRepo.UpdatePayment(model);
+                            return new ResponseDTO("Update payment successfully!", 200, true, paymentDTO);
+                        }
+                        else if (paymentDTO.Status == false)
+                        {
+                            // Update Medicine Storage
+                            // UpdateMedicineAfterPayment(int PrescriptionId)
+                            await _unitOfWork.paymentAllRepo.UpdatePayment(model);
+                            return new ResponseDTO("Paying successfully!", 200, true, paymentDTO);
+                        }
+                    } return new ResponseDTO("This payment being paid!", 999, false, _mapper.Map<PaymentAllDTO>(model));
+                }
+                return new ResponseDTO("Payment not found!", 400, true, null);
             }
             catch (Exception ex)
             {
@@ -124,8 +163,17 @@ namespace Services.Impl
         {
             try
             {
-                await _unitOfWork.paymentAllRepo.DeletePayment(id);
-                return new ResponseDTO("Delete payment successfully!", 200, true, null);
+                PaymentAll model = await _unitOfWork.paymentAllRepo.GetPaymentById(id);
+                if (model != null)
+                {
+                    if (model.Status == true)
+                    {
+                        await _unitOfWork.paymentAllRepo.DeletePayment(id);
+                        return new ResponseDTO("Delete payment successfully!", 200, true, _mapper.Map<PaymentAllDTO>(model));
+                    }
+                    return new ResponseDTO("This payment being paid!", 999, false, _mapper.Map<PaymentAllDTO>(model));
+                }
+                return new ResponseDTO("Payment not found!", 400, true, null);
             }
             catch (Exception ex)
             {

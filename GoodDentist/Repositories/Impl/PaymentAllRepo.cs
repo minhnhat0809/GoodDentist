@@ -24,35 +24,66 @@ namespace Repositories.Impl
 
         public async Task<PaymentAll> GetPaymentById(int id)
         {
-            return await _repositoryContext.PaymentAlls
+            PaymentAll? model =  await _repositoryContext.PaymentAlls
                 .Include(x => x.Payment)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == id);
+            return model;
         }
 
         public async Task CreatePayment(PaymentAll paymentAll)
         {
             await _repositoryContext.PaymentAlls.AddAsync(paymentAll);
             await _repositoryContext.SaveChangesAsync();
+            
         }
 
         public async Task UpdatePayment(PaymentAll paymentAll)
         {
-            var existingPayment = await _repositoryContext.PaymentAlls.FindAsync(paymentAll.PaymentAllId);
-            if (existingPayment != null)
+            PaymentAll? model =  await _repositoryContext.PaymentAlls
+                .Include(x => x.Payment)
+                .Include(x => x.PaymentPrescription)
+                .FirstOrDefaultAsync(x => x.PaymentAllId == paymentAll.PaymentAllId);
+            if (model != null)
             {
-                _repositoryContext.Entry(existingPayment).CurrentValues.SetValues(paymentAll);
+                
+                _repositoryContext.Entry(model).CurrentValues.SetValues(paymentAll);
+                if(model.Payment != null)
+                {
+                    _repositoryContext.Payments.RemoveRange(model.Payment);
+                }
+                if(model.PaymentPrescription != null)
+                {
+                    _repositoryContext.PaymentPrescriptions.RemoveRange(model.PaymentPrescription);
+                }
+                await _repositoryContext.SaveChangesAsync();
+
+                model.Payment = paymentAll.Payment;
+                model.PaymentPrescription = paymentAll.PaymentPrescription;
+                
                 await _repositoryContext.SaveChangesAsync();
             }
         }
 
         public async Task DeletePayment(int id)
         {
-            var payment = await _repositoryContext.PaymentAlls.FindAsync(id);
-            if (payment != null)
+            PaymentAll? model =  await _repositoryContext.PaymentAlls
+                .Include(x => x.Payment)
+                .Include(x => x.PaymentPrescription)
+                .FirstOrDefaultAsync(x => x.PaymentAllId == id);
+            if (model != null)
             {
-                payment.Status = false;
-                //_repositoryContext.PaymentAlls.Remove(payment);
+                if(model.Payment != null)
+                {
+                    _repositoryContext.Payments.RemoveRange(model.Payment);
+                }
+                if(model.PaymentPrescription != null)
+                {
+                    _repositoryContext.PaymentPrescriptions.RemoveRange(model.PaymentPrescription);
+                }
+                await _repositoryContext.SaveChangesAsync();
+                
+                _repositoryContext.PaymentAlls.Remove(model);
                 await _repositoryContext.SaveChangesAsync();
             }
         }

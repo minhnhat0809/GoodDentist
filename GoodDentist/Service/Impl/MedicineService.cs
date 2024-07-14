@@ -93,7 +93,49 @@ namespace Services.Impl
             }
         }
 
-        
+        public async Task<ResponseDTO> UpdateMedicineAfterPaymentPrescription(int prescriptionId)
+        {
+            try
+            {
+                Prescription? prescription = await unitOfWork.prescriptionRepo.GetPrescriptionById(prescriptionId);
+                if (prescription != null)
+                {
+                    List<Medicine?> medicines = prescription.MedicinePrescriptions.Select(x => x.Medicine).ToList();
+                    // check input medicines
+                    if (!medicines.IsNullOrEmpty())
+                    {
+                        foreach (Medicine? medicine in medicines)
+                        {
+                            if(medicine != null)
+                            {
+                                Medicine? medicineModel =
+                                    await unitOfWork.medicineRepo.GetByIdAsync(medicine.MedicineId);
+                                // medicine in storage
+                                if (medicineModel != null)
+                                {
+                                    medicineModel.Quantity -= medicine.Quantity;
+                                    // check valid quantity
+                                    if (medicineModel.Quantity < 0) return new ResponseDTO("Medicine in storage is not available for this quantity!", 404, false, null);
+                                    await unitOfWork.medicineRepo.UpdateAsync(medicineModel);
+                                } return new ResponseDTO("Medicine not found in Storage!", 404, false, null);
+                            } return new ResponseDTO("Medicine not found!", 404, false, null);
+                        }
+                        // update prescription : PAID
+                        prescription.Status = false;
+                        foreach (MedicinePrescription? medicinePrescription in prescription.MedicinePrescriptions)
+                        {
+                            medicinePrescription.Status = false;
+                        }
+                        await unitOfWork.prescriptionRepo.UpdateAsync(prescription);
+                    } return new ResponseDTO("Medicines not found!", 404, false, null);
+                } return new ResponseDTO("Prescription not found!", 404, false, null);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }
+
 
         public async Task<ResponseDTO> AddMedicine(MedicineDTO medicineDTO)
         {
