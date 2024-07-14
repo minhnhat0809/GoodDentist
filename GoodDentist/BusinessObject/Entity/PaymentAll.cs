@@ -11,13 +11,11 @@ public partial class PaymentAll
 
     public decimal? Total { get; set; }
 
-    public int? PaymentId { get; set; }
-
     public int? PaymentPrescriptionId { get; set; }
 
     public bool? Status { get; set; }
 
-    public virtual Payment? Payment { get; set; }
-
     public virtual PaymentPrescription? PaymentPrescription { get; set; }
+
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 }

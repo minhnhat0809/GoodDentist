@@ -82,13 +82,13 @@ namespace Repositories.Impl
 				{
 					_repositoryContext.Entry(model).CurrentValues.SetValues(order);
 					_repositoryContext.OrderServices.RemoveRange(model.OrderServices);
-					await _repositoryContext.SaveChangesAsync();
+					//await _repositoryContext.SaveChangesAsync();
 					
-					foreach (var os in order.OrderServices)
+					foreach (var os in order.OrderServices.ToList())
 					{
 						model.OrderServices.Add(os);	
 					}
-					await _repositoryContext.SaveChangesAsync();
+					//await _repositoryContext.SaveChangesAsync();
 					
 					return model;
 				}

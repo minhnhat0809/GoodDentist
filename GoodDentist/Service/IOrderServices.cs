@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessObject.DTO;
 using BusinessObject.DTO.OrderDTOs;
 using BusinessObject.DTO.OrderDTOs.View;
+using BusinessObject.Entity;
 
 namespace Services
 {
@@ -22,5 +23,7 @@ namespace Services
 		Task<ResponseDTO> DeleteOrder(int orderId);
 
         Task<ResponseDTO> GetOrderDetails(int orderId);
-    }
+
+        Task<ResponseDTO> UpdateOrderAfterPayment(int orderId, List<Payment> payments);
+	}
 }

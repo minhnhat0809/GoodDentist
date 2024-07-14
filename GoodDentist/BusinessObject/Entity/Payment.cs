@@ -9,13 +9,17 @@ public partial class Payment
 
     public string? PaymentDetail { get; set; }
 
+    public DateTime? CreateAt { get; set; }
+
     public decimal? Price { get; set; }
 
     public int? OrderServiceId { get; set; }
+
+    public int? PaymentAllId { get; set; }
 
     public bool? Status { get; set; }
 
     public virtual OrderService? OrderService { get; set; }
 
-    public virtual ICollection<PaymentAll> PaymentAlls { get; set; } = new List<PaymentAll>();
+    public virtual PaymentAll? PaymentAll { get; set; }
 }

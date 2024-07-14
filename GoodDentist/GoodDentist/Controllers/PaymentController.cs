@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using System.Threading.Tasks;
+using BusinessObject.DTO.PaymentDTOs;
 using BusinessObject.DTO.PaymentDTOs.View;
 
 namespace GoodDentist.Controllers
@@ -18,7 +19,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllPayment([FromQuery] int pageNumber, [FromQuery] int rowsPerPage)
+        public async Task<IActionResult> GetAllPayment([FromQuery] int pageNumber = 1, [FromQuery] int rowsPerPage = 3)
         {
             var responseDTO = await _paymentService.GetAllPayment(pageNumber, rowsPerPage);
             return StatusCode(responseDTO.StatusCode, responseDTO);
@@ -32,7 +33,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePayment([FromBody] PaymentAllDTO paymentDTO)
+        public async Task<IActionResult> CreatePayment([FromBody] PaymentAllCreateDTO paymentDTO)
         {
             if (paymentDTO == null)
             {
@@ -43,14 +44,9 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePayment(int id, [FromBody] PaymentAllDTO paymentDTO)
+        [HttpPut]
+        public async Task<IActionResult> UpdatePayment([FromBody] PaymentAllUpdateDTO paymentDTO)
         {
-            if (paymentDTO == null || id != paymentDTO.PaymentAllId)
-            {
-                return BadRequest(new ResponseDTO("Invalid data", 400, false, null));
-            }
-
             var responseDTO = await _paymentService.UpdatePayment(paymentDTO);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
