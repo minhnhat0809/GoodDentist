@@ -50,5 +50,13 @@ namespace Repositories.Impl
         {
             return _repositoryContext.Users.Any(u => u.Email.Equals(email));
         }
+
+        public async Task<User?> GetUserById(string userId)
+        {
+            return await _repositoryContext.Users
+                .Include(u => u.ClinicUsers).ThenInclude(cu => cu.Clinic)
+                .Include(u => u.ExaminationProfiles).ThenInclude(ep => ep.Customer)
+                .FirstOrDefaultAsync(u => u.UserId.Equals(Guid.Parse(userId)));
+        }
     }
 }
