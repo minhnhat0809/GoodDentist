@@ -83,6 +83,14 @@ namespace Repositories.Impl
             return dentistSlots;
         }
 
+        public async Task<DentistSlot?> GetDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart)
+        {
+            List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.DentistId.Equals(Guid.Parse(dentistId))
+                                                                              && dl.TimeStart.Equals(timeStart));
+
+            return dentistSlots.FirstOrDefault();
+        }
+
         public async Task<List<DentistSlot>?> GetAllSlotsOfClinic(string clinicId, int pageNumber, int rowsPerPage)
         {
             List<DentistSlot> dentistSlots = await _repositoryContext.DentistSlots
@@ -127,10 +135,10 @@ namespace Repositories.Impl
                 .ToListAsync();
         }
 
-        public async Task<DentistSlot?> GetDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart)
+        public async Task<DentistSlot?> GetValidDentistSlotByDentistAndTimeStart(string dentistId, DateTime timeStart)
         {
             List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.DentistId.Equals(Guid.Parse(dentistId))
-            && dl.TimeStart.Equals(timeStart));
+            && dl.TimeStart.Equals(timeStart) && dl.Status == true);
 
             return dentistSlots.FirstOrDefault();
         }
@@ -146,7 +154,8 @@ namespace Repositories.Impl
 
         public async Task<DentistSlot?> GetDentistSlotsByRoomAndTimeStart(int roomId, DateTime timeStart)
         {
-            List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.RoomId == roomId && dl.TimeStart.Equals(timeStart));
+            List<DentistSlot> dentistSlots = await FindByConditionAsync(dl => dl.RoomId == roomId && dl.TimeStart.Equals(timeStart)&&
+                                                                              dl.Status==true);
             return dentistSlots.FirstOrDefault();
         }
     }

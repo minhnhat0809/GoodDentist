@@ -37,9 +37,20 @@ namespace Services.Impl
                     responseDTO = await validateDentistSlot(mapper.Map<UpdateDentistSlotDTO>(dl));
                     if (responseDTO.IsSuccess == true)
                     {
-                        DentistSlot dentistSlot = mapper.Map<DentistSlot>(dl);
-                        dentistSlots.Add(dentistSlot);
-                        await unitOfWork.dentistSlotRepo.CreateAsync(dentistSlot); 
+                        DentistSlot? dentistSlott = await unitOfWork.dentistSlotRepo
+                            .GetDentistSlotByDentistAndTimeStart(dl.DentistId.ToString(), dl.TimeStart.Value);
+
+                        if (dentistSlott != null)
+                        {
+                            dentistSlott.Status = true;
+                            await unitOfWork.dentistSlotRepo.UpdateAsync(dentistSlott);
+                        }
+                        else
+                        {
+                            DentistSlot dentistSlot = mapper.Map<DentistSlot>(dl);
+                            dentistSlots.Add(dentistSlot);
+                            await unitOfWork.dentistSlotRepo.CreateAsync(dentistSlot);  
+                        }
                     }
                 }
 
@@ -311,7 +322,7 @@ namespace Services.Impl
                 errors.Add("This clinic does not have this room !!!");
             }
 
-            DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetDentistSlotByDentistAndTimeStart(dentistId, timeStart);
+            DentistSlot? dentistSlot = await unitOfWork.dentistSlotRepo.GetValidDentistSlotByDentistAndTimeStart(dentistId, timeStart);
             if (dentistSlot != null)
             {
                 errors.Add("This dentist already has this slot ["+dentistSlot.TimeStart.Value.TimeOfDay +"-"+dentistSlot.TimeEnd.Value.TimeOfDay+"]");
