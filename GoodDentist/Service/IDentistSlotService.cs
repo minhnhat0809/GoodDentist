@@ -13,9 +13,9 @@ namespace Services
     {
         Task<ResponseDTO> deleteDentistSlot(int slotId);
 
-        Task<ResponseListDTO> createDentistSlot(CreateDentistSlotDTO dentistSlotDTO);
+        Task<ResponseListDTO> createDentistSlot(List<CreateDentistSlotDTO> dentistSlotDTO);
 
-        Task<ResponseListDTO> updateDentistSlot(CreateDentistSlotDTO dentistSlotDTO);
+        Task<ResponseListDTO> updateDentistSlot(UpdateDentistSlotDTO dentistSlotDTO);
 
         Task<ResponseDTO> getDentistSlotDetail(int slotId);
 

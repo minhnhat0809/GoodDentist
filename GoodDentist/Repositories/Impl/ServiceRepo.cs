@@ -31,12 +31,25 @@ namespace Repositories.Impl
 			return service;
 		}
 
-		public async Task<List<Service>?> GetServicesByClinic(string clinicId)
+		public async Task<List<Service>?> GetServicesByClinic(string clinicId, int pageNumber, int rowsPerPage)
 		{
-			return await _repositoryContext.Services
-				.Include(s => s.ClinicServices)
-				.Where(s => s.ClinicServices.Select(cs => cs.ClinicId).Equals(Guid.Parse(clinicId)
-				))
+			return await _repositoryContext.ClinicServices
+				.Where(cs => cs.ClinicId.Equals(Guid.Parse(clinicId)))
+				.Select(cs => cs.Service)
+				.Skip((pageNumber - 1) * rowsPerPage)
+				.Take(rowsPerPage)
+				.ToListAsync();
+		}
+
+		public async Task<List<Service>> GetServicesByClinicByFilter(string filterValue, string clinicId, int pageNumber, int rowsPerPage)
+		{
+			bool status = !filterValue.Equals("false");
+			return await _repositoryContext.ClinicServices
+				.Where(cs => cs.ClinicId.Equals(Guid.Parse(clinicId)) && 
+				             cs.Status == status )
+				.Select(cs => cs.Service)
+				.Skip((pageNumber - 1) * rowsPerPage)
+				.Take(rowsPerPage)
 				.ToListAsync();
 		}
 	}

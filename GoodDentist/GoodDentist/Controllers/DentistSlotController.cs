@@ -73,14 +73,14 @@ namespace GoodDentist.Controllers
         }
 
         [HttpPost("/dentist-slot")]
-        public async Task<ResponseListDTO> CreateDentistSlot([FromBody] CreateDentistSlotDTO dentistSlotDTO)
+        public async Task<ResponseListDTO> CreateDentistSlot([FromBody] List<CreateDentistSlotDTO> dentistSlotDTO)
         {
             ResponseListDTO responseDTO = await dentistSlotService.createDentistSlot(dentistSlotDTO);
             return responseDTO;
         }
 
         [HttpPut("/dentist-slot")]
-        public async Task<ResponseListDTO> UpdateDentistSlot([FromBody] CreateDentistSlotDTO dentistSlotDTO)
+        public async Task<ResponseListDTO> UpdateDentistSlot([FromBody] UpdateDentistSlotDTO dentistSlotDTO)
         {
             ResponseListDTO responseDTO = await dentistSlotService.updateDentistSlot(dentistSlotDTO);
             return responseDTO;

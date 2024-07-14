@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CreateDentistSlotDTO = BusinessObject.DTO.DentistSlotDTOs.CreateDentistSlotDTO;
 using BusinessObject.DTO.ExaminationDTOs.View;
 using BusinessObject.DTO.UserDTOs.View;
 using BusinessObject.DTO.RoomDTOs.View;
@@ -93,16 +92,15 @@ namespace Services
 
             /*----------------------------------------------------*/
             //DENTIST SLOT
-            CreateMap<DentistSlot, CreateDentistSlotDTO>()
-                .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.Room.RoomNumber));
-
+            CreateMap<DentistSlot, UpdateDentistSlotDTO>();
+                
             CreateMap<DentistSlot, DentistSlotForExamDTO>();
 
             CreateMap<DentistSlot, DentistSlotDTO>();
 
             CreateMap<DentistSlot, DentistAndSlotDTO>();
 
-            CreateMap<CreateDentistSlotDTO, DentistSlot>()
+            CreateMap<UpdateDentistSlotDTO, DentistSlot>()
                 .ForMember(dest => dest.TimeStart, opt => opt.MapFrom(src => src.TimeStart))
                 .ForMember(dest => dest.TimeEnd, opt => opt.MapFrom(src => src.TimeEnd))
                 .ForMember(dest => dest.Status, otp => otp.MapFrom(src => src.Status))
@@ -113,6 +111,9 @@ namespace Services
                 .ForMember(dest => dest.Examinations, otp => otp.Ignore())
                 .ForMember(dest => dest.Room, otp => otp.Ignore());
 
+            CreateMap<CreateDentistSlotDTO, UpdateDentistSlotDTO>();
+
+            CreateMap<CreateDentistSlotDTO, DentistSlot>();
             /*----------------------------------------------------*/
             //MEDICINE
             CreateMap<MedicineDTO, Medicine>()

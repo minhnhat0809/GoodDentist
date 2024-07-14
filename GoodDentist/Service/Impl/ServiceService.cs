@@ -9,6 +9,7 @@ using AutoMapper;
 using BusinessObject;
 using BusinessObject.DTO;
 using BusinessObject.DTO.ServiceDTOs;
+using BusinessObject.DTO.ServiceDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -148,10 +149,26 @@ namespace Services.Impl
 					return AddError("Clinic is not found!",404);
 				}
 
-				List<Service>? services = await unitOfWork.serviceRepo.GetServicesByClinic(clinicId);
+				List<Service> services = new List<Service>();
 				
-				
+				if (!filterField.IsNullOrEmpty())
+				{
+					if (filterField.ToLower().Equals("status"))
+					{
+						services = await unitOfWork.serviceRepo.GetServicesByClinicByFilter(filterValue, clinicId,
+							pageNumber.Value, rowsPerPage.Value);
+					}
+				}
+				else
+				{
+					services = await unitOfWork.serviceRepo.GetServicesByClinic(clinicId, pageNumber.Value, rowsPerPage.Value);
 
+				}				
+				services = await Filter(services, filterField, filterValue);
+
+				List<ServiceDTO> serviceDtos = mapper.Map<List<ServiceDTO>>(services);
+
+				responseDto.Result = serviceDtos;
 			}
 			catch (Exception e)
 			{
@@ -184,6 +201,11 @@ namespace Services.Impl
 				return services;
 			}
 
+			if (services.IsNullOrEmpty())
+			{
+				return services;
+			}
+
 			switch (filterField.ToLower())
 			{
 				case "servicename":
@@ -197,11 +219,8 @@ namespace Services.Impl
 					}
 					break;
 				default:
-					break;
-				
+					return services;
 			}
-			
-
 			return services;
 		}
 		
