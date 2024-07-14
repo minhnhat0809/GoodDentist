@@ -415,7 +415,7 @@ namespace Services.Impl
                     }
                 }
 
-                List<DentistSlotDTO> dentistSlotDTos = mapper.Map<List<DentistSlotDTO>>(dentistSlotList);
+                List<DentistAndSlotDTO> dentistSlotDTos = mapper.Map<List<DentistAndSlotDTO>>(dentistSlotList);
                 
                 /*foreach (var dl in dentistSlots)
                 {
