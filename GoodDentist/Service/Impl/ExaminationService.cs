@@ -58,18 +58,20 @@ namespace Services.Impl
                             return responseListDTO;
                         }
                     }
+                    DentistSlot? dentistSlotForNew = await unitOfWork.dentistSlotRepo.GetByIdAsync(examinationDTO.DentistSlotId);
+
 
                     ExaminationProfile examinationProfile = new ExaminationProfile();
                     examinationProfile.Status = true;
                     examinationProfile.Date = DateOnly.FromDateTime(DateTime.Now);
                     examinationProfile.Diagnosis = "Đang cập nhật";
                     examinationProfile.CustomerId = Guid.Parse(customerId);
+                    examinationProfile.DentistId = dentistSlotForNew.DentistId;
 
                     await unitOfWork.examProfileRepo.CreateAsync(examinationProfile);
                     
                     Examination examinationForNew = mapper.Map<Examination>(examinationDTO);
                     examinationForNew.ExaminationProfileId = examinationProfile.ExaminationProfileId;
-                    DentistSlot? dentistSlotForNew = await unitOfWork.dentistSlotRepo.GetByIdAsync(examinationDTO.DentistSlotId);
                     examinationForNew.DentistId = dentistSlotForNew.DentistId;
                     await unitOfWork.examinationRepo.CreateAsync(examinationForNew);
 
