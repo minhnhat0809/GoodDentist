@@ -246,8 +246,8 @@ namespace Services
             CreateMap<Payment, PaymentDTO>().ReverseMap();
             CreateMap<PaymentPrescription, PaymentPrescriptionDTO>().ReverseMap();
             
-            CreateMap<PaymentAllCreateDTO, Payment>().ReverseMap();
-            CreateMap<PaymentAllUpdateDTO, Payment>().ReverseMap();
+            CreateMap<PaymentAllCreateDTO, PaymentAll>().ReverseMap();
+            CreateMap<PaymentAllUpdateDTO, PaymentAll>().ReverseMap();
 
     
             /*----------------------------------------------------*/

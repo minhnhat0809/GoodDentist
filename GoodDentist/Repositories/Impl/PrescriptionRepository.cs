@@ -40,14 +40,15 @@ namespace Repositories.Impl
 				
 				_repositoryContext.Entry(model).CurrentValues.SetValues(prescription);
 				_repositoryContext.MedicinePrescriptions.RemoveRange(model.MedicinePrescriptions);
-				await _repositoryContext.SaveChangesAsync();
+				//await _repositoryContext.SaveChangesAsync();
 
-				foreach (var medicinePrescription in prescription.MedicinePrescriptions)
+				foreach (MedicinePrescription? prescriptionMedicine in prescription.MedicinePrescriptions.ToList())
 				{
-					model.MedicinePrescriptions.Add(medicinePrescription);
+					prescriptionMedicine.Status = prescription.Status;
+					model.MedicinePrescriptions.Add(prescriptionMedicine);
 				}
-
-				await _repositoryContext.SaveChangesAsync();
+				
+				//await _repositoryContext.SaveChangesAsync();
 			}
 			return model;
 		}

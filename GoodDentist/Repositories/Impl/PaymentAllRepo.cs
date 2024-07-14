@@ -40,30 +40,54 @@ namespace Repositories.Impl
 
         public async Task UpdatePayment(PaymentAll paymentAll)
         {
-            PaymentAll? model =  await _repositoryContext.PaymentAlls
+            PaymentAll? model = await _repositoryContext.PaymentAlls
                 .Include(x => x.Payments)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == paymentAll.PaymentAllId);
+    
             if (model != null)
             {
-                
+                // Update the PaymentAll entity
                 _repositoryContext.Entry(model).CurrentValues.SetValues(paymentAll);
-                if(model.Payments != null)
+        
+                // Handle Payments
+                if (model.Payments != null)
                 {
-                    _repositoryContext.Payments.RemoveRange(model.Payments);
+                    // Remove old Payments that are in paymentAll
+                    foreach (Payment payment in model.Payments.ToList())
+                    {
+                        if (paymentAll.Payments.Any(x => x.PaymentId == payment.PaymentId))
+                        {
+                            _repositoryContext.Payments.Remove(payment);
+                        }
+                    }
                 }
-                if(model.PaymentPrescription != null)
-                {
-                    _repositoryContext.PaymentPrescriptions.RemoveRange(model.PaymentPrescription);
-                }
-                await _repositoryContext.SaveChangesAsync();
 
-                model.Payments = paymentAll.Payments;
+                // Remove existing PaymentPrescription
+                if (model.PaymentPrescription != null)
+                {
+                    _repositoryContext.PaymentPrescriptions.Remove(model.PaymentPrescription);
+                }
+        
+                //await _repositoryContext.SaveChangesAsync();
+
+                // Add new Payments and update their status
+                foreach (Payment payment in paymentAll.Payments.ToList())
+                {
+                    // Set the payment status to match the PaymentAll status
+                    payment.Status = paymentAll.Status;
+            
+                    // Add the new Payment
+                    model.Payments?.Add(payment);
+                }
+
+                // Update PaymentPrescription
                 model.PaymentPrescription = paymentAll.PaymentPrescription;
-                
-                await _repositoryContext.SaveChangesAsync();
+
+               // await _repositoryContext.SaveChangesAsync();
             }
         }
+
 
         public async Task DeletePayment(int id)
         {

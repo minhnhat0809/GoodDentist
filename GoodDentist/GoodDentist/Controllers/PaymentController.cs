@@ -19,7 +19,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllPayment([FromQuery] int pageNumber, [FromQuery] int rowsPerPage)
+        public async Task<IActionResult> GetAllPayment([FromQuery] int pageNumber = 1, [FromQuery] int rowsPerPage = 3)
         {
             var responseDTO = await _paymentService.GetAllPayment(pageNumber, rowsPerPage);
             return StatusCode(responseDTO.StatusCode, responseDTO);
@@ -44,7 +44,7 @@ namespace GoodDentist.Controllers
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> UpdatePayment([FromBody] PaymentAllUpdateDTO paymentDTO)
         {
             var responseDTO = await _paymentService.UpdatePayment(paymentDTO);

@@ -117,7 +117,7 @@ namespace Services.Impl
             return responseDto;
         }
 
-        public async Task<ResponseDTO> UpdateOrderAfterPayment(int orderId, int orderServiceId)
+        public async Task<ResponseDTO> UpdateOrderAfterPayment(int orderId, List<Payment> payments)
         {
 	        try
 	        {
@@ -128,15 +128,24 @@ namespace Services.Impl
 			        foreach (OrderService? orderService in orderServices)
 			        {
 				        // if any order service paid
-				        if (orderService.OrderServiceId == orderServiceId)
+				        if (payments.Any(x=>x.OrderService.OrderServiceId == orderService.OrderServiceId))
 				        {
 					        // set status to be paid AS false
 					        orderService.Status = 0;
+					        // Update Order Price when one service BEING PAID.
+					        order.Price -= orderService.Price;
 				        }
-						// Update Order Price when one service BEING PAID.
-				        order.Price -= orderService.Price;
 			        }
-		        } return new ResponseDTO("Order not found!", 404, false, null);
+					// Inactive order when price = 0;
+			        if (order.Price == 0)
+			        {
+				        order.Status = false;
+			        }
+
+			        await _unitOfWork.orderRepo.UpdateOrder(order);
+			        return new ResponseDTO("Update Order Price sucessfully", 200, true, _mapper.Map<OrderDTO>(order));
+
+		        } return new ResponseDTO("Order not found!", 404, false, _mapper.Map<OrderDTO>(order));
             }
             catch (Exception ex)
             {

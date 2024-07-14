@@ -8,6 +8,7 @@ using BusinessObject;
 using BusinessObject.DTO;
 using BusinessObject.DTO.MedicineDTOs;
 using BusinessObject.DTO.MedicineDTOs.View;
+using BusinessObject.DTO.PrescriptionDTOs.View;
 using BusinessObject.Entity;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
@@ -100,35 +101,37 @@ namespace Services.Impl
                 Prescription? prescription = await unitOfWork.prescriptionRepo.GetPrescriptionById(prescriptionId);
                 if (prescription != null)
                 {
-                    List<Medicine?> medicines = prescription.MedicinePrescriptions.Select(x => x.Medicine).ToList();
+                    List<MedicinePrescription> medicinePrescriptions = prescription.MedicinePrescriptions.ToList();
                     // check input medicines
-                    if (!medicines.IsNullOrEmpty())
+                    if (!medicinePrescriptions.IsNullOrEmpty())
                     {
-                        foreach (Medicine? medicine in medicines)
+                        foreach (MedicinePrescription? medicinePrescription in medicinePrescriptions)
                         {
-                            if(medicine != null)
+                            if(medicinePrescription != null)
                             {
-                                Medicine? medicineModel =
-                                    await unitOfWork.medicineRepo.GetByIdAsync(medicine.MedicineId);
-                                // medicine in storage
-                                if (medicineModel != null)
+                                if (medicinePrescription.MedicineId != null)
                                 {
-                                    medicineModel.Quantity -= medicine.Quantity;
-                                    // check valid quantity
-                                    if (medicineModel.Quantity < 0) return new ResponseDTO("Medicine in storage is not available for this quantity!", 404, false, null);
-                                    await unitOfWork.medicineRepo.UpdateAsync(medicineModel);
-                                } return new ResponseDTO("Medicine not found in Storage!", 404, false, null);
-                            } return new ResponseDTO("Medicine not found!", 404, false, null);
+                                    Medicine? medicineModel =
+                                        await unitOfWork.medicineRepo.GetByIdAsync(medicinePrescription.MedicineId);
+                                    // medicine in storage
+                                    if (medicineModel != null)
+                                    {
+                                        medicineModel.Quantity -= medicinePrescription.Quantity;
+                                        // check valid quantity
+                                        if (medicineModel.Quantity <= 0) return new ResponseDTO("Medicine in storage is not available for this quantity!", 404, false, null);
+                                        await unitOfWork.medicineRepo.UpdateAsync(medicineModel);
+                                        
+                                    }
+                                }
+                            } else return new ResponseDTO("Medicine not found!", 404, false, null);
                         }
                         // update prescription : PAID
                         prescription.Status = false;
-                        foreach (MedicinePrescription? medicinePrescription in prescription.MedicinePrescriptions)
-                        {
-                            medicinePrescription.Status = false;
-                        }
-                        await unitOfWork.prescriptionRepo.UpdateAsync(prescription);
+                        
+                        prescription = await unitOfWork.prescriptionRepo.UpdatePrescription(prescription);
+                        return new ResponseDTO("Update Medicine Storage Successfully", 200, true, mapper.Map<PrescriptionDTO>(prescription));
                     } return new ResponseDTO("Medicines not found!", 404, false, null);
-                } return new ResponseDTO("Prescription not found!", 404, false, null);
+                }  return new ResponseDTO("Prescription not found!", 404, false, null);
             }
             catch (Exception ex)
             {
