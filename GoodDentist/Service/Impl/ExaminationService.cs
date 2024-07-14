@@ -404,6 +404,9 @@ namespace Services.Impl
                         if (dentistSlot == null)
                         {
                             Add("Dentist slot is not exist!");
+                        }else if (dentistSlot.Status != true)
+                        {
+                            Add("Dentist slot is closed!");
                         }
                         else
                         {
