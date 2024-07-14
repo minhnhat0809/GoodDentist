@@ -234,7 +234,11 @@ namespace Services
             CreateMap<Customer, CustomerForExamDTO>()
             .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Dob.HasValue ? new DateTime(src.Dob.Value.Year, src.Dob.Value.Month, src.Dob.Value.Day) : (DateTime?)null))            
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId));
-            
+
+            CreateMap<Customer, CustomerDTOForLoc>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CustomerId))
+                .ForMember(dest => dest.Clinics, opt => opt.MapFrom(src => src.CustomerClinics.Select(cc => cc.Clinic)))
+                .ForMember(dest => dest.ExaminationProfiles, opt => opt.MapFrom(src => src.ExaminationProfiles.Select(ep => ep.ExaminationProfileId)));
             
             /*----------------------------------------------------*/
             // PAYMENT

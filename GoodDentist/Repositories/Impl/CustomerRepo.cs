@@ -18,6 +18,7 @@ namespace Repositories.Impl
         public async Task<List<Customer>> GetAllCustomers(int pageNumber, int rowsPerPage)
         {
             return await _repositoryContext.Customers
+                .Include(c => c.ExaminationProfiles)
                 .Include(c => c.CustomerClinics)
                 .ThenInclude(cc => cc.Clinic )
                 .Skip((pageNumber - 1) * rowsPerPage)
@@ -94,7 +95,7 @@ namespace Repositories.Impl
         public Task<List<Customer>> GetCustomersByClinic(string clinicId, int pageNumber, int rowsPerPage)
         {
             return _repositoryContext.Customers
-                .Include(c => c.ExaminationProfiles)
+                .Include(c => c.ExaminationProfiles).ThenInclude(ex => ex.Dentist)
                 .Include(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
                 .Where(c => c.CustomerClinics.Any(cc => cc.ClinicId.Equals(Guid.Parse(clinicId)) && cc.Status == true))
                 .Skip((pageNumber - 1) * rowsPerPage)

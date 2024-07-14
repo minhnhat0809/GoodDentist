@@ -707,7 +707,7 @@ namespace Services.Impl
                 customers = FilterCustomer(customers, filterField, filterValue);
                 customers = SortCustomer(customers, sortField, sortOrder);
 
-                List<CustomerDTO> viewModels = mapper.Map<List<CustomerDTO>>(customers);
+                List<CustomerDTOForLoc> viewModels = mapper.Map<List<CustomerDTOForLoc>>(customers);
                 foreach (var viewModel in viewModels)
                 {
                     var clinics = customers
