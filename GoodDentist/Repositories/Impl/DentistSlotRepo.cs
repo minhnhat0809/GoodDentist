@@ -60,7 +60,8 @@ namespace Repositories.Impl
                     .SelectMany(u => u.DentistSlots)
                     .Where(dl => dl.TimeStart.Value.Date == timeStart.Date
                     && (dl.TimeStart <= timeStart && timeEnd < dl.TimeEnd) || (dl.TimeStart < timeStart && timeEnd <= dl.TimeEnd)
-                    && dl.Room.ClinicId.Equals(Guid.Parse(clinicId)))
+                    && dl.Room.ClinicId.Equals(Guid.Parse(clinicId))
+                    && dl.Status == true)
                     .ToList();
             }
             return dentistSlots;
@@ -105,7 +106,8 @@ namespace Repositories.Impl
                 dl.TimeStart.HasValue &&
                 dl.TimeStart.Value.Date == selectedDate.ToDateTime(new TimeOnly(0, 0)) &&
                 dl.Room != null &&
-                dl.Room.ClinicId.Equals(Guid.Parse(clinicId)))
+                dl.Room.ClinicId.Equals(Guid.Parse(clinicId)) &&
+                dl.Status == true)
                 .ToListAsync();
         }
 
