@@ -341,7 +341,7 @@ namespace Services.Impl
                 //check date of birth
                 if (customerRequestDto.Dob.HasValue)
                 {
-                    model.Dob = customerRequestDto.Dob.Value;
+                        model.Dob = DateOnly.FromDateTime(customerRequestDto.Dob.Value);
                 }
 
                 //check gender
@@ -488,7 +488,7 @@ namespace Services.Impl
                     DateOnly maxDateOfBirth = DateOnly.FromDateTime(DateTime.Now); // Or a specific end date if required
 
                     // Use DateOnly directly from customerRequestDto.Dob
-                    DateOnly dob = customerRequestDto.Dob.Value;
+                    DateOnly dob = DateOnly.FromDateTime(customerRequestDto.Dob.Value);
 
                     if (dob < minDateOfBirth || dob > maxDateOfBirth)
                     {
@@ -550,7 +550,7 @@ namespace Services.Impl
                     DateOnly maxDateOfBirth = DateOnly.FromDateTime(DateTime.Now); // Or a specific end date if required
 
                     // Use DateOnly directly from customerRequestDto.Dob
-                    DateOnly dob = customerRequestDto.Dob.Value;
+                    DateOnly dob = DateOnly.FromDateTime(customerRequestDto.Dob.Value);
 
                     if (dob < minDateOfBirth || dob > maxDateOfBirth)
                     {
