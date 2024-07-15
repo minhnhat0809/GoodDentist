@@ -315,6 +315,7 @@ namespace Services.Impl
             ResponseListDTO responseListDTO = new ResponseListDTO();
             responseListDTO.IsSuccess = true;
             responseListDTO.StatusCode = 200;
+            responseListDTO.Result = "null";
             try
             {
                 responseListDTO = await ValidateExamination(examinationDTO, mod, "");
@@ -359,6 +360,7 @@ namespace Services.Impl
                 responseListDTO.IsSuccess = false;
                 responseListDTO.Message.Add(ex.Message);
                 responseListDTO.StatusCode = 500;
+                responseListDTO.Result = "null";
                 return responseListDTO;
             }
         }

@@ -11,21 +11,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Update Payment : Update Payment Prescription &amp; Payment OrderService &amp; Validate &amp; Pricing When Paid For Each Prescription or OrderService">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/PaymentAllCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/PaymentAllCreateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/PaymentAllUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/PaymentAllUpdateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentAllDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentAllDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/PaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/PaymentController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/PrescriptionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/PrescriptionRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IOrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IOrderServices.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/MedicineService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/MedicineService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/PaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/PaymentService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="commit">
+      <change beforePath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="master" />
+        <entry key="$PROJECT_DIR$/.." value="deploy" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -96,33 +83,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.GoodDentist: IIS Express.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.GoodDentist: http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.GoodDentist: https.executor&quot;: &quot;Debug&quot;,
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;huyntv171283&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.CSharpInteractiveConfiguration&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Debug",
+    ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
+    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.CSharpInteractiveConfiguration",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/apple/Library/Application Support/JetBrains/Rider2023.3/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/apple/Library/Application Support/JetBrains/Rider2023.3/resharper-host/SourcesCache&quot;,
-      &quot;/Users/apple/.local/share/Symbols/src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "/Users/apple/Library/Application Support/JetBrains/Rider2023.3/resharper-host/DecompilerCache",
+      "/Users/apple/Library/Application Support/JetBrains/Rider2023.3/resharper-host/SourcesCache",
+      "/Users/apple/.local/share/Symbols/src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: https">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
@@ -539,7 +526,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720981787620</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="commit">
+      <option name="closed" value="true" />
+      <created>1721008004387</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1721008004387</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,14 +574,14 @@
     <MESSAGE value="Create Order : Add Order include Services" />
     <MESSAGE value="fix merge main" />
     <MESSAGE value="fix conflict while merge" />
-    <MESSAGE value="commit" />
     <MESSAGE value="merge conflict" />
     <MESSAGE value="Prescription Delete: Inactive Prescription Include Medicines" />
     <MESSAGE value="IPayment" />
     <MESSAGE value="Payment delete" />
     <MESSAGE value="Update Medicine after Paid for Prescription : Reduce Medicine in Storage and Validate" />
     <MESSAGE value="Update Payment : Update Payment Prescription &amp; Payment OrderService &amp; Validate &amp; Pricing When Paid For Each Prescription or OrderService" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Payment : Update Payment Prescription &amp; Payment OrderService &amp; Validate &amp; Pricing When Paid For Each Prescription or OrderService" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -670,45 +665,6 @@
           <option name="timeStamp" value="110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
-          <line>166</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'AddOrder'">
-            <startOffsets>
-              <option value="5192" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5235" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs</url>
-          <line>75</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\OrderRepository.cs" containingFunctionPresentation="Method 'UpdateOrder'">
-            <startOffsets>
-              <option value="1942" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2119" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="127" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
-          <line>239</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'UpdateOrder'">
-            <startOffsets>
-              <option value="7340" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7391" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="128" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/PrescriptionService.cs</url>
           <line>169</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PrescriptionService.cs" containingFunctionPresentation="Method 'UpdatePrescription'">
@@ -746,19 +702,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="137" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
-          <line>123</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'UpdateOrderAfterPayment'">
-            <startOffsets>
-              <option value="3756" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3821" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/MedicineService.cs</url>
