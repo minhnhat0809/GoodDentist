@@ -166,14 +166,14 @@ namespace Services.Impl
             ResponseDTO responseDTO = new ResponseDTO("Delete Customer Successfully", 200, true, "");
             try
             {
-                Customer model = await unitOfWork.customerRepo.GetCustomerById(customerId);
+                Customer model = await unitOfWork.customerRepo.GetByIdAsync(customerId);
                 if (model == null)
                 {
                     responseDTO.IsSuccess = false;
                     responseDTO.Message = "There no customer founded yet!";
                     responseDTO.Result = null;
                 }
-                await unitOfWork.customerRepo.DeleteCustomer(customerId);
+                await unitOfWork.customerRepo.DeleteAsync(model);
                 responseDTO.Message = "Customer delete successfully!";
                 return responseDTO;
             }
