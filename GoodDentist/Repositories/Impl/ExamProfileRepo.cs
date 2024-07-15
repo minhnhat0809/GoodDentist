@@ -26,7 +26,7 @@ namespace Repositories.Impl
         {
             return await _repositoryContext.ExaminationProfiles
                 .Include(ex => ex.Customer).ThenInclude(c => c.CustomerClinics).ThenInclude(cc => cc.Clinic)
-                .Include(ex => ex.Customer).ThenInclude(c => c.ExaminationProfiles)
+                .Include(ex => ex.Customer).ThenInclude(c => c.ExaminationProfiles).ThenInclude(ep => ep.Dentist)
                 .Where(e => e.DentistId.Equals(Guid.Parse(dentistId))).ToListAsync();
         }
 
