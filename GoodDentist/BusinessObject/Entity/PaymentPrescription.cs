@@ -15,7 +15,7 @@ public partial class PaymentPrescription
 
     public bool? Status { get; set; }
 
-    public virtual ICollection<PaymentAll> PaymentAlls { get; set; } = new List<PaymentAll>();
+    public virtual PaymentAll? PaymentAll { get; set; }
 
     public virtual Prescription? Prescription { get; set; }
 }

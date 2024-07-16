@@ -19,7 +19,5 @@ public partial class OrderService
 
     public virtual Order? Order { get; set; }
 
-    public virtual Payment? Payment { get; set; }
-
     public virtual Service? Service { get; set; }
 }

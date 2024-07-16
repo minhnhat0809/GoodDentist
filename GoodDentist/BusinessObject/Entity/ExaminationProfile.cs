@@ -19,6 +19,8 @@ public partial class ExaminationProfile
 
     public virtual Customer? Customer { get; set; }
 
+    public virtual Debt? Debt { get; set; }
+
     public virtual User? Dentist { get; set; }
 
     public virtual ICollection<Examination> Examinations { get; set; } = new List<Examination>();

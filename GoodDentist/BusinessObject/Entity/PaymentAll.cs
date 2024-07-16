@@ -13,9 +13,11 @@ public partial class PaymentAll
 
     public int? PaymentPrescriptionId { get; set; }
 
+    public int? PaymentOrderId { get; set; }
+
     public bool? Status { get; set; }
 
-    public virtual PaymentPrescription? PaymentPrescription { get; set; }
+    public virtual Payment? PaymentOrder { get; set; }
 
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+    public virtual PaymentPrescription? PaymentPrescription { get; set; }
 }

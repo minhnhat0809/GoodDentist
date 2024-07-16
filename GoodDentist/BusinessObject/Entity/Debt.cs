@@ -10,4 +10,6 @@ public partial class Debt
     public decimal? Total { get; set; }
 
     public int? ExaminationProfileId { get; set; }
+
+    public virtual ExaminationProfile? ExaminationProfile { get; set; }
 }

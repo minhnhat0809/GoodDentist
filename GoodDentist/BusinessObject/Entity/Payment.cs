@@ -13,13 +13,11 @@ public partial class Payment
 
     public decimal? Price { get; set; }
 
-    public int? OrderServiceId { get; set; }
-
-    public int? PaymentAllId { get; set; }
+    public int? OrderId { get; set; }
 
     public bool? Status { get; set; }
 
-    public virtual OrderService? OrderService { get; set; }
+    public virtual Order? Order { get; set; }
 
     public virtual PaymentAll? PaymentAll { get; set; }
 }

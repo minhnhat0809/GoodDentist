@@ -15,7 +15,7 @@ namespace Repositories.Impl
         public async Task<List<PaymentAll>> GetAllPayment(int pageNumber, int rowsPerPage)
         {
             return await _repositoryContext.PaymentAlls
-                .Include(x => x.Payments)
+                .Include(x => x.PaymentOrder)
                 .Include(x => x.PaymentPrescription)
                 .Skip((pageNumber - 1) * rowsPerPage)
                 .Take(rowsPerPage)
@@ -25,7 +25,7 @@ namespace Repositories.Impl
         public async Task<PaymentAll> GetPaymentById(int id)
         {
             PaymentAll? model =  await _repositoryContext.PaymentAlls
-                .Include(x => x.Payments)
+                .Include(x => x.PaymentOrder)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == id);
             return model;
@@ -41,7 +41,7 @@ namespace Repositories.Impl
         public async Task UpdatePayment(PaymentAll paymentAll)
         {
             PaymentAll? model = await _repositoryContext.PaymentAlls
-                .Include(x => x.Payments)
+                .Include(x => x.PaymentOrder)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == paymentAll.PaymentAllId);
     
@@ -51,16 +51,12 @@ namespace Repositories.Impl
                 _repositoryContext.Entry(model).CurrentValues.SetValues(paymentAll);
         
                 // Handle Payments
-                if (model.Payments != null)
+                if (model.PaymentOrder != null)
                 {
                     // Remove old Payments that are in paymentAll
-                    foreach (Payment payment in model.Payments.ToList())
-                    {
-                        if (paymentAll.Payments.Any(x => x.PaymentId == payment.PaymentId))
-                        {
-                            _repositoryContext.Payments.Remove(payment);
-                        }
-                    }
+                    
+                            //_repositoryContext.Payments.Remove(payment);
+                    
                 }
 
                 // Remove existing PaymentPrescription
@@ -72,14 +68,14 @@ namespace Repositories.Impl
                 //await _repositoryContext.SaveChangesAsync();
 
                 // Add new Payments and update their status
-                foreach (Payment payment in paymentAll.Payments.ToList())
+                /*foreach (Payment payment in paymentAll.Payments.ToList())
                 {
                     // Set the payment status to match the PaymentAll status
                     payment.Status = paymentAll.Status;
             
                     // Add the new Payment
                     model.Payments?.Add(payment);
-                }
+                }*/
 
                 // Update PaymentPrescription
                 model.PaymentPrescription = paymentAll.PaymentPrescription;
@@ -92,15 +88,15 @@ namespace Repositories.Impl
         public async Task DeletePayment(int id)
         {
             PaymentAll? model =  await _repositoryContext.PaymentAlls
-                .Include(x => x.Payments)
+                //.Include(x => x.Payments)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == id);
             if (model != null)
             {
-                if(model.Payments != null)
+                /*if(model.Payments != null)
                 {
                     _repositoryContext.Payments.RemoveRange(model.Payments);
-                }
+                }*/
                 if(model.PaymentPrescription != null)
                 {
                     _repositoryContext.PaymentPrescriptions.RemoveRange(model.PaymentPrescription);

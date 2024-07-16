@@ -20,4 +20,6 @@ public partial class Order
     public virtual Examination? Examination { get; set; }
 
     public virtual ICollection<OrderService> OrderServices { get; set; } = new List<OrderService>();
+
+    public virtual Payment? Payment { get; set; }
 }

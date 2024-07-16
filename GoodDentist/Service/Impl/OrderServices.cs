@@ -128,13 +128,13 @@ namespace Services.Impl
 			        foreach (OrderService? orderService in orderServices)
 			        {
 				        // if any order service paid
-				        if (payments.Any(x=>x.OrderService.OrderServiceId == orderService.OrderServiceId))
+				        /*if (payments.Any(x=>x.OrderService.OrderServiceId == orderService.OrderServiceId))
 				        {
 					        // set status to be paid AS false
 					        orderService.Status = 0;
 					        // Update Order Price when one service BEING PAID.
 					        order.Price -= orderService.Price;
-				        }
+				        }*/
 			        }
 					// Inactive order when price = 0;
 			        if (order.Price == 0)

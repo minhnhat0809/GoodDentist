@@ -96,12 +96,12 @@ namespace Services.Impl
                             {
                                 Price = orderService.Price * orderService.Quantity, // price * quantity
                                 Status = true,
-                                OrderService = orderService,
+                                //OrderService = orderService,
                                 PaymentDetail = orderService.Quantity.ToString(),
-                                OrderServiceId = orderService.OrderId,
+                                //OrderServiceId = orderService.OrderId,
                                 CreateAt = DateTime.Now
                             };
-                            model.Payments.Add(payment);
+                            //model.Payments.Add(payment);
                             model.Total += payment.Price;
                         }
                     }
@@ -149,7 +149,7 @@ namespace Services.Impl
                             }else return new ResponseDTO("Prescription had Paid!", 400, false, _mapper.Map<PrescriptionDTO>(prescription));
                         }
                         // check order - [payment for all order in one time]
-                        if (paymentDTO.Order != null)
+                        /*if (paymentDTO.Order != null)
                         {
                             return new ResponseDTO("We are not support this feature yet!", 400, false, null);
                             Order? order = await _unitOfWork.orderRepo.GetOrderById(paymentDTO.Order.OrderId);
@@ -182,7 +182,7 @@ namespace Services.Impl
                                     
                                 }
                             }else return new ResponseDTO("Order had Paid!", 400, false, _mapper.Map<OrderDTO>(order));
-                        }
+                        }*/
                         // check is Paid yet ?
                         if (paymentDTO.Status == true)
                         {
@@ -213,7 +213,7 @@ namespace Services.Impl
                                 } else return new ResponseDTO("Prescription had Paid!", 400, false, _mapper.Map<PrescriptionDTO>(prescription));
                             }
 
-                            if (paymentDTO.Order != null)
+                            /*if (paymentDTO.Order != null)
                             {
                                 Order? order = await _unitOfWork.orderRepo.GetOrderById(paymentDTO.Order.OrderId);
                                 if (order != null && order.Status == true )
@@ -249,7 +249,7 @@ namespace Services.Impl
                                     if (checkOrder.IsSuccess) return checkOrder;
     
                                 } else return new ResponseDTO("Order had Paid!", 400, false, _mapper.Map<OrderDTO>(order));
-                            }
+                            }*/
                             // UPDATE - PAYMENT ALL
                             await _unitOfWork.paymentAllRepo.UpdatePayment(model);
                             return new ResponseDTO("Paying successfully!", 200, true, paymentDTO);
