@@ -17,4 +17,14 @@ namespace BusinessObject.DTO.ServiceDTOs
 
         public bool? Status { get; set; }
     }
+    public partial class CreateServiceRequestDTO
+    {
+        public string ServiceName { get; set; } = null!;
+
+        public string? Description { get; set; }
+
+        public decimal? Price { get; set; }
+
+        public bool? Status { get; set; }
+    }
 }

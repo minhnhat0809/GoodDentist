@@ -48,7 +48,7 @@ namespace Services.Impl
 				var create = await unitOfWork.serviceRepo.CreateAsync(service);
 				if (create)
 				{
-					return new ResponseDTO("Sucessfully", 200, true, null);
+					return new ResponseDTO("Sucessfully", 200, true, mapper.Map<ServiceDTO>(service));
 				}
 				else
 				{
@@ -77,6 +77,7 @@ namespace Services.Impl
 				createServiceDTO.ServiceName = model.ServiceName;
 				createServiceDTO.Description = model.Description;
 				createServiceDTO.Price = model.Price;
+				createServiceDTO.Status = model.Status;
 				var responseDTO = validateService(createServiceDTO);
 				if (!responseDTO.IsSuccess)
 				{
@@ -91,7 +92,7 @@ namespace Services.Impl
 					return new ResponseDTO("Failed to update", 500, false, null);
 					
 				}
-				return new ResponseDTO("Sucessfully", 200, true, null);
+				return new ResponseDTO("Successfully", 200, true, mapper.Map<ServiceDTO>(service));
 			}
 			catch (Exception ex)
 			{
@@ -124,7 +125,7 @@ namespace Services.Impl
 					return new ResponseDTO("Failed to delete", 500, false, null);
 
 				}
-				return new ResponseDTO("Sucessfully", 200, true, null);
+				return new ResponseDTO("Successfully", 200, true, mapper.Map<ServiceDTO>(service));
 			}
 			catch (Exception ex)
 			{

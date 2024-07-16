@@ -54,7 +54,7 @@ namespace GoodDentist.Controllers
 			return responseDTO;
 		}
 		[HttpDelete("service")]
-		public async Task<ResponseDTO> DeleteService([FromBody] int serviceID)
+		public async Task<ResponseDTO> DeleteService( int serviceID)
 		{
 			ResponseDTO responseDTO = await serviceService.deleteService(serviceID);
 			return responseDTO;
