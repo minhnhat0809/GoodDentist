@@ -38,9 +38,9 @@ public class ClinicService : IClinicService
     {
         try
         {
-            if (clinicDto != null)
+            if (clinicDto == null)
             {
-                return new ResponseDTO("This Clinic is exist!", 400, false, null);
+                return new ResponseDTO("Clinic should not be empty", 400, false, null);
             }
 
             Clinic model = _mapper.Map<Clinic>(clinicDto);
