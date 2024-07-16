@@ -132,6 +132,55 @@ namespace Services.Impl
 			}
 		}
 
+		public async Task<ResponseDTO> GetAllServices(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField,
+			string? sortOrder)
+		{
+			try
+	        {
+	            List<Service> models = await unitOfWork.serviceRepo.GetAllService(pageNumber, rowsPerPage);
+	                
+	            // Filter 
+	            if (!string.IsNullOrEmpty(filterField) || !string.IsNullOrEmpty(filterValue))
+	            {
+	                switch (filterField.ToLower())
+	                {
+	                    case "name":
+	                        models = models.Where(u => u.ServiceName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+	                        break;
+	                    case "clinic":
+	                        models = models.Where(u => u.ClinicServices.Any(x=>x.ClinicId.Equals(string.IsNullOrWhiteSpace(filterValue))))
+	                            .ToList();
+	                        break;
+	                }
+
+	                
+	            }
+	            // Sort
+	            if (!string.IsNullOrEmpty(sortField) || !string.IsNullOrEmpty(sortOrder))
+	            {
+	                bool isAscending = sortOrder.ToLower() == "asc";
+	                switch (sortField.ToLower())
+	                {
+	                    case "name":
+	                        models = isAscending ? models.OrderBy(u => u.ServiceName).ToList() : models.OrderByDescending(u => u.ServiceName).ToList();
+	                        break;
+	                    case "clinic":
+	                        models = isAscending ? models.OrderBy(u => u.ClinicServices.Any(x=>x.ClinicId.Equals(string.IsNullOrWhiteSpace(filterValue)))).ToList() 
+		                        : models.OrderByDescending(u => u.ClinicServices.Any(x=>x.ClinicId.Equals(string.IsNullOrWhiteSpace(filterValue)))).ToList();
+	                        break;
+	                }
+	            }
+	            List<ServiceDTO> viewModels = mapper.Map<List<ServiceDTO>>(models);
+	            
+	            return new ResponseDTO("Get services successfully!", 200, true, viewModels);
+	        }
+	        catch (Exception ex)
+	        {
+	            return new ResponseDTO(ex.Message, 500, false, null);
+	        }
+		}
+        
+
 		public async Task<ResponseDTO> GetAllServicesByClinic(string clinicId, string? filterField, string? filterValue, int? pageNumber,
 			int? rowsPerPage)
 		{

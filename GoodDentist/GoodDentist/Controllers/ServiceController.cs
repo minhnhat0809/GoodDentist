@@ -17,10 +17,16 @@ namespace GoodDentist.Controllers
 			this.serviceService = serviceService;
 		}
 		[HttpGet("all-services")]
-		public async Task<ResponseDTO> GetAllService([FromQuery] int pageNumber, int rowsPerPage)
+		public async Task<ActionResult<ResponseDTO>> GetAllServices(
+			[FromQuery] int pageNumber = 1, int rowsPerPage = 5,
+			[FromQuery] string? filterField = null,
+			[FromQuery] string? filterValue = null,
+			[FromQuery] string? sortField = null,
+			[FromQuery] string? sortOrder = "asc")
 		{
-			ResponseDTO responseDTO = await serviceService.getAllService(pageNumber, rowsPerPage);
-			return responseDTO;
+			ResponseDTO responseDTO = await serviceService.GetAllServices(pageNumber,rowsPerPage,filterField,filterValue,sortField,sortOrder);
+            
+			return StatusCode(responseDTO.StatusCode, responseDTO);
 		}
 
 		[HttpGet("clinic")]

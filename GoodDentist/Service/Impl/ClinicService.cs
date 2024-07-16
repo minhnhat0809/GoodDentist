@@ -95,6 +95,7 @@ public class ClinicService : IClinicService
             }
 
             Clinic model = _mapper.Map<Clinic>(clinicDto);
+            model.ClinicId = Guid.NewGuid();
             if (!clinicDto.Services.IsNullOrEmpty())
             {
                 foreach (var serviceDto in clinicDto.Services)

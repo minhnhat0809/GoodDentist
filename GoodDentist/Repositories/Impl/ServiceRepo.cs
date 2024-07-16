@@ -20,9 +20,11 @@ namespace Repositories.Impl
 
 		public async Task<List<Service>> GetAllService(int pageNumber, int rowsPerPage)
 		{
-			List<Service> serviceList = await Paging(pageNumber, rowsPerPage);
-			serviceList.Where(s => true).ToList();
-			return serviceList;
+			return await _repositoryContext.Services
+				.Include(x=>x.ClinicServices)
+				.Skip((pageNumber - 1) * rowsPerPage)
+				.Take(rowsPerPage)
+				.ToListAsync();
 		}
 
 		public async Task<Service> GetServiceByID(int serviceId)

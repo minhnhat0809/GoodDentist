@@ -11,15 +11,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Clinic Get : Get All Clinics - FilterField/FilterValue/SortOn/SortBy(asc/des)">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Payment Create : Create Payment Include Prescription's Medicines/Order's Services">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentAllDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentAllDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentPrescriptionDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/PaymentDTOs/View/PaymentPrescriptionDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IOrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IOrderServices.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/PaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/PaymentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ServiceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ServiceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ServiceRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ServiceRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IServiceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IServiceService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/ServiceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ServiceService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +80,7 @@
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IOrderServices.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IOrderServices.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IOrderServices.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IOrderServices.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/ClinicService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/ClinicService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
@@ -109,7 +108,7 @@
   "keyToString": {
     ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Debug",
     ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
-    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
+    ".NET Launch Settings Profile.GoodDentist: https.executor": "Run",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -588,7 +587,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721111738112</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Payment Create : Create Payment Include Prescription's Medicines/Order's Services">
+      <option name="closed" value="true" />
+      <created>1721112716624</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1721112716624</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -610,7 +617,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="main pulling" />
     <MESSAGE value="get user" />
     <MESSAGE value="userDto: add user id" />
     <MESSAGE value="User detail" />
@@ -635,7 +641,8 @@
     <MESSAGE value="clinic get all : filter/sort/asc" />
     <MESSAGE value="clinic Create : update error catching" />
     <MESSAGE value="Clinic Get : Get All Clinics - FilterField/FilterValue/SortOn/SortBy(asc/des)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clinic Get : Get All Clinics - FilterField/FilterValue/SortOn/SortBy(asc/des)" />
+    <MESSAGE value="Payment Create : Create Payment Include Prescription's Medicines/Order's Services" />
+    <option name="LAST_COMMIT_MESSAGE" value="Payment Create : Create Payment Include Prescription's Medicines/Order's Services" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -759,13 +766,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/ClinicService.cs</url>
-          <line>146</line>
+          <line>147</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\ClinicService.cs" containingFunctionPresentation="Method 'UpdateClinic'">
             <startOffsets>
-              <option value="5716" />
+              <option value="5761" />
             </startOffsets>
             <endOffsets>
-              <option value="5801" />
+              <option value="5846" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="156" />
