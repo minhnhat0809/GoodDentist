@@ -28,17 +28,17 @@ public class ClinicRepository : RepositoryBase<Clinic>, IClinicRepository
         // Filtering
         if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
         {
-            if (filterOn.Equals("ClinicName", StringComparison.OrdinalIgnoreCase))
+            if (filterOn.Equals("name", StringComparison.OrdinalIgnoreCase))
             {
                 list = list.Where(x => x.ClinicName.Contains(filterQuery));
             }
         }
         if (string.IsNullOrWhiteSpace(sortBy) == false )
         {
-            if (sortBy.Equals("ClinicName", StringComparison.OrdinalIgnoreCase))
+            if (sortBy.Equals("name", StringComparison.OrdinalIgnoreCase))
             {
                 list = isAscending ? list.OrderBy(x => x.ClinicName) : list.OrderByDescending(x => x.ClinicName);
-            }else if (sortBy.Equals("ClinicName", StringComparison.OrdinalIgnoreCase))
+            }else if (sortBy.Equals("name", StringComparison.OrdinalIgnoreCase))
             {
                 list = isAscending ? list.OrderBy(x => x.Address) : list.OrderByDescending(x => x.Address);
             }

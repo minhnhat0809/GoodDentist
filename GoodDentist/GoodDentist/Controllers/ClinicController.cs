@@ -64,7 +64,7 @@ namespace GoodDentist.Controllers
             [FromQuery] string? filterOn ,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy, 
-            [FromQuery] bool isAscending)
+            [FromQuery] bool isAscending = true)
 
         {
             _responseDto = new ResponseDTO("", 200,true,null);
