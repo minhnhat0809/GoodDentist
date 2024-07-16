@@ -59,7 +59,7 @@ namespace GoodDentist.Controllers
 
             return _responseDto;
         }
-        [HttpGet]
+        [HttpGet("paging")]
         public async Task<ActionResult<ResponseDTO>> GetAllClinics(
             [FromQuery] int pageNumber = 1, int rowsPerPage = 5,
             [FromQuery] string? filterField = null,
@@ -69,6 +69,30 @@ namespace GoodDentist.Controllers
         {
             ResponseDTO responseDTO = await _service.GetAllClinics(pageNumber,rowsPerPage,filterField,filterValue,sortField,sortOrder);
             return StatusCode(responseDTO.StatusCode, responseDTO);
+        }
+        [HttpGet]
+        public async Task<ResponseDTO> GetClinics(
+            [FromQuery] string? filterOn ,
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy, 
+            [FromQuery] bool isAscending)
+
+        {
+            _responseDto = new ResponseDTO("", 200,true,null);
+            try
+            {
+                var clinics = await _service.GetClinics(filterOn, filterQuery,sortBy,isAscending);
+                _responseDto.Result = clinics;
+
+            }
+            catch (Exception e)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = e.Message;
+                _responseDto.StatusCode = 500;
+            }
+
+            return _responseDto;
         }
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> CreateClinic([FromBody] ClinicCreateDTO requestDto)
