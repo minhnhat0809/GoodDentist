@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using BusinessObject.DTO;
 using BusinessObject.DTO.ClinicDTOs;
 using BusinessObject.DTO.ClinicDTOs.View;
 
@@ -12,7 +13,7 @@ public interface IClinicService
         string? filterOn = null, string? filterQuery = null,
         string? sortBy = null, bool isAscending = true);
 
-    Task<ClinicDTO> CreateClinic(ClinicRequestDTO requestDto);
-    Task<ClinicDTO> DeleteClinic(Guid id);
-    Task<ClinicDTO> UpdateClinic(ClinicRequestDTO requestDto);
+    Task<ResponseDTO> CreateClinic(ClinicCreateDTO requestDto);
+    Task<ResponseDTO> DeleteClinic(Guid id);
+    Task<ResponseDTO> UpdateClinic(ClinicUpdateDTO requestDto);
 }

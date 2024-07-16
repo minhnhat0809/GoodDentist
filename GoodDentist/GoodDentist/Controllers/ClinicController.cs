@@ -84,64 +84,25 @@ namespace GoodDentist.Controllers
             return _responseDto;
         }
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> CreateClinic([FromBody] ClinicRequestDTO requestDto)
+        public async Task<ActionResult<ResponseDTO>> CreateClinic([FromBody] ClinicCreateDTO requestDto)
         {
-            _responseDto = new ResponseDTO("", 200, true, null);
-            try
-            {
-                var createdClinic = await _service.CreateClinic(requestDto);
-                _responseDto.Result = createdClinic;
-            }
-            catch (Exception e)
-            {
-                _responseDto.IsSuccess = false;
-                _responseDto.Message = e.Message;
-                _responseDto.StatusCode = 500;
-            }
-
+            _responseDto = await _service.CreateClinic(requestDto);
             return _responseDto;
         }
 
         
         [HttpPut]
-        public async Task<ActionResult<ResponseDTO>> UpdateClinic([FromBody] ClinicRequestDTO requestDto)
+        public async Task<ActionResult<ResponseDTO>> UpdateClinic([FromBody] ClinicUpdateDTO requestDto)
         {
-            _responseDto = new ResponseDTO("", 200, true, null);
-            try
-            {
-                var updatedClinic = await _service.UpdateClinic(requestDto);
-                _responseDto.Result = updatedClinic;
-            }
-            catch (Exception e)
-            {
-                _responseDto.IsSuccess = false;
-                _responseDto.Message = e.Message;
-                _responseDto.StatusCode = 500;
-            }
-
+            _responseDto = await _service.UpdateClinic(requestDto);
             return _responseDto;
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> DeleteClinic(Guid id)
         {
-            _responseDto = new ResponseDTO("", 200, true, null);
-            try
-            {
-                var deletedClinic = await _service.DeleteClinic(id);
-                if (deletedClinic == null)
-                {
-                    return NotFound(); // Or handle not found scenario
-                }
-                _responseDto.Result = deletedClinic;
-            }
-            catch (Exception e)
-            {
-                _responseDto.IsSuccess = false;
-                _responseDto.Message = e.Message;
-                _responseDto.StatusCode = 500;
-            }
-
+            
+            _responseDto = await _service.DeleteClinic(id);
             return _responseDto;
         }
     }

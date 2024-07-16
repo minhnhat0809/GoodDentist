@@ -1,12 +1,9 @@
 ﻿using BusinessObject.DTO.ServiceDTOs.View;
-using BusinessObject.Entity;
 
 namespace BusinessObject.DTO.ClinicDTOs;
 
-public class ClinicUpdateDTO
+public class ClinicCreateDTO
 {
-    public Guid ClinicId { get; set; }
-
     public string ClinicName { get; set; } = null!;
 
     public string? Address { get; set; }

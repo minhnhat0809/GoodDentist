@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObject.DTO.ClinicDTOs;
 using BusinessObject.DTO.ExaminationDTOs.View;
 using BusinessObject.DTO.UserDTOs.View;
 using BusinessObject.DTO.RoomDTOs.View;
@@ -202,6 +203,8 @@ namespace Services
             /*----------------------------------------------------*/
             //CLINIC
             CreateMap<Clinic, ClinicDTO>().ReverseMap();
+            CreateMap<Clinic, ClinicCreateDTO>().ReverseMap();
+            CreateMap<Clinic, ClinicUpdateDTO>().ReverseMap();
             
             /*----------------------------------------------------*/
            //NOTIFICATION

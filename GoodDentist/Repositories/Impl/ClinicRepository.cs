@@ -1,6 +1,7 @@
 ﻿using BusinessObject;
 using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Repositories.Impl;
 
@@ -52,11 +53,30 @@ public class ClinicRepository : RepositoryBase<Clinic>, IClinicRepository
         return clinic;
     }
 
-    public async Task<Clinic> UpdateClinic(Clinic clinic)
+    public async Task<Clinic?> UpdateClinic(Clinic clinic)
     {
-        _repositoryContext.Entry(clinic).State = EntityState.Modified;
-        await _repositoryContext.SaveChangesAsync();
-        return clinic;
+        Clinic? model = _repositoryContext.Clinics
+            .Include(x => x.Rooms)
+            .Include(x => x.ClinicServices)
+            .FirstOrDefault(x => x.ClinicId == clinic.ClinicId);
+            
+        if(model != null)
+        {
+            _repositoryContext.Entry(model).CurrentValues.SetValues(clinic);
+            // if new list service, update 
+            if (!clinic.ClinicServices.IsNullOrEmpty())
+            {
+                _repositoryContext.ClinicServices.RemoveRange(model.ClinicServices);
+                await _repositoryContext.SaveChangesAsync();
+                foreach (var clinicService in clinic.ClinicServices)
+                {
+                    model.ClinicServices.Add(clinicService);
+                }
+            }
+            await _repositoryContext.SaveChangesAsync();
+            return model;
+        }
+        return null;
     }
 
     public async Task<Clinic> DeleteClinic(Guid id)

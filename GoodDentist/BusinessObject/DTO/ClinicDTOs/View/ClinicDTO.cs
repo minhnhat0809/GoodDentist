@@ -1,4 +1,7 @@
-﻿namespace BusinessObject.DTO.ClinicDTOs.View;
+﻿using BusinessObject.DTO.ClinicServiceDTOs.View;
+using BusinessObject.DTO.RoomDTOs.View;
+
+namespace BusinessObject.DTO.ClinicDTOs.View;
 
 public class ClinicDTO
 {
@@ -13,6 +16,9 @@ public class ClinicDTO
     public string? Email { get; set; }
 
     public bool? Status { get; set; }
+    
+    public virtual ICollection<ClinicServiceDTO> ClinicServices { get; set; } = new List<ClinicServiceDTO>();
 
+    public virtual ICollection<RoomDTO> Rooms { get; set; } = new List<RoomDTO>();
 
 }

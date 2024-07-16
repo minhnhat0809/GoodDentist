@@ -12,7 +12,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="commit">
-      <change beforePath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BusinessObject/DTO/ClinicDTOs/ClinicCreateDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ClinicDTOs/ClinicRequestDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ClinicDTOs/ClinicRequestDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ClinicDTOs/View/ClinicDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ClinicDTOs/View/ClinicDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ClinicController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ClinicRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IClinicService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +44,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="deploy" />
+        <entry key="$PROJECT_DIR$/.." value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -92,7 +100,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "master__test__db",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -741,6 +749,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/ClinicService.cs</url>
+          <line>95</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\ClinicService.cs" containingFunctionPresentation="Method 'UpdateClinic'">
+            <startOffsets>
+              <option value="3292" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3377" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="156" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
