@@ -10,8 +10,6 @@ public class PaymentPrescriptionDTO
 
     public decimal? Price { get; set; }
 
-    public int? PrescriptionId { get; set; }
-
     public bool? Status { get; set; }
 
     public virtual PrescriptionDTO? Prescription { get; set; }

@@ -117,35 +117,25 @@ namespace Services.Impl
             return responseDto;
         }
 
-        public async Task<ResponseDTO> UpdateOrderAfterPayment(int orderId, List<Payment> payments)
+        public async Task<ResponseDTO> UpdateOrderAfterPayment(Order order)
         {
 	        try
 	        {
-		        Order? order = await _unitOfWork.orderRepo.GetOrderById(orderId);
-		        if (order != null)
+		        if (order!=null)
 		        {
-			        List<OrderService> orderServices = order.OrderServices.ToList();
-			        foreach (OrderService? orderService in orderServices)
+			        Order? model = await _unitOfWork.orderRepo.GetOrderById(order.OrderId);
+			        if (model != null)
 			        {
-				        // if any order service paid
-				        /*if (payments.Any(x=>x.OrderService.OrderServiceId == orderService.OrderServiceId))
+				        foreach (OrderService? orderService in order.OrderServices.ToList())
 				        {
-					        // set status to be paid AS false
 					        orderService.Status = 0;
-					        // Update Order Price when one service BEING PAID.
-					        order.Price -= orderService.Price;
-				        }*/
-			        }
-					// Inactive order when price = 0;
-			        if (order.Price == 0)
-			        {
-				        order.Status = false;
-			        }
+				        }
+				        model = await _unitOfWork.orderRepo.UpdateOrder(order);
+				        return new ResponseDTO("Update Order Price successfully", 200, true,
+					        _mapper.Map<OrderDTO>(order));
 
-			        await _unitOfWork.orderRepo.UpdateOrder(order);
-			        return new ResponseDTO("Update Order Price sucessfully", 200, true, _mapper.Map<OrderDTO>(order));
-
-		        } return new ResponseDTO("Order not found!", 404, false, _mapper.Map<OrderDTO>(order));
+			        } return new ResponseDTO("Order not exist !", 404, false, _mapper.Map<OrderDTO>(order));
+		        } return new ResponseDTO("Order is should not null!", 404, false, _mapper.Map<OrderDTO>(order));
             }
             catch (Exception ex)
             {

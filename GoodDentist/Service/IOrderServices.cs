@@ -24,6 +24,6 @@ namespace Services
 
         Task<ResponseDTO> GetOrderDetails(int orderId);
 
-        Task<ResponseDTO> UpdateOrderAfterPayment(int orderId, List<Payment> payments);
+        Task<ResponseDTO> UpdateOrderAfterPayment(Order order);
 	}
 }

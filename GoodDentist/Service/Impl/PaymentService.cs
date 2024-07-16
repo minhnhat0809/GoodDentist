@@ -90,20 +90,17 @@ namespace Services.Impl
                     Order? order = await _unitOfWork.orderRepo.GetOrderById(paymentDTO.Order.OrderId);
                     if (order != null && order.Status == true)
                     {
-                        foreach (OrderService orderService in order.OrderServices)
+                        Payment payment = new Payment()
                         {
-                            Payment payment = new Payment()
-                            {
-                                Price = orderService.Price * orderService.Quantity, // price * quantity
-                                Status = true,
-                                //OrderService = orderService,
-                                PaymentDetail = orderService.Quantity.ToString(),
-                                //OrderServiceId = orderService.OrderId,
-                                CreateAt = DateTime.Now
-                            };
-                            //model.Payments.Add(payment);
-                            model.Total += payment.Price;
-                        }
+                            Price = order.Price,
+                            Status = true,
+                            Order = order,
+                            PaymentDetail = order.OrderName + " : " + order.Price,
+                            OrderId = order.OrderId,
+                            CreateAt = DateTime.Now
+                        };
+                        model.PaymentOrder = payment;
+                        model.Total += payment.Price;   
                     }
                 }
                 await _unitOfWork.paymentAllRepo.CreatePayment(model);
@@ -125,7 +122,6 @@ namespace Services.Impl
                     if (model.Status == true)
                     {
                         model = _mapper.Map<PaymentAll>(paymentDTO);
-                        //model.PaymentDetail = paymentDTO.PaymentDetail;
                         
                         model.Total = 0;
                         // check prescription - done
@@ -148,41 +144,25 @@ namespace Services.Impl
                                 model.Total += paymentPrescription.Price;
                             }else return new ResponseDTO("Prescription had Paid!", 400, false, _mapper.Map<PrescriptionDTO>(prescription));
                         }
-                        // check order - [payment for all order in one time]
-                        /*if (paymentDTO.Order != null)
+                        // check order - [payment for all order's service in one time]
+                        if (paymentDTO.Order != null)
                         {
-                            return new ResponseDTO("We are not support this feature yet!", 400, false, null);
+                            //return new ResponseDTO("We are not support this feature yet!", 400, false, null);
                             Order? order = await _unitOfWork.orderRepo.GetOrderById(paymentDTO.Order.OrderId);
                             if (order != null && order.Status == true)
                             {
-                                foreach (OrderService orderService in order.OrderServices)
+                                Payment paymentOrder = new Payment()
                                 {
-                                    List<Payment> payList =
-                                        (await _unitOfWork.paymentAllRepo.GetPaymentById(paymentDTO.PaymentAllId))
-                                        .Payments.ToList();
-                                    if (!payList.IsNullOrEmpty())
-                                    {
-                                        Payment? paymentOrder = payList.FirstOrDefault(x =>
-                                            x.OrderServiceId == orderService.OrderServiceId && x.Status == true);
-                                        // check if Exist( orderCreate) == Order get by id =>> create Payment [when status= Paid set OrderService = false (Paid)]
-                                        if(paymentOrder!= null)
-                                        {
-                                            Payment payment = new Payment()
-                                            {
-                                                Price = orderService.Price * orderService.Quantity, // price * quantity
-                                                Status = true,
-                                                OrderService = orderService,
-                                                PaymentDetail = orderService.Quantity.ToString(),
-                                                OrderServiceId = orderService.OrderId,
-                                                CreateAt = DateTime.Now
-                                            };
-                                            model.Payments.Add(payment);
-                                        }
-                                    }
-                                    
-                                }
-                            }else return new ResponseDTO("Order had Paid!", 400, false, _mapper.Map<OrderDTO>(order));
-                        }*/
+                                    Price = order.Price,
+                                    Status = true,
+                                    CreateAt = DateTime.Now,
+                                    Order = order,
+                                    OrderId = order.OrderId
+                                };
+                                model.PaymentOrder = paymentOrder;
+                                model.Total += paymentOrder.Price;
+                            } else return new ResponseDTO("Order had Paid!", 400, false, _mapper.Map<OrderDTO>(order));
+                        }
                         // check is Paid yet ?
                         if (paymentDTO.Status == true)
                         {
@@ -208,48 +188,22 @@ namespace Services.Impl
                                     if (!checkUpdateMedicine.IsSuccess)
                                         return checkUpdateMedicine;
                                     // if success add price to payment-all
-                                    model.Total += prescription.Total;
+                                   // model.Total += prescription.Total;
                                     
                                 } else return new ResponseDTO("Prescription had Paid!", 400, false, _mapper.Map<PrescriptionDTO>(prescription));
                             }
 
-                            /*if (paymentDTO.Order != null)
+                            if (paymentDTO.Order != null)
                             {
                                 Order? order = await _unitOfWork.orderRepo.GetOrderById(paymentDTO.Order.OrderId);
-                                if (order != null && order.Status == true )
+                                if (order != null && order.Status == true)
                                 {
-                                    List<Payment> payList =
-                                        (await _unitOfWork.paymentAllRepo.GetPaymentById(paymentDTO.PaymentAllId))
-                                        .Payments.ToList();
-                                    
-                                    foreach (OrderService orderService in order.OrderServices)
-                                    {
-                                        var tmp = model.Payments.FirstOrDefault(x =>
-                                            x.OrderServiceId == orderService.OrderServiceId && x.Status == true);
-                                        if (tmp != null)
-                                        {
-                                            model.Payments.Remove(tmp); // Remove found service of order
-
-                                            Payment? paymentOrder = payList.FirstOrDefault(x =>
-                                                x.OrderServiceId == orderService.OrderServiceId && x.Status == true);
-                                            // check if Any( orderCreate) == Order get by id 
-                                            if (paymentOrder != null)
-                                            {
-                                                paymentOrder.Status = false;
-                                                model.Payments.Add(paymentOrder); // set again service had Paid 
-
-                                            }
-                                        }
-                                    }
-                                    // Update Order [include List<OrderService> where status false] 
-                                    var checkOrder =
-                                        await _orderServices.UpdateOrderAfterPayment(
-                                            paymentDTO.Order.OrderId
-                                            , model.Payments.ToList());
-                                    if (checkOrder.IsSuccess) return checkOrder;
-    
+                                    var checkUpdateOrder = await _orderServices.UpdateOrderAfterPayment(order);
+                                    if (!checkUpdateOrder.IsSuccess) return checkUpdateOrder;
+                                    // if success add price to payment-all
+                                    //model.Total += order.Price;
                                 } else return new ResponseDTO("Order had Paid!", 400, false, _mapper.Map<OrderDTO>(order));
-                            }*/
+                            }
                             // UPDATE - PAYMENT ALL
                             await _unitOfWork.paymentAllRepo.UpdatePayment(model);
                             return new ResponseDTO("Paying successfully!", 200, true, paymentDTO);

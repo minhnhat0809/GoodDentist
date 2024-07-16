@@ -50,37 +50,22 @@ namespace Repositories.Impl
                 // Update the PaymentAll entity
                 _repositoryContext.Entry(model).CurrentValues.SetValues(paymentAll);
         
-                // Handle Payments
-                if (model.PaymentOrder != null)
+                // Handle Payment for Order's Services
+                if (paymentAll.PaymentOrder != null)
                 {
-                    // Remove old Payments that are in paymentAll
-                    
-                            //_repositoryContext.Payments.Remove(payment);
-                    
+                    if(model.PaymentOrder!=null) _repositoryContext.Payments.Remove(model.PaymentOrder);
+                    await _repositoryContext.SaveChangesAsync();
+                    model.PaymentOrder = paymentAll.PaymentOrder;
                 }
 
-                // Remove existing PaymentPrescription
-                if (model.PaymentPrescription != null)
+                //  Handle Payment for Prescription's Medicines
+                if (paymentAll.PaymentPrescription != null)
                 {
-                    _repositoryContext.PaymentPrescriptions.Remove(model.PaymentPrescription);
+                    if(model.PaymentPrescription!=null) _repositoryContext.PaymentPrescriptions.Remove(model.PaymentPrescription);
+                    await _repositoryContext.SaveChangesAsync();
+                    model.PaymentPrescription = paymentAll.PaymentPrescription;
                 }
-        
-                //await _repositoryContext.SaveChangesAsync();
-
-                // Add new Payments and update their status
-                /*foreach (Payment payment in paymentAll.Payments.ToList())
-                {
-                    // Set the payment status to match the PaymentAll status
-                    payment.Status = paymentAll.Status;
-            
-                    // Add the new Payment
-                    model.Payments?.Add(payment);
-                }*/
-
-                // Update PaymentPrescription
-                model.PaymentPrescription = paymentAll.PaymentPrescription;
-
-               // await _repositoryContext.SaveChangesAsync();
+                await _repositoryContext.SaveChangesAsync();
             }
         }
 
@@ -88,22 +73,22 @@ namespace Repositories.Impl
         public async Task DeletePayment(int id)
         {
             PaymentAll? model =  await _repositoryContext.PaymentAlls
-                //.Include(x => x.Payments)
+                .Include(x => x.PaymentOrder)
                 .Include(x => x.PaymentPrescription)
                 .FirstOrDefaultAsync(x => x.PaymentAllId == id);
             if (model != null)
             {
-                /*if(model.Payments != null)
-                {
-                    _repositoryContext.Payments.RemoveRange(model.Payments);
-                }*/
+                // delete all prescription payment
                 if(model.PaymentPrescription != null)
                 {
                     _repositoryContext.PaymentPrescriptions.RemoveRange(model.PaymentPrescription);
                 }
-                await _repositoryContext.SaveChangesAsync();
-                
-                _repositoryContext.PaymentAlls.Remove(model);
+                // delete all order payment
+                if (model.PaymentOrder != null)
+                {
+                    _repositoryContext.Payments.Remove(model.PaymentOrder);
+                }
+                model.Status = false;
                 await _repositoryContext.SaveChangesAsync();
             }
         }

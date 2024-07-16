@@ -8,11 +8,9 @@ public class PaymentAllDTO
 
     public decimal? Total { get; set; }
 
-    public int? PaymentPrescriptionId { get; set; }
-
     public bool? Status { get; set; }
+    
+    public virtual PaymentDTO? PaymentOrder { get; set; }
 
     public virtual PaymentPrescriptionDTO? PaymentPrescription { get; set; }
-
-    public virtual ICollection<PaymentDTO> Payments { get; set; } = new List<PaymentDTO>();
 }
