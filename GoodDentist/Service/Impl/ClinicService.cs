@@ -131,7 +131,7 @@ public class ClinicService : IClinicService
             {
                 return new ResponseDTO("This Clinic is not exist!", 400, false, null);
             }
-            
+            model.Status = false;
             await _unitOfWork.ClinicRepository.DeleteAsync(model);
             return new ResponseDTO("Medicine Delete successfully!", 201, true, _mapper.Map<ClinicDTO>(model));
         }
