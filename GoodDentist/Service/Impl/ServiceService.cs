@@ -140,35 +140,50 @@ namespace Services.Impl
 	            List<Service> models = await unitOfWork.serviceRepo.GetAllService(pageNumber, rowsPerPage);
 	                
 	            // Filter 
-	            if (!string.IsNullOrEmpty(filterField) || !string.IsNullOrEmpty(filterValue))
+	            if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
 	            {
-	                switch (filterField.ToLower())
-	                {
-	                    case "name":
-	                        models = models.Where(u => u.ServiceName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
-	                        break;
-	                    case "clinic":
-	                        models = models.Where(u => u.ClinicServices.Any(x=>x.ClinicId.Equals(string.IsNullOrWhiteSpace(filterValue))))
-	                            .ToList();
-	                        break;
-	                }
 
-	                
+		            models = models;
+
+	            }
+	            else
+	            {
+		            switch (filterField.ToLower())
+		            {
+			            case "name":
+				            models = models.Where(u => u.ServiceName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+				            break;
+			            case "clinicId":
+				            if (Guid.TryParse(filterValue, out Guid clinicId))
+				            {
+					            models = models.Where(u => u.ClinicServices.Any(x => x.ClinicId == clinicId)).ToList();
+				            }
+				            else
+				            {
+					            return new ResponseDTO("Invalid Clinic ID format!", 400, false, null);
+				            }
+				            break;
+		            }
 	            }
 	            // Sort
-	            if (!string.IsNullOrEmpty(sortField) || !string.IsNullOrEmpty(sortOrder))
+	            if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
 	            {
-	                bool isAscending = sortOrder.ToLower() == "asc";
-	                switch (sortField.ToLower())
-	                {
-	                    case "name":
-	                        models = isAscending ? models.OrderBy(u => u.ServiceName).ToList() : models.OrderByDescending(u => u.ServiceName).ToList();
-	                        break;
-	                    case "clinic":
-	                        models = isAscending ? models.OrderBy(u => u.ClinicServices.Any(x=>x.ClinicId.Equals(string.IsNullOrWhiteSpace(filterValue)))).ToList() 
-		                        : models.OrderByDescending(u => u.ClinicServices.Any(x=>x.ClinicId.Equals(string.IsNullOrWhiteSpace(filterValue)))).ToList();
-	                        break;
-	                }
+		            models = models;
+	            }
+	            else
+	            {
+		            bool isAscending = sortOrder.ToLower() == "asc";
+		            switch (sortField.ToLower())
+		            {
+			            case "name":
+				            models = isAscending ? models.OrderBy(u => u.ServiceName).ToList() : models.OrderByDescending(u => u.ServiceName).ToList();
+				            break;
+			            case "clinicId":
+				            models = isAscending 
+					            ? models.OrderBy(u => u.ClinicServices.Any(x => x.ClinicId == Guid.Parse(filterValue))).ToList()
+					            : models.OrderByDescending(u => u.ClinicServices.Any(x => x.ClinicId == Guid.Parse(filterValue))).ToList();
+				            break;
+		            }
 	            }
 	            List<ServiceDTO> viewModels = mapper.Map<List<ServiceDTO>>(models);
 	            

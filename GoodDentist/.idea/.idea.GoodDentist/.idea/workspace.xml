@@ -11,12 +11,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Payment Create : Create Payment Include Prescription's Medicines/Order's Services">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="service">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ServiceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ServiceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ServiceRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ServiceRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IServiceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IServiceService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ClinicService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/Impl/ServiceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ServiceService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -595,7 +591,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721112716624</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="service">
+      <option name="closed" value="true" />
+      <created>1721114780810</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1721114780810</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -617,7 +621,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="get user" />
     <MESSAGE value="userDto: add user id" />
     <MESSAGE value="User detail" />
     <MESSAGE value="Get User include Clinic" />
@@ -642,7 +645,8 @@
     <MESSAGE value="clinic Create : update error catching" />
     <MESSAGE value="Clinic Get : Get All Clinics - FilterField/FilterValue/SortOn/SortBy(asc/des)" />
     <MESSAGE value="Payment Create : Create Payment Include Prescription's Medicines/Order's Services" />
-    <option name="LAST_COMMIT_MESSAGE" value="Payment Create : Create Payment Include Prescription's Medicines/Order's Services" />
+    <MESSAGE value="service" />
+    <option name="LAST_COMMIT_MESSAGE" value="service" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -854,6 +858,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/ServiceService.cs</url>
+          <line>139</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\ServiceService.cs" containingFunctionPresentation="Method 'GetAllServices'">
+            <startOffsets>
+              <option value="3952" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4043" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="164" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
