@@ -16,4 +16,8 @@ public interface IClinicService
     Task<ResponseDTO> CreateClinic(ClinicCreateDTO requestDto);
     Task<ResponseDTO> DeleteClinic(Guid id);
     Task<ResponseDTO> UpdateClinic(ClinicUpdateDTO requestDto);
+
+    Task<ResponseDTO> GetAllClinics(int pageNumber, int rowsPerPage, string? filterField, string? filterValue,
+        string? sortField,
+        string? sortOrder);
 }

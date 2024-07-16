@@ -14,4 +14,5 @@ public interface IClinicRepository : IRepositoryBase<Clinic>
     Task<Clinic> CreateClinic(Clinic request);
     Task<Clinic> DeleteClinic(Guid id);
     Task<Clinic> UpdateClinic(Clinic request);
+    Task<List<Clinic>> GetAllClinics(int pageNumber, int rowsPerPage);
 }

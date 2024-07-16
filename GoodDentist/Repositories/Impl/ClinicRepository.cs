@@ -45,6 +45,15 @@ public class ClinicRepository : RepositoryBase<Clinic>, IClinicRepository
         }
         return await list.ToListAsync();
     }
+    public async Task<List<Clinic>> GetAllClinics(int pageNumber, int rowsPerPage)
+    {
+        return await _repositoryContext.Clinics
+            .Include(x=>x.ClinicServices)
+            .Include(x=>x.Rooms)
+            .Skip((pageNumber - 1) * rowsPerPage)
+            .Take(rowsPerPage)
+            .ToListAsync();
+    }
 
     public async Task<Clinic> CreateClinic(Clinic clinic)
     {

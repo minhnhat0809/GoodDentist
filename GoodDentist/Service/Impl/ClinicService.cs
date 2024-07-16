@@ -29,9 +29,60 @@ public class ClinicService : IClinicService
  
     public async Task<List<ClinicDTO>> GetClinics(string? filterOn , string? filterQuery, string? sortBy, bool isAscending )
     {
-        var list = await _unitOfWork.ClinicRepository.GetClinics(filterOn, filterQuery, sortBy, isAscending);
+        List<Clinic> list = await _unitOfWork.ClinicRepository.GetClinics(filterOn, filterQuery, sortBy, isAscending);
         var listDto =  _mapper.Map<List<ClinicDTO>>(list);
         return listDto;
+    }
+    public async Task<ResponseDTO> GetAllClinics(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField,
+        string? sortOrder)
+    {
+        try
+        {
+            List<Clinic> models = await _unitOfWork.ClinicRepository.GetAllClinics(pageNumber, rowsPerPage);
+                
+            // Filter 
+            if (!string.IsNullOrEmpty(filterField) || !string.IsNullOrEmpty(filterValue))
+            {
+                switch (filterField.ToLower())
+                {
+                    case "name":
+                        models = models.Where(u => u.ClinicName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        break;
+                    case "phone":
+                        models = models.Where(u =>
+                            u.PhoneNumber.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        break;
+                    case "email":
+                        models = models.Where(u => u.Email.Contains(filterValue, StringComparison.OrdinalIgnoreCase))
+                            .ToList();
+                        break;
+                }
+            }
+            // Sort
+            if (!string.IsNullOrEmpty(sortField) || !string.IsNullOrEmpty(sortOrder))
+            {
+                bool isAscending = sortOrder.ToLower() == "asc";
+                switch (sortField.ToLower())
+                {
+                    case "name":
+                        models = isAscending ? models.OrderBy(u => u.ClinicName).ToList() : models.OrderByDescending(u => u.ClinicName).ToList();
+                        break;
+                    case "phone":
+                        models = isAscending ? models.OrderBy(u => u.PhoneNumber).ToList() : models.OrderByDescending(u => u.PhoneNumber).ToList();
+                        break;
+                    case "email":
+                        models = isAscending ? models.OrderBy(u => u.Email).ToList() : models.OrderByDescending(u => u.Email).ToList();
+                        break;
+                }
+            }
+            List<ClinicDTO> viewModels = _mapper.Map<List<ClinicDTO>>(models);
+            
+            return new ResponseDTO("Get customer successfully!", 200, true, viewModels);
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO(ex.Message, 500, false, null);
+        }
     }
 
     public async Task<ResponseDTO> CreateClinic(ClinicCreateDTO clinicDto)
