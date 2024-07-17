@@ -161,6 +161,8 @@ namespace Services.Impl
 				// map to model
 				Order model = _mapper.Map<Order>(orderDTO);
 				model.Price = 0;
+				model.DateTime = DateTime.Now;
+				model.Status = true;
 				if(!orderDTO.Services.IsNullOrEmpty())
 				{
 					foreach (ServiceToOrderDTO serviceDto in orderDTO.Services)
@@ -183,8 +185,10 @@ namespace Services.Impl
 
 				if (orderDTO.ExaminationId != null) 
 				{
-					model.Examination =
+					Examination? examination =
 						await _unitOfWork.examinationRepo.GetExaminationById(orderDTO.ExaminationId.Value);
+					if (examination == null) return new ResponseDTO("Examination not found!", 400, false, examination);
+					model.Examination = examination;
 				}
 				
 				await _unitOfWork.orderRepo.CreateOrder(model);
@@ -232,7 +236,7 @@ namespace Services.Impl
 								Service = service
 							};
 							model.OrderServices.Add(orderService);
-							model.Price += service.Price * serviceDto.Quantity;
+							if(orderService.Status != 0 ) model.Price += service.Price * serviceDto.Quantity;
 						}
 					}
 				}

@@ -11,9 +11,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Services Controller : Get no paging for Get All Services and Get All Services for Clinic">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Order Update/Delete : Valid by status">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ServiceDTOs/View/ServiceDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ServiceDTOs/View/ServiceDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -601,7 +601,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721192571025</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Order Update/Delete : Valid by status">
+      <option name="closed" value="true" />
+      <created>1721209771855</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1721209771855</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -623,7 +631,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Get User include Clinic" />
     <MESSAGE value="merge commit" />
     <MESSAGE value="customer get all remake: add filter, sort" />
     <MESSAGE value="fix update customer controller" />
@@ -648,7 +655,8 @@
     <MESSAGE value="service" />
     <MESSAGE value="Service Controller : Update/Delete service" />
     <MESSAGE value="Services Controller : Get no paging for Get All Services and Get All Services for Clinic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Services Controller : Get no paging for Get All Services and Get All Services for Clinic" />
+    <MESSAGE value="Order Update/Delete : Valid by status" />
+    <option name="LAST_COMMIT_MESSAGE" value="Order Update/Delete : Valid by status" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -863,16 +871,42 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
-          <line>202</line>
+          <line>206</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'UpdateOrder'">
             <startOffsets>
-              <option value="6246" />
+              <option value="6456" />
             </startOffsets>
             <endOffsets>
-              <option value="6319" />
+              <option value="6529" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
+          <line>161</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'AddOrder'">
+            <startOffsets>
+              <option value="5105" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5148" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/ExaminationRepo.cs</url>
+          <line>55</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\ExaminationRepo.cs" containingFunctionPresentation="Method 'GetExaminationById'">
+            <startOffsets>
+              <option value="2370" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3137" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="167" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
