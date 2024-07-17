@@ -20,6 +20,6 @@ namespace Repositories
 		Task<List<Service>> GetServicesByClinicByFilterNoPaging(string filterValue, string clinicId);
 		Task<List<Service>> GetAllServiceNoPaging();
 
-		Task<List<OrderService>> GetServiceUsedInDateRange(DateOnly DateStart, DateOnly DateEnd);
+		Task<List<OrderService>> GetServiceUsedInDateRange(DateTime DateStart, DateTime DateEnd);
 	}
 }

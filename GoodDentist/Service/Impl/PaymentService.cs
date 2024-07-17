@@ -290,7 +290,7 @@ namespace Services.Impl
             return responseDto;
         }
 
-        public async Task<ResponseDTO> GetPaymentsInDateRange(DateOnly DateStart, DateOnly DateEnd)
+        public async Task<ResponseDTO> GetPaymentsInDateRange(DateTime DateStart, DateTime DateEnd)
         {
             ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
             try
@@ -325,7 +325,7 @@ namespace Services.Impl
             return responseDto;
         }
 
-        public async Task<ResponseDTO> GetPaymentsOfServicesInDateRange(DateOnly DateStart, DateOnly DateEnd)
+        public async Task<ResponseDTO> GetPaymentsOfServicesInDateRange(DateTime DateStart, DateTime DateEnd)
         {
             ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
             try
