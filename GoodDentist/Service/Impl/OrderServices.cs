@@ -191,7 +191,7 @@ namespace Services.Impl
 					model.Examination = examination;
 				}
 				
-				await _unitOfWork.orderRepo.CreateOrder(model);
+				model = await _unitOfWork.orderRepo.CreateOrder(model);
 				return new ResponseDTO("Create successfully", 200, true, _mapper.Map<OrderDTO>(model));
 			}
 			catch (Exception ex)

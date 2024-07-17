@@ -11,9 +11,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Order Update/Delete : Valid by status">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,6 +62,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39edc8d6636bf8ac398568727a2cda2ffc90cd6d7bf9a45d9d43252df59484f/StorageClient.UploadObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6293d1755dba2be55da4743189b3329541121b6a8fba6ed5a6c914fbd4515/StorageClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/IServiceRepo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/ServiceRepo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IServiceService.cs" root0="SKIP_HIGHLIGHTING" />
@@ -107,9 +108,9 @@
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/apple/Library/Application Support/JetBrains/Rider2023.3/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/apple/Library/Application Support/JetBrains/Rider2023.3/resharper-host/SourcesCache&quot;,
-      &quot;/Users/apple/.local/share/Symbols/src&quot;
+      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Admin\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
@@ -216,22 +217,8 @@
       <workItem from="1720716305449" duration="2551000" />
       <workItem from="1720755509889" duration="9639000" />
       <workItem from="1720809903114" duration="5008000" />
-    </task>
-    <task id="LOCAL-00001" summary="change file location and create repositoryBase">
-      <option name="closed" value="true" />
-      <created>1716830771990</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1716830771990</updated>
-    </task>
-    <task id="LOCAL-00002" summary="rename controller">
-      <option name="closed" value="true" />
-      <created>1716869083336</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1716869083336</updated>
+      <workItem from="1721214206193" duration="995000" />
+      <workItem from="1721224190772" duration="493000" />
     </task>
     <task id="LOCAL-00003" summary="role">
       <option name="closed" value="true" />
@@ -609,7 +596,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721209771855</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Order Update : Price When delete service">
+      <option name="closed" value="true" />
+      <created>1721211404139</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1721211404140</updated>
+    </task>
+    <task id="LOCAL-00051" summary="push">
+      <option name="closed" value="true" />
+      <created>1721214238587</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1721214238587</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -631,8 +634,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="merge commit" />
-    <MESSAGE value="customer get all remake: add filter, sort" />
     <MESSAGE value="fix update customer controller" />
     <MESSAGE value="get all customer&amp;user : sort name" />
     <MESSAGE value="get all user: filter by search (phone, name, email, username)" />
@@ -656,7 +657,9 @@
     <MESSAGE value="Service Controller : Update/Delete service" />
     <MESSAGE value="Services Controller : Get no paging for Get All Services and Get All Services for Clinic" />
     <MESSAGE value="Order Update/Delete : Valid by status" />
-    <option name="LAST_COMMIT_MESSAGE" value="Order Update/Delete : Valid by status" />
+    <MESSAGE value="Order Update : Price When delete service" />
+    <MESSAGE value="push" />
+    <option name="LAST_COMMIT_MESSAGE" value="push" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -874,10 +877,10 @@
           <line>206</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'UpdateOrder'">
             <startOffsets>
-              <option value="6456" />
+              <option value="6464" />
             </startOffsets>
             <endOffsets>
-              <option value="6529" />
+              <option value="6537" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="165" />
@@ -907,6 +910,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs</url>
+          <line>63</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\OrderRepository.cs" containingFunctionPresentation="Method 'CreateOrder'">
+            <startOffsets>
+              <option value="1600" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1637" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="168" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
