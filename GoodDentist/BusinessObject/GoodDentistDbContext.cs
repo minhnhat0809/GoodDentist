@@ -63,12 +63,12 @@ public partial class GoodDentistDbContext : DbContext
     public virtual DbSet<Service> Services { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Clinic>(entity =>
         {
-            entity.HasKey(e => e.ClinicId).HasName("PK__Clinic__A0C8D19B3BDDFDE7");
+            entity.HasKey(e => e.ClinicId).HasName("PK__Clinic__A0C8D19B159788E0");
 
             entity.ToTable("Clinic");
 
@@ -92,7 +92,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<ClinicService>(entity =>
         {
-            entity.HasKey(e => e.ClinicServiceId).HasName("PK__Clinic_S__916E631C0C2208C8");
+            entity.HasKey(e => e.ClinicServiceId).HasName("PK__Clinic_S__916E631C55E608F5");
 
             entity.ToTable("Clinic_Service");
 
@@ -115,7 +115,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<ClinicUser>(entity =>
         {
-            entity.HasKey(e => e.ClinicUserId).HasName("PK__Clinic_U__7EF5AC802C418689");
+            entity.HasKey(e => e.ClinicUserId).HasName("PK__Clinic_U__7EF5AC80184FE5FD");
 
             entity.ToTable("Clinic_User");
 
@@ -135,7 +135,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB854FE0A647");
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB85CC0AA6DA");
 
             entity.ToTable("Customer");
 
@@ -177,7 +177,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<CustomerClinic>(entity =>
         {
-            entity.HasKey(e => e.CustomerClinicId).HasName("PK__Customer__971AD285B742420C");
+            entity.HasKey(e => e.CustomerClinicId).HasName("PK__Customer__971AD2856BA45FFB");
 
             entity.ToTable("Customer_Clinic");
 
@@ -197,11 +197,11 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Debt>(entity =>
         {
-            entity.HasKey(e => e.TotalId).HasName("PK__Debt__B0C5112236EA1D5A");
+            entity.HasKey(e => e.TotalId).HasName("PK__Debt__B0C51122029DAFCE");
 
             entity.ToTable("Debt");
 
-            entity.HasIndex(e => e.ExaminationProfileId, "UQ__Debt__2B0A04919C10F1D6").IsUnique();
+            entity.HasIndex(e => e.ExaminationProfileId, "UQ__Debt__2B0A049131500420").IsUnique();
 
             entity.Property(e => e.TotalId).HasColumnName("total_id");
             entity.Property(e => e.ExaminationProfileId).HasColumnName("examination_profile_id");
@@ -216,7 +216,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<DentistSlot>(entity =>
         {
-            entity.HasKey(e => e.DentistSlotId).HasName("PK__Dentist___F7C6C8C317C50EF7");
+            entity.HasKey(e => e.DentistSlotId).HasName("PK__Dentist___F7C6C8C3BE0100DD");
 
             entity.ToTable("Dentist_Slot");
 
@@ -242,7 +242,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Examination>(entity =>
         {
-            entity.HasKey(e => e.ExaminationId).HasName("PK__Examinat__BCD82530917764F9");
+            entity.HasKey(e => e.ExaminationId).HasName("PK__Examinat__BCD825307159E03C");
 
             entity.ToTable("Examination");
 
@@ -279,7 +279,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<ExaminationProfile>(entity =>
         {
-            entity.HasKey(e => e.ExaminationProfileId).HasName("PK__Examinat__2B0A04908F57260C");
+            entity.HasKey(e => e.ExaminationProfileId).HasName("PK__Examinat__2B0A049029F8A6D7");
 
             entity.ToTable("Examination_Profile");
 
@@ -303,7 +303,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<MedicalRecord>(entity =>
         {
-            entity.HasKey(e => e.MedicalRecordId).HasName("PK__Medical___05C4C30AABA51862");
+            entity.HasKey(e => e.MedicalRecordId).HasName("PK__Medical___05C4C30AE93972AB");
 
             entity.ToTable("Medical_Record");
 
@@ -329,7 +329,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Medicine>(entity =>
         {
-            entity.HasKey(e => e.MedicineId).HasName("PK__Medicine__E7148EBBACBD2935");
+            entity.HasKey(e => e.MedicineId).HasName("PK__Medicine__E7148EBBF63FE098");
 
             entity.ToTable("Medicine");
 
@@ -355,7 +355,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<MedicinePrescription>(entity =>
         {
-            entity.HasKey(e => e.MedicinePrescriptionId).HasName("PK__Medicine__9354DD60C6E6735D");
+            entity.HasKey(e => e.MedicinePrescriptionId).HasName("PK__Medicine__9354DD6080C9E8E0");
 
             entity.ToTable("Medicine_Prescription");
 
@@ -379,7 +379,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Notification>(entity =>
         {
-            entity.HasKey(e => e.NotificationId).HasName("PK__Notifica__E059842F03413C0A");
+            entity.HasKey(e => e.NotificationId).HasName("PK__Notifica__E059842F43E5C675");
 
             entity.ToTable("Notification");
 
@@ -398,7 +398,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Order__4659622905A526C4");
+            entity.HasKey(e => e.OrderId).HasName("PK__Order__46596229D4A63C47");
 
             entity.ToTable("Order");
 
@@ -422,7 +422,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<OrderService>(entity =>
         {
-            entity.HasKey(e => e.OrderServiceId).HasName("PK__Order_Se__88196EDD0C858FBB");
+            entity.HasKey(e => e.OrderServiceId).HasName("PK__Order_Se__88196EDD9E1BB113");
 
             entity.ToTable("Order_Service");
 
@@ -446,11 +446,11 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payment__ED1FC9EA16ED27B1");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payment__ED1FC9EAFFD5097F");
 
             entity.ToTable("Payment");
 
-            entity.HasIndex(e => e.OrderId, "UQ__Payment__465962287469260B").IsUnique();
+            entity.HasIndex(e => e.OrderId, "UQ__Payment__46596228E7015464").IsUnique();
 
             entity.Property(e => e.PaymentId).HasColumnName("payment_id");
             entity.Property(e => e.CreateAt)
@@ -472,15 +472,18 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<PaymentAll>(entity =>
         {
-            entity.HasKey(e => e.PaymentAllId).HasName("PK__Payment___8074B6D360D96170");
+            entity.HasKey(e => e.PaymentAllId).HasName("PK__Payment___8074B6D39A7A21B0");
 
             entity.ToTable("Payment_All");
 
-            entity.HasIndex(e => e.PaymentOrderId, "UQ__Payment___30BEDDE719407DE3").IsUnique();
+            entity.HasIndex(e => e.PaymentOrderId, "UQ__Payment___30BEDDE752EE3830").IsUnique();
 
-            entity.HasIndex(e => e.PaymentPrescriptionId, "UQ__Payment___6D84E415C5A32749").IsUnique();
+            entity.HasIndex(e => e.PaymentPrescriptionId, "UQ__Payment___6D84E415E793F0B4").IsUnique();
 
             entity.Property(e => e.PaymentAllId).HasColumnName("payment_all_id");
+            entity.Property(e => e.Date)
+                .HasColumnType("datetime")
+                .HasColumnName("date");
             entity.Property(e => e.PaymentDetail)
                 .HasMaxLength(255)
                 .HasColumnName("payment_detail");
@@ -502,7 +505,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<PaymentPrescription>(entity =>
         {
-            entity.HasKey(e => e.PaymentPrescriptionId).HasName("PK__Payment___6D84E41454854B4B");
+            entity.HasKey(e => e.PaymentPrescriptionId).HasName("PK__Payment___6D84E414F71CA59F");
 
             entity.ToTable("Payment_Prescription");
 
@@ -523,7 +526,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Prescription>(entity =>
         {
-            entity.HasKey(e => e.PrescriptionId).HasName("PK__Prescrip__3EE444F89A2547B1");
+            entity.HasKey(e => e.PrescriptionId).HasName("PK__Prescrip__3EE444F805E05D37");
 
             entity.ToTable("Prescription");
 
@@ -547,7 +550,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<RecordType>(entity =>
         {
-            entity.HasKey(e => e.RecordTypeId).HasName("PK__Record_T__3F68ADEC54860D0A");
+            entity.HasKey(e => e.RecordTypeId).HasName("PK__Record_T__3F68ADEC1AD9511A");
 
             entity.ToTable("Record_Type");
 
@@ -560,7 +563,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Role__760965CCFC142639");
+            entity.HasKey(e => e.RoleId).HasName("PK__Role__760965CC1AD69AF3");
 
             entity.ToTable("Role");
 
@@ -573,7 +576,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Room>(entity =>
         {
-            entity.HasKey(e => e.RoomId).HasName("PK__Room__19675A8AD4EA4455");
+            entity.HasKey(e => e.RoomId).HasName("PK__Room__19675A8AFB8807E2");
 
             entity.ToTable("Room");
 
@@ -591,7 +594,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AFB6437728");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service__3E0DB8AFE301D263");
 
             entity.ToTable("Service");
 
@@ -610,7 +613,7 @@ public partial class GoodDentistDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User__B9BE370FDC950100");
+            entity.HasKey(e => e.UserId).HasName("PK__User__B9BE370F4033D59F");
 
             entity.ToTable("User");
 
@@ -664,7 +667,7 @@ public partial class GoodDentistDbContext : DbContext
                         .HasConstraintName("FK__User_Noti__user___03F0984C"),
                     j =>
                     {
-                        j.HasKey("UserId", "NotificationId").HasName("PK__User_Not__57BBAF4DC5A45EE8");
+                        j.HasKey("UserId", "NotificationId").HasName("PK__User_Not__57BBAF4D8AE4FA94");
                         j.ToTable("User_Notification");
                         j.IndexerProperty<Guid>("UserId").HasColumnName("user_id");
                         j.IndexerProperty<int>("NotificationId").HasColumnName("notification_id");
