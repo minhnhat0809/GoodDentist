@@ -92,5 +92,18 @@ namespace Repositories.Impl
                 await _repositoryContext.SaveChangesAsync();
             }
         }
+
+        public async Task<List<PaymentAll>> GetPaymentsPerYear(int year)
+        {
+            return await _repositoryContext.PaymentAlls.Where(pa => pa.Date.Value.Date.Year.Equals(year)).ToListAsync();
+        }
+
+        public async Task<List<PaymentAll>> GetPaymentsInRange(DateTime DateStart, DateTime DateEnd)
+        {
+            return await _repositoryContext.PaymentAlls.
+                Where(pa => pa.Date.Value.Date >= DateStart.Date && pa.Date.Value.Date <= DateEnd.Date)
+                .ToListAsync();
+
+        }
     }
 }

@@ -57,5 +57,26 @@ namespace GoodDentist.Controllers
             var responseDTO = await _paymentService.DeletePayment(id);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
+
+        [HttpGet("year")]
+        public async Task<ActionResult<ResponseDTO>> GetPaymentsPerYear([FromQuery] int year)
+        {
+            ResponseDTO responseDto = await _paymentService.GetPaymentsPerYear(year);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+        
+        [HttpGet("date-start/date-end")]
+        public async Task<ActionResult<ResponseDTO>> GetPaymentsInDateRange([FromQuery] DateTime DateStart, DateTime DateEnd)
+        {
+            ResponseDTO responseDto = await _paymentService.GetPaymentsInDateRange(DateStart, DateEnd);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+        
+        [HttpGet("date-start/date-end/service")]
+        public async Task<ActionResult<ResponseDTO>> GetPaymentsOfServicesInDateRange([FromQuery] DateTime DateStart, DateTime DateEnd)
+        {
+            ResponseDTO responseDto = await _paymentService.GetPaymentsOfServicesInDateRange(DateStart, DateEnd);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }

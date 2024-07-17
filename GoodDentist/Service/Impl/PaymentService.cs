@@ -239,5 +239,126 @@ namespace Services.Impl
                 return new ResponseDTO("Failed to delete payment", 500, false, ex.Message);
             }
         }
+
+        public async Task<ResponseDTO> GetPaymentsPerYear(int year)
+        {
+            ResponseDTO responseDto = new ResponseDTO("",200,true,null);
+            try
+            {
+                List<PaymentAll> paymentAlls = await _unitOfWork.paymentAllRepo.GetPaymentsPerYear(year);
+
+                if (paymentAlls.IsNullOrEmpty())
+                {
+                    responseDto.Message = "This year has no income!";
+                    return responseDto;
+                }
+
+                
+                var months = new Dictionary<int, PaymentPerYearDTO>
+                {
+                    { 1, new PaymentPerYearDTO("January", 0) },
+                    { 2, new PaymentPerYearDTO("February", 0) },
+                    { 3, new PaymentPerYearDTO("March", 0) },
+                    { 4, new PaymentPerYearDTO("April", 0) },
+                    { 5, new PaymentPerYearDTO("May", 0) },
+                    { 6, new PaymentPerYearDTO("June", 0) },
+                    { 7, new PaymentPerYearDTO("July", 0) },
+                    { 8, new PaymentPerYearDTO("August", 0) },
+                    { 9, new PaymentPerYearDTO("September", 0) },
+                    { 10, new PaymentPerYearDTO("October", 0) },
+                    { 11, new PaymentPerYearDTO("November", 0) },
+                    { 12, new PaymentPerYearDTO("December", 0) }
+                };
+
+                
+                foreach (var pa in paymentAlls)
+                {
+                    if (pa.Date.HasValue && pa.Total.HasValue)
+                    {
+                        months[pa.Date.Value.Month].Income += pa.Total.Value;
+                    }
+                }
+                
+                responseDto.Result = months.Values.ToList();
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+                responseDto.Message = e.Message;
+            }
+            return responseDto;
+        }
+
+        public async Task<ResponseDTO> GetPaymentsInDateRange(DateTime DateStart, DateTime DateEnd)
+        {
+            ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+            try
+            {
+                List<PaymentAll> paymentAlls = await _unitOfWork.paymentAllRepo.GetPaymentsInRange(DateStart, DateEnd);
+                if (paymentAlls.IsNullOrEmpty())
+                {
+                    responseDto.Message = "There is no income in this range";
+                    responseDto.Result = 0;
+                    return responseDto;
+                }
+
+                decimal total = 0;
+
+                foreach (var pa in paymentAlls)
+                {
+                    if (pa.Date.HasValue && pa.Total.HasValue)
+                    {
+                        total += pa.Total.Value;
+                    }
+                }
+
+                responseDto.Result = total;
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+                responseDto.Message = e.Message;
+            }
+
+            return responseDto;
+        }
+
+        public async Task<ResponseDTO> GetPaymentsOfServicesInDateRange(DateTime DateStart, DateTime DateEnd)
+        {
+            ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+            try
+            {
+                List<OrderService> orderServices = await _unitOfWork.serviceRepo.GetServiceUsedInDateRange(DateStart, DateEnd);
+
+                List<Service> services = await _unitOfWork.serviceRepo.GetAllService(1, 300);
+
+                var serviceDtos = new Dictionary<int, PaymentServiceDTO>();
+                foreach (var s in services)
+                {
+                   serviceDtos.Add(s.ServiceId, new PaymentServiceDTO(s.ServiceName, 0)); 
+                }
+                
+                
+                foreach (var os in orderServices)
+                {
+                    if (os.Price.HasValue && os.ServiceId.HasValue)
+                    {
+                        serviceDtos[os.ServiceId.Value].Total += os.Price.Value;
+                    }
+                }
+
+                responseDto.Result = serviceDtos.Values.ToList();
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+                responseDto.Message = e.Message;
+            }
+
+            return responseDto;
+        }
     }
 }

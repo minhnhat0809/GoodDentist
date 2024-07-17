@@ -11,6 +11,8 @@ public partial class PaymentAll
 
     public decimal? Total { get; set; }
 
+    public DateTime? Date { get; set; }
+
     public int? PaymentPrescriptionId { get; set; }
 
     public int? PaymentOrderId { get; set; }
