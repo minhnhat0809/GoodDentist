@@ -780,6 +780,31 @@ namespace Services.Impl
             return responseDTO;
         }
 
+        public async Task<ResponseDTO> GetNewCustomersByDateRange(DateTime DateStart, DateTime DateEnd)
+        {
+            ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+            try
+            {
+                List<Customer> customers = await unitOfWork.customerRepo.GetNewCustomers(DateStart, DateEnd);
+                if (customers.IsNullOrEmpty())
+                {
+                    responseDto.Message = "There are no new customers";
+                    responseDto.Result = 0;
+                    return responseDto;
+                }
+
+                responseDto.Result = customers.Count;
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+                responseDto.Message = e.Message;
+            }
+
+            return responseDto;
+        }
+
         private List<Customer> FilterCustomer(List<Customer> customers, string filterField, string filterValue)
         {
             if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))

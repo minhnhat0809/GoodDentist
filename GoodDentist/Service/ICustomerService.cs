@@ -21,5 +21,7 @@ namespace Services
         Task<ResponseDTO> GetCustomers(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
         Task<ResponseListDTO> UpdateCustomer(CustomerUpdateRequestDTO customerUpdateRequestDto);
         Task<ResponseDTO> GetCustomersByClinic(string clinicId, int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
+
+        Task<ResponseDTO> GetNewCustomersByDateRange(DateTime DateStart, DateTime DateEnd);
     }
 }

@@ -17,6 +17,15 @@ namespace GoodDentist.Controllers
             this.customerService = customerService;
         }
 
+        [HttpGet("new-customers")]
+        public async Task<ActionResult<ResponseDTO>> GetNewCustomersByDateRange([FromQuery] DateTime DateStart,
+            DateTime DateEnd)
+        {
+            ResponseDTO responseDto = await customerService.GetNewCustomersByDateRange(DateStart, DateEnd);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+        
+
         [HttpGet("denitst")]
         public async Task<ActionResult<ResponseDTO>> GetAllCustomerOfDentist([FromQuery] string dentistId, string? search)
         {
