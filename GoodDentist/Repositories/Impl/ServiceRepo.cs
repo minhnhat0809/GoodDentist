@@ -71,4 +71,14 @@ public class ServiceRepo : RepositoryBase<Service>, IServiceRepo
 			.ToListAsync();
 		return models;
 	}
+
+	public async Task<List<OrderService>> GetServiceUsedInDateRange(DateOnly DateStart, DateOnly DateEnd)
+	{
+		return await _repositoryContext.OrderServices
+			.Include(os => os.Order)
+			.Where(os => os.Status == 1 &&
+			             DateOnly.FromDateTime(os.Order.DateTime.Value.Date) >= DateStart && 
+			             DateOnly.FromDateTime(os.Order.DateTime.Value.Date) <= DateEnd)
+			.ToListAsync();
+	}
 }

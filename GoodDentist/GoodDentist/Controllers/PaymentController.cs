@@ -71,5 +71,12 @@ namespace GoodDentist.Controllers
             ResponseDTO responseDto = await _paymentService.GetPaymentsInDateRange(DateStart, DateEnd);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+        
+        [HttpGet("date-start/date-end/service")]
+        public async Task<ActionResult<ResponseDTO>> GetPaymentsOfServicesInDateRange([FromQuery] DateOnly DateStart, DateOnly DateEnd)
+        {
+            ResponseDTO responseDto = await _paymentService.GetPaymentsOfServicesInDateRange(DateStart, DateEnd);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }

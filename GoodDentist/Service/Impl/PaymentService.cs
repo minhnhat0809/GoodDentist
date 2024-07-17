@@ -299,6 +299,7 @@ namespace Services.Impl
                 if (paymentAlls.IsNullOrEmpty())
                 {
                     responseDto.Message = "There is no income in this range";
+                    responseDto.Result = 0;
                     return responseDto;
                 }
 
@@ -313,6 +314,42 @@ namespace Services.Impl
                 }
 
                 responseDto.Result = total;
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+                responseDto.Message = e.Message;
+            }
+
+            return responseDto;
+        }
+
+        public async Task<ResponseDTO> GetPaymentsOfServicesInDateRange(DateOnly DateStart, DateOnly DateEnd)
+        {
+            ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+            try
+            {
+                List<OrderService> orderServices = await _unitOfWork.serviceRepo.GetServiceUsedInDateRange(DateStart, DateEnd);
+
+                List<Service> services = await _unitOfWork.serviceRepo.GetAllService(1, 300);
+
+                var serviceDtos = new Dictionary<int, PaymentServiceDTO>();
+                foreach (var s in services)
+                {
+                   serviceDtos.Add(s.ServiceId, new PaymentServiceDTO(s.ServiceName, 0)); 
+                }
+                
+                
+                foreach (var os in orderServices)
+                {
+                    if (os.Price.HasValue && os.ServiceId.HasValue)
+                    {
+                        serviceDtos[os.ServiceId.Value].Total += os.Price.Value;
+                    }
+                }
+
+                responseDto.Result = serviceDtos.Values.ToList();
             }
             catch (Exception e)
             {
