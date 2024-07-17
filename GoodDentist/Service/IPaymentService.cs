@@ -17,5 +17,6 @@ namespace Services
 		Task<ResponseDTO> UpdatePayment(PaymentAllUpdateDTO paymentDTO);
 		Task<ResponseDTO> DeletePayment(int id);
 		Task<ResponseDTO> GetPaymentsPerYear(int year);
+		Task<ResponseDTO> GetPaymentsInDateRange(DateOnly DateStart, DateOnly DateEnd);
 	}
 }

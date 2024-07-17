@@ -10,4 +10,6 @@ public interface IPaymentAllRepo
     Task UpdatePayment(PaymentAll paymentAll);
     Task DeletePayment(int id);
     Task<List<PaymentAll>> GetPaymentsPerYear(int year);
+    
+    Task<List<PaymentAll>> GetPaymentsInRange(DateOnly DateStart, DateOnly DateEnd);
 }

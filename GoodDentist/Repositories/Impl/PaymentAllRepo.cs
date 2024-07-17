@@ -97,5 +97,13 @@ namespace Repositories.Impl
         {
             return await _repositoryContext.PaymentAlls.Where(pa => pa.Date.Value.Date.Year.Equals(year)).ToListAsync();
         }
+
+        public async Task<List<PaymentAll>> GetPaymentsInRange(DateOnly DateStart, DateOnly DateEnd)
+        {
+            return await _repositoryContext.PaymentAlls.
+                Where(pa => DateOnly.FromDateTime(pa.Date.Value.Date) >= DateStart && DateOnly.FromDateTime(pa.Date.Value.Date) <= DateEnd)
+                .ToListAsync();
+
+        }
     }
 }

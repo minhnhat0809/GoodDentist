@@ -289,5 +289,39 @@ namespace Services.Impl
             }
             return responseDto;
         }
+
+        public async Task<ResponseDTO> GetPaymentsInDateRange(DateOnly DateStart, DateOnly DateEnd)
+        {
+            ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+            try
+            {
+                List<PaymentAll> paymentAlls = await _unitOfWork.paymentAllRepo.GetPaymentsInRange(DateStart, DateEnd);
+                if (paymentAlls.IsNullOrEmpty())
+                {
+                    responseDto.Message = "There is no income in this range";
+                    return responseDto;
+                }
+
+                decimal total = 0;
+
+                foreach (var pa in paymentAlls)
+                {
+                    if (pa.Date.HasValue && pa.Total.HasValue)
+                    {
+                        total += pa.Total.Value;
+                    }
+                }
+
+                responseDto.Result = total;
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+                responseDto.Message = e.Message;
+            }
+
+            return responseDto;
+        }
     }
 }
