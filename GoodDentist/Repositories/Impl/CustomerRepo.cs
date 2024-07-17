@@ -102,5 +102,16 @@ namespace Repositories.Impl
                 .Take(rowsPerPage)
                 .ToListAsync();
         }
+
+        public Task<List<Customer>> GetNewCustomers(DateTime DateStart, DateTime DateEnd)
+        {
+            return _repositoryContext.Customers
+                .Include(c => c.ExaminationProfiles)
+                .ThenInclude(ep => ep.Examinations)
+                .Where(c => c.ExaminationProfiles.Count == 1 && 
+                            c.ExaminationProfiles.Any(ep => ep.Examinations.Count <= 1) && 
+                            c.ExaminationProfiles.Any(ep => ep.Date >= DateOnly.FromDateTime(DateStart.Date) && ep.Date <= DateOnly.FromDateTime(DateEnd.Date)))
+                .ToListAsync();
+        }
     }
 }

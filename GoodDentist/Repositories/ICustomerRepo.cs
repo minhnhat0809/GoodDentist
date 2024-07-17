@@ -17,5 +17,7 @@ namespace Repositories
         Task<string> GetCustomerName(string customerId);
 
         Task<List<Customer>> GetCustomersByClinic(string clinicId, int pageNumber, int rowsPerPage);
+        
+        Task<List<Customer>> GetNewCustomers(DateTime DateStart, DateTime DateEnd);
     }
 }
