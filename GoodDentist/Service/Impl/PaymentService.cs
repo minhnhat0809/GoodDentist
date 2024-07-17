@@ -239,5 +239,12 @@ namespace Services.Impl
                 return new ResponseDTO("Failed to delete payment", 500, false, ex.Message);
             }
         }
+
+        public async Task<ResponseDTO> GetPaymentsPerYear(string year)
+        {
+            List<PaymentAll> paymentAlls = await _unitOfWork.paymentAllRepo.GetPaymentsPerYear(year);
+            
+            throw new NotImplementedException();
+        }
     }
 }

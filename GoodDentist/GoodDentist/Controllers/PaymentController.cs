@@ -57,5 +57,12 @@ namespace GoodDentist.Controllers
             var responseDTO = await _paymentService.DeletePayment(id);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
+
+        [HttpGet("year")]
+        public async Task<ActionResult<ResponseDTO>> GetPaymentsPerYear([FromQuery] string year)
+        {
+            ResponseDTO responseDto = await _paymentService.GetPaymentsPerYear(year);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }

@@ -92,5 +92,11 @@ namespace Repositories.Impl
                 await _repositoryContext.SaveChangesAsync();
             }
         }
+
+        public async Task<List<PaymentAll>> GetPaymentsPerYear(string year)
+        {
+            //_repositoryContext.PaymentAlls.Where(pa => )
+            throw new NotImplementedException();
+        }
     }
 }

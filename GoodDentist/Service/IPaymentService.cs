@@ -16,5 +16,6 @@ namespace Services
 		Task<ResponseDTO> CreatePayment(PaymentAllCreateDTO paymentDTO);
 		Task<ResponseDTO> UpdatePayment(PaymentAllUpdateDTO paymentDTO);
 		Task<ResponseDTO> DeletePayment(int id);
+		Task<ResponseDTO> GetPaymentsPerYear(string year);
 	}
 }
