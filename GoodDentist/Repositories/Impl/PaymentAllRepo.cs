@@ -93,10 +93,9 @@ namespace Repositories.Impl
             }
         }
 
-        public async Task<List<PaymentAll>> GetPaymentsPerYear(string year)
+        public async Task<List<PaymentAll>> GetPaymentsPerYear(int year)
         {
-            //_repositoryContext.PaymentAlls.Where(pa => )
-            throw new NotImplementedException();
+            return await _repositoryContext.PaymentAlls.Where(pa => pa.Date.Value.Date.Year.Equals(year)).ToListAsync();
         }
     }
 }

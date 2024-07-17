@@ -59,7 +59,7 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("year")]
-        public async Task<ActionResult<ResponseDTO>> GetPaymentsPerYear([FromQuery] string year)
+        public async Task<ActionResult<ResponseDTO>> GetPaymentsPerYear([FromQuery] int year)
         {
             ResponseDTO responseDto = await _paymentService.GetPaymentsPerYear(year);
             return StatusCode(responseDto.StatusCode, responseDto);

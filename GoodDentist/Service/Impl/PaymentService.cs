@@ -240,11 +240,109 @@ namespace Services.Impl
             }
         }
 
-        public async Task<ResponseDTO> GetPaymentsPerYear(string year)
+        public async Task<ResponseDTO> GetPaymentsPerYear(int year)
         {
-            List<PaymentAll> paymentAlls = await _unitOfWork.paymentAllRepo.GetPaymentsPerYear(year);
-            
-            throw new NotImplementedException();
+            ResponseDTO responseDto = new ResponseDTO("",200,true,null);
+            try
+            {
+                List<PaymentAll> paymentAlls = await _unitOfWork.paymentAllRepo.GetPaymentsPerYear(year);
+
+                if (paymentAlls.IsNullOrEmpty())
+                {
+                    responseDto.Message = "This year has no income!";
+                    return responseDto;
+                }
+
+                PaymentPerYearDTO January = new PaymentPerYearDTO("January",0);
+                
+                PaymentPerYearDTO February = new PaymentPerYearDTO("February", 0);
+                
+                PaymentPerYearDTO March = new PaymentPerYearDTO("March", 0);
+                
+                PaymentPerYearDTO April = new PaymentPerYearDTO("April", 0);
+                
+                PaymentPerYearDTO May = new PaymentPerYearDTO("May", 0);
+                
+                PaymentPerYearDTO June = new PaymentPerYearDTO("June", 0);
+                
+                PaymentPerYearDTO July = new PaymentPerYearDTO("July",0);
+                
+                PaymentPerYearDTO August = new PaymentPerYearDTO("August",0);
+                
+                PaymentPerYearDTO September = new PaymentPerYearDTO("September",0);
+                
+                PaymentPerYearDTO October = new PaymentPerYearDTO("October",0);
+                
+                PaymentPerYearDTO November = new PaymentPerYearDTO("November",0);
+                
+                PaymentPerYearDTO December = new PaymentPerYearDTO("December",0);
+                
+                foreach (var pa in paymentAlls)
+                {
+                    switch (pa.Date.Value.Month)
+                    {
+                        case 1:
+                            January.Income += pa.Total.Value;
+                            break;
+                        case 2:
+                            February.Income += pa.Total.Value;
+                            break;
+                        case 3:
+                            March.Income += pa.Total.Value;
+                            break;
+                        case 4:
+                            April.Income += pa.Total.Value;
+                            break;
+                        case 5:
+                            May.Income += pa.Total.Value;
+                            break;
+                        case 6:
+                            June.Income += pa.Total.Value;
+                            break;
+                        case 7:
+                            July.Income += pa.Total.Value;
+                            break;
+                        case 8:
+                            August.Income += pa.Total.Value;
+                            break;
+                        case 9:
+                            September.Income += pa.Total.Value;
+                            break;
+                        case 10:
+                            October.Income += pa.Total.Value;
+                            break;
+                        case 11:
+                            November.Income += pa.Total.Value;
+                            break;
+                        case 12:
+                            December.Income += pa.Total.Value;
+                            break;
+                    }
+                }
+
+                List<PaymentPerYearDTO> paymentPerYearDtos = new List<PaymentPerYearDTO>();
+                paymentPerYearDtos.Add(January);
+                paymentPerYearDtos.Add(February);
+                paymentPerYearDtos.Add(March);
+                paymentPerYearDtos.Add(April);
+                paymentPerYearDtos.Add(May);
+                paymentPerYearDtos.Add(June);
+                paymentPerYearDtos.Add(July);
+                paymentPerYearDtos.Add(August);
+                paymentPerYearDtos.Add(September);
+                paymentPerYearDtos.Add(October);
+                paymentPerYearDtos.Add(November);
+                paymentPerYearDtos.Add(December);
+
+                responseDto.Result = paymentPerYearDtos;
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.StatusCode = 500;
+                responseDto.Message = e.Message;
+            }
+            return responseDto;
         }
     }
 }

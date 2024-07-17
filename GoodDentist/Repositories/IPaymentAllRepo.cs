@@ -9,5 +9,5 @@ public interface IPaymentAllRepo
     Task CreatePayment(PaymentAll paymentAll);
     Task UpdatePayment(PaymentAll paymentAll);
     Task DeletePayment(int id);
-    Task<List<PaymentAll>> GetPaymentsPerYear(string year);
+    Task<List<PaymentAll>> GetPaymentsPerYear(int year);
 }
