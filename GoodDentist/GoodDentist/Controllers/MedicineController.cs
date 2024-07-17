@@ -36,9 +36,15 @@ namespace GoodDentist.Controllers
         }
 
         [HttpGet("all-medicine")]
-        public async Task<ResponseDTO> GetAllMedicine([FromQuery] int pageNumber, int rowsPerPage)
+        public async Task<ResponseDTO> GetAllMedicine([FromQuery] string? filterField = null, 
+            string? filterValue = null,
+            string? sortField = null,
+            string? sortValue = "asc",
+            string? search = null,
+            int? pageNumber = 1, int? rowsPerPage = 5)
         {           
-            ResponseDTO responseDTO = await _medicineService.GetAllMedicine(pageNumber, rowsPerPage);
+            ResponseDTO responseDTO = await _medicineService.GetAllMedicine(filterField
+            , filterValue, sortField, sortValue, search, pageNumber, rowsPerPage);
             return responseDTO;
         }
 

@@ -13,5 +13,7 @@ namespace Repositories
         Task<List<Medicine>?> GetAllMedicine(int pageNumber, int pageSize);
 
         Task<Medicine?> GetMedicineByID(int Id);
+
+        Task<List<Medicine>> GetAllMedicines();
     }
 }

@@ -13,7 +13,8 @@ namespace Services
 {
     public interface IMedicineService
     {
-        Task<ResponseDTO> GetAllMedicine(int pageNumber, int pageSize);
+        Task<ResponseDTO> GetAllMedicine(string? filterField, string? filterValue, string? sortField,
+            string? sortValue, string? search,int? pageNumber, int? pageSize);
 
         Task<ResponseDTO> SearchMedicine(string searchValue);
 

@@ -28,5 +28,9 @@ namespace Repositories.Impl
             return await _repositoryContext.Medicines.FirstOrDefaultAsync(c => c.MedicineId == Id);
         }
 
+        public async Task<List<Medicine>> GetAllMedicines()
+        {
+            return await _repositoryContext.Medicines.ToListAsync();
+        }
     }
 }

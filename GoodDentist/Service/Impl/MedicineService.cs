@@ -26,15 +26,19 @@ namespace Services.Impl
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-        public async Task<ResponseDTO> GetAllMedicine(int pageNumber, int pageSize)
+        public async Task<ResponseDTO> GetAllMedicine(string? filterField, string? filterValue, string? sortField,
+            string? sortValue, string? search,int? pageNumber, int? pageSize)
         {
             ResponseDTO responseDTO = new ResponseDTO("", 200, true, null);
             try
             {
-                List<Medicine>? medicineList = await unitOfWork.medicineRepo.GetAllMedicine(pageNumber, pageSize);
-                var all = medicineList.Where(c => c.Status == true);
-
-                List<MedicineUpdateDTO> medicineDTOList = mapper.Map<List<MedicineUpdateDTO>>(all);
+                List<Medicine>? medicineList = await unitOfWork.medicineRepo.GetAllMedicines();
+                medicineList = await FilterMedicine(medicineList, filterField, filterValue);
+                medicineList = await Search(medicineList, search);
+                medicineList = await SortMedicine(medicineList, sortField, sortValue);
+                medicineList = Paging(medicineList, pageNumber, pageSize);
+                
+                List<MedicineDTO> medicineDTOList = mapper.Map<List<MedicineDTO>>(medicineList);
 
                 responseDTO.Message = "Get all Medicine successfully!";
                 responseDTO.Result = medicineDTOList;
@@ -138,8 +142,7 @@ namespace Services.Impl
                 return new ResponseDTO(ex.Message, 500, false, null);
             }
         }
-
-
+        
         public async Task<ResponseDTO> AddMedicine(MedicineDTO medicineDTO)
         {
             
@@ -265,6 +268,13 @@ namespace Services.Impl
             {
                 return new ResponseDTO("Please input medicine id", 400, false, null);
             }
+
+            Medicine? medicine = await unitOfWork.medicineRepo.GetByIdAsync(medicineDTO.MedicineId);
+            if (medicine == null)
+            {
+                return new ResponseDTO("Medicine is not exist!", 404, false, null);
+
+            }
             if (medicineDTO.MedicineName.IsNullOrEmpty())
             {
                 return new ResponseDTO("Please input medicine name", 400, false, null);
@@ -326,7 +336,96 @@ namespace Services.Impl
             {
                 return new ResponseDTO("Medicine's price is out of range!", 400, false, null);
             }
+
+            if (medicineDTO.Unit.IsNullOrEmpty())
+            {
+                return new ResponseDTO("Unit is empty!", 400, false, null);
+            }
+
+            if (!medicineDTO.Status.HasValue)
+            {
+                return new ResponseDTO("Please input status", 400, false, null);
+            }
 			return new ResponseDTO("Check validation successfully", 200, true, null);
+        }
+        
+        private async Task<List<Medicine>> FilterMedicine (List<Medicine> medicines,string? filterField, string? filterValue)
+        {
+            if (filterField.IsNullOrEmpty() || filterValue.IsNullOrEmpty())
+            {
+                return medicines;
+            }
+
+            switch (filterField.ToLower())
+            {
+                case "medicinename":
+                    return medicines.Where(m => m.MedicineName.Contains(filterValue)).ToList();
+                case "type":
+                    return medicines.Where(m => m.Type.Contains(filterValue)).ToList();
+                case "unit":
+                    return medicines.Where(m => m.Unit.Contains(filterValue)).ToList();
+                case "description":
+                    return medicines.Where(m => m.Description.Contains(filterValue)).ToList();
+                case "status":
+                    bool s = true;
+                    if (filterValue.Equals("false")) s = false;
+                    return medicines.Where(m => m.Status == s).ToList();
+                case "price":
+                    return medicines.Where(m => m.Price.ToString().Equals(filterValue)).ToList();
+            }
+            return medicines;
+        }
+
+        private async Task<List<Medicine>> Search(List<Medicine> medicines, string? search)
+        {
+            if (search.IsNullOrEmpty())
+            {
+                return medicines;
+            }
+
+            return medicines.Where(m => m.MedicineName.Contains(search, StringComparison.OrdinalIgnoreCase) 
+                                 || m.Description.Contains(search, StringComparison.OrdinalIgnoreCase)
+                                 ).ToList();
+        }
+
+        private async Task<List<Medicine>> SortMedicine(List<Medicine> medicines ,string? sortField, string? sortValue)
+        {
+            if (sortField.IsNullOrEmpty())
+            {
+                return medicines;
+            }
+
+            bool isAscending = sortValue.ToLower().Equals("asc");
+
+            switch (sortField.ToLower())
+            {
+                case "medicinename":
+                    return isAscending
+                        ? medicines.OrderBy(m => m.MedicineName).ToList()
+                        : medicines.OrderByDescending(m => m.MedicineName).ToList();
+                case "price":
+                    return isAscending
+                        ? medicines.OrderBy(m => m.Price).ToList()
+                        : medicines.OrderByDescending(m => m.Price).ToList();
+                case "unit":
+                    return isAscending
+                        ? medicines.OrderBy(m => m.Unit).ToList()
+                        : medicines.OrderByDescending(m => m.Unit).ToList();
+                case "quantity":
+                    return isAscending
+                        ? medicines.OrderBy(m => m.Quantity).ToList()
+                        : medicines.OrderByDescending(m => m.Quantity).ToList();
+                case "type":
+                    return isAscending
+                        ? medicines.OrderBy(m => m.Type).ToList()
+                        : medicines.OrderByDescending(m => m.Type).ToList();
+            }
+            return medicines;
+        }
+
+        private List<Medicine> Paging(List<Medicine> medicines, int? pageNumber, int? pageSize)
+        {
+           return medicines.Skip((pageNumber.Value -1 ) * pageSize.Value).Take(pageSize.Value).ToList();
         }
     }
 }
