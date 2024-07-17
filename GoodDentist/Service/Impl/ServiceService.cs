@@ -242,6 +242,112 @@ namespace Services.Impl
 			return responseDto;
 		}
 
+		public async Task<ResponseDTO> GetAllServicesNoPaging(string? filterField, string? filterValue, string? sortField, string? sortOrder)
+		{
+			try
+			{
+				List<Service> models = await unitOfWork.serviceRepo.GetAllServiceNoPaging();
+	                
+	            // Filter 
+	            if (string.IsNullOrEmpty(filterField) || string.IsNullOrEmpty(filterValue))
+	            {
+
+		            models = models;
+
+	            }
+	            else
+	            {
+		            switch (filterField.ToLower())
+		            {
+			            case "name":
+				            models = models.Where(u => u.ServiceName.Contains(filterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+				            break;
+			            case "clinicId":
+				            if (Guid.TryParse(filterValue, out Guid clinicId))
+				            {
+					            models = models.Where(u => u.ClinicServices.Any(x => x.ClinicId == clinicId)).ToList();
+				            }
+				            else
+				            {
+					            return new ResponseDTO("Invalid Clinic ID format!", 400, false, null);
+				            }
+				            break;
+		            }
+	            }
+	            // Sort
+	            if (string.IsNullOrEmpty(sortField) || string.IsNullOrEmpty(sortOrder))
+	            {
+		            models = models;
+	            }
+	            else
+	            {
+		            bool isAscending = sortOrder.ToLower() == "asc";
+		            switch (sortField.ToLower())
+		            {
+			            case "name":
+				            models = isAscending ? models.OrderBy(u => u.ServiceName).ToList() : models.OrderByDescending(u => u.ServiceName).ToList();
+				            break;
+			            case "clinicId":
+				            models = isAscending 
+					            ? models.OrderBy(u => u.ClinicServices.Any(x => x.ClinicId == Guid.Parse(filterValue))).ToList()
+					            : models.OrderByDescending(u => u.ClinicServices.Any(x => x.ClinicId == Guid.Parse(filterValue))).ToList();
+				            break;
+		            }
+	            }
+	            List<ServiceDTO> viewModels = mapper.Map<List<ServiceDTO>>(models);
+	            
+	            return new ResponseDTO("Get services successfully!", 200, true, viewModels);
+	        }
+	        catch (Exception ex)
+	        {
+	            return new ResponseDTO(ex.Message, 500, false, null);
+	        }
+		}
+
+		public async Task<ResponseDTO> GetAllServicesByClinicNoPaging(string clinicId, string? filterField, string? filterValue)
+		{
+			ResponseDTO responseDto = new ResponseDTO("", 200, true, null);
+			try
+			{
+				if (clinicId.IsNullOrEmpty())
+				{
+					return AddError("Clinic Id is null!",400);
+				}
+
+				Clinic? clinic = await unitOfWork.clinicRepo.GetByIdAsync(Guid.Parse(clinicId));
+				if (clinic == null)
+				{
+					return AddError("Clinic is not found!",404);
+				}
+
+				List<Service> services = new List<Service>();
+				
+				if (!filterField.IsNullOrEmpty())
+				{
+					if (filterField.ToLower().Equals("status"))
+					{
+						services = await unitOfWork.serviceRepo.GetServicesByClinicByFilterNoPaging(filterValue, clinicId);
+					}
+				}
+				else
+				{
+					services = await unitOfWork.serviceRepo.GetAllServiceNoPaging();
+					services = services.Where(x => x.ClinicServices
+						.Any(x => x.ClinicId.Equals(Guid.Parse(clinicId)))).ToList();
+				}				
+				services = await Filter(services, filterField, filterValue);
+
+				List<ServiceDTO> serviceDtos = mapper.Map<List<ServiceDTO>>(services);
+
+				responseDto.Result = serviceDtos;
+			}
+			catch (Exception e)
+			{
+				responseDto = AddError(e.Message, 500);
+			}
+			return responseDto;
+		}
+
 
 		public async Task<ResponseDTO> getAllService(int pageNumber, int rowsPerPage)
 		{

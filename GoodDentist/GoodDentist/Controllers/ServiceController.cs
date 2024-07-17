@@ -28,7 +28,17 @@ namespace GoodDentist.Controllers
             
 			return StatusCode(responseDTO.StatusCode, responseDTO);
 		}
-
+		[HttpGet("all-services-no-paging")]
+		public async Task<ActionResult<ResponseDTO>> GetAllServicesNoPaging(
+			[FromQuery] string? filterField = null,
+			[FromQuery] string? filterValue = null,
+			[FromQuery] string? sortField = null,
+			[FromQuery] string? sortOrder = "asc")
+		{
+			ResponseDTO responseDTO = await serviceService.GetAllServicesNoPaging(filterField,filterValue,sortField,sortOrder);
+            
+			return StatusCode(responseDTO.StatusCode, responseDTO);
+		}
 		[HttpGet("clinic")]
 		public async Task<ActionResult<ResponseDTO>> GetAllServiceByClinic([FromQuery] string clinicId,
 			string? filterField,
@@ -39,7 +49,14 @@ namespace GoodDentist.Controllers
 			ResponseDTO responseDto = await serviceService.GetAllServicesByClinic(clinicId, filterField, filterValue, pageNumber, rowsPerPage);
 			return StatusCode(responseDto.StatusCode, responseDto);
 		}
-		
+		[HttpGet("clinic-no-paging")]
+		public async Task<ActionResult<ResponseDTO>> GetAllServicesByClinicNoPaging([FromQuery] string clinicId,
+			string? filterField,
+			string? filterValue)
+		{
+			ResponseDTO responseDto = await serviceService.GetAllServicesByClinicNoPaging(clinicId, filterField, filterValue);
+			return StatusCode(responseDto.StatusCode, responseDto);
+		}
 		
 		[HttpPost("new-service")]
 		public async Task<ResponseDTO> CreateService([FromBody] CreateServiceDTO model)

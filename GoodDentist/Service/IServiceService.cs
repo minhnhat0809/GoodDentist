@@ -20,5 +20,9 @@ namespace Services
 		Task<ResponseDTO> GetAllServicesByClinic(string clinicId, string? filterField, string? filterValue,
 			int? pageNumber,
 			int? rowsPerPage);
+		Task<ResponseDTO> GetAllServicesNoPaging(string? filterField, string? filterValue,
+			string? sortField,
+			string? sortOrder);
+		Task<ResponseDTO> GetAllServicesByClinicNoPaging(string clinicId, string? filterField, string? filterValue);
 	}
 }

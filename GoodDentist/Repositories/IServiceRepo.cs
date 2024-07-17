@@ -17,5 +17,7 @@ namespace Repositories
 		Task<List<Service>> GetServicesByClinic(string clinicId, int pageNumber, int rowsPerPage);
 		
 		Task<List<Service>> GetServicesByClinicByFilter(string filterValue, string clinicId, int pageNumber, int rowsPerPage);
+		Task<List<Service>> GetServicesByClinicByFilterNoPaging(string filterValue, string clinicId);
+		Task<List<Service>> GetAllServiceNoPaging();
 	}
 }
