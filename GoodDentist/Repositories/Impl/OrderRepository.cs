@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessObject;
 using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Repositories.Impl
 {
@@ -60,15 +61,9 @@ namespace Repositories.Impl
 
 		public async Task<Order> CreateOrder(Order order)
 		{
-			var model = await _repositoryContext.Orders.FirstOrDefaultAsync(x => x.OrderName == order.OrderName);
-			if (model== null)
-			{
-				_repositoryContext.Orders.Add(order);
-				_repositoryContext.SaveChanges();
-				return  await _repositoryContext.Orders.FirstOrDefaultAsync(x => x.OrderName == order.OrderName);
-			}
-
-			return null;
+			_repositoryContext.Orders.Add(order);
+			await _repositoryContext.SaveChangesAsync();
+			return order;
 		}
 
 		public async Task<Order> UpdateOrder(Order order)
