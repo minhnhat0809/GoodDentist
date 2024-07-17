@@ -76,7 +76,7 @@ public class ServiceRepo : RepositoryBase<Service>, IServiceRepo
 	{
 		return await _repositoryContext.OrderServices
 			.Include(os => os.Order)
-			.Where(os => os.Status == 1 &&
+			.Where(os => os.Status == 5 &&
 			             os.Order.DateTime.Value.Date >= DateStart.Date && 
 			             os.Order.DateTime.Value.Date <= DateEnd.Date)
 			.ToListAsync();
