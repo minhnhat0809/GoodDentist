@@ -65,14 +65,19 @@ namespace Services.Impl
 		{
 			try
 			{
-				var order = await _unitOfWork.orderRepo.GetByIdAsync(orderId);
-				if (order == null)
+				var order = await _unitOfWork.orderRepo.GetOrderById(orderId);
+				if (order != null)
 				{
-					return new ResponseDTO("This order is not exist!", 400, false, null);
-				}
+					List<OrderService> orderServices = order.OrderServices.ToList();
+					foreach (var orderService in orderServices)
+					{
+						if (orderService.Status != 1 ) return new ResponseDTO("This Order is on processing! Can Not Delete !", 400, false, orderService);
+					}
+					order = await _unitOfWork.orderRepo.DeleteOrder(orderId);
+					return new ResponseDTO("Order Delete successfully!", 200, true, _mapper.Map<OrderDTO>(order));
 
-				order = await _unitOfWork.orderRepo.DeleteOrder(orderId);
-				return new ResponseDTO("Order Delete successfully!", 200, true, _mapper.Map<OrderDTO>(order));
+				}
+				return new ResponseDTO("This order is not exist!", 400, false, null);
 			}
 			catch (Exception ex)
 			{
@@ -128,7 +133,7 @@ namespace Services.Impl
 			        {
 				        foreach (OrderService? orderService in order.OrderServices.ToList())
 				        {
-					        orderService.Status = 0;
+					        orderService.Status = 5;
 				        }
 				        model = await _unitOfWork.orderRepo.UpdateOrder(order);
 				        return new ResponseDTO("Update Order Price successfully", 200, true,
@@ -222,7 +227,7 @@ namespace Services.Impl
 								OrderId = model.OrderId,
 								Price = service.Price,
 								Quantity = serviceDto.Quantity,
-								Status = orderDTO.Status == true ? 1 : 0,
+								Status = serviceDto.Status,
 								ServiceId = service.ServiceId,
 								Service = service
 							};

@@ -11,13 +11,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Service Controller : Update/Delete service">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Services Controller : Get no paging for Get All Services and Get All Services for Clinic">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/ServiceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/ServiceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/IServiceRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IServiceRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/ServiceRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/ServiceRepo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/IServiceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IServiceService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/ServiceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ServiceService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessObject/DTO/ServiceDTOs/View/ServiceDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessObject/DTO/ServiceDTOs/View/ServiceDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/OrderServices.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,11 +62,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39edc8d6636bf8ac398568727a2cda2ffc90cd6d7bf9a45d9d43252df59484f/StorageClient.UploadObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6293d1755dba2be55da4743189b3329541121b6a8fba6ed5a6c914fbd4515/StorageClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/BusinessObject/DTO/ServiceDTOs/CreateServiceDTO.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/BusinessObject/DTO/ServiceDTOs/CreateServiceDTO.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/BusinessObject/DTO/ServiceDTOs/CreateServiceDTO.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/ClinicController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/Controllers/ServiceController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/IServiceRepo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/ServiceRepo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IServiceService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -598,7 +593,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721139299558</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Services Controller : Get no paging for Get All Services and Get All Services for Clinic">
+      <option name="closed" value="true" />
+      <created>1721192571025</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1721192571025</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -620,7 +623,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="User detail" />
     <MESSAGE value="Get User include Clinic" />
     <MESSAGE value="merge commit" />
     <MESSAGE value="customer get all remake: add filter, sort" />
@@ -645,7 +647,8 @@
     <MESSAGE value="Payment Create : Create Payment Include Prescription's Medicines/Order's Services" />
     <MESSAGE value="service" />
     <MESSAGE value="Service Controller : Update/Delete service" />
-    <option name="LAST_COMMIT_MESSAGE" value="Service Controller : Update/Delete service" />
+    <MESSAGE value="Services Controller : Get no paging for Get All Services and Get All Services for Clinic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Services Controller : Get no paging for Get All Services and Get All Services for Clinic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -755,19 +758,6 @@
           <option name="timeStamp" value="137" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Service/Impl/MedicineService.cs</url>
-          <line>130</line>
-          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\MedicineService.cs" containingFunctionPresentation="Method 'UpdateMedicineAfterPaymentPrescription'">
-            <startOffsets>
-              <option value="5579" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5661" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="150" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/ClinicService.cs</url>
           <line>147</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\ClinicService.cs" containingFunctionPresentation="Method 'UpdateClinic'">
@@ -834,13 +824,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
-          <line>123</line>
+          <line>128</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'UpdateOrderAfterPayment'">
             <startOffsets>
-              <option value="3732" />
+              <option value="4002" />
             </startOffsets>
             <endOffsets>
-              <option value="3748" />
+              <option value="4018" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="161" />
@@ -870,6 +860,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="164" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/OrderServices.cs</url>
+          <line>202</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\OrderServices.cs" containingFunctionPresentation="Method 'UpdateOrder'">
+            <startOffsets>
+              <option value="6246" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6319" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="165" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
