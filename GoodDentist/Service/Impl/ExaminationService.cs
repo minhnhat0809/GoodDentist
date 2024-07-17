@@ -470,9 +470,14 @@ namespace Services.Impl
                 if (examinationDTO.Diagnosis.IsNullOrEmpty()) Add("Diagnose is empty!");
 
                 //check status
-                if (!examinationDTO.Status.HasValue) Add("Status is empty!");
+                if (examinationDTO.Status != 0 &&
+                    examinationDTO.Status != 1 &&
+                    examinationDTO.Status != 2 &&
+                    examinationDTO.Status != 3 &&
+                    examinationDTO.Status != 4 &&
+                    examinationDTO.Status != 5 ) Add("Status is empty!");
 
-                //check dentist and overlap 
+                //check dentist and overlap S
                 if (examinationDTO.DentistSlotId <= 0)
                 {
                     Add("Dentist slot ID is empty!");

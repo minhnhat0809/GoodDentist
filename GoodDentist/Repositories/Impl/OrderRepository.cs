@@ -7,6 +7,7 @@ using BusinessObject;
 using BusinessObject.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Repositories.Impl
 {
@@ -76,15 +77,14 @@ namespace Repositories.Impl
 				if (model != null)
 				{
 					_repositoryContext.Entry(model).CurrentValues.SetValues(order);
-					_repositoryContext.OrderServices.RemoveRange(model.OrderServices);
-					//await _repositoryContext.SaveChangesAsync();
-					
-					foreach (var os in order.OrderServices.ToList())
+					if (!order.OrderServices.IsNullOrEmpty())
 					{
-						model.OrderServices.Add(os);	
+						if(!model.OrderServices.IsNullOrEmpty()) _repositoryContext.OrderServices.RemoveRange(model.OrderServices);
+						await _repositoryContext.SaveChangesAsync();
+						model.OrderServices = order.OrderServices;
 					}
-					//await _repositoryContext.SaveChangesAsync();
-					
+
+					await _repositoryContext.SaveChangesAsync();
 					return model;
 				}
 
