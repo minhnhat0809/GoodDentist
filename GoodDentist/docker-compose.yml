@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   gooddentist:
-    image: gooddentist.azurecr.io/gooddentist
+    image: gooddentistregistry.azurecr.io/gooddentist
     build:
       context: .
       dockerfile: GoodDentist/Dockerfile
