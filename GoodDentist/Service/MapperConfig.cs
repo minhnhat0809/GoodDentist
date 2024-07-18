@@ -253,13 +253,14 @@ namespace Services
             /*----------------------------------------------------*/
             // PAYMENT
             CreateMap<PaymentAll, PaymentAllDTO>().ReverseMap();
+            
             CreateMap<Payment, PaymentDTO>().ReverseMap();
             CreateMap<PaymentPrescription, PaymentPrescriptionDTO>().ReverseMap();
             
             CreateMap<PaymentAllCreateDTO, PaymentAll>().ReverseMap();
             CreateMap<PaymentAllUpdateDTO, PaymentAll>().ReverseMap();
-
-    
+            
+            CreateMap<Order, ServiceToOrderDTO>().ReverseMap();
             /*----------------------------------------------------*/
         }
     }

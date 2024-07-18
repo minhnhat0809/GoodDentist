@@ -11,10 +11,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="">
+    <list default="true" id="5f15a130-7415-4286-9711-425f173e2a1b" name="Changes" comment="Order Update : Update Error/ fix bug">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoodDentist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/OrderRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/ExaminationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoodDentist/Controllers/PaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GoodDentist/Controllers/PaymentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/IPaymentAllRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/IPaymentAllRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/IPaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/IPaymentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/Impl/PaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/Impl/PaymentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Service/MapperConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MapperConfig.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,10 +66,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39edc8d6636bf8ac398568727a2cda2ffc90cd6d7bf9a45d9d43252df59484f/StorageClient.UploadObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6293d1755dba2be55da4743189b3329541121b6a8fba6ed5a6c914fbd4515/StorageClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a614a754ab15364aa8ac82b190515fa48f911fb8282094b3f4f4144d126882/MapperConfigurationExpression.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/GoodDentist/appsettings.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/IServiceRepo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Repositories/Impl/ServiceRepo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/IServiceService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/FPT/Semes 7/SWD/GoodDentist-BE/GoodDentist/Service/Impl/ExaminationService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/MapperConfig.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -87,33 +88,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.GoodDentist: IIS Express.executor&quot;: &quot;Debug&quot;,
-    &quot;.NET Launch Settings Profile.GoodDentist: http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.GoodDentist: https.executor&quot;: &quot;Run&quot;,
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master__test__db&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.CSharpInteractiveConfiguration&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.GoodDentist: IIS Express.executor": "Debug",
+    ".NET Launch Settings Profile.GoodDentist: http.executor": "Run",
+    ".NET Launch Settings Profile.GoodDentist: https.executor": "Debug",
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master__test__db",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.CSharpInteractiveConfiguration",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\Admin\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\Admin\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.GoodDentist: https">
     <configuration name="GoodDentist: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GoodDentist/GoodDentist.csproj" />
@@ -220,15 +221,7 @@
       <workItem from="1721214206193" duration="995000" />
       <workItem from="1721224190772" duration="1893000" />
       <workItem from="1721246921817" duration="1133000" />
-      <workItem from="1721255970901" duration="152000" />
-    </task>
-    <task id="LOCAL-00004" summary="unit of work/ clinic / dentist slot - crud/ repository/ controller">
-      <option name="closed" value="true" />
-      <created>1717657850822</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1717657850822</updated>
+      <workItem from="1721255970901" duration="6261000" />
     </task>
     <task id="LOCAL-00005" summary="mapper dto">
       <option name="closed" value="true" />
@@ -614,7 +607,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721224765071</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Order Update : Update Error/ fix bug">
+      <option name="closed" value="true" />
+      <created>1721256326272</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1721256326272</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,7 +637,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="get all customer&amp;user : sort name" />
     <MESSAGE value="get all user: filter by search (phone, name, email, username)" />
     <MESSAGE value="get all users : filter clinic and filter value = clinic id (get all user by clinic id)" />
     <MESSAGE value="Create Order : Add Order include Services" />
@@ -661,7 +661,8 @@
     <MESSAGE value="Order Update : Price When delete service" />
     <MESSAGE value="push" />
     <MESSAGE value="Order Create : Create Order" />
-    <option name="LAST_COMMIT_MESSAGE" value="Order Create : Create Order" />
+    <MESSAGE value="Order Update : Update Error/ fix bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Order Update : Update Error/ fix bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -785,52 +786,52 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/PaymentService.cs</url>
-          <line>147</line>
+          <line>148</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PaymentService.cs" containingFunctionPresentation="Method 'UpdatePayment'">
             <startOffsets>
-              <option value="6592" />
+              <option value="6635" />
             </startOffsets>
             <endOffsets>
-              <option value="6621" />
+              <option value="6664" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="157" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/PaymentService.cs</url>
-          <line>127</line>
+          <line>128</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PaymentService.cs" containingFunctionPresentation="Method 'UpdatePayment'">
             <startOffsets>
-              <option value="5259" />
+              <option value="5302" />
             </startOffsets>
             <endOffsets>
-              <option value="5295" />
+              <option value="5338" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="158" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/PaymentService.cs</url>
-          <line>195</line>
+          <line>196</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PaymentService.cs" containingFunctionPresentation="Method 'UpdatePayment'">
             <startOffsets>
-              <option value="9559" />
+              <option value="9602" />
             </startOffsets>
             <endOffsets>
-              <option value="9588" />
+              <option value="9631" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="159" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Service/Impl/PaymentService.cs</url>
-          <line>174</line>
+          <line>175</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PaymentService.cs" containingFunctionPresentation="Method 'UpdatePayment'">
             <startOffsets>
-              <option value="8163" />
+              <option value="8206" />
             </startOffsets>
             <endOffsets>
-              <option value="8199" />
+              <option value="8242" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="160" />
@@ -850,13 +851,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Repositories/Impl/PaymentAllRepo.cs</url>
-          <line>53</line>
+          <line>99</line>
           <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Repositories\Impl\PaymentAllRepo.cs" containingFunctionPresentation="Method 'UpdatePayment'">
             <startOffsets>
-              <option value="1929" />
+              <option value="4960" />
             </startOffsets>
             <endOffsets>
-              <option value="1965" />
+              <option value="4996" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="163" />
@@ -926,8 +927,26 @@
           </properties>
           <option name="timeStamp" value="168" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Service/Impl/PaymentService.cs</url>
+          <line>445</line>
+          <properties documentPath="D:\FPT\Semes 7\SWD\GoodDentist-BE\GoodDentist\Service\Impl\PaymentService.cs" containingFunctionPresentation="Method 'GetAllPayments'">
+            <startOffsets>
+              <option value="20887" />
+            </startOffsets>
+            <endOffsets>
+              <option value="20917" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#BusinessObject.Entity.PaymentAll" memberName="PaymentPrescription" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

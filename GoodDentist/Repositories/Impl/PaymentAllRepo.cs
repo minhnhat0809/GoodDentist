@@ -15,13 +15,59 @@ namespace Repositories.Impl
         public async Task<List<PaymentAll>> GetAllPayment(int pageNumber, int rowsPerPage)
         {
             return await _repositoryContext.PaymentAlls
-                .Include(x => x.PaymentOrder)
-                .Include(x => x.PaymentPrescription)
+                .Include(p => p.PaymentOrder)
+                    .ThenInclude(po => po.Order)
+                        .ThenInclude(o => o.Examination)
+                            .ThenInclude(e => e.ExaminationProfile)
+                .Include(p => p.PaymentOrder)
+                    .ThenInclude(po => po.Order)
+                        .ThenInclude(o => o.Examination)
+                            .ThenInclude(e => e.Orders)
+                .Include(p => p.PaymentOrder)
+                    .ThenInclude(po => po.Order)
+                        .ThenInclude(o => o.Examination)
+                            .ThenInclude(e => e.Prescriptions)
+                .Include(p => p.PaymentPrescription)
+                    .ThenInclude(pp => pp.Prescription)
+                        .ThenInclude(pr => pr.Examination)
+                            .ThenInclude(e => e.ExaminationProfile)
                 .Skip((pageNumber - 1) * rowsPerPage)
                 .Take(rowsPerPage)
                 .ToListAsync();
         }
+public async Task<List<PaymentAll>> GetAllPaymentsForCustomer(Guid customerId, int pageNumber, int rowsPerPage, string? sortField, string? sortOrder)
+    {
+        IQueryable<PaymentAll> paymentsQuery = _repositoryContext.PaymentAlls
+            .Include(p => p.PaymentOrder)
+                .ThenInclude(po => po.Order)
+                    .ThenInclude(o => o.Examination)
+                        .ThenInclude(e => e.ExaminationProfile)
+            .Include(p => p.PaymentPrescription)
+                .ThenInclude(pp => pp.Prescription)
+                    .ThenInclude(p => p.Examination)
+                        .ThenInclude(e => e.ExaminationProfile)
+            .Where(p =>
+                (p.PaymentOrder != null && p.PaymentOrder.Order != null && p.PaymentOrder.Order.Examination != null && p.PaymentOrder.Order.Examination.ExaminationProfile != null && p.PaymentOrder.Order.Examination.ExaminationProfile.CustomerId == customerId) ||
+                (p.PaymentPrescription != null && p.PaymentPrescription.Prescription != null && p.PaymentPrescription.Prescription.Examination != null && p.PaymentPrescription.Prescription.Examination.ExaminationProfile != null && p.PaymentPrescription.Prescription.Examination.ExaminationProfile.CustomerId == customerId))
+            .AsQueryable();
 
+        // Sorting
+        if (!string.IsNullOrEmpty(sortField) && !string.IsNullOrEmpty(sortOrder))
+        {
+            bool isAscending = sortOrder.ToLower() == "asc";
+            paymentsQuery = sortField.ToLower() switch
+            {
+                "date" => isAscending ? paymentsQuery.OrderBy(u => u.Date) : paymentsQuery.OrderByDescending(u => u.Date),
+                "detail" => isAscending ? paymentsQuery.OrderBy(u => u.PaymentDetail) : paymentsQuery.OrderByDescending(u => u.PaymentDetail),
+                "total" => isAscending ? paymentsQuery.OrderBy(u => u.Total) : paymentsQuery.OrderByDescending(u => u.Total),
+                "status" => isAscending ? paymentsQuery.OrderBy(u => u.Status) : paymentsQuery.OrderByDescending(u => u.Status),
+                _ => paymentsQuery
+            };
+        }
+
+        // Pagination
+        return await paymentsQuery.Skip((pageNumber - 1) * rowsPerPage).Take(rowsPerPage).ToListAsync();
+    }
         public async Task<PaymentAll> GetPaymentById(int id)
         {
             PaymentAll? model =  await _repositoryContext.PaymentAlls

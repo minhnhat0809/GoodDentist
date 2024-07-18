@@ -19,5 +19,6 @@ namespace Services
 		Task<ResponseDTO> GetPaymentsPerYear(int year);
 		Task<ResponseDTO> GetPaymentsInDateRange(DateTime DateStart, DateTime DateEnd);
 		Task<ResponseDTO> GetPaymentsOfServicesInDateRange(DateTime DateStart, DateTime DateEnd);
+		Task<ResponseDTO> GetAllPayments(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder);
 	}
 }

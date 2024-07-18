@@ -24,7 +24,17 @@ namespace GoodDentist.Controllers
             var responseDTO = await _paymentService.GetAllPayment(pageNumber, rowsPerPage);
             return StatusCode(responseDTO.StatusCode, responseDTO);
         }
-
+        [HttpGet("paging")]
+        public async Task<ActionResult<ResponseDTO>> GetPaymentAlls(
+            [FromQuery] int pageNumber = 1, int rowsPerPage = 5,
+            [FromQuery] string? filterField = null,
+            [FromQuery] string? filterValue = null,
+            [FromQuery] string? sortField = null,
+            [FromQuery] string? sortOrder = "asc")
+        {
+            ResponseDTO responseDTO = await _paymentService.GetAllPayments(pageNumber,rowsPerPage,filterField,filterValue,sortField,sortOrder);
+            return StatusCode(responseDTO.StatusCode, responseDTO);
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPaymentById(int id)
         {

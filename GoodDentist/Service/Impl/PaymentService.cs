@@ -65,6 +65,7 @@ namespace Services.Impl
                 var model = _mapper.Map<PaymentAll>(paymentDTO);
                 model.Total = 0;
                 model.Status = true;
+                model.Date = DateTime.Now;
                 // check prescription
                 if (paymentDTO.Prescription != null)
                 {
@@ -360,5 +361,137 @@ namespace Services.Impl
 
             return responseDto;
         }
+
+        public async Task<ResponseDTO> GetAllPayments(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField, string? sortOrder)
+        {
+            try
+            {
+                List<PaymentAll> models = new List<PaymentAll>();
+
+                // Filter by Customer ID
+                if (!string.IsNullOrEmpty(filterField) && !string.IsNullOrEmpty(filterValue) && filterField.ToLower() == "customerid")
+                {
+                    Guid customerId = Guid.Parse(filterValue);
+                    models = await _unitOfWork.paymentAllRepo.GetAllPaymentsForCustomer(customerId, pageNumber, rowsPerPage, sortField, sortOrder);
+                }
+                else
+                {
+                    models = await _unitOfWork.paymentAllRepo.GetAllPayment(pageNumber, rowsPerPage);
+                    if (!string.IsNullOrEmpty(filterField) && !string.IsNullOrEmpty(filterValue))
+                    {
+                        switch (filterField.ToLower())
+                    {
+                        case "customerid":
+                            Guid customerId = Guid.Parse(filterValue);
+                            models = models
+                                .Where(x => 
+                                    (x.PaymentOrder != null && 
+                                     x.PaymentOrder.Order != null &&
+                                     x.PaymentOrder.Order.Examination != null &&
+                                     x.PaymentOrder.Order.Examination.ExaminationProfile != null &&
+                                     x.PaymentOrder.Order.Examination.ExaminationProfile.CustomerId == customerId) 
+                                    ||
+                                    (x.PaymentPrescription != null &&
+                                     x.PaymentPrescription.Prescription != null &&
+                                     x.PaymentPrescription.Prescription.Examination != null &&
+                                     x.PaymentPrescription.Prescription.Examination.ExaminationProfile != null &&
+                                     x.PaymentPrescription.Prescription.Examination.ExaminationProfile.CustomerId == customerId))
+                                .ToList();
+                            break;
+                    }
+                    }
+                    // Sort
+                    if (!string.IsNullOrEmpty(sortField) && !string.IsNullOrEmpty(sortOrder))
+                {
+                    bool isAscending = sortOrder.ToLower() == "asc";
+                    switch (sortField.ToLower())
+                    {
+                        case "date":
+                            models = isAscending ? models.OrderBy(u => u.Date).ToList() : models.OrderByDescending(u => u.Date).ToList();
+                            break;
+                        case "detail":
+                            models = isAscending ? models.OrderBy(u => u.PaymentDetail).ToList() : models.OrderByDescending(u => u.PaymentDetail).ToList();
+                            break;
+                        case "total":
+                            models = isAscending ? models.OrderBy(u => u.Total).ToList() : models.OrderByDescending(u => u.Total).ToList();
+                            break;
+                        case "status":
+                            models = isAscending ? models.OrderBy(u => u.Status).ToList() : models.OrderByDescending(u => u.Status).ToList();
+                            break;
+                    }
+                }
+                }
+
+                // Map to DTO
+                List<PaymentAllDTO> viewModels = _mapper.Map<List<PaymentAllDTO>>(models);
+
+                return new ResponseDTO("Get payments successfully!", 200, true, viewModels);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }
+        /*public async Task<ResponseDTO> GetAllPayments(int pageNumber, int rowsPerPage, string? filterField, string? filterValue, string? sortField,
+            string? sortOrder)
+        
+        {
+            try
+            {
+                List<PaymentAll> models = await _unitOfWork.paymentAllRepo.GetAllPayment(pageNumber, rowsPerPage);
+                    
+                // Filter 
+                if (!string.IsNullOrEmpty(filterField) && !string.IsNullOrEmpty(filterValue))
+                {
+                    switch (filterField.ToLower())
+                    {
+                        case "customerid":
+                            Guid customerId = Guid.Parse(filterValue);
+                            models = models
+                                .Where(x => 
+                                    (x.PaymentOrder != null && 
+                                     x.PaymentOrder.Order != null &&
+                                     x.PaymentOrder.Order.Examination != null &&
+                                     x.PaymentOrder.Order.Examination.ExaminationProfile != null &&
+                                     x.PaymentOrder.Order.Examination.ExaminationProfile.CustomerId == customerId) 
+                                    ||
+                                    (x.PaymentPrescription != null &&
+                                     x.PaymentPrescription.Prescription != null &&
+                                     x.PaymentPrescription.Prescription.Examination != null &&
+                                     x.PaymentPrescription.Prescription.Examination.ExaminationProfile != null &&
+                                     x.PaymentPrescription.Prescription.Examination.ExaminationProfile.CustomerId == customerId))
+                                .ToList();
+                            break;
+                    }
+                }
+                // Sort
+                if (!string.IsNullOrEmpty(sortField) && !string.IsNullOrEmpty(sortOrder))
+                {
+                    bool isAscending = sortOrder.ToLower() == "asc";
+                    switch (sortField.ToLower())
+                    {
+                        case "date":
+                            models = isAscending ? models.OrderBy(u => u.Date).ToList() : models.OrderByDescending(u => u.Date).ToList();
+                            break;
+                        case "detail":
+                            models = isAscending ? models.OrderBy(u => u.PaymentDetail).ToList() : models.OrderByDescending(u => u.PaymentDetail).ToList();
+                            break;
+                        case "total":
+                            models = isAscending ? models.OrderBy(u => u.Total).ToList() : models.OrderByDescending(u => u.Total).ToList();
+                            break;
+                        case "status":
+                            models = isAscending ? models.OrderBy(u => u.Status).ToList() : models.OrderByDescending(u => u.Status).ToList();
+                            break;
+                    }
+                }
+                List<PaymentAllDTO> viewModels = _mapper.Map<List<PaymentAllDTO>>(models);
+                
+                return new ResponseDTO("Get customer successfully!", 200, true, viewModels);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO(ex.Message, 500, false, null);
+            }
+        }*/
     }
 }
